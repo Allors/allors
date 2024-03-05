@@ -29,6 +29,10 @@ internal abstract class Extent : IExtent<IObject>
     public abstract Allors.Database.IExtent<IObject> AddSort(RoleType roleType);
 
     public abstract Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction);
+    public IExtent<TResult> Cast<TResult>() where TResult : class, IObject
+    {
+        return new GenericExtent<TResult>(this);
+    }
 
     public abstract IEnumerator GetEnumerator();
 }

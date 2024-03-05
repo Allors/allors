@@ -78,7 +78,12 @@ public abstract class Extent : IExtent<IObject>
         this.Invalidate();
         return this;
     }
-    
+
+    public IExtent<TResult> Cast<TResult>() where TResult : class, IObject
+    {
+        return new GenericExtent<TResult>(this);
+    }
+
     public IEnumerator GetEnumerator()
     {
         this.Evaluate();

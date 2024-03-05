@@ -16,7 +16,7 @@ using Allors.Database.Meta;
 ///     The extent can be filter based on predicates.
 /// </summary>
 /// <typeparam name="T">The .Net type of the extent.</typeparam>
-public interface IExtent<out T> : IReadOnlyCollection<T> where T : class, IObject 
+public interface IExtent<out T> : IReadOnlyCollection<T> where T : class, IObject
 {
     /// <summary>
     ///     Gets the filter.
@@ -47,4 +47,6 @@ public interface IExtent<out T> : IReadOnlyCollection<T> where T : class, IObjec
     /// <param name="direction">The sort direction.</param>
     /// <returns>The current extent.</returns>
     IExtent<IObject> AddSort(RoleType roleType, SortDirection direction);
+
+    IExtent<TResult> Cast<TResult>() where TResult : class, IObject;
 }

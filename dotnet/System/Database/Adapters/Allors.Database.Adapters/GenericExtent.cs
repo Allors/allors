@@ -13,7 +13,7 @@ using Meta;
 public class GenericExtent<T>(IExtent<IObject> extent) : IExtent<T>
     where T : class, IObject
 {
-    public IEnumerator<T> GetEnumerator() => extent.Cast<T>().GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => Enumerable.Cast<T>(extent).GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => extent.GetEnumerator();
 
@@ -31,5 +31,10 @@ public class GenericExtent<T>(IExtent<IObject> extent) : IExtent<T>
     public IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
     {
         return extent.AddSort(roleType, direction);
+    }
+
+    public IExtent<TResult> Cast<TResult>() where TResult : class, IObject
+    {
+        return (IExtent<TResult>)this;
     }
 }
