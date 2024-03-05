@@ -30,7 +30,7 @@ internal class ExtentOperation : SqlExtent
         second.ParentOperationExtent = this;
     }
 
-    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null) => null;
+    public override ICompositePredicate Filter => null;
 
     internal override Transaction Transaction => this.first.Transaction;
 
@@ -44,17 +44,17 @@ internal class ExtentOperation : SqlExtent
 
         switch (this.operationType)
         {
-            case ExtentOperations.Union:
-                statement.Append("\nUNION\n");
-                break;
+        case ExtentOperations.Union:
+            statement.Append("\nUNION\n");
+            break;
 
-            case ExtentOperations.Intersect:
-                statement.Append("\nINTERSECT\n");
-                break;
+        case ExtentOperations.Intersect:
+            statement.Append("\nINTERSECT\n");
+            break;
 
-            case ExtentOperations.Except:
-                statement.Append("\n" + "EXCEPT" + "\n");
-                break;
+        case ExtentOperations.Except:
+            statement.Append("\n" + "EXCEPT" + "\n");
+            break;
         }
 
         statement.Append("(");

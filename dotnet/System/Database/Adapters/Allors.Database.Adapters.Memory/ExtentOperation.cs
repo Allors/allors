@@ -32,7 +32,7 @@ internal sealed class ExtentOperation : Extent
         secondOperand.Parent = this;
     }
 
-    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null) => null;
+    public override ICompositePredicate Filter => null;
 
     public override Composite ObjectType => this.firstOperand.ObjectType;
 

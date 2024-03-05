@@ -37,11 +37,13 @@ internal class ExtentFiltered : SqlExtent
         this.objectType = objectType;
     }
 
-    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null)
+    public override ICompositePredicate Filter
     {
-        this.LazyLoadFilter();
-        init?.Invoke(this.filter);
-        return this.filter;
+        get
+        {
+            this.LazyLoadFilter();
+            return this.filter;
+        }
     }
 
     internal Mapping Mapping => this.transaction.Database.Mapping;

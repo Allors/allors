@@ -28,7 +28,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
     ///     The filter is a top level AND filter. If you require an OR or a NOT filter
     ///     then simply add it to this AND filter.
     /// </value>
-    public abstract ICompositePredicate Filter(Action<ICompositePredicate> filter = null);
+    public abstract ICompositePredicate Filter { get; }
 
     /// <summary>
     ///     Gets the object type of this extent.
@@ -337,7 +337,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
         ///     The filter is a top level AND filter. If you require an OR or a NOT filter
         ///     then simply add it to this AND filter.
         /// </value>
-        public override ICompositePredicate Filter(Action<ICompositePredicate> init = null) => throw new NotSupportedException("A converted extent does not support a filter");
+        public override ICompositePredicate Filter => throw new NotSupportedException("A converted extent does not support a filter");
 
         /// <summary>
         ///     Gets the object type of this extent.

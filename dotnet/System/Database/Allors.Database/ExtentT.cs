@@ -42,7 +42,7 @@ public class Extent<T> : IList, IList<T> where T : IObject // Extent<T> must als
     ///     The filter is a top level AND filter. If you require an OR or a NOT filter
     ///     then simply add it to this AND filter.
     /// </value>
-    public ICompositePredicate Filter(Action<ICompositePredicate> filter = null) => this.BaseExtent.Filter(filter);
+    public ICompositePredicate Filter => this.BaseExtent.Filter;
 
     /// <summary>
     ///     Gets the first object from the Extent.

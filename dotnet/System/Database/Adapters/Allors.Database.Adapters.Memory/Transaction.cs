@@ -391,11 +391,7 @@ public class Transaction : ITransaction
     public virtual Allors.Database.Extent Extent(Composite objectType, Action<ICompositePredicate> filter = null)
     {
         var extent = new ExtentFiltered(this, objectType);
-        if (filter != null)
-        {
-            extent.Filter(filter);
-        }
-
+        filter?.Invoke(extent.Filter);
         return extent;
     }
 

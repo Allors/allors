@@ -440,11 +440,7 @@ public sealed class Transaction : ITransaction
     public Allors.Database.Extent Extent(Composite type, Action<ICompositePredicate> filter = null)
     {
         var extent = new ExtentFiltered(this, type);
-        if (filter != null)
-        {
-            extent.Filter(filter);
-        }
-
+        filter?.Invoke(extent.Filter);
         return extent;
     }
 

@@ -17,7 +17,7 @@ namespace Allors.Database.Domain
                 return default(T);
             }
 
-            @this.Filter().AddEquals(roleType, value);
+            @this.Filter.AddEquals(roleType, value);
             return @this.FirstOrDefault();
         }
     }

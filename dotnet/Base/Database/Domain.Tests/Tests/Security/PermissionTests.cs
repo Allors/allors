@@ -59,11 +59,11 @@ namespace Allors.Database.Domain.Tests
         // Assert.Equal(count + 3, new Permissions(this.DatabaseTransaction).Extent().Count);
 
         // var roleTypePermissions = new Permissions(this.DatabaseTransaction).Extent();
-        //    roleTypePermissions.Filter().AddEquals(M.Permission.OperandTypePointer, relationType.RoleType.Id);
+        //    roleTypePermissions.Filter.AddEquals(M.Permission.OperandTypePointer, relationType.RoleType.Id);
         //    Assert.Equal(2, roleTypePermissions.Count);
 
         // var associationTypePermissions = new Permissions(this.DatabaseTransaction).Extent();
-        //    associationTypePermissions.Filter().AddEquals(M.Permission.OperandTypePointer, relationType.AssociationType.Id);
+        //    associationTypePermissions.Filter.AddEquals(M.Permission.OperandTypePointer, relationType.AssociationType.Id);
         //    Assert.Equal(1, associationTypePermissions.Count);
         // }
 
