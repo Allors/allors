@@ -17,5 +17,5 @@ public class Sort : IVisitable
 
     public void Accept(IVisitor visitor) => visitor.VisitSort(this);
 
-    public void Build(Database.Extent extent) => extent.AddSort(this.RoleType, this.SortDirection);
+    public void Build(Database.IExtent<IObject> extent) => extent.AddSort(this.RoleType, this.SortDirection);
 }

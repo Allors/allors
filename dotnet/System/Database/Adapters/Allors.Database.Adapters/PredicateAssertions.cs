@@ -15,12 +15,12 @@ using Allors.Database.Meta;
 public class PredicateAssertions
 {
     /// <summary>
-    ///     Asserts that the <see cref="AssociationType" /> and the <see cref="Extent" /> are compatible with
+    ///     Asserts that the <see cref="AssociationType" /> and the <see cref="IExtent{T}.Database.IObject}" /> are compatible with
     ///     <see cref="ICompositePredicate#AddIn" />.
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="extent">The extent.</param>
-    public static void AssertAssociationIn(AssociationType association, Extent extent)
+    public static void AssertAssociationIn(AssociationType association, IExtent<IObject> extent)
     {
         // TODO: ?
     }
@@ -145,12 +145,12 @@ public class PredicateAssertions
     }
 
     /// <summary>
-    ///     Asserts that the <see cref="RoleType" /> and the <see cref="Extent" /> are compatible with
+    ///     Asserts that the <see cref="RoleType" /> and the <see cref="IExtent{T}.Database.IObject}" /> are compatible with
     ///     <see cref="ICompositePredicate#AddIn" />.
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="extent">The extent.</param>
-    public static void ValidateRoleIn(RoleType role, Extent extent)
+    public static void ValidateRoleIn(RoleType role, IExtent<IObject> extent)
     {
         if (role.ObjectType is Unit)
         {

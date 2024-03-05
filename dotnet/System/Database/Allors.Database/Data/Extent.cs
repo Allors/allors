@@ -19,7 +19,7 @@ public class Extent : IExtent, IPredicateContainer
 
     bool IExtent.HasMissingArguments(IArguments arguments) => this.Predicate != null && this.Predicate.HasMissingArguments(arguments);
 
-    public Database.Extent Build(ITransaction transaction, IArguments arguments = null)
+    public Database.IExtent<IObject> Build(ITransaction transaction, IArguments arguments = null)
     {
         var extent = transaction.Extent(this.ObjectType);
 

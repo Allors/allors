@@ -12,7 +12,7 @@ internal sealed class RoleInExtent : In
     private readonly SqlExtent inExtent;
     private readonly RoleType role;
 
-    internal RoleInExtent(ExtentFiltered extent, RoleType role, Allors.Database.Extent inExtent)
+    internal RoleInExtent(ExtentFiltered extent, RoleType role, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, inExtent);

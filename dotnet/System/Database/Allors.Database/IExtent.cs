@@ -16,7 +16,7 @@ using Allors.Database.Meta;
 ///     The extent can be filter based on predicates.
 /// </summary>
 /// <typeparam name="T">The .Net type of the extent.</typeparam>
-public interface Extent<out T> : IReadOnlyCollection<T> where T : class, IObject 
+public interface IExtent<out T> : IReadOnlyCollection<T> where T : class, IObject 
 {
     /// <summary>
     ///     Gets the filter.
@@ -38,7 +38,7 @@ public interface Extent<out T> : IReadOnlyCollection<T> where T : class, IObject
     /// </summary>
     /// <param name="roleType">The role type by which to sort.</param>
     /// <returns>The current extent.</returns>
-    Extent AddSort(RoleType roleType);
+    IExtent<IObject> AddSort(RoleType roleType);
 
     /// <summary>
     ///     Adds sorting based on the specified role type and direction.
@@ -46,5 +46,5 @@ public interface Extent<out T> : IReadOnlyCollection<T> where T : class, IObject
     /// <param name="roleType">The role type by which to sort.</param>
     /// <param name="direction">The sort direction.</param>
     /// <returns>The current extent.</returns>
-    Extent AddSort(RoleType roleType, SortDirection direction);
+    IExtent<IObject> AddSort(RoleType roleType, SortDirection direction);
 }

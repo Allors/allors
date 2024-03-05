@@ -435,27 +435,27 @@ public sealed class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
+    public IExtent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
     {
         var extent = this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), filter);
         return new GenericExtent<T>(extent);
     }
 
-    public Allors.Database.Extent Extent(Composite type, Action<ICompositePredicate> filter = null)
+    public Allors.Database.IExtent<IObject> Extent(Composite type, Action<ICompositePredicate> filter = null)
     {
         var extent = new ExtentFiltered(this, type);
         filter?.Invoke(extent.Filter);
         return extent;
     }
 
-    public Allors.Database.Extent Union(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
+    public Allors.Database.IExtent<IObject> Union(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
         new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent, ExtentOperations.Union);
 
-    public Allors.Database.Extent Intersect(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
+    public Allors.Database.IExtent<IObject> Intersect(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
         new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent,
             ExtentOperations.Intersect);
 
-    public Allors.Database.Extent Except(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
+    public Allors.Database.IExtent<IObject> Except(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
         new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent, ExtentOperations.Except);
 
     public void Commit()

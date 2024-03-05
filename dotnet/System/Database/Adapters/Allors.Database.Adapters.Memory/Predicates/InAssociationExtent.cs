@@ -11,9 +11,9 @@ using Allors.Database.Meta;
 internal sealed class InAssociationExtent : In
 {
     private readonly AssociationType associationType;
-    private readonly Allors.Database.Extent containingExtent;
+    private readonly Allors.Database.IExtent<IObject> containingExtent;
 
-    internal InAssociationExtent(ExtentFiltered extent, AssociationType associationType, Allors.Database.Extent containingExtent)
+    internal InAssociationExtent(ExtentFiltered extent, AssociationType associationType, Allors.Database.IExtent<IObject> containingExtent)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.AssertAssociationIn(associationType, containingExtent);

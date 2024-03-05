@@ -20,7 +20,7 @@ public class Union : IExtentOperator
 
     bool IExtent.HasMissingArguments(IArguments arguments) => this.Operands.Any(v => v.HasMissingArguments(arguments));
 
-    public Database.Extent Build(ITransaction transaction, IArguments arguments = null)
+    public Database.IExtent<IObject> Build(ITransaction transaction, IArguments arguments = null)
     {
         var extent = transaction.Union(this.Operands[0].Build(transaction, arguments), this.Operands[1].Build(transaction, arguments));
 

@@ -23,7 +23,7 @@ namespace Allors.Database.Domain
         {
         }
 
-        private void Derive(Extent extent)
+        private void Derive(IExtent<IObject> extent)
         {
             // TODO:
 

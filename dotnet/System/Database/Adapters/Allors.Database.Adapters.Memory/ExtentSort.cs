@@ -81,7 +81,7 @@ public sealed class ExtentSort : IComparer<Strategy>
         }
     }
 
-    internal void CopyToConnected(Allors.Database.Extent connectedExtent)
+    internal void CopyToConnected(Allors.Database.IExtent<IObject> connectedExtent)
     {
         connectedExtent.AddSort(this.roleType, this.direction);
         this.subSorter?.CopyToConnected(connectedExtent);

@@ -12,7 +12,7 @@ internal sealed class NotAssociationInExtent : In
     private readonly AssociationType association;
     private readonly SqlExtent inExtent;
 
-    internal NotAssociationInExtent(ExtentFiltered extent, AssociationType association, Allors.Database.Extent inExtent)
+    internal NotAssociationInExtent(ExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, inExtent);

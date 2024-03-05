@@ -41,7 +41,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return between;
     }
 
-    public IPredicate AddIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
 
@@ -67,7 +67,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return @in;
     }
 
-    public IPredicate AddIn(AssociationType association, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
 

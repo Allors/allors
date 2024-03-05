@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Meta;
 
-public class GenericExtent<T>(Extent extent) : Extent<T>
+public class GenericExtent<T>(IExtent<IObject> extent) : IExtent<T>
     where T : class, IObject
 {
     public IEnumerator<T> GetEnumerator() => extent.Cast<T>().GetEnumerator();
@@ -23,12 +23,12 @@ public class GenericExtent<T>(Extent extent) : Extent<T>
 
     public Composite ObjectType => extent.ObjectType;
 
-    public Extent AddSort(RoleType roleType)
+    public IExtent<IObject> AddSort(RoleType roleType)
     {
         return extent.AddSort(roleType);
     }
 
-    public Extent AddSort(RoleType roleType, SortDirection direction)
+    public IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
     {
         return extent.AddSort(roleType, direction);
     }

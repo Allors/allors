@@ -102,7 +102,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
             if (changeSet.RoleTypesByAssociation.TryGetValue(association, out var changedRoleTypes) && changedRoleTypes.Intersect(roleTypes).Any())
             {
-                Extent extent = null;
+                IExtent<IObject> extent = null;
 
                 foreach (var roleType in roleTypes)
                 {

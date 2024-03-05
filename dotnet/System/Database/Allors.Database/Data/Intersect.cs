@@ -20,7 +20,7 @@ public class Intersect : IExtentOperator
 
     bool IExtent.HasMissingArguments(IArguments arguments) => this.Operands.Any(v => v.HasMissingArguments(arguments));
 
-    Database.Extent IExtent.Build(ITransaction transaction, IArguments arguments)
+    Database.IExtent<IObject> IExtent.Build(ITransaction transaction, IArguments arguments)
     {
         var extent = transaction.Intersect(this.Operands[0].Build(transaction, arguments), this.Operands[1].Build(transaction, arguments));
         if (this.Sorting == null)

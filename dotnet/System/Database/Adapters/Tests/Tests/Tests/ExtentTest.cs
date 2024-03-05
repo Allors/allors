@@ -569,7 +569,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
-                        extent.Filter.AddIn(m.I34.I12sWhereI12I34many2many, (Extent<IObject>)inExtent);
+                        extent.Filter.AddIn(m.I34.I12sWhereI12I34many2many, (IExtent<IObject>)inExtent);
                     }
                     else
                     {
@@ -9272,12 +9272,12 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Association (Amgiguous Name)
-            Extent<Company> parents = this.Transaction.Extent<Company>();
+            IExtent<Company> parents = this.Transaction.Extent<Company>();
 
-            Extent<Company> children = this.Transaction.Extent<Company>();
+            IExtent<Company> children = this.Transaction.Extent<Company>();
             children.Filter.AddIn(m.Company.CompanyWhereChild, parents);
 
-            Extent<Person> persons = this.Transaction.Extent<Person>();
+            IExtent<Person> persons = this.Transaction.Extent<Person>();
             var or = persons.Filter.AddOr();
             or.AddIn(m.Person.Company, parents);
             or.AddIn(m.Person.Company, children);
@@ -17437,7 +17437,7 @@ public abstract class ExtentTest : IDisposable
             var c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Filter.AddContains(m.C2.C3Many2Manies, c3);
 
-            Extent<C1> c1s = this.Transaction.Extent<C1>();
+            IExtent<C1> c1s = this.Transaction.Extent<C1>();
             c1s.Filter.AddIn(m.C1.C1C2many2one, c2s);
 
             Assert.Single(c1s);
@@ -17465,7 +17465,7 @@ public abstract class ExtentTest : IDisposable
             var c3s = this.Transaction.Extent(m.C3.Composite);
             c3s.Filter.AddContains(m.C3.C3C4one2manies, c4);
 
-            Extent<C2> c2s = this.Transaction.Extent<C2>();
+            IExtent<C2> c2s = this.Transaction.Extent<C2>();
             c2s.Filter.AddIn(m.C2.C3Many2One, c3s);
 
             Assert.Single(c2s);
@@ -17493,7 +17493,7 @@ public abstract class ExtentTest : IDisposable
             var c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Filter.AddContains(m.C2.C3sWhereC3C2many2many, c3);
 
-            Extent<C1> c1s = this.Transaction.Extent<C1>();
+            IExtent<C1> c1s = this.Transaction.Extent<C1>();
             c1s.Filter.AddIn(m.C1.C1C2many2one, c2s);
 
             Assert.Single(c1s);
@@ -17530,7 +17530,7 @@ public abstract class ExtentTest : IDisposable
 
     private static Unit GetAllorsString(ObjectType objectType) => (Unit)objectType.MetaPopulation.FindById(UnitIds.String);
 
-    private void AssertC1(Extent extent, bool assert0, bool assert1, bool assert2, bool assert3)
+    private void AssertC1(IExtent<IObject> extent, bool assert0, bool assert1, bool assert2, bool assert3)
     {
         if (assert0)
         {
@@ -17569,7 +17569,7 @@ public abstract class ExtentTest : IDisposable
         }
     }
 
-    private void AssertC2(Extent extent, bool assert0, bool assert1, bool assert2, bool assert3)
+    private void AssertC2(IExtent<IObject> extent, bool assert0, bool assert1, bool assert2, bool assert3)
     {
         if (assert0)
         {
@@ -17608,7 +17608,7 @@ public abstract class ExtentTest : IDisposable
         }
     }
 
-    private void AssertC3(Extent extent, bool assert0, bool assert1, bool assert2, bool assert3)
+    private void AssertC3(IExtent<IObject> extent, bool assert0, bool assert1, bool assert2, bool assert3)
     {
         if (assert0)
         {
@@ -17647,7 +17647,7 @@ public abstract class ExtentTest : IDisposable
         }
     }
 
-    private void AssertC4(Extent extent, bool assert0, bool assert1, bool assert2, bool assert3)
+    private void AssertC4(IExtent<IObject> extent, bool assert0, bool assert1, bool assert2, bool assert3)
     {
         if (assert0)
         {

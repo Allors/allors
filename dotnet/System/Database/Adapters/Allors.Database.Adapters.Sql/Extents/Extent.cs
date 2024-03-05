@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Meta;
 
-internal abstract class Extent : Allors.Database.Extent
+internal abstract class Extent : IExtent<IObject>
 {
     internal abstract SqlExtent InExtent { get; }
     IEnumerator<IObject> IEnumerable<IObject>.GetEnumerator()
@@ -26,9 +26,9 @@ internal abstract class Extent : Allors.Database.Extent
 
     public abstract Composite ObjectType { get; }
 
-    public abstract Allors.Database.Extent AddSort(RoleType roleType);
+    public abstract Allors.Database.IExtent<IObject> AddSort(RoleType roleType);
 
-    public abstract Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction);
+    public abstract Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction);
 
     public abstract IEnumerator GetEnumerator();
 }

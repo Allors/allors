@@ -13,7 +13,7 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Data;
     using Database.Meta;
     using Database.Security;
-    using Extent = Database.Extent;
+    using Extent = Database.IExtent<Database.IObject>;
 
     public class PullInstantiate
     {

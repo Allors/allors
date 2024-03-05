@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     public partial class Places
     {
-        public Extent<Place> ExtentByPostalCode()
+        public IExtent<Place> ExtentByPostalCode()
         {
             var places = this.Transaction.Extent<Place>();
             places.AddSort(this.M.Place.PostalCode);

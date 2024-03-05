@@ -56,7 +56,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return between;
     }
 
-    public IPredicate AddIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         In @in = role.IsMany
             ? new InRoleManyExtent(this.extent, role, containingExtent)
@@ -78,7 +78,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return @in;
     }
 
-    public IPredicate AddIn(AssociationType association, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
         var containedIn = new InAssociationExtent(this.extent, association, containingExtent);
 

@@ -20,7 +20,7 @@ public class Except : IExtentOperator
 
     bool IExtent.HasMissingArguments(IArguments arguments) => this.Operands.Any(v => v.HasMissingArguments(arguments));
 
-    Database.Extent IExtent.Build(ITransaction transaction, IArguments arguments)
+    Database.IExtent<IObject> IExtent.Build(ITransaction transaction, IArguments arguments)
     {
         var extent = transaction.Except(this.Operands[0].Build(transaction, arguments), this.Operands[1].Build(transaction, arguments));
 

@@ -53,7 +53,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>this CompositePredicate.</returns>
-    IPredicate AddIn(RoleType role, Extent containingExtent);
+    IPredicate AddIn(RoleType role, IExtent<IObject> containingExtent);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
@@ -71,7 +71,7 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    IPredicate AddIn(AssociationType association, Extent containingExtent);
+    IPredicate AddIn(AssociationType association, IExtent<IObject> containingExtent);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in

@@ -13,7 +13,7 @@ public interface IExtent : IVisitable
 
     Sort[] Sorting { get; set; }
 
-    Database.Extent Build(ITransaction transaction, IArguments arguments = null);
+    Database.IExtent<IObject> Build(ITransaction transaction, IArguments arguments = null);
 
     bool HasMissingArguments(IArguments arguments);
 }

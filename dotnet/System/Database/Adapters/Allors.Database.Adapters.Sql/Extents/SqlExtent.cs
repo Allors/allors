@@ -26,9 +26,9 @@ internal abstract class SqlExtent : Extent
 
     private IList<long> ObjectIds => this.objectIds ??= this.GetObjectIds();
     
-    public override Allors.Database.Extent AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+    public override Allors.Database.IExtent<IObject> AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
 
-    public override Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction)
+    public override Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
     {
         this.LazyLoadFilter();
         this.FlushCache();

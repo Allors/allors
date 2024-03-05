@@ -13,7 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public abstract class Extent : Allors.Database.Extent
+public abstract class Extent : IExtent<IObject>
 {
     private IObject[] defaultObjectArray;
     private Extent parent;
@@ -62,9 +62,9 @@ public abstract class Extent : Allors.Database.Extent
 
     protected List<Strategy> Strategies { get; set; }
 
-    public Allors.Database.Extent AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+    public Allors.Database.IExtent<IObject> AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
 
-    public Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction)
+    public Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
     {
         if (this.Sorter == null)
         {

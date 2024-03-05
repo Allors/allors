@@ -45,7 +45,7 @@ public interface ITransaction : IDisposable
     /// </summary>
     /// <typeparam name="T">The type for the extent.</typeparam>
     /// <returns>The extent.</returns>
-    Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject;
+    IExtent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject;
 
     /// <summary>
     ///     Creates an Extent for the specified <see cref="ObjectType" />.
@@ -53,7 +53,7 @@ public interface ITransaction : IDisposable
     /// <param name="objectType">The @class.</param>
     /// <param name="filter"></param>
     /// <returns>The extent.</returns>
-    Extent Extent(Composite objectType, Action<ICompositePredicate> filter = null);
+    IExtent<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null);
 
     /// <summary>
     ///     Creates an Extent that is the exception of its two operands.
@@ -61,7 +61,7 @@ public interface ITransaction : IDisposable
     /// <param name="firstOperand">The first operand.</param>
     /// <param name="secondOperand">The second operand.</param>
     /// <returns>The except extent.</returns>
-    Extent Except(Extent firstOperand, Extent secondOperand);
+    IExtent<IObject> Except(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand);
 
     /// <summary>
     ///     Creates an Extent that is the Intersect of its two operands.
@@ -69,7 +69,7 @@ public interface ITransaction : IDisposable
     /// <param name="firstOperand">The first operand.</param>
     /// <param name="secondOperand">The second operand.</param>
     /// <returns>The intersect extent.</returns>
-    Extent Intersect(Extent firstOperand, Extent secondOperand);
+    IExtent<IObject> Intersect(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand);
 
     /// <summary>
     ///     Creates an Extent that is the Union of its two operands.
@@ -77,7 +77,7 @@ public interface ITransaction : IDisposable
     /// <param name="firstOperand">The first operand.</param>
     /// <param name="secondOperand">The second operand.</param>
     /// <returns>The union extent.</returns>
-    Extent Union(Extent firstOperand, Extent secondOperand);
+    IExtent<IObject> Union(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand);
 
     /// <summary>
     ///     Commits all changes that where made during this transaction.

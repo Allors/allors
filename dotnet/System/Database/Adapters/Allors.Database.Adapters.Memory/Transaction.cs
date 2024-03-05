@@ -378,31 +378,31 @@ public class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
+    public IExtent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
     {
         if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
         {
             throw new Exception("type should be a CompositeType");
         }
 
-        Allors.Database.Extent extent = this.Extent(compositeType, filter);
+        Allors.Database.IExtent<IObject> extent = this.Extent(compositeType, filter);
         return new GenericExtent<T>(extent);
     }
 
-    public virtual Allors.Database.Extent Extent(Composite objectType, Action<ICompositePredicate> filter = null)
+    public virtual Allors.Database.IExtent<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null)
     {
         var extent = new ExtentFiltered(this, objectType);
         filter?.Invoke(extent.Filter);
         return extent;
     }
 
-    public virtual Allors.Database.Extent Union(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
+    public virtual Allors.Database.IExtent<IObject> Union(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
         new ExtentOperation(this, (Extent)firstOperand, (Extent)secondOperand, ExtentOperationType.Union);
 
-    public virtual Allors.Database.Extent Intersect(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
+    public virtual Allors.Database.IExtent<IObject> Intersect(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
         new ExtentOperation(this, (Extent)firstOperand, (Extent)secondOperand, ExtentOperationType.Intersect);
 
-    public virtual Allors.Database.Extent Except(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand)
+    public virtual Allors.Database.IExtent<IObject> Except(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand)
     {
         var firstExtent = (Extent)firstOperand;
         var secondExtent = (Extent)secondOperand;
