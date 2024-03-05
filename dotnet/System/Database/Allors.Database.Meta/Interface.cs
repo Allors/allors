@@ -65,9 +65,9 @@ public sealed class Interface : Composite
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 
     public void DeriveWorkspaceNames() =>
-        this.derivedWorkspaceNames = ((Interface)this)
+        this.derivedWorkspaceNames = this
             .RoleTypes.SelectMany(v => v.RelationType.WorkspaceNames)
-            .Union(((Interface)this).AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
+            .Union(this.AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 
@@ -88,7 +88,7 @@ public sealed class Interface : Composite
         var subclasses = new HashSet<Class>();
         foreach (var subType in this.subtypes.OfType<Class>())
         {
-            subclasses.Add((Class)subType);
+            subclasses.Add(subType);
         }
 
         this.subclasses = subclasses.ToArray();

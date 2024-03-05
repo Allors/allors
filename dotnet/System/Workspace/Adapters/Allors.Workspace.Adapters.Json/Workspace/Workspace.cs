@@ -100,7 +100,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (!this.StrategyById.TryGetValue(p.i, out var strategy))
                 {
-                    var databaseRecord = (Adapters.Record)this.Connection.GetRecord(p.i);
+                    var databaseRecord = this.Connection.GetRecord(p.i);
                     strategy = new Strategy(this, databaseRecord.Class, databaseRecord.Id);
                     this.AddStrategy(strategy);
                 }

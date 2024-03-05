@@ -230,7 +230,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 
         var associationTypesByRoleTypeObjectType = this.relationTypes
             .GroupBy(v => v.RoleType.ObjectType)
-            .ToDictionary(g => (ObjectType)g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
+            .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
         foreach (Composite composite in this.composites)
@@ -247,7 +247,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         // MethodTypes
         var methodTypeByClass = this.methodTypes
             .GroupBy(v => v.ObjectType)
-            .ToDictionary(g => (Composite)g.Key, g => new HashSet<MethodType>(g));
+            .ToDictionary(g => g.Key, g => new HashSet<MethodType>(g));
 
         foreach (Composite composite in this.composites)
         {
@@ -255,7 +255,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
 
         // Composite RoleTypes
-        var compositeRoleTypesByComposite = this.composites.ToDictionary(v => (Composite)v, v => new HashSet<CompositeRoleType>());
+        var compositeRoleTypesByComposite = this.composites.ToDictionary(v => v, v => new HashSet<CompositeRoleType>());
         foreach (var relationType in this.relationTypes)
         {
             relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
@@ -267,7 +267,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
 
         // Composite MethodTypes
-        var compositeMethodTypesByComposite = this.composites.ToDictionary(v => (Composite)v, v => new HashSet<CompositeMethodType>());
+        var compositeMethodTypesByComposite = this.composites.ToDictionary(v => v, v => new HashSet<CompositeMethodType>());
         foreach (var methodType in this.methodTypes)
         {
             methodType.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);

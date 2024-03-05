@@ -116,7 +116,7 @@ namespace Allors.Workspace.Adapters.Direct
         }
 
         public IStrategy GetObject(string key)
-            => this.Objects.TryGetValue(key, out var @object) ? (IStrategy)@object : null;
+            => this.Objects.TryGetValue(key, out var @object) ? @object : null;
 
         public object GetValue(string key) => this.Values[key];
 

@@ -56,22 +56,22 @@ public abstract class ExtentTest : IDisposable
             });
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
@@ -79,22 +79,22 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
@@ -102,22 +102,22 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.True(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.True(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.Contains(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.Contains(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
         }
     }
 
@@ -138,64 +138,64 @@ public abstract class ExtentTest : IDisposable
             });
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddAnd(v => v.AddLessThan(m.I12.I12AllorsInteger, 2));
 
             Assert.Equal(2, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddAnd(v => v.AddLessThan(m.S1234.S1234AllorsInteger, 2));
 
             Assert.Equal(4, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.True(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.True(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.Contains(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.Contains(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
         }
     }
 
@@ -227,7 +227,7 @@ public abstract class ExtentTest : IDisposable
                     var extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
@@ -253,7 +253,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
@@ -282,7 +282,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
@@ -312,7 +312,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
@@ -338,7 +338,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
@@ -367,7 +367,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
@@ -399,7 +399,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
@@ -425,7 +425,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
@@ -454,7 +454,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
@@ -484,7 +484,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
@@ -510,7 +510,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
@@ -539,7 +539,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
@@ -569,7 +569,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
-                        extent.Filter.AddIn(m.I34.I12sWhereI12I34many2many, (IEnumerable<IObject>)(Extent<IObject>)inExtent);
+                        extent.Filter.AddIn(m.I34.I12sWhereI12I34many2many, (Extent<IObject>)inExtent);
                     }
                     else
                     {
@@ -594,7 +594,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I34.I12sWhereI12I34many2many, enumerable);
                     }
                     else
@@ -623,7 +623,7 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
-                        var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
+                        var enumerable = (IEnumerable<IObject>)inExtent;
                         extent.Filter.AddIn(m.I34.I12sWhereI12I34many2many, enumerable);
                     }
                     else
@@ -655,88 +655,88 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2many, this.c1C);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2many, this.c1D);
 
             Assert.Equal(2, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddContains(m.I12.C1sWhereC1I12many2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddContains(m.S1234.S1234sWhereS1234many2many, this.c1B);
 
             Assert.Equal(2, extent.Count);
-            Assert.True(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.Contains(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
         }
     }
 
@@ -754,66 +754,66 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddExists(m.C2.C1sWhereC1C2many2many);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddExists(m.I2.I1sWhereI1I2many2many);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234sWhereS1234many2many);
 
             Assert.Equal(10, extent.Count);
-            Assert.True(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.True(extent.Contains(this.c3B));
-            Assert.True(extent.Contains(this.c3C));
-            Assert.True(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.Contains(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.Contains(this.c3B, extent);
+            Assert.Contains(this.c3C, extent);
+            Assert.Contains(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Class - Wrong RelationType
             extent = this.Transaction.Extent(m.C2.Composite);
@@ -1205,86 +1205,86 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddContains(m.C1.C1sWhereC1C1many2one, this.c1C);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2one, this.c1C);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddContains(m.C4.C3sWhereC3C4many2one, this.c3C);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.True(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.Contains(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddContains(m.I12.C1sWhereC1I12many2one, this.c1C);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // TODO: wrong relation
         }
@@ -1681,66 +1681,66 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddExists(m.C2.C1WhereC1C2one2many);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddExists(m.I2.I1WhereI1I2one2many);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234WhereS1234one2many);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Class - Wrong RelationType
             extent = this.Transaction.Extent(m.C1.Composite);
@@ -1803,66 +1803,66 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddInstanceOf(m.C2.C1WhereC1C2one2many, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddInstanceOf(m.I12.C1WhereC1I12one2many, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddInstanceOf(m.S1234.S1234WhereS1234one2many, m.C1.Composite);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // TODO: wrong relation
         }
@@ -1895,43 +1895,43 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddIn(m.C1.C1WhereC1C1one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddIn(m.C2.C1WhereC1C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 inExtent = this.Transaction.Extent(m.C3.Composite);
                 if (useOperator)
@@ -1945,22 +1945,22 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddIn(m.C4.C3WhereC3C4one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // In Extent over Interface
                 inExtent = this.Transaction.Extent(m.I12.Composite);
@@ -1975,43 +1975,43 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddIn(m.C1.C1WhereC1C1one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddIn(m.C2.C1WhereC1C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
@@ -2025,22 +2025,22 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddIn(m.C4.C3WhereC3C4one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // RelationType from Interface to Class
 
@@ -2057,22 +2057,22 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddIn(m.C2.I12WhereI12C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // In Extent over Interface
                 inExtent = this.Transaction.Extent(m.I12.Composite);
@@ -2109,108 +2109,108 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddEquals(m.C1.C1WhereC1C1one2one, this.c1B);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddEquals(m.C2.C1WhereC1C2one2one, this.c1B);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddEquals(m.C4.C3WhereC3C4one2one, this.c3B);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.True(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.Contains(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddEquals(m.I2.I1WhereI1I2one2one, this.c1B);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234WhereS1234one2one, this.c1C);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Class - Wrong RelationType
             extent = this.Transaction.Extent(m.C1.Composite);
@@ -2273,108 +2273,108 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddExists(m.C1.C1WhereC1C1one2one);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddExists(m.C2.C1WhereC1C2one2one);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddExists(m.C4.C3WhereC3C4one2one);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.True(extent.Contains(this.c4B));
-            Assert.True(extent.Contains(this.c4C));
-            Assert.True(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.Contains(this.c4B, extent);
+            Assert.Contains(this.c4C, extent);
+            Assert.Contains(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddExists(m.I2.I1WhereI1I2one2one);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234WhereS1234one2one);
 
             Assert.Equal(9, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.True(extent.Contains(this.c3B));
-            Assert.True(extent.Contains(this.c3C));
-            Assert.True(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.Contains(this.c3B, extent);
+            Assert.Contains(this.c3C, extent);
+            Assert.Contains(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Class - Wrong RelationType
             extent = this.Transaction.Extent(m.C1.Composite);
@@ -2439,108 +2439,108 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddInstanceOf(m.C1.C1WhereC1C1one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddInstanceOf(m.C2.C1WhereC1C2one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddInstanceOf(m.C4.C3WhereC3C4one2one, m.C3.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.True(extent.Contains(this.c4B));
-            Assert.True(extent.Contains(this.c4C));
-            Assert.True(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.Contains(this.c4B, extent);
+            Assert.Contains(this.c4C, extent);
+            Assert.Contains(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddInstanceOf(m.I12.C1WhereC1I12one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddInstanceOf(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.True(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.Contains(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Interface
 
@@ -2549,108 +2549,108 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddInstanceOf(m.C1.C1WhereC1C1one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddInstanceOf(m.C2.C1WhereC1C2one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddInstanceOf(m.C4.C3WhereC3C4one2one, m.I3.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.True(extent.Contains(this.c4B));
-            Assert.True(extent.Contains(this.c4C));
-            Assert.True(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.Contains(this.c4B, extent);
+            Assert.Contains(this.c4C, extent);
+            Assert.Contains(this.c4D, extent);
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddInstanceOf(m.I12.C1WhereC1I12one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddInstanceOf(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
 
             Assert.Equal(9, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.True(extent.Contains(this.c3B));
-            Assert.True(extent.Contains(this.c3C));
-            Assert.True(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.Contains(this.c3B, extent);
+            Assert.Contains(this.c3C, extent);
+            Assert.Contains(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // TODO: wrong relation
         }
@@ -2692,22 +2692,22 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 0, 1);
 
             Assert.Empty(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Role In + Except
             var firstExtent = this.Transaction.Extent(m.C2.Composite);
@@ -2722,22 +2722,22 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddIn(m.C1.C1C2one2manies, inExtent);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // AssociationType In + Except
             firstExtent = this.Transaction.Extent(m.C1.Composite);
@@ -2752,22 +2752,22 @@ public abstract class ExtentTest : IDisposable
             extent.Filter.AddIn(m.C2.C1WhereC1C2one2many, inExtent);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
         }
     }
 
@@ -2793,22 +2793,22 @@ public abstract class ExtentTest : IDisposable
             var extent = this.Transaction.Except(topExtent, unionExtent);
 
             Assert.Single(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Except + Intersect
             firstExtent = this.Transaction.Extent(m.C1.Composite);
@@ -2823,22 +2823,22 @@ public abstract class ExtentTest : IDisposable
             extent = this.Transaction.Except(topExtent, intersectExtent);
 
             Assert.Equal(2, extent.Count);
-            Assert.True(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.Contains(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Intersect + Intersect + Intersect
             firstExtent = this.Transaction.Intersect(
@@ -2851,22 +2851,22 @@ public abstract class ExtentTest : IDisposable
             extent = this.Transaction.Intersect(firstExtent, secondExtent);
 
             Assert.Equal(4, extent.Count);
-            Assert.True(extent.Contains(this.c1A));
-            Assert.True(extent.Contains(this.c1B));
-            Assert.True(extent.Contains(this.c1C));
-            Assert.True(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.Contains(this.c1A, extent);
+            Assert.Contains(this.c1B, extent);
+            Assert.Contains(this.c1C, extent);
+            Assert.Contains(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
 
             // Except + Intersect + Intersect
             firstExtent = this.Transaction.Intersect(
@@ -2879,22 +2879,22 @@ public abstract class ExtentTest : IDisposable
             extent = this.Transaction.Except(firstExtent, secondExtent);
 
             Assert.Empty(extent);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.False(extent.Contains(this.c2A));
-            Assert.False(extent.Contains(this.c2B));
-            Assert.False(extent.Contains(this.c2C));
-            Assert.False(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.DoesNotContain(this.c2A, extent);
+            Assert.DoesNotContain(this.c2B, extent);
+            Assert.DoesNotContain(this.c2C, extent);
+            Assert.DoesNotContain(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
         }
     }
 
@@ -3437,22 +3437,22 @@ public abstract class ExtentTest : IDisposable
             extent = this.Transaction.Intersect(firstExtent, secondExtent);
 
             Assert.Equal(4, extent.Count);
-            Assert.False(extent.Contains(this.c1A));
-            Assert.False(extent.Contains(this.c1B));
-            Assert.False(extent.Contains(this.c1C));
-            Assert.False(extent.Contains(this.c1D));
-            Assert.True(extent.Contains(this.c2A));
-            Assert.True(extent.Contains(this.c2B));
-            Assert.True(extent.Contains(this.c2C));
-            Assert.True(extent.Contains(this.c2D));
-            Assert.False(extent.Contains(this.c3A));
-            Assert.False(extent.Contains(this.c3B));
-            Assert.False(extent.Contains(this.c3C));
-            Assert.False(extent.Contains(this.c3D));
-            Assert.False(extent.Contains(this.c4A));
-            Assert.False(extent.Contains(this.c4B));
-            Assert.False(extent.Contains(this.c4C));
-            Assert.False(extent.Contains(this.c4D));
+            Assert.DoesNotContain(this.c1A, extent);
+            Assert.DoesNotContain(this.c1B, extent);
+            Assert.DoesNotContain(this.c1C, extent);
+            Assert.DoesNotContain(this.c1D, extent);
+            Assert.Contains(this.c2A, extent);
+            Assert.Contains(this.c2B, extent);
+            Assert.Contains(this.c2C, extent);
+            Assert.Contains(this.c2D, extent);
+            Assert.DoesNotContain(this.c3A, extent);
+            Assert.DoesNotContain(this.c3B, extent);
+            Assert.DoesNotContain(this.c3C, extent);
+            Assert.DoesNotContain(this.c3D, extent);
+            Assert.DoesNotContain(this.c4A, extent);
+            Assert.DoesNotContain(this.c4B, extent);
+            Assert.DoesNotContain(this.c4C, extent);
+            Assert.DoesNotContain(this.c4D, extent);
         }
     }
 
@@ -6500,7 +6500,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.C2.C2AllorsString, "Nothing here!");
 
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -6512,7 +6512,7 @@ public abstract class ExtentTest : IDisposable
             inExtent = this.Transaction.Extent(m.C2.Composite);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6525,7 +6525,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.C2.C2AllorsString, "ᴀbra");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6539,7 +6539,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -6551,7 +6551,7 @@ public abstract class ExtentTest : IDisposable
             inExtent = this.Transaction.Extent(m.I12.Composite);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6564,7 +6564,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C2many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6580,7 +6580,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -6592,7 +6592,7 @@ public abstract class ExtentTest : IDisposable
             inExtent = this.Transaction.Extent(m.C1.Composite);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6605,7 +6605,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6619,7 +6619,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -6631,7 +6631,7 @@ public abstract class ExtentTest : IDisposable
             inExtent = this.Transaction.Extent(m.I12.Composite);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6644,7 +6644,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1C1many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6660,7 +6660,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -6672,7 +6672,7 @@ public abstract class ExtentTest : IDisposable
             inExtent = this.Transaction.Extent(m.C1.Composite);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, inExtent.ToArray());
 
             this.Transaction.Commit();
 
@@ -6687,7 +6687,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, inExtent.ToArray());
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -6701,7 +6701,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -6713,7 +6713,7 @@ public abstract class ExtentTest : IDisposable
             inExtent = this.Transaction.Extent(m.C1.Composite);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, inExtent.ToArray());
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -6726,7 +6726,7 @@ public abstract class ExtentTest : IDisposable
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
+            extent.Filter.AddNot().AddIn(m.C1.C1I12many2manies, inExtent.ToArray());
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -6837,7 +6837,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                // Emtpy Extent
+                // Empty Extent
                 var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
@@ -7053,7 +7053,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, inExtent.ToArray());
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, true, true, true, true);
@@ -7071,7 +7071,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -7088,7 +7088,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C2one2manies, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -7105,7 +7105,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C3.Composite);
-                extent.Filter.AddNot().AddIn(m.C3.C3C4one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C3.C3C4one2manies, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -7127,7 +7127,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, inExtent.ToArray());
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, true, true, true, true);
@@ -7145,7 +7145,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1one2manies, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -7162,7 +7162,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C2one2manies, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -7179,7 +7179,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C3.Composite);
-                extent.Filter.AddNot().AddIn(m.C3.C3C4one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C3.C3C4one2manies, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -7199,7 +7199,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.I12.I12C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.I12.I12C2one2manies, inExtent.ToArray());
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, true, false, true, true);
@@ -7217,7 +7217,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.I12.I12C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.I12.I12C2one2manies, inExtent.ToArray());
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, true, false, true, true);
@@ -7542,7 +7542,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -7559,7 +7559,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C2one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -7576,7 +7576,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C3.Composite);
-                extent.Filter.AddNot().AddIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C3.C3C4one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -7594,7 +7594,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -7611,7 +7611,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C2one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -7628,7 +7628,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C3.Composite);
-                extent.Filter.AddNot().AddIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C3.C3C4one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -7648,7 +7648,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1I12one2one, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, true, false, false);
@@ -7666,7 +7666,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1I12one2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -8147,7 +8147,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -8164,7 +8164,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C2many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C2many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -8181,7 +8181,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C3.Composite);
-                extent.Filter.AddNot().AddIn(m.C3.C3C4many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C3.C3C4many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -8199,7 +8199,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C1many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C1many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -8216,7 +8216,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1C2many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1C2many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -8233,7 +8233,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C3.Composite);
-                extent.Filter.AddNot().AddIn(m.C3.C3C4many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C3.C3C4many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -8253,7 +8253,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1I12many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1I12many2one, inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, true, false, false);
@@ -8271,7 +8271,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Extent(m.C1.Composite);
-                extent.Filter.AddNot().AddIn(m.C1.C1I12many2one, (IEnumerable<IObject>)inExtent.ToArray());
+                extent.Filter.AddNot().AddIn(m.C1.C1I12many2one, inExtent.ToArray());
 
                 Assert.Single(extent);
                 this.AssertC1(extent, true, false, false, false);
@@ -11907,88 +11907,88 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime1, dateTime3);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 3 and 4
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime3, dateTime4);
 
                 Assert.Single(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 4 and 5
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime4, dateTime5);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 6 and 10
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime6, dateTime10);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Interface
                 // Between 1 and 3
@@ -11996,88 +11996,88 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime1, dateTime3);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 3 and 4
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime3, dateTime4);
 
                 Assert.Equal(2, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 4 and 5
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime4, dateTime5);
 
                 Assert.Equal(6, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 6 and 10
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime6, dateTime10);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Super Interface
                 // Between 1 and 3
@@ -12085,88 +12085,88 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime1, dateTime3);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 3 and 4
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime3, dateTime4);
 
                 Assert.Equal(4, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.True(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.Contains(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Between 4 and 5
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime4, dateTime5);
 
                 Assert.Equal(12, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.True(extent.Contains(this.c3B));
-                Assert.True(extent.Contains(this.c3C));
-                Assert.True(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.Contains(this.c3B, extent);
+                Assert.Contains(this.c3C, extent);
+                Assert.Contains(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // Between 6 and 10
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime6, dateTime10);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Class - Wrong RelationType0
                 // Between 1 and 3
@@ -12270,66 +12270,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddLessThan(m.C1.C1AllorsDateTime, dateTime4);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Less Than 5
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLessThan(m.C1.C1AllorsDateTime, dateTime5);
 
                 Assert.Single(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Less Than 6
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLessThan(m.C1.C1AllorsDateTime, dateTime6);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Interface
                 // Less Than 4
@@ -12337,66 +12337,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddLessThan(m.I12.I12AllorsDateTime, dateTime4);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Less Than 5
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddLessThan(m.I12.I12AllorsDateTime, dateTime5);
 
                 Assert.Equal(2, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Less Than 6
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddLessThan(m.I12.I12AllorsDateTime, dateTime6);
 
                 Assert.Equal(6, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Super Interface
                 // Less Than 4
@@ -12404,66 +12404,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddLessThan(m.S1234.S1234AllorsDateTime, dateTime4);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Less Than 5
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddLessThan(m.S1234.S1234AllorsDateTime, dateTime5);
 
                 Assert.Equal(4, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.True(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.Contains(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Less Than 6
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddLessThan(m.S1234.S1234AllorsDateTime, dateTime6);
 
                 Assert.Equal(12, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.True(extent.Contains(this.c3B));
-                Assert.True(extent.Contains(this.c3C));
-                Assert.True(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.Contains(this.c3B, extent);
+                Assert.Contains(this.c3C, extent);
+                Assert.Contains(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // Class - Wrong RelationType
 
@@ -12645,66 +12645,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddGreaterThan(m.C1.C1AllorsDateTime, dateTime3);
 
                 Assert.Equal(3, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Greater Than 4
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddGreaterThan(m.C1.C1AllorsDateTime, dateTime4);
 
                 Assert.Equal(2, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Greater Than 5
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddGreaterThan(m.C1.C1AllorsDateTime, dateTime5);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Interface
                 // Greater Than 3
@@ -12712,66 +12712,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddGreaterThan(m.I12.I12AllorsDateTime, dateTime3);
 
                 Assert.Equal(6, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Greater Than 4
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddGreaterThan(m.I12.I12AllorsDateTime, dateTime4);
 
                 Assert.Equal(4, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Greater Than 5
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddGreaterThan(m.I12.I12AllorsDateTime, dateTime5);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Super Interface
                 // Greater Than 3
@@ -12779,66 +12779,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDateTime, dateTime3);
 
                 Assert.Equal(12, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.True(extent.Contains(this.c3B));
-                Assert.True(extent.Contains(this.c3C));
-                Assert.True(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.Contains(this.c3B, extent);
+                Assert.Contains(this.c3C, extent);
+                Assert.Contains(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // Greater Than 4
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDateTime, dateTime4);
 
                 Assert.Equal(8, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.True(extent.Contains(this.c3C));
-                Assert.True(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.Contains(this.c3C, extent);
+                Assert.Contains(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // Greater Than 5
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDateTime, dateTime5);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Class - Wrong RelationType
 
@@ -13022,66 +13022,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddEquals(m.C1.C1AllorsDateTime, dateTime3);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Equal 4
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1AllorsDateTime, dateTime4);
 
                 Assert.Single(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Equal 5
                 extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1AllorsDateTime, dateTime5);
 
                 Assert.Equal(2, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Interface
                 // Equal 3
@@ -13089,66 +13089,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddEquals(m.I12.I12AllorsDateTime, dateTime3);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Equal 4
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddEquals(m.I12.I12AllorsDateTime, dateTime4);
 
                 Assert.Equal(2, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Equal 5
                 extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddEquals(m.I12.I12AllorsDateTime, dateTime5);
 
                 Assert.Equal(4, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Super Interface
                 // Equal 3
@@ -13156,66 +13156,66 @@ public abstract class ExtentTest : IDisposable
                 extent.Filter.AddEquals(m.S1234.S1234AllorsDateTime, dateTime3);
 
                 Assert.Empty(extent);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Equal 4
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddEquals(m.S1234.S1234AllorsDateTime, dateTime4);
 
                 Assert.Equal(4, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.True(extent.Contains(this.c1B));
-                Assert.False(extent.Contains(this.c1C));
-                Assert.False(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.True(extent.Contains(this.c2B));
-                Assert.False(extent.Contains(this.c2C));
-                Assert.False(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.True(extent.Contains(this.c3B));
-                Assert.False(extent.Contains(this.c3C));
-                Assert.False(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.True(extent.Contains(this.c4B));
-                Assert.False(extent.Contains(this.c4C));
-                Assert.False(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.Contains(this.c1B, extent);
+                Assert.DoesNotContain(this.c1C, extent);
+                Assert.DoesNotContain(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.Contains(this.c2B, extent);
+                Assert.DoesNotContain(this.c2C, extent);
+                Assert.DoesNotContain(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.Contains(this.c3B, extent);
+                Assert.DoesNotContain(this.c3C, extent);
+                Assert.DoesNotContain(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.Contains(this.c4B, extent);
+                Assert.DoesNotContain(this.c4C, extent);
+                Assert.DoesNotContain(this.c4D, extent);
 
                 // Equal 5
                 extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddEquals(m.S1234.S1234AllorsDateTime, dateTime5);
 
                 Assert.Equal(8, extent.Count);
-                Assert.False(extent.Contains(this.c1A));
-                Assert.False(extent.Contains(this.c1B));
-                Assert.True(extent.Contains(this.c1C));
-                Assert.True(extent.Contains(this.c1D));
-                Assert.False(extent.Contains(this.c2A));
-                Assert.False(extent.Contains(this.c2B));
-                Assert.True(extent.Contains(this.c2C));
-                Assert.True(extent.Contains(this.c2D));
-                Assert.False(extent.Contains(this.c3A));
-                Assert.False(extent.Contains(this.c3B));
-                Assert.True(extent.Contains(this.c3C));
-                Assert.True(extent.Contains(this.c3D));
-                Assert.False(extent.Contains(this.c4A));
-                Assert.False(extent.Contains(this.c4B));
-                Assert.True(extent.Contains(this.c4C));
-                Assert.True(extent.Contains(this.c4D));
+                Assert.DoesNotContain(this.c1A, extent);
+                Assert.DoesNotContain(this.c1B, extent);
+                Assert.Contains(this.c1C, extent);
+                Assert.Contains(this.c1D, extent);
+                Assert.DoesNotContain(this.c2A, extent);
+                Assert.DoesNotContain(this.c2B, extent);
+                Assert.Contains(this.c2C, extent);
+                Assert.Contains(this.c2D, extent);
+                Assert.DoesNotContain(this.c3A, extent);
+                Assert.DoesNotContain(this.c3B, extent);
+                Assert.Contains(this.c3C, extent);
+                Assert.Contains(this.c3D, extent);
+                Assert.DoesNotContain(this.c4A, extent);
+                Assert.DoesNotContain(this.c4B, extent);
+                Assert.Contains(this.c4C, extent);
+                Assert.Contains(this.c4D, extent);
 
                 // Class - Wrong RelationType
                 // Equal 3
@@ -15500,7 +15500,7 @@ public abstract class ExtentTest : IDisposable
             var inArray = this.Transaction.Extent(m.C1.Composite).ToArray();
 
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C1.C1C1one2one, inArray);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15511,7 +15511,7 @@ public abstract class ExtentTest : IDisposable
             inArray = this.Transaction.Extent(m.C2.Composite).ToArray();
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C1.C1C2one2one, inArray);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15522,7 +15522,7 @@ public abstract class ExtentTest : IDisposable
             inArray = this.Transaction.Extent(m.C4.Composite).ToArray();
 
             extent = this.Transaction.Extent(m.C3.Composite);
-            extent.Filter.AddIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C3.C3C4one2one, inArray);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, false, false, false);
@@ -15534,7 +15534,7 @@ public abstract class ExtentTest : IDisposable
             inArray = this.Transaction.Extent(m.I12.Composite).ToArray();
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C1.C1C1one2one, inArray);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15545,7 +15545,7 @@ public abstract class ExtentTest : IDisposable
             inArray = this.Transaction.Extent(m.I12.Composite).ToArray();
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C1.C1C2one2one, inArray);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15556,7 +15556,7 @@ public abstract class ExtentTest : IDisposable
             inArray = this.Transaction.Extent(m.I34.Composite).ToArray();
 
             extent = this.Transaction.Extent(m.C3.Composite);
-            extent.Filter.AddIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C3.C3C4one2one, inArray);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, false, false, false);
@@ -15570,7 +15570,7 @@ public abstract class ExtentTest : IDisposable
             inArray = this.Transaction.Extent(m.C2.Composite).ToArray();
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inArray);
+            extent.Filter.AddIn(m.C1.C1I12one2one, inArray);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -16842,7 +16842,7 @@ public abstract class ExtentTest : IDisposable
             var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddIn(m.C1.C1C2many2manies, sharedExtent);
             var intersectExtent = this.Transaction.Intersect(firstExtent, secondExtent);
-            var array = intersectExtent.ToArray();
+            _ = intersectExtent.ToArray();
         }
     }
 
@@ -16874,7 +16874,7 @@ public abstract class ExtentTest : IDisposable
             extent = this.Transaction.Extent<C1>();
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
-            sortedObjects = (C1[])extent.ToArray<C1>();
+            sortedObjects = extent.ToArray<C1>();
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(this.c1C, sortedObjects[0]);
             Assert.Equal(this.c1D, sortedObjects[1]);
@@ -16884,7 +16884,7 @@ public abstract class ExtentTest : IDisposable
             extent = this.Transaction.Extent<C1>();
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
 
-            sortedObjects = (C1[])extent.ToArray<C1>();
+            sortedObjects = extent.ToArray<C1>();
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(this.c1A, sortedObjects[0]);
             Assert.Equal(this.c1B, sortedObjects[1]);
@@ -16934,7 +16934,7 @@ public abstract class ExtentTest : IDisposable
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger);
 
-            var sortedObjects = (C1[])extent.ToArray<C1>();
+            var sortedObjects = extent.ToArray<C1>();
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(this.c1D, sortedObjects[0]);
             Assert.Equal(this.c1B, sortedObjects[1]);
@@ -16945,7 +16945,7 @@ public abstract class ExtentTest : IDisposable
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Ascending);
 
-            sortedObjects = (C1[])extent.ToArray<C1>();
+            sortedObjects = extent.ToArray<C1>();
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(this.c1D, sortedObjects[0]);
             Assert.Equal(this.c1B, sortedObjects[1]);
@@ -16956,7 +16956,7 @@ public abstract class ExtentTest : IDisposable
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Descending);
 
-            sortedObjects = (C1[])extent.ToArray<C1>();
+            sortedObjects = extent.ToArray<C1>();
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(this.c1B, sortedObjects[0]);
             Assert.Equal(this.c1D, sortedObjects[1]);
@@ -16967,7 +16967,7 @@ public abstract class ExtentTest : IDisposable
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Descending);
 
-            sortedObjects = (C1[])extent.ToArray<C1>();
+            sortedObjects = extent.ToArray<C1>();
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(this.c1A, sortedObjects[0]);
             Assert.Equal(this.c1C, sortedObjects[1]);
@@ -16996,7 +16996,7 @@ public abstract class ExtentTest : IDisposable
             var extent = this.Transaction.Extent<C1>();
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
-            var sortedObjects = (C1[])extent.ToArray<C1>();
+            var sortedObjects = extent.ToArray<C1>();
 
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(c1B, sortedObjects[0]);
@@ -17015,7 +17015,7 @@ public abstract class ExtentTest : IDisposable
                 extent = transaction2.Extent<C1>();
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
-                sortedObjects = (C1[])extent.ToArray<C1>();
+                sortedObjects = extent.ToArray<C1>();
 
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(c1B, sortedObjects[0]);
@@ -17114,7 +17114,7 @@ public abstract class ExtentTest : IDisposable
                 var inExtent = this.Transaction.Extent(m.C1.Composite);
 
                 var extent = this.Transaction.Extent(m.C2.Composite);
-                extent.Filter.AddIn(((RoleType)m.C1.I12AllorsBoolean).AssociationType, inExtent);
+                extent.Filter.AddIn(m.C1.I12AllorsBoolean.AssociationType, inExtent);
                 extent.ToArray();
             }
             catch (ArgumentException)

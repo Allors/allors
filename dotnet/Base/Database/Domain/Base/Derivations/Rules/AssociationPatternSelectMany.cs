@@ -36,7 +36,7 @@ namespace Allors.Database.Domain.Derivations.Rules
             }
 
             var lambda = this.SelectMany.Compile();
-            foreach (var result in lambda((T)@object))
+            foreach (var result in lambda(@object))
             {
                 if (result != null)
                 {

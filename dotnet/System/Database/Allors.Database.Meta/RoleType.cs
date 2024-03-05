@@ -75,7 +75,7 @@ public sealed class RoleType : RelationEndType, IComparable
     {
         get => this.AssignedPluralName ?? (this.AssignedSingularName != null
             ? Pluralizer.Pluralize(this.AssignedSingularName)
-            : ((RelationEndType)this).ObjectType.PluralName);
+            : this.ObjectType.PluralName);
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ public sealed class RoleType : RelationEndType, IComparable
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
         {
-            var compositeRoleType = (CompositeRoleType)new CompositeRoleType(v, this);
+            var compositeRoleType = new CompositeRoleType(v, this);
             compositeRoleTypesByComposite[v].Add(compositeRoleType);
             return compositeRoleType;
         });

@@ -34,7 +34,7 @@ namespace Allors.Database.Domain.Derivations.Rules
             }
 
             var lambda = this.Select.Compile();
-            TResult result = lambda((T)@object);
+            TResult result = lambda(@object);
             if (result != null)
             {
                 yield return result;

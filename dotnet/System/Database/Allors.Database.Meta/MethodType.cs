@@ -87,7 +87,7 @@ public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObje
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
         {
-            var compositeMethodType = (CompositeMethodType)new CompositeMethodType(v, this);
+            var compositeMethodType = new CompositeMethodType(v, this);
             compositeMethodTypesByComposite[v].Add(compositeMethodType);
             return compositeMethodType;
         });

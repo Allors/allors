@@ -13,7 +13,7 @@ namespace Allors.Shared.Ranges
 
     public readonly struct ValueRange<T> : IEquatable<ValueRange<T>>, IEnumerable<T> where T : struct, IComparable<T>
     {
-        public static readonly ValueRange<T> Empty = new ValueRange<T>((T[]?)null);
+        public static readonly ValueRange<T> Empty = new ValueRange<T>(null);
 
         private readonly T[]? items;
 

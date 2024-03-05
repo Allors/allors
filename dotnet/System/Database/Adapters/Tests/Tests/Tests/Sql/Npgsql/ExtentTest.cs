@@ -46,7 +46,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                 var extent = this.Transaction.Extent<C1>();
                 extent.AddSort(m.C1.C1AllorsString);
 
-                var sortedObjects = (C1[])extent.ToArray<C1>();
+                var sortedObjects = extent.ToArray<C1>();
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(this.c1A, sortedObjects[0]);
                 Assert.Equal(this.c1C, sortedObjects[1]);
@@ -58,7 +58,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                 extent = this.Transaction.Extent<C1>();
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
-                sortedObjects = (C1[])extent.ToArray<C1>();
+                sortedObjects = extent.ToArray<C1>();
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(this.c1A, sortedObjects[0]);
                 Assert.Equal(this.c1C, sortedObjects[1]);
@@ -70,7 +70,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                 extent = this.Transaction.Extent<C1>();
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
-                sortedObjects = (C1[])extent.ToArray<C1>();
+                sortedObjects = extent.ToArray<C1>();
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(this.c1A, sortedObjects[0]);
                 Assert.Equal(this.c1C, sortedObjects[1]);
@@ -82,7 +82,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                 extent = this.Transaction.Extent<C1>();
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
 
-                sortedObjects = (C1[])extent.ToArray<C1>();
+                sortedObjects = extent.ToArray<C1>();
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(this.c1B, sortedObjects[0]);
                 Assert.Equal(this.c1D, sortedObjects[1]);
@@ -94,7 +94,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                 extent = this.Transaction.Extent<C1>();
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
 
-                sortedObjects = (C1[])extent.ToArray<C1>();
+                sortedObjects = extent.ToArray<C1>();
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(this.c1B, sortedObjects[0]);
                 Assert.Equal(this.c1D, sortedObjects[1]);

@@ -107,12 +107,12 @@ namespace Allors.Database.Data.Tests
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);
 
-            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals((RelationEndType)m.User.UniqueId));
+            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals(m.User.UniqueId));
 
             Assert.NotNull(uniqueIdChild);
             Assert.Empty(uniqueIdChild.Nodes);
 
-            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals((RelationEndType)m.User.SecurityTokens));
+            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals(m.User.SecurityTokens));
 
             Assert.NotNull(securityTokens);
             Assert.Empty(securityTokens.Nodes);
