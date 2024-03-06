@@ -11,9 +11,9 @@ using Allors.Database.Meta;
 
 internal abstract class CompositePredicate : Predicate, ICompositePredicate
 {
-    private readonly ExtentFiltered extent;
+    private readonly IInternalExtent extent;
 
-    internal CompositePredicate(ExtentFiltered extent)
+    internal CompositePredicate(IInternalExtent extent)
     {
         this.extent = extent;
         this.Filters = new List<Predicate>(4);

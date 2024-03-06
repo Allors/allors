@@ -15,7 +15,6 @@ using Allors.Database.Meta;
 
 public abstract class Extent : IExtent<IObject>
 {
-    private IObject[] defaultObjectArray;
     private Extent parent;
 
     protected Extent(Transaction transaction) => this.Transaction = transaction;
@@ -96,7 +95,7 @@ public abstract class Extent : IExtent<IObject>
         return this.Strategies;
     }
 
-    internal void Invalidate()
+    public void Invalidate()
     {
         this.Strategies = null;
         this.parent?.Invalidate();

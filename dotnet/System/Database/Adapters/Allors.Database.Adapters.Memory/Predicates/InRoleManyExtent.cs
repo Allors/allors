@@ -10,10 +10,10 @@ using Allors.Database.Meta;
 
 internal sealed class InRoleManyExtent : In
 {
-    private readonly Allors.Database.IExtent<IObject> containingExtent;
+    private readonly IExtent<IObject> containingExtent;
     private readonly RoleType roleType;
 
-    internal InRoleManyExtent(ExtentFiltered extent, RoleType roleType, Allors.Database.IExtent<IObject> containingExtent)
+    internal InRoleManyExtent(IInternalExtent extent, RoleType roleType, IExtent<IObject> containingExtent)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleIn(roleType, containingExtent);

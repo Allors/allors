@@ -12,7 +12,7 @@ internal sealed class InstanceOfRole : InstanceOf
     private readonly Composite objectType;
     private readonly RoleType roleType;
 
-    internal InstanceOfRole(ExtentFiltered extent, RoleType roleType, Composite objectType)
+    internal InstanceOfRole(IInternalExtent extent, RoleType roleType, Composite objectType)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleInstanceOf(roleType, objectType);

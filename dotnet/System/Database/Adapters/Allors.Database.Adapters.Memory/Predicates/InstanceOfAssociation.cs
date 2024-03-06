@@ -12,7 +12,7 @@ internal sealed class InstanceOfAssociation : InstanceOf
     private readonly AssociationType associationType;
     private readonly ObjectType objectType;
 
-    internal InstanceOfAssociation(ExtentFiltered extent, AssociationType associationType, ObjectType instanceObjectType)
+    internal InstanceOfAssociation(IInternalExtent extent, AssociationType associationType, ObjectType instanceObjectType)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.ValidateAssociationInstanceof(associationType, instanceObjectType);

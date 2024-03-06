@@ -11,15 +11,13 @@ using Allors.Database.Meta;
 internal sealed class EqualsRoleUnit : Equals
 {
     private readonly object equals;
-    private readonly ExtentFiltered extent;
     private readonly RoleType roleType;
 
-    internal EqualsRoleUnit(ExtentFiltered extent, RoleType roleType, object equals)
+    internal EqualsRoleUnit(IInternalExtent extent, RoleType roleType, object equals)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleEquals(roleType, equals);
 
-        this.extent = extent;
         this.roleType = roleType;
         if (equals is Enum)
         {

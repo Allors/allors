@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class ExtentFiltered : Extent
+internal sealed class ExtentFiltered : Extent, IInternalExtent
 {
     private And filter;
 
@@ -28,7 +28,7 @@ internal sealed class ExtentFiltered : Extent
 
     public override Composite ObjectType { get; }
 
-    internal void CheckForAssociationType(AssociationType association)
+    public void CheckForAssociationType(AssociationType association)
     {
         if (!this.Transaction.Database.MetaCache.GetAssociationTypesByComposite(this.ObjectType).Contains(association))
         {
@@ -36,7 +36,7 @@ internal sealed class ExtentFiltered : Extent
         }
     }
 
-    internal void CheckForRoleType(RoleType roleType)
+    public void CheckForRoleType(RoleType roleType)
     {
         if (!this.Transaction.Database.MetaCache.GetRoleTypesByComposite(this.ObjectType).Contains(roleType))
         {

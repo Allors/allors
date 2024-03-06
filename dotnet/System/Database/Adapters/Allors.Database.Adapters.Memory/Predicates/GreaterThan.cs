@@ -14,15 +14,13 @@ using Allors.Database.Meta;
 internal sealed class GreaterThan : Predicate, IPredicate
 {
     private readonly object compare;
-    private readonly ExtentFiltered extent;
     private readonly RoleType roleType;
 
-    internal GreaterThan(ExtentFiltered extent, RoleType roleType, object compare)
+    internal GreaterThan(IInternalExtent extent, RoleType roleType, object compare)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleGreaterThan(roleType, compare);
 
-        this.extent = extent;
         this.roleType = roleType;
         this.compare = compare;
     }

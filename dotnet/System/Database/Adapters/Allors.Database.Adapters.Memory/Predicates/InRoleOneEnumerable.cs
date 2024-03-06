@@ -13,7 +13,7 @@ internal sealed class InRoleOneEnumerable : In
     private readonly IEnumerable<IObject> containingEnumerable;
     private readonly RoleType roleType;
 
-    internal InRoleOneEnumerable(ExtentFiltered extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
+    internal InRoleOneEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleIn(roleType, containingEnumerable);

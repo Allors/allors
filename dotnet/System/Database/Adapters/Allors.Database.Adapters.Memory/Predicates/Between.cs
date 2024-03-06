@@ -10,12 +10,12 @@ using Allors.Database.Meta;
 
 internal sealed class Between : Predicate, IPredicate
 {
-    private readonly ExtentFiltered extent;
+    private readonly IInternalExtent extent;
     private readonly object first;
     private readonly RoleType roleType;
     private readonly object second;
 
-    internal Between(ExtentFiltered extent, RoleType roleType, object first, object second)
+    internal Between(IInternalExtent extent, RoleType roleType, object first, object second)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleBetween(roleType, first, second);

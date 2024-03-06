@@ -1,4 +1,4 @@
-// <copyright file="RoleLike.cs" company="Allors bv">
+﻿// <copyright file="RoleLike.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ internal sealed class Like : Predicate, IPredicate
     private readonly Regex regex;
     private readonly RoleType roleType;
 
-    internal Like(ExtentFiltered extent, RoleType roleType, string like)
+    internal Like(IInternalExtent extent, RoleType roleType, string like)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleLikeFilter(roleType, like);

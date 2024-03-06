@@ -13,7 +13,7 @@ internal sealed class InAssociationEnumerable : In
     private readonly AssociationType associationType;
     private readonly IEnumerable<IObject> containingEnumerable;
 
-    internal InAssociationEnumerable(ExtentFiltered extent, AssociationType associationType,
+    internal InAssociationEnumerable(IInternalExtent extent, AssociationType associationType,
         IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForAssociationType(associationType);

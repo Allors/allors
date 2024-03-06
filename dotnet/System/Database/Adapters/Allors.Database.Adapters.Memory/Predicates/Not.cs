@@ -11,10 +11,10 @@ using Allors.Database.Meta;
 
 internal sealed class Not : Predicate, ICompositePredicate
 {
-    private readonly ExtentFiltered extent;
+    private readonly IInternalExtent extent;
     private Predicate predicate;
 
-    internal Not(ExtentFiltered extent) => this.extent = extent;
+    internal Not(IInternalExtent extent) => this.extent = extent;
 
     internal override bool Include => this.predicate?.Include == true;
 

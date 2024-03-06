@@ -12,7 +12,7 @@ internal sealed class EqualsRoleComposite : Equals
     private readonly object equals;
     private readonly RoleType roleType;
 
-    internal EqualsRoleComposite(ExtentFiltered extent, RoleType roleType, object equals)
+    internal EqualsRoleComposite(IInternalExtent extent, RoleType roleType, object equals)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleEquals(roleType, equals);

@@ -1,4 +1,4 @@
-// <copyright file="And.cs" company="Allors bv">
+﻿// <copyright file="And.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Memory;
 
 internal sealed class And : CompositePredicate
 {
-    public And(ExtentFiltered extent) : base(extent)
+    public And(IInternalExtent extent) : base(extent)
     {
     }
 

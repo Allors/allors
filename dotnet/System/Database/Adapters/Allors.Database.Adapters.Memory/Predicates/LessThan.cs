@@ -14,12 +14,11 @@ internal sealed class LessThan : Predicate, IPredicate
     private readonly ExtentFiltered extent;
     private readonly RoleType roleType;
 
-    internal LessThan(ExtentFiltered extent, RoleType roleType, object compare)
+    internal LessThan(IInternalExtent extent, RoleType roleType, object compare)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleLessThan(roleType, compare);
 
-        this.extent = extent;
         this.roleType = roleType;
         this.compare = compare;
     }
