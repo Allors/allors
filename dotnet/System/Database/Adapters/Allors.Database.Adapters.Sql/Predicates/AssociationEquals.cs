@@ -12,7 +12,7 @@ internal sealed class AssociationEquals : Equals
     private readonly IObject allorsObject;
     private readonly AssociationType association;
 
-    internal AssociationEquals(ExtentFiltered extent, AssociationType association, IObject allorsObject)
+    internal AssociationEquals(IInternalExtentFiltered extent, AssociationType association, IObject allorsObject)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationEquals(association, allorsObject);

@@ -15,7 +15,7 @@ internal sealed class RoleContains : Contains
     private readonly IObject allorsObject;
     private readonly RoleType role;
 
-    internal RoleContains(ExtentFiltered extent, RoleType role, IObject allorsObject)
+    internal RoleContains(IInternalExtentFiltered extent, RoleType role, IObject allorsObject)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleContains(role, allorsObject);

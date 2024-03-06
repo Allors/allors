@@ -12,7 +12,7 @@ internal sealed class AssociationContains : Contains
     private readonly IObject allorsObject;
     private readonly AssociationType association;
 
-    internal AssociationContains(ExtentFiltered extent, AssociationType association, IObject allorsObject)
+    internal AssociationContains(IInternalExtentFiltered extent, AssociationType association, IObject allorsObject)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationContains(association, allorsObject);

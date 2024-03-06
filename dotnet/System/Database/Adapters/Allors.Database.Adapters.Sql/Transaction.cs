@@ -449,14 +449,14 @@ public sealed class Transaction : ITransaction
     }
 
     public Allors.Database.IExtent<IObject> Union(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
-        new ExtentOperation(((SqlExtent)firstOperand).InExtent, ((SqlExtent)secondOperand).InExtent, ExtentOperations.Union);
+        new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent, ExtentOperations.Union);
 
     public Allors.Database.IExtent<IObject> Intersect(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
-        new ExtentOperation(((SqlExtent)firstOperand).InExtent, ((SqlExtent)secondOperand).InExtent,
+        new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent,
             ExtentOperations.Intersect);
 
     public Allors.Database.IExtent<IObject> Except(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
-        new ExtentOperation(((SqlExtent)firstOperand).InExtent, ((SqlExtent)secondOperand).InExtent, ExtentOperations.Except);
+        new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent, ExtentOperations.Except);
 
     public void Commit()
     {

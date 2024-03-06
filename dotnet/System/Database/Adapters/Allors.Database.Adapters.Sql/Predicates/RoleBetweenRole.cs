@@ -13,7 +13,7 @@ internal sealed class RoleBetweenRole : Between
     private readonly RoleType role;
     private readonly RoleType second;
 
-    internal RoleBetweenRole(ExtentFiltered extent, RoleType role, RoleType first, RoleType second)
+    internal RoleBetweenRole(IInternalExtentFiltered extent, RoleType role, RoleType first, RoleType second)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleBetween(role, first, second);

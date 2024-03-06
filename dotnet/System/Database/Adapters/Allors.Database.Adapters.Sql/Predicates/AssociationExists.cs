@@ -11,7 +11,7 @@ internal sealed class AssociationExists : Exists
 {
     private readonly AssociationType association;
 
-    internal AssociationExists(ExtentFiltered extent, AssociationType association)
+    internal AssociationExists(IInternalExtentFiltered extent, AssociationType association)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.ValidateAssociationExists(association);

@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql;
 
 internal sealed class And : CompositePredicate
 {
-    internal And(ExtentFiltered extent) : base(extent)
+    internal And(IInternalExtentFiltered extent) : base(extent)
     {
     }
 

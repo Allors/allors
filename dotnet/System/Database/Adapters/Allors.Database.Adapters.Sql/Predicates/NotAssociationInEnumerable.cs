@@ -14,7 +14,7 @@ internal sealed class NotAssociationInEnumerable : In
     private readonly AssociationType association;
     private readonly IEnumerable<IObject> enumerable;
 
-    internal NotAssociationInEnumerable(ExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
+    internal NotAssociationInEnumerable(IInternalExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, this.enumerable);

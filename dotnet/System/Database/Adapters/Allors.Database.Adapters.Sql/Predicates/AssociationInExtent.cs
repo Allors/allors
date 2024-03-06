@@ -10,14 +10,14 @@ using Allors.Database.Meta;
 internal sealed class AssociationInExtent : In
 {
     private readonly AssociationType association;
-    private readonly SqlExtent inExtent;
+    private readonly Extent inExtent;
 
-    internal AssociationInExtent(ExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
+    internal AssociationInExtent(IInternalExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, inExtent);
         this.association = association;
-        this.inExtent = ((SqlExtent)inExtent).InExtent;
+        this.inExtent = ((Extent)inExtent).InExtent;
     }
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)

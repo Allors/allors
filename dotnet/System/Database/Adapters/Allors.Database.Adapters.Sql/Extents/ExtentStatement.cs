@@ -15,7 +15,7 @@ internal abstract class ExtentStatement
     private readonly List<RoleType> referenceRoleInstances;
     private readonly List<RoleType> referenceRoles;
 
-    protected ExtentStatement(SqlExtent extent)
+    protected ExtentStatement(Extent extent)
     {
         this.Extent = extent;
 
@@ -32,7 +32,7 @@ internal abstract class ExtentStatement
 
     protected Transaction Transaction => this.Extent.Transaction;
 
-    internal SqlExtent Extent { get; }
+    internal Extent Extent { get; }
 
     internal abstract bool IsRoot { get; }
 
@@ -176,9 +176,9 @@ internal abstract class ExtentStatement
 
     internal abstract string CreateAlias();
 
-    internal abstract ExtentStatement CreateChild(SqlExtent extent, AssociationType association);
+    internal abstract ExtentStatement CreateChild(Extent extent, AssociationType association);
 
-    internal abstract ExtentStatement CreateChild(SqlExtent extent, RoleType role);
+    internal abstract ExtentStatement CreateChild(Extent extent, RoleType role);
 
     internal string GetJoinName(AssociationType association) => association.SingularFullName + "_AC";
 

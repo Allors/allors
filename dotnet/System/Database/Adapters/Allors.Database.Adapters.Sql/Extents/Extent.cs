@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal abstract class SqlExtent : IExtent<IObject>
+internal abstract class Extent : IExtent<IObject>
 {
     private IList<long> objectIds;
     
@@ -32,7 +32,7 @@ internal abstract class SqlExtent : IExtent<IObject>
 
     public int Count => this.ObjectIds.Count;
 
-    internal SqlExtent InExtent => this;
+    internal Extent InExtent => this;
 
     internal ExtentOperation ParentOperationExtent { get; set; }
 
@@ -68,7 +68,7 @@ internal abstract class SqlExtent : IExtent<IObject>
 
     internal abstract string BuildSql(ExtentStatement statement);
 
-    internal void FlushCache()
+    public void FlushCache()
     {
         this.objectIds = null;
         this.ParentOperationExtent?.FlushCache();

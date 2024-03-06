@@ -9,13 +9,13 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal class ExtentOperation : SqlExtent
+internal class ExtentOperation : Extent
 {
-    private readonly SqlExtent first;
+    private readonly Extent first;
     private readonly ExtentOperations operationType;
-    private readonly SqlExtent second;
+    private readonly Extent second;
 
-    internal ExtentOperation(SqlExtent first, SqlExtent second, ExtentOperations operationType)
+    internal ExtentOperation(Extent first, Extent second, ExtentOperations operationType)
     {
         if (!first.ObjectType.Equals(second.ObjectType))
         {

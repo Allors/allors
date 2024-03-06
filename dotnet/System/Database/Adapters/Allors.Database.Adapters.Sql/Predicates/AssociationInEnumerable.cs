@@ -14,7 +14,7 @@ internal sealed class AssociationInEnumerable : In
     private readonly AssociationType association;
     private readonly IEnumerable<IObject> enumerable;
 
-    internal AssociationInEnumerable(ExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
+    internal AssociationInEnumerable(IInternalExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, this.enumerable);

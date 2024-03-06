@@ -17,7 +17,7 @@ internal class ExtentStatementRoot : ExtentStatement
     private ICommand command;
     private int parameterIndex;
 
-    internal ExtentStatementRoot(SqlExtent extent) : base(extent)
+    internal ExtentStatementRoot(Extent extent) : base(extent)
     {
         this.parameterIndex = 0;
         this.aliasIndex = 0;
@@ -45,10 +45,10 @@ internal class ExtentStatementRoot : ExtentStatement
 
     internal override string CreateAlias() => "alias" + this.aliasIndex++;
 
-    internal override ExtentStatement CreateChild(SqlExtent extent, AssociationType association) =>
+    internal override ExtentStatement CreateChild(Extent extent, AssociationType association) =>
         new ExtentStatementChild(this, extent, association);
 
-    internal override ExtentStatement CreateChild(SqlExtent extent, RoleType role) => new ExtentStatementChild(this, extent, role);
+    internal override ExtentStatement CreateChild(Extent extent, RoleType role) => new ExtentStatementChild(this, extent, role);
 
     internal ICommand CreateDbCommand(string alias)
     {

@@ -11,7 +11,7 @@ internal sealed class RoleExists : Exists
 {
     private readonly RoleType role;
 
-    internal RoleExists(ExtentFiltered extent, RoleType role)
+    internal RoleExists(IInternalExtentFiltered extent, RoleType role)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleExists(role);

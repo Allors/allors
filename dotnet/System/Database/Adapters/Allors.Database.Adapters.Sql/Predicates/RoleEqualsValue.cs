@@ -13,7 +13,7 @@ internal sealed class RoleEqualsValue : Equals
     private readonly object obj;
     private readonly RoleType roleType;
 
-    internal RoleEqualsValue(ExtentFiltered extent, RoleType roleType, object obj)
+    internal RoleEqualsValue(IInternalExtentFiltered extent, RoleType roleType, object obj)
     {
         extent.CheckRole(roleType);
         PredicateAssertions.ValidateRoleEquals(roleType, obj);

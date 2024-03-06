@@ -12,7 +12,7 @@ internal sealed class RoleGreaterThanRole : GreaterThan
     private readonly RoleType greaterThanRole;
     private readonly RoleType role;
 
-    internal RoleGreaterThanRole(ExtentFiltered extent, RoleType role, RoleType greaterThanRole)
+    internal RoleGreaterThanRole(IInternalExtentFiltered extent, RoleType role, RoleType greaterThanRole)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleGreaterThan(role, greaterThanRole);

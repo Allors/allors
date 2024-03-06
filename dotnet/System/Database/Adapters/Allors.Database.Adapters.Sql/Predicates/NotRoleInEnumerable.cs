@@ -14,7 +14,7 @@ internal sealed class NotRoleInEnumerable : In
     private readonly IEnumerable<IObject> enumerable;
     private readonly RoleType role;
 
-    internal NotRoleInEnumerable(ExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
+    internal NotRoleInEnumerable(IInternalExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, enumerable);

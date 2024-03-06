@@ -12,7 +12,7 @@ internal sealed class Like : Predicate, IPredicate
     private readonly string like;
     private readonly RoleType role;
 
-    internal Like(ExtentFiltered extent, RoleType role, string like)
+    internal Like(IInternalExtentFiltered extent, RoleType role, string like)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleLikeFilter(role, like);

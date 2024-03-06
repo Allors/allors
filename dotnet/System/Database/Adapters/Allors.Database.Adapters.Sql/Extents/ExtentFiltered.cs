@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal class ExtentFiltered : SqlExtent
+internal class ExtentFiltered : Extent, IInternalExtentFiltered
 {
     private readonly Composite objectType;
     private readonly Transaction transaction;
@@ -52,11 +52,11 @@ internal class ExtentFiltered : SqlExtent
 
     internal override Transaction Transaction => this.transaction;
 
-    internal AssociationType AssociationType { get; private set; }
+    public AssociationType AssociationType { get; private set; }
 
-    internal RoleType RoleType { get; private set; }
+    public RoleType RoleType { get; private set; }
 
-    internal Strategy Strategy { get; private set; }
+    public Strategy Strategy { get; private set; }
 
     internal override string BuildSql(ExtentStatement statement)
     {
@@ -76,7 +76,7 @@ internal class ExtentFiltered : SqlExtent
         return null;
     }
 
-    internal void CheckAssociation(AssociationType associationType)
+    public void CheckAssociation(AssociationType associationType)
     {
         if (!this.objectType.AssociationTypes.Contains(associationType))
         {
@@ -84,7 +84,7 @@ internal class ExtentFiltered : SqlExtent
         }
     }
 
-    internal void CheckRole(RoleType roleType)
+    public void CheckRole(RoleType roleType)
     {
         if (!this.objectType.RoleTypes.Contains(roleType))
         {

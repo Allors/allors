@@ -12,7 +12,7 @@ using Allors.Database.Meta;
 
 internal abstract class CompositePredicate : Predicate, ICompositePredicate
 {
-    protected CompositePredicate(ExtentFiltered extent)
+    protected CompositePredicate(IInternalExtentFiltered extent)
     {
         this.Extent = extent;
         this.Filters = new List<Predicate>(4);
@@ -63,7 +63,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         }
     }
 
-    protected ExtentFiltered Extent { get; }
+    protected IInternalExtentFiltered Extent { get; }
 
     protected List<Predicate> Filters { get; }
 

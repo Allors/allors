@@ -12,7 +12,7 @@ internal sealed class RoleLessThanRole : LessThan
     private readonly RoleType lessThanRole;
     private readonly RoleType role;
 
-    internal RoleLessThanRole(ExtentFiltered extent, RoleType role, RoleType lessThanRole)
+    internal RoleLessThanRole(IInternalExtentFiltered extent, RoleType role, RoleType lessThanRole)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleLessThan(role, lessThanRole);

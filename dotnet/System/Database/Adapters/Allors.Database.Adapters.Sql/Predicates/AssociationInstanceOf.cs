@@ -12,7 +12,7 @@ internal sealed class AssociationInstanceOf : InstanceOf
     private readonly AssociationType association;
     private readonly ObjectType[] instanceClasses;
 
-    internal AssociationInstanceOf(ExtentFiltered extent, AssociationType association, ObjectType instanceType,
+    internal AssociationInstanceOf(IInternalExtentFiltered extent, AssociationType association, ObjectType instanceType,
         ObjectType[] instanceClasses)
     {
         extent.CheckAssociation(association);

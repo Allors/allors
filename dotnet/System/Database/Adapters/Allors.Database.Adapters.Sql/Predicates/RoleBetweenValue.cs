@@ -9,11 +9,11 @@ using Allors.Database.Meta;
 
 internal sealed class RoleBetweenValue : Between
 {
-    private readonly object first;
     private readonly RoleType roleType;
+    private readonly object first;
     private readonly object second;
 
-    internal RoleBetweenValue(ExtentFiltered extent, RoleType roleType, object first, object second)
+    internal RoleBetweenValue(IInternalExtentFiltered extent, RoleType roleType, object first, object second)
     {
         extent.CheckRole(roleType);
         PredicateAssertions.ValidateRoleBetween(roleType, first, second);

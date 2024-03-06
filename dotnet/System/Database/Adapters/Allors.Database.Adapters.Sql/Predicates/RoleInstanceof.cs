@@ -12,7 +12,7 @@ internal sealed class RoleInstanceof : InstanceOf
     private readonly ObjectType[] instanceClasses;
     private readonly RoleType role;
 
-    internal RoleInstanceof(ExtentFiltered extent, RoleType role, ObjectType instanceType, ObjectType[] instanceClasses)
+    internal RoleInstanceof(IInternalExtentFiltered extent, RoleType role, ObjectType instanceType, ObjectType[] instanceClasses)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleInstanceOf(role, instanceType);
