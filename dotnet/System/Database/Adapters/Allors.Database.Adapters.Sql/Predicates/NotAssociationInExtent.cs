@@ -10,14 +10,14 @@ using Allors.Database.Meta;
 internal sealed class NotAssociationInExtent : In
 {
     private readonly AssociationType association;
-    private readonly Extent inExtent;
+    private readonly IInternalExtent inExtent;
 
     internal NotAssociationInExtent(IInternalExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, inExtent);
         this.association = association;
-        this.inExtent = ((Extent)inExtent).InExtent;
+        this.inExtent = ((IInternalExtent)inExtent).InExtent;
     }
 
     internal override bool IsNotFilter => true;

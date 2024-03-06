@@ -1,4 +1,4 @@
-// <copyright file="ExtentStatementRoot.cs" company="Allors bv">
+﻿// <copyright file="ExtentStatementRoot.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -45,10 +45,10 @@ internal class ExtentStatementRoot : ExtentStatement
 
     internal override string CreateAlias() => "alias" + this.aliasIndex++;
 
-    internal override ExtentStatement CreateChild(Extent extent, AssociationType association) =>
+    internal override ExtentStatement CreateChild(IInternalExtent extent, AssociationType association) =>
         new ExtentStatementChild(this, extent, association);
 
-    internal override ExtentStatement CreateChild(Extent extent, RoleType role) => new ExtentStatementChild(this, extent, role);
+    internal override ExtentStatement CreateChild(IInternalExtent extent, RoleType role) => new ExtentStatementChild(this, extent, role);
 
     internal ICommand CreateDbCommand(string alias)
     {

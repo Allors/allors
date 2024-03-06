@@ -8,14 +8,14 @@ namespace Allors.Database.Adapters.Sql;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal abstract class ExtentStatement
+public abstract class ExtentStatement
 {
     private readonly List<AssociationType> referenceAssociationInstances;
     private readonly List<AssociationType> referenceAssociations;
     private readonly List<RoleType> referenceRoleInstances;
     private readonly List<RoleType> referenceRoles;
 
-    protected ExtentStatement(Extent extent)
+    protected ExtentStatement(IInternalExtent extent)
     {
         this.Extent = extent;
 
@@ -32,7 +32,7 @@ internal abstract class ExtentStatement
 
     protected Transaction Transaction => this.Extent.Transaction;
 
-    internal Extent Extent { get; }
+    internal IInternalExtent Extent { get; }
 
     internal abstract bool IsRoot { get; }
 
@@ -176,9 +176,9 @@ internal abstract class ExtentStatement
 
     internal abstract string CreateAlias();
 
-    internal abstract ExtentStatement CreateChild(Extent extent, AssociationType association);
+    internal abstract ExtentStatement CreateChild(IInternalExtent extent, AssociationType association);
 
-    internal abstract ExtentStatement CreateChild(Extent extent, RoleType role);
+    internal abstract ExtentStatement CreateChild(IInternalExtent extent, RoleType role);
 
     internal string GetJoinName(AssociationType association) => association.SingularFullName + "_AC";
 

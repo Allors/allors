@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 internal sealed class RoleInExtent : In
 {
-    private readonly Extent inExtent;
+    private readonly IInternalExtent inExtent;
     private readonly RoleType role;
 
     internal RoleInExtent(IInternalExtentFiltered extent, RoleType role, Allors.Database.IExtent<IObject> inExtent)
@@ -17,7 +17,7 @@ internal sealed class RoleInExtent : In
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, inExtent);
         this.role = role;
-        this.inExtent = ((Extent)inExtent).InExtent;
+        this.inExtent = ((IInternalExtent)inExtent).InExtent;
     }
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)

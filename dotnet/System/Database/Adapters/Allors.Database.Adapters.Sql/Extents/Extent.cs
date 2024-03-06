@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal abstract class Extent : IExtent<IObject>
+public abstract class Extent : IInternalExtent, IExtent<IObject>
 {
     private IList<long> objectIds;
     
@@ -32,13 +32,13 @@ internal abstract class Extent : IExtent<IObject>
 
     public int Count => this.ObjectIds.Count;
 
-    internal Extent InExtent => this;
+    public IInternalExtent InExtent => this;
 
-    internal ExtentOperation ParentOperationExtent { get; set; }
+    public IInternalExtent ParentOperationExtent { get; set; }
 
-    internal abstract Transaction Transaction { get; }
+    public abstract Transaction Transaction { get; }
 
-    internal ExtentSort Sorter { get; private set; }
+    public ExtentSort Sorter { get; private set; }
 
     private IList<long> ObjectIds => this.objectIds ??= this.GetObjectIds();
     
@@ -66,7 +66,7 @@ internal abstract class Extent : IExtent<IObject>
         return new ExtentEnumerator(references);
     }
 
-    internal abstract string BuildSql(ExtentStatement statement);
+    public abstract string BuildSql(ExtentStatement statement);
 
     public void FlushCache()
     {

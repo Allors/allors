@@ -50,7 +50,7 @@ internal class ExtentFiltered : Extent, IInternalExtentFiltered
 
     public override Composite ObjectType => this.objectType;
 
-    internal override Transaction Transaction => this.transaction;
+    public override Transaction Transaction => this.transaction;
 
     public AssociationType AssociationType { get; private set; }
 
@@ -58,7 +58,7 @@ internal class ExtentFiltered : Extent, IInternalExtentFiltered
 
     public Strategy Strategy { get; private set; }
 
-    internal override string BuildSql(ExtentStatement statement)
+    public override string BuildSql(ExtentStatement statement)
     {
         this.LazyLoadFilter();
         this.filter.Setup(statement);

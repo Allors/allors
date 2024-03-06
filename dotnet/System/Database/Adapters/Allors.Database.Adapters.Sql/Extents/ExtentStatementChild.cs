@@ -11,14 +11,14 @@ internal class ExtentStatementChild : ExtentStatement
 {
     private readonly ExtentStatementRoot root;
 
-    internal ExtentStatementChild(ExtentStatementRoot root, Extent extent, RoleType roleType)
+    internal ExtentStatementChild(ExtentStatementRoot root, IInternalExtent extent, RoleType roleType)
         : base(extent)
     {
         this.root = root;
         this.RoleType = roleType;
     }
 
-    internal ExtentStatementChild(ExtentStatementRoot root, Extent extent, AssociationType associationType)
+    internal ExtentStatementChild(ExtentStatementRoot root, IInternalExtent extent, AssociationType associationType)
         : base(extent)
     {
         this.root = root;
@@ -39,8 +39,8 @@ internal class ExtentStatementChild : ExtentStatement
 
     internal override string CreateAlias() => this.root.CreateAlias();
 
-    internal override ExtentStatement CreateChild(Extent extent, AssociationType association) =>
+    internal override ExtentStatement CreateChild(IInternalExtent extent, AssociationType association) =>
         new ExtentStatementChild(this.root, extent, association);
 
-    internal override ExtentStatement CreateChild(Extent extent, RoleType role) => new ExtentStatementChild(this.root, extent, role);
+    internal override ExtentStatement CreateChild(IInternalExtent extent, RoleType role) => new ExtentStatementChild(this.root, extent, role);
 }

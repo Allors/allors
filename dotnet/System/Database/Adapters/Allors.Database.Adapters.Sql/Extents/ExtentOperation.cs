@@ -9,13 +9,13 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal class ExtentOperation : Extent
+public class ExtentOperation : Extent
 {
-    private readonly Extent first;
+    private readonly IInternalExtent first;
     private readonly ExtentOperations operationType;
-    private readonly Extent second;
+    private readonly IInternalExtent second;
 
-    internal ExtentOperation(Extent first, Extent second, ExtentOperations operationType)
+    internal ExtentOperation(IInternalExtent first, IInternalExtent second, ExtentOperations operationType)
     {
         if (!first.ObjectType.Equals(second.ObjectType))
         {
@@ -32,11 +32,11 @@ internal class ExtentOperation : Extent
 
     public override ICompositePredicate Filter => null;
 
-    internal override Transaction Transaction => this.first.Transaction;
+    public override Transaction Transaction => this.first.Transaction;
 
     public override Composite ObjectType => this.first.ObjectType;
 
-    internal override string BuildSql(ExtentStatement statement)
+    public override string BuildSql(ExtentStatement statement)
     {
         statement.Append("(");
         this.first.BuildSql(statement);
