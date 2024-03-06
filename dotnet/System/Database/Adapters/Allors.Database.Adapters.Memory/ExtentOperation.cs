@@ -9,16 +9,16 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class ExtentOperation : Extent
+internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
 {
-    private readonly Extent firstOperand;
+    private readonly IExtentOperand firstOperand;
+    private readonly IExtentOperand secondOperand;
     private readonly ExtentOperationType operationType;
-    private readonly Extent secondOperand;
 
-    public ExtentOperation(Transaction transaction, Extent firstOperand, Extent secondOperand, ExtentOperationType operationType)
+    public ExtentOperation(Transaction transaction, IExtentOperand firstOperand, IExtentOperand secondOperand, ExtentOperationType operationType)
         : base(transaction)
     {
-        if (!firstOperand.ObjectType.Equals(secondOperand.ObjectType))
+        if (!firstOperand.ObjectType.IsAssignableFrom(secondOperand.ObjectType))
         {
             throw new ArgumentException("Both extents in a Union, Intersect or Except must be from the same type");
         }

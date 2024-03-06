@@ -13,17 +13,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public abstract class Extent : IExtent<IObject>
+public abstract class Extent<T> : IExtentOperand, IInternalExtent, IExtent<T> where T : class, IObject
 {
-    private Extent parent;
+    private IInternalExtent parent;
 
     protected Extent(Transaction transaction) => this.Transaction = transaction;
 
-    IEnumerator<IObject> IEnumerable<IObject>.GetEnumerator()
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
         foreach (var @object in this)
         {
-            yield return (IObject)@object;
+            yield return (T)@object;
         }
     }
 
@@ -40,7 +40,7 @@ public abstract class Extent : IExtent<IObject>
         }
     }
 
-    public Extent Parent
+    public IInternalExtent Parent
     {
         get => this.parent;
 
@@ -61,9 +61,9 @@ public abstract class Extent : IExtent<IObject>
 
     protected List<Strategy> Strategies { get; set; }
 
-    public Allors.Database.IExtent<IObject> AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+    public IExtent<IObject> AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
 
-    public Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
+    public IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
     {
         if (this.Sorter == null)
         {
@@ -80,7 +80,7 @@ public abstract class Extent : IExtent<IObject>
 
     public IExtent<TResult> Cast<TResult>() where TResult : class, IObject
     {
-        return new GenericExtent<TResult>(this);
+        return (IExtent<TResult>)this;
     }
 
     public IEnumerator GetEnumerator()
@@ -89,10 +89,26 @@ public abstract class Extent : IExtent<IObject>
         return new ExtentEnumerator(this.Strategies.GetEnumerator());
     }
 
-    internal List<Strategy> GetEvaluatedStrategies()
+    public IEnumerable<Strategy> GetEvaluatedStrategies()
     {
         this.Evaluate();
         return this.Strategies;
+    }
+
+    public void CheckForAssociationType(AssociationType association)
+    {
+        if (!this.Transaction.Database.MetaCache.GetAssociationTypesByComposite(this.ObjectType).Contains(association))
+        {
+            throw new ArgumentException("Extent does not have association " + association);
+        }
+    }
+
+    public void CheckForRoleType(RoleType roleType)
+    {
+        if (!this.Transaction.Database.MetaCache.GetRoleTypesByComposite(this.ObjectType).Contains(roleType))
+        {
+            throw new ArgumentException("Extent does not have role " + roleType.SingularName);
+        }
     }
 
     public void Invalidate()

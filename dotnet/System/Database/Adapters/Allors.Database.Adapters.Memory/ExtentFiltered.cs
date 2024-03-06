@@ -9,11 +9,11 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class ExtentFiltered : Extent, IInternalExtent
+internal sealed class ExtentFiltered<T> : Extent<T> where T : class, IObject
 {
     private And filter;
 
-    internal ExtentFiltered(Transaction transaction, Composite objectType)
+    public ExtentFiltered(Transaction transaction, Composite objectType)
         : base(transaction) =>
         this.ObjectType = objectType;
 
@@ -27,23 +27,7 @@ internal sealed class ExtentFiltered : Extent, IInternalExtent
     }
 
     public override Composite ObjectType { get; }
-
-    public void CheckForAssociationType(AssociationType association)
-    {
-        if (!this.Transaction.Database.MetaCache.GetAssociationTypesByComposite(this.ObjectType).Contains(association))
-        {
-            throw new ArgumentException("Extent does not have association " + association);
-        }
-    }
-
-    public void CheckForRoleType(RoleType roleType)
-    {
-        if (!this.Transaction.Database.MetaCache.GetRoleTypesByComposite(this.ObjectType).Contains(roleType))
-        {
-            throw new ArgumentException("Extent does not have role " + roleType.SingularName);
-        }
-    }
-
+    
     protected override void Evaluate()
     {
         if (this.Strategies == null)

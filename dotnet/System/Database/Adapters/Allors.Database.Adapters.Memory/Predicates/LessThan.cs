@@ -11,7 +11,7 @@ using Allors.Database.Meta;
 internal sealed class LessThan : Predicate, IPredicate
 {
     private readonly object compare;
-    private readonly ExtentFiltered extent;
+    private readonly ExtentFiltered<IObject> extent;
     private readonly RoleType roleType;
 
     internal LessThan(IInternalExtent extent, RoleType roleType, object compare)

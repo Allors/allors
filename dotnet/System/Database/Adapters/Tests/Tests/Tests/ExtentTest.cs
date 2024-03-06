@@ -17083,6 +17083,38 @@ public abstract class ExtentTest : IDisposable
 
             Assert.True(exceptionThrown);
 
+            // Non assignable interface
+            firstExtent = this.Transaction.Extent(m.C1.Composite);
+            secondExtent = this.Transaction.Extent(m.I12.Composite);
+
+            exceptionThrown = false;
+            try
+            {
+                this.Transaction.Union(firstExtent, secondExtent);
+            }
+            catch (ArgumentException)
+            {
+                exceptionThrown = true;
+            }
+
+            Assert.True(exceptionThrown);
+
+            // Assignable interface
+            firstExtent = this.Transaction.Extent(m.I12.Composite);
+            secondExtent = this.Transaction.Extent(m.C1.Composite);
+
+            exceptionThrown = false;
+            try
+            {
+                this.Transaction.Union(firstExtent, secondExtent);
+            }
+            catch (ArgumentException)
+            {
+                exceptionThrown = true;
+            }
+
+            Assert.False(exceptionThrown);
+
             // Name clashes
             var parents = this.Transaction.Extent(m.Company.Composite);
 
