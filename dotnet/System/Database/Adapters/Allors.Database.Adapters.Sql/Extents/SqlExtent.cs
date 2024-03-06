@@ -5,18 +5,34 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal abstract class SqlExtent : Extent
+internal abstract class SqlExtent : IExtent<IObject>
 {
     private IList<long> objectIds;
+    
+    IEnumerator<IObject> IEnumerable<IObject>.GetEnumerator()
+    {
+        foreach (var @object in this)
+        {
+            yield return (IObject)@object;
+        }
+    }
 
-    public override int Count => this.ObjectIds.Count;
+    public abstract ICompositePredicate Filter { get; }
 
-    internal override SqlExtent InExtent => this;
+    public abstract Composite ObjectType { get; }
+
+    public IExtent<TResult> Cast<TResult>() where TResult : class, IObject
+    {
+        return new GenericExtent<TResult>(this);
+    }
+
+    public int Count => this.ObjectIds.Count;
+
+    internal SqlExtent InExtent => this;
 
     internal ExtentOperation ParentOperationExtent { get; set; }
 
@@ -26,9 +42,9 @@ internal abstract class SqlExtent : Extent
 
     private IList<long> ObjectIds => this.objectIds ??= this.GetObjectIds();
     
-    public override Allors.Database.IExtent<IObject> AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+    public Allors.Database.IExtent<IObject> AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
 
-    public override Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
+    public Allors.Database.IExtent<IObject> AddSort(RoleType roleType, SortDirection direction)
     {
         this.LazyLoadFilter();
         this.FlushCache();
@@ -44,7 +60,7 @@ internal abstract class SqlExtent : Extent
         return this;
     }
 
-    public override IEnumerator GetEnumerator()
+    public IEnumerator GetEnumerator()
     {
         var references = this.Transaction.GetOrCreateReferencesForExistingObjects(this.ObjectIds);
         return new ExtentEnumerator(references);

@@ -17,7 +17,7 @@ internal sealed class NotAssociationInExtent : In
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, inExtent);
         this.association = association;
-        this.inExtent = ((Extent)inExtent).InExtent;
+        this.inExtent = ((SqlExtent)inExtent).InExtent;
     }
 
     internal override bool IsNotFilter => true;

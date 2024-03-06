@@ -17,7 +17,7 @@ internal sealed class AssociationInExtent : In
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, inExtent);
         this.association = association;
-        this.inExtent = ((Extent)inExtent).InExtent;
+        this.inExtent = ((SqlExtent)inExtent).InExtent;
     }
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)

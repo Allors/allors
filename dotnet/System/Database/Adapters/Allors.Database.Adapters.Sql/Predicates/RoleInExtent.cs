@@ -17,7 +17,7 @@ internal sealed class RoleInExtent : In
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, inExtent);
         this.role = role;
-        this.inExtent = ((Extent)inExtent).InExtent;
+        this.inExtent = ((SqlExtent)inExtent).InExtent;
     }
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)
