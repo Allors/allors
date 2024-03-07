@@ -17,7 +17,7 @@ internal class ExtentStatementRoot : ExtentStatement
     private ICommand command;
     private int parameterIndex;
 
-    internal ExtentStatementRoot(Extent extent) : base(extent)
+    internal ExtentStatementRoot(IInternalExtent extent) : base(extent)
     {
         this.parameterIndex = 0;
         this.aliasIndex = 0;

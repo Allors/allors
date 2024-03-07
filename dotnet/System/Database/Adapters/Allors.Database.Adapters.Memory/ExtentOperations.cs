@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Adapters.Memory;
 
-public enum ExtentOperationType
+public enum ExtentOperations
 {
     /// <summary>
     ///     The union operation.

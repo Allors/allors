@@ -9,15 +9,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public abstract class Extent : IInternalExtent, IExtent<IObject>
+public abstract class Extent<T> : IInternalExtent, IExtent<T> where T: class, IObject
 {
     private IList<long> objectIds;
     
-    IEnumerator<IObject> IEnumerable<IObject>.GetEnumerator()
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
         foreach (var @object in this)
         {
-            yield return (IObject)@object;
+            yield return (T)@object;
         }
     }
 

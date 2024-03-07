@@ -437,26 +437,35 @@ public sealed class Transaction : ITransaction
 
     public IExtent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
     {
-        var extent = this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), filter);
-        return new GenericExtent<T>(extent);
+        if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
+        {
+            throw new Exception("type should be a CompositeType");
+        }
+
+        var extent = (IExtent<T>)this.Extent(compositeType, filter);
+        return extent;
     }
 
-    public Allors.Database.IExtent<IObject> Extent(Composite type, Action<ICompositePredicate> filter = null)
+    public Allors.Database.IExtent<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null)
     {
-        var extent = new ExtentFiltered(this, type);
+        Type type = typeof(ExtentFiltered<>);
+        Type[] typeArgs = [objectType.BoundType];
+        Type constructed = type.MakeGenericType(typeArgs);
+        var instance = Activator.CreateInstance(constructed, this, objectType);
+
+        var extent = (IExtent<IObject>)instance;
         filter?.Invoke(extent.Filter);
         return extent;
     }
 
-    public Allors.Database.IExtent<IObject> Union(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
-        new ExtentOperation(((IInternalExtent)firstOperand).InExtent, ((IInternalExtent)secondOperand).InExtent, ExtentOperations.Union);
+    public IExtent<IObject> Union(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand) =>
+        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperations.Union);
 
-    public Allors.Database.IExtent<IObject> Intersect(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
-        new ExtentOperation(((IInternalExtent)firstOperand).InExtent, ((IInternalExtent)secondOperand).InExtent,
-            ExtentOperations.Intersect);
+    public IExtent<IObject> Intersect(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand) =>
+        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperations.Intersect);
 
-    public Allors.Database.IExtent<IObject> Except(Allors.Database.IExtent<IObject> firstOperand, Allors.Database.IExtent<IObject> secondOperand) =>
-        new ExtentOperation(((IInternalExtent)firstOperand).InExtent, ((IInternalExtent)secondOperand).InExtent, ExtentOperations.Except);
+    public IExtent<IObject> Except(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand) =>
+        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperations.Except);
 
     public void Commit()
     {
@@ -631,4 +640,27 @@ public sealed class Transaction : ITransaction
     {
         var forceEvaluation = this.Commands.InstantiateReferences(objectIds).ToArray();
     }
+
+    private IExtent<IObject> CreateExtentOperation(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand, ExtentOperations extentOperations)
+    {
+        try
+        {
+            Type type = typeof(ExtentOperation<>);
+            Type[] typeArgs = [firstOperand.ObjectType.BoundType];
+            Type constructed = type.MakeGenericType(typeArgs);
+            var instance = Activator.CreateInstance(constructed, this, firstOperand, secondOperand, extentOperations);
+            var extent = (IExtent<IObject>)instance;
+            return extent;
+        }
+        catch (Exception e)
+        {
+            if (e.InnerException != null)
+            {
+                throw e.InnerException;
+            }
+
+            throw;
+        }
+    }
+
 }

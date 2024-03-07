@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public class ExtentOperation : Extent
+public class ExtentOperation<T> : Extent<T> where T : class, IObject
 {
     private readonly IInternalExtent first;
     private readonly ExtentOperations operationType;

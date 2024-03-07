@@ -13,9 +13,9 @@ internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
 {
     private readonly IExtentOperand firstOperand;
     private readonly IExtentOperand secondOperand;
-    private readonly ExtentOperationType operationType;
+    private readonly ExtentOperations operations;
 
-    public ExtentOperation(Transaction transaction, IExtentOperand firstOperand, IExtentOperand secondOperand, ExtentOperationType operationType)
+    public ExtentOperation(Transaction transaction, IExtentOperand firstOperand, IExtentOperand secondOperand, ExtentOperations operations)
         : base(transaction)
     {
         if (!firstOperand.ObjectType.IsAssignableFrom(secondOperand.ObjectType))
@@ -23,7 +23,7 @@ internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
             throw new ArgumentException("Both extents in a Union, Intersect or Except must be from the same type");
         }
 
-        this.operationType = operationType;
+        this.operations = operations;
 
         this.firstOperand = firstOperand;
         this.secondOperand = secondOperand;
@@ -43,9 +43,9 @@ internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
             var firstOperandStrategies = new List<Strategy>(this.firstOperand.GetEvaluatedStrategies());
             var secondOperandStrategies = new List<Strategy>(this.secondOperand.GetEvaluatedStrategies());
 
-            switch (this.operationType)
+            switch (this.operations)
             {
-            case ExtentOperationType.Union:
+            case ExtentOperations.Union:
                 this.Strategies = firstOperandStrategies;
                 foreach (var strategy in secondOperandStrategies)
                 {
@@ -57,7 +57,7 @@ internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
 
                 break;
 
-            case ExtentOperationType.Intersect:
+            case ExtentOperations.Intersect:
                 this.Strategies = new List<Strategy>();
                 foreach (var strategy in firstOperandStrategies)
                 {
@@ -69,7 +69,7 @@ internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
 
                 break;
 
-            case ExtentOperationType.Except:
+            case ExtentOperations.Except:
                 this.Strategies = firstOperandStrategies;
                 foreach (var strategy in secondOperandStrategies)
                 {

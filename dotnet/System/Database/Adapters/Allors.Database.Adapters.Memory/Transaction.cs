@@ -403,13 +403,13 @@ public class Transaction : ITransaction
     }
 
     public IExtent<IObject> Union(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand) =>
-        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperationType.Union);
+        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperations.Union);
 
     public IExtent<IObject> Intersect(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand) =>
-        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperationType.Intersect);
+        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperations.Intersect);
 
     public IExtent<IObject> Except(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand) =>
-        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperationType.Except);
+        this.CreateExtentOperation(firstOperand, secondOperand, ExtentOperations.Except);
 
     private IObject CreateWithoutOnBuild(Class objectType)
     {
@@ -575,15 +575,14 @@ public class Transaction : ITransaction
         this.strategiesByObjectType = new Dictionary<ObjectType, HashSet<Strategy>>();
     }
 
-    private IExtent<IObject> CreateExtentOperation(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand, ExtentOperationType extentOperationType)
+    private IExtent<IObject> CreateExtentOperation(IExtent<IObject> firstOperand, IExtent<IObject> secondOperand, ExtentOperations extentOperations)
     {
         try
         {
             Type type = typeof(ExtentOperation<>);
             Type[] typeArgs = [firstOperand.ObjectType.BoundType];
             Type constructed = type.MakeGenericType(typeArgs);
-            var instance =
-                Activator.CreateInstance(constructed, this, firstOperand, secondOperand, extentOperationType);
+            var instance = Activator.CreateInstance(constructed, this, firstOperand, secondOperand, extentOperations);
             var extent = (IExtent<IObject>)instance;
             return extent;
         }
