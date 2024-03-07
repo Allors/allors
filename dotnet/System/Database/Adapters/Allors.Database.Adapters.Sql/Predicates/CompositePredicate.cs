@@ -16,35 +16,6 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     {
         this.Extent = extent;
         this.Filters = new List<Predicate>(4);
-
-        if (extent.Strategy != null)
-        {
-            var allorsObject = extent.Strategy.GetObject();
-            if (extent.AssociationType != null)
-            {
-                var role = extent.AssociationType.RoleType;
-                if (role.IsMany)
-                {
-                    this.AddContains(role, allorsObject);
-                }
-                else
-                {
-                    this.AddEquals(role, allorsObject);
-                }
-            }
-            else
-            {
-                var association = extent.RoleType.AssociationType;
-                if (association.IsMany)
-                {
-                    this.AddContains(association, allorsObject);
-                }
-                else
-                {
-                    this.AddEquals(association, allorsObject);
-                }
-            }
-        }
     }
 
     internal override bool Include

@@ -15,9 +15,9 @@ public class ExtentOperation<T> : Extent<T> where T : class, IObject
     private readonly ExtentOperations operationType;
     private readonly IInternalExtent second;
 
-    internal ExtentOperation(IInternalExtent first, IInternalExtent second, ExtentOperations operationType)
+    public ExtentOperation(IInternalExtent first, IInternalExtent second, ExtentOperations operationType)
     {
-        if (!first.ObjectType.Equals(second.ObjectType))
+        if (!first.ObjectType.IsAssignableFrom(second.ObjectType))
         {
             throw new ArgumentException("Both extents in a Union, Intersect or Except must be from the same type");
         }

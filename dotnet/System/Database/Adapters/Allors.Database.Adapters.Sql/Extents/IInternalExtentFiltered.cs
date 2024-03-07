@@ -15,8 +15,6 @@ public interface IInternalExtentFiltered
 
     void CheckAssociation(AssociationType association);
 
-    Strategy Strategy { get; }
-
     AssociationType AssociationType { get; }
 
     RoleType RoleType { get; }

@@ -648,7 +648,7 @@ public sealed class Transaction : ITransaction
             Type type = typeof(ExtentOperation<>);
             Type[] typeArgs = [firstOperand.ObjectType.BoundType];
             Type constructed = type.MakeGenericType(typeArgs);
-            var instance = Activator.CreateInstance(constructed, this, firstOperand, secondOperand, extentOperations);
+            var instance = Activator.CreateInstance(constructed, firstOperand, secondOperand, extentOperations);
             var extent = (IExtent<IObject>)instance;
             return extent;
         }

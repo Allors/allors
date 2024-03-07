@@ -17,21 +17,7 @@ internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered where T : 
 
     private And filter;
 
-    internal ExtentFiltered(Transaction transaction, Strategy strategy, RoleType roleType)
-        : this(transaction, (Composite)roleType.ObjectType)
-    {
-        this.Strategy = strategy;
-        this.RoleType = roleType;
-    }
-
-    internal ExtentFiltered(Transaction transaction, Strategy strategy, AssociationType associationType)
-        : this(transaction, associationType.Composite)
-    {
-        this.Strategy = strategy;
-        this.AssociationType = associationType;
-    }
-
-    internal ExtentFiltered(Transaction transaction, Composite objectType)
+    public ExtentFiltered(Transaction transaction, Composite objectType)
     {
         this.transaction = transaction;
         this.objectType = objectType;
@@ -55,8 +41,6 @@ internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered where T : 
     public AssociationType AssociationType { get; private set; }
 
     public RoleType RoleType { get; private set; }
-
-    public Strategy Strategy { get; private set; }
 
     public override string BuildSql(ExtentStatement statement)
     {
@@ -94,16 +78,6 @@ internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered where T : 
 
     protected override IList<long> GetObjectIds()
     {
-        if (this.Strategy != null)
-        {
-            if (this.AssociationType != null)
-            {
-                return this.Strategy.ExtentGetCompositeAssociations(this.AssociationType);
-            }
-
-            return this.Strategy.GetCompositesRole(this.RoleType).ToList();
-        }
-
         this.transaction.State.Flush();
 
         var statement = new ExtentStatementRoot(this);
@@ -136,7 +110,6 @@ internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered where T : 
         if (this.filter == null)
         {
             this.filter = new And(this);
-            this.Strategy = null;
             this.AssociationType = null;
             this.RoleType = null;
             this.FlushCache();
