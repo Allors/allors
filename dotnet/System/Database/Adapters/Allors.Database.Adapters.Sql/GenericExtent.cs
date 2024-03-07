@@ -19,7 +19,7 @@ public class GenericExtent<T>(IExtent<IObject> extent) : IExtent<T>
 
     public int Count => extent.Count;
 
-    public ICompositePredicate Filter => extent.Filter;
+    public ICompositePredicate Predicate => extent.Predicate;
 
     public Composite ObjectType => extent.ObjectType;
 

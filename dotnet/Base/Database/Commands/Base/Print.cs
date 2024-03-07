@@ -31,7 +31,7 @@ namespace Commands
 
             var m = this.Parent.M;
             var printDocuments = transaction.Extent<PrintDocument>();
-            printDocuments.Filter.AddNot().AddExists(m.PrintDocument.Media);
+            printDocuments.Predicate.AddNot().AddExists(m.PrintDocument.Media);
 
             foreach (PrintDocument printDocument in printDocuments)
             {

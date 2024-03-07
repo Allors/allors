@@ -30,7 +30,7 @@ public class ExtentOperation<T> : Extent<T> where T : class, IObject
         second.ParentOperationExtent = this;
     }
 
-    public override ICompositePredicate Filter => null;
+    public override ICompositePredicate Predicate => null;
 
     public override Transaction Transaction => this.first.Transaction;
 

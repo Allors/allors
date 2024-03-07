@@ -29,7 +29,7 @@ public abstract class Extent<T> : IExtentOperand, IInternalExtent, IExtent<T> wh
 
     public abstract Composite ObjectType { get; }
 
-    public abstract ICompositePredicate Filter { get; }
+    public abstract ICompositePredicate Predicate { get; }
 
     public int Count
     {

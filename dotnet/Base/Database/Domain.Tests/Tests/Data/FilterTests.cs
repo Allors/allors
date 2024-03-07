@@ -73,7 +73,7 @@ namespace Allors.Database.Domain.Tests
             var queryExtent = filter.Build(this.Transaction);
 
             var extent = this.Transaction.Extent(this.M.Person.Composite);
-            extent.Filter.AddAnd(v =>
+            extent.Predicate.AddAnd(v =>
             {
                 v.AddEquals(this.M.Person.FirstName, "John");
                 v.AddEquals(this.M.Person.LastName, "Doe");

@@ -454,7 +454,7 @@ public sealed class Transaction : ITransaction
         var instance = Activator.CreateInstance(constructed, this, objectType);
 
         var extent = (IExtent<IObject>)instance;
-        filter?.Invoke(extent.Filter);
+        filter?.Invoke(extent.Predicate);
         return extent;
     }
 

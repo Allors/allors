@@ -118,7 +118,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                         extent = transaction.Extent(objectType);
                     }
 
-                    extent.Filter.AddEquals(roleType, role);
+                    extent.Predicate.AddEquals(roleType, role);
                 }
 
                 if (extent != null && extent.Count != 1)

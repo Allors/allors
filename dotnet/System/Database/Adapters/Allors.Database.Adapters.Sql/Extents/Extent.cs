@@ -21,7 +21,7 @@ public abstract class Extent<T> : IInternalExtent, IExtent<T> where T: class, IO
         }
     }
 
-    public abstract ICompositePredicate Filter { get; }
+    public abstract ICompositePredicate Predicate { get; }
 
     public abstract Composite ObjectType { get; }
 

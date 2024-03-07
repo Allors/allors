@@ -17,7 +17,7 @@ internal sealed class ExtentFiltered<T> : Extent<T> where T : class, IObject
         : base(transaction) =>
         this.ObjectType = objectType;
 
-    public override ICompositePredicate Filter
+    public override ICompositePredicate Predicate
     {
         get
         {

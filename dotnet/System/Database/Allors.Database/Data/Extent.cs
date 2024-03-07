@@ -25,7 +25,7 @@ public class Extent : IExtent, IPredicateContainer
 
         if (this.Predicate != null && !this.Predicate.ShouldTreeShake(arguments))
         {
-            this.Predicate?.Build(transaction, arguments, extent.Filter);
+            this.Predicate?.Build(transaction, arguments, extent.Predicate);
         }
 
         if (this.Sorting != null)

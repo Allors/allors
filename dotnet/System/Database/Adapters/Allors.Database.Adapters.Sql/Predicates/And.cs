@@ -15,7 +15,7 @@ internal sealed class And : CompositePredicate
     {
         if (this.Include)
         {
-            var root = this.Extent.Filter == null || this.Extent.Filter.Equals(this);
+            var root = this.Extent.Predicate == null || this.Extent.Predicate.Equals(this);
             if (root)
             {
                 var wherePresent = this.Extent.ObjectType.ExclusiveClass == null;

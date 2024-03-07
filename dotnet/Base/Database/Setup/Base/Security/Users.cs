@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
         public void SavePasswords(XmlWriter writer)
         {
             var usersWithPassword = this.Transaction.Extent<User>();
-            usersWithPassword.Filter.AddExists(this.Meta.UserPasswordHash);
+            usersWithPassword.Predicate.AddExists(this.Meta.UserPasswordHash);
 
             var records = new List<Credentials.Record>();
             foreach (User user in usersWithPassword)

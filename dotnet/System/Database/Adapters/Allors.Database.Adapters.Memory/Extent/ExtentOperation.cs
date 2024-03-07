@@ -32,7 +32,7 @@ internal sealed class ExtentOperation<T> : Extent<T> where T : class, IObject
         secondOperand.Parent = this;
     }
 
-    public override ICompositePredicate Filter => null;
+    public override ICompositePredicate Predicate => null;
 
     public override Composite ObjectType => this.firstOperand.ObjectType;
 

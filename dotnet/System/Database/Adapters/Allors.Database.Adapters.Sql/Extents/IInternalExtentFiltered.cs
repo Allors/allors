@@ -19,7 +19,7 @@ public interface IInternalExtentFiltered
 
     RoleType RoleType { get; }
 
-    ICompositePredicate Filter { get; }
+    ICompositePredicate Predicate { get; }
 
     Composite ObjectType { get; }
 }

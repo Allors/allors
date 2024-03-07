@@ -23,7 +23,7 @@ internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered where T : 
         this.objectType = objectType;
     }
 
-    public override ICompositePredicate Filter
+    public override ICompositePredicate Predicate
     {
         get
         {

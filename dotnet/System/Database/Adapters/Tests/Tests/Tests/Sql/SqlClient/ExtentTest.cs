@@ -108,10 +108,10 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                         marker();
 
                         var firstExtent = this.Transaction.Extent(m.C1.Composite);
-                        firstExtent.Filter.AddLike(m.C1.C1AllorsString, "1");
+                        firstExtent.Predicate.AddLike(m.C1.C1AllorsString, "1");
                         var secondExtent = this.Transaction.Extent(m.C1.Composite);
                         extent = this.Transaction.Union(firstExtent, secondExtent);
-                        secondExtent.Filter.AddLike(m.C1.C1AllorsString, "3");
+                        secondExtent.Predicate.AddLike(m.C1.C1AllorsString, "3");
                         extent.AddSort(m.C1.C1AllorsString);
 
                         sortedObjects = extent.Cast<C1>().ToArray();

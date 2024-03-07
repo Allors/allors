@@ -25,7 +25,7 @@ public interface IExtent<out T> : IReadOnlyCollection<T> where T : class, IObjec
     ///     The filter is a top level AND filter. If you require an OR or a NOT filter
     ///     then simply add it to this AND filter.
     /// </value>
-    ICompositePredicate Filter { get; }
+    ICompositePredicate Predicate { get; }
 
     /// <summary>
     ///     Gets the object type of this extent.
