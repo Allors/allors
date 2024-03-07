@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
 
     public static partial class ExtentExtensions
     {
-        public static T FindBy<T>(this IExtent<T> @this, RoleType roleType, object value) where T: class, IObject
+        public static T FindBy<T>(this IFilter<T> @this, RoleType roleType, object value) where T: class, IObject
         {
             if (value == null)
             {

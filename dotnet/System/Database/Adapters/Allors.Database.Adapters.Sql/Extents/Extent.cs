@@ -27,7 +27,7 @@ public abstract class Extent<T> : IInternalExtent, IExtent<T> where T: class, IO
 
     public IExtent<TResult> Cast<TResult>() where TResult : class, IObject
     {
-        return new GenericExtent<TResult>(this);
+        return (IExtent<TResult>)this;
     }
 
     public int Count => this.ObjectIds.Count;

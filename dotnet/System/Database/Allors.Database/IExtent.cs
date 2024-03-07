@@ -19,15 +19,6 @@ using Allors.Database.Meta;
 public interface IExtent<out T> : IReadOnlyCollection<T> where T : class, IObject
 {
     /// <summary>
-    ///     Gets the filter.
-    /// </summary>
-    /// <value>
-    ///     The filter is a top level AND filter. If you require an OR or a NOT filter
-    ///     then simply add it to this AND filter.
-    /// </value>
-    ICompositePredicate Predicate { get; }
-
-    /// <summary>
     ///     Gets the object type of this extent.
     /// </summary>
     /// <value>The type of the Extent.</value>

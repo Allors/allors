@@ -45,7 +45,7 @@ public interface ITransaction : IDisposable
     /// </summary>
     /// <typeparam name="T">The type for the extent.</typeparam>
     /// <returns>The extent.</returns>
-    IExtent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject;
+    IFilter<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject;
 
     /// <summary>
     ///     Creates an Extent for the specified <see cref="ObjectType" />.
@@ -53,7 +53,7 @@ public interface ITransaction : IDisposable
     /// <param name="objectType">The @class.</param>
     /// <param name="filter"></param>
     /// <returns>The extent.</returns>
-    IExtent<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null);
+    IFilter<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null);
 
     /// <summary>
     ///     Creates an Extent that is the exception of its two operands.

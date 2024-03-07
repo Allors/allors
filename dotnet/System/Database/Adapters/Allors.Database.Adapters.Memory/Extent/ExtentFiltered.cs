@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class ExtentFiltered<T> : Extent<T> where T : class, IObject
+internal sealed class ExtentFiltered<T> : Extent<T>, IFilter<T> where T : class, IObject
 {
     private And filter;
 
@@ -27,7 +27,7 @@ internal sealed class ExtentFiltered<T> : Extent<T> where T : class, IObject
     }
 
     public override Composite ObjectType { get; }
-    
+
     protected override void Evaluate()
     {
         if (this.Strategies == null)

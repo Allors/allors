@@ -435,25 +435,25 @@ public sealed class Transaction : ITransaction
         }
     }
 
-    public IExtent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
+    public IFilter<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
     {
         if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
         {
             throw new Exception("type should be a CompositeType");
         }
 
-        var extent = (IExtent<T>)this.Extent(compositeType, filter);
+        var extent = (IFilter<T>)this.Extent(compositeType, filter);
         return extent;
     }
 
-    public Allors.Database.IExtent<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null)
+    public IFilter<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null)
     {
         Type type = typeof(ExtentFiltered<>);
         Type[] typeArgs = [objectType.BoundType];
         Type constructed = type.MakeGenericType(typeArgs);
         var instance = Activator.CreateInstance(constructed, this, objectType);
 
-        var extent = (IExtent<IObject>)instance;
+        var extent = (IFilter<IObject>)instance;
         filter?.Invoke(extent.Predicate);
         return extent;
     }

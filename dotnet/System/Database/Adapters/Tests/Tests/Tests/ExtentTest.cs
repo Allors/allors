@@ -213,8 +213,7 @@ public abstract class ExtentTest : IDisposable
                 foreach (var useOperator in this.UseOperator)
                 {
                     // Empty
-                    var inExtent = this.Transaction.Extent(m.C1.Composite);
-                    inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                    IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -268,8 +267,7 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.C1.Composite);
-                    inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                    inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -298,8 +296,7 @@ public abstract class ExtentTest : IDisposable
 
                     // In Extent over Interface
                     // Empty
-                    inExtent = this.Transaction.Extent(m.I12.Composite);
-                    inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                    inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -353,8 +350,7 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.I12.Composite);
-                    inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                    inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -385,8 +381,7 @@ public abstract class ExtentTest : IDisposable
 
                     // In Extent over Class
                     // Empty
-                    inExtent = this.Transaction.Extent(m.C1.Composite);
-                    inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                    inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -440,8 +435,7 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.C1.Composite);
-                    inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                    inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -470,8 +464,7 @@ public abstract class ExtentTest : IDisposable
 
                     // In Extent over Interface
                     // Empty
-                    inExtent = this.Transaction.Extent(m.I12.Composite);
-                    inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                    inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -525,8 +518,7 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.I12.Composite);
-                    inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                    inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -555,8 +547,7 @@ public abstract class ExtentTest : IDisposable
 
                     // In Extent over Disjoint Interfaces
                     // Empty
-                    inExtent = this.Transaction.Extent(m.I12.Composite);
-                    inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                    inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -609,8 +600,7 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, true, true, true, true);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.I12.Composite);
-                    inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                    inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                     if (useOperator)
                     {
                         var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -881,8 +871,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -920,8 +909,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -942,8 +930,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -981,8 +968,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1005,8 +991,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -1044,8 +1029,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -1066,8 +1050,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1105,8 +1088,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1129,8 +1111,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1168,8 +1149,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, true, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1307,8 +1287,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -1346,8 +1325,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -1368,8 +1346,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1407,8 +1384,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1431,8 +1407,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -1470,8 +1445,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -1492,8 +1466,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1531,8 +1504,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -1883,7 +1855,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -2781,11 +2753,8 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Except + Union
-            var firstExtent = this.Transaction.Extent(m.C1.Composite);
-            firstExtent.Predicate.AddNot().AddExists(m.C1.C1AllorsString);
-
-            var secondExtent = this.Transaction.Extent(m.C1.Composite);
-            secondExtent.Predicate.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
+            IExtent<IObject> firstExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddNot().AddExists(m.C1.C1AllorsString));
+            IExtent<IObject> secondExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddLike(m.C1.C1AllorsString, "ᴀbracadabra"));
 
             var unionExtent = this.Transaction.Union(firstExtent, secondExtent);
             var topExtent = this.Transaction.Extent(m.C1.Composite);
@@ -2811,11 +2780,8 @@ public abstract class ExtentTest : IDisposable
             Assert.DoesNotContain(this.c4D, extent);
 
             // Except + Intersect
-            firstExtent = this.Transaction.Extent(m.C1.Composite);
-            firstExtent.Predicate.AddExists(m.C1.C1AllorsString);
-
-            secondExtent = this.Transaction.Extent(m.C1.Composite);
-            secondExtent.Predicate.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
+            firstExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddExists(m.C1.C1AllorsString));
+            secondExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddLike(m.C1.C1AllorsString, "ᴀbracadabra"));
 
             var intersectExtent = this.Transaction.Intersect(firstExtent, secondExtent);
             topExtent = this.Transaction.Extent(m.C1.Composite);
@@ -3572,8 +3538,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -3611,8 +3576,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -3633,8 +3597,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -3672,8 +3635,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -3696,8 +3658,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -3735,8 +3696,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -3757,8 +3717,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -3796,8 +3755,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -3922,8 +3880,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -3961,8 +3918,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -3983,8 +3939,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4022,8 +3977,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4046,8 +4000,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -4085,8 +4038,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -4107,8 +4059,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4146,8 +4097,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4186,8 +4136,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -4225,8 +4174,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -4247,8 +4195,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4286,8 +4233,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4310,8 +4256,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -4349,8 +4294,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -4371,8 +4315,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4410,8 +4353,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -4666,7 +4608,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C1 to C1
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -6048,8 +5990,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C1 to C2
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C2.Composite);
-                inExtent.Predicate.AddEquals(m.C2.C2AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C2.Composite, v => v.AddEquals(m.C2.C2AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C2.Composite);
@@ -6087,8 +6028,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C2.Composite);
-                inExtent.Predicate.AddEquals(m.C2.C2AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C2.Composite, v => v.AddEquals(m.C2.C2AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C2.Composite);
@@ -6109,8 +6049,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -6148,8 +6087,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -6172,8 +6110,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -6211,8 +6148,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -6233,8 +6169,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -6272,8 +6207,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -6296,8 +6230,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -6335,8 +6268,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -6357,8 +6289,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -6396,8 +6327,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -6418,8 +6348,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent I12<->I34
                 // Empty
-                inExtent = this.Transaction.Extent(m.I34.Composite);
-                inExtent.Predicate.AddEquals(m.I34.I34AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I34.Composite, v => v.AddEquals(m.I34.I34AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I34.Composite);
@@ -6457,8 +6386,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I34.Composite);
-                inExtent.Predicate.AddEquals(m.I34.I34AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I34.Composite, v => v.AddEquals(m.I34.I34AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I34.Composite);
@@ -6838,8 +6766,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty Extent
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -6912,8 +6839,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Emtpy Extent
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -7041,8 +6967,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Emtpy Extent
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -7115,8 +7040,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Emtpy Extent
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -7373,7 +7297,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -7533,7 +7457,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -7978,7 +7902,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -8138,7 +8062,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -9274,10 +9198,10 @@ public abstract class ExtentTest : IDisposable
             // Association (Amgiguous Name)
             IExtent<Company> parents = this.Transaction.Extent<Company>();
 
-            IExtent<Company> children = this.Transaction.Extent<Company>();
+            IFilter<Company> children = this.Transaction.Extent<Company>();
             children.Predicate.AddIn(m.Company.CompanyWhereChild, parents);
 
-            IExtent<Person> persons = this.Transaction.Extent<Person>();
+            IFilter<Person> persons = this.Transaction.Extent<Person>();
             var or = persons.Predicate.AddOr();
             or.AddIn(m.Person.Company, parents);
             or.AddIn(m.Person.Company, children);
@@ -14604,8 +14528,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -14643,8 +14566,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -14665,8 +14587,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -14704,8 +14625,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -14728,8 +14648,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -14767,8 +14686,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -14789,8 +14707,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -14828,8 +14745,7 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "ᴀbra");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -15007,8 +14923,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Class
                 // Emtpy Extent
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "Nothing here!");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -15081,8 +14996,7 @@ public abstract class ExtentTest : IDisposable
 
                 // In Extent over Shared Interface
                 // Emtpy Extent
-                inExtent = this.Transaction.Extent(m.I12.Composite);
-                inExtent.Predicate.AddEquals(m.I12.I12AllorsString, "Nothing here!");
+                inExtent = this.Transaction.Extent(m.I12.Composite, v => v.AddEquals(m.I12.I12AllorsString, "Nothing here!"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.I12.Composite);
@@ -15339,7 +15253,7 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // In Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -15610,8 +15524,7 @@ public abstract class ExtentTest : IDisposable
                 // In Extent over Shared Interface
 
                 // With filter
-                var inExtent = this.Transaction.Extent(m.C1.Composite);
-                inExtent.Predicate.AddEquals(m.C1.C1AllorsString, "ᴀbra");
+                IExtent<IObject> inExtent = this.Transaction.Extent(m.C1.Composite, v => v.AddEquals(m.C1.C1AllorsString, "ᴀbra"));
                 if (useOperator)
                 {
                     var inExtentA = this.Transaction.Extent(m.C1.Composite);
@@ -17469,7 +17382,7 @@ public abstract class ExtentTest : IDisposable
             var c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Predicate.AddContains(m.C2.C3Many2Manies, c3);
 
-            IExtent<C1> c1s = this.Transaction.Extent<C1>();
+            IFilter<C1> c1s = this.Transaction.Extent<C1>();
             c1s.Predicate.AddIn(m.C1.C1C2many2one, c2s);
 
             Assert.Single(c1s);
@@ -17497,7 +17410,7 @@ public abstract class ExtentTest : IDisposable
             var c3s = this.Transaction.Extent(m.C3.Composite);
             c3s.Predicate.AddContains(m.C3.C3C4one2manies, c4);
 
-            IExtent<C2> c2s = this.Transaction.Extent<C2>();
+            IFilter<C2> c2s = this.Transaction.Extent<C2>();
             c2s.Predicate.AddIn(m.C2.C3Many2One, c3s);
 
             Assert.Single(c2s);
@@ -17525,7 +17438,7 @@ public abstract class ExtentTest : IDisposable
             var c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Predicate.AddContains(m.C2.C3sWhereC3C2many2many, c3);
 
-            IExtent<C1> c1s = this.Transaction.Extent<C1>();
+            IFilter<C1> c1s = this.Transaction.Extent<C1>();
             c1s.Predicate.AddIn(m.C1.C1C2many2one, c2s);
 
             Assert.Single(c1s);
