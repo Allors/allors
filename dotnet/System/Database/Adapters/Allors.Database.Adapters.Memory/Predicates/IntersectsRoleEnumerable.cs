@@ -9,12 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class WithinRoleManyEnumerable : Within
+internal sealed class IntersectsRoleEnumerable : Within
 {
     private readonly IEnumerable<IObject> containingEnumerable;
     private readonly RoleType roleType;
 
-    internal WithinRoleManyEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
+    internal IntersectsRoleEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleIn(roleType, containingEnumerable);

@@ -392,7 +392,7 @@ public class Transaction : ITransaction
 
     public virtual IFilter<IObject> Filter(Composite objectType, Action<ICompositePredicate> filter = null)
     {
-        Type type = typeof(ExtentFiltered<>);
+        Type type = typeof(ExtentFilter<>);
         Type[] typeArgs = [objectType.BoundType];
         Type constructed = type.MakeGenericType(typeArgs);
         var instance = Activator.CreateInstance(constructed, this, objectType);

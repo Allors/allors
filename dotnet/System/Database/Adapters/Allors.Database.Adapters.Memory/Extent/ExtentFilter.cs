@@ -9,11 +9,11 @@ using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class ExtentFiltered<T> : Extent<T>, IFilter<T> where T : class, IObject
+internal sealed class ExtentFilter<T> : Extent<T>, IFilter<T> where T : class, IObject
 {
     private And filter;
 
-    public ExtentFiltered(Transaction transaction, Composite objectType)
+    public ExtentFilter(Transaction transaction, Composite objectType)
         : base(transaction) =>
         this.ObjectType = objectType;
 

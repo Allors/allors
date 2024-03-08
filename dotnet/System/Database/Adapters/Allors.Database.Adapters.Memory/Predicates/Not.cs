@@ -46,8 +46,8 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         Within within = role.IsMany ?
-            new WithinRoleManyExtent(this.extent, role, containingExtent) :
-            new WithinRoleOneExtent(this.extent, role, containingExtent);
+            new IntersectsRoleExtent(this.extent, role, containingExtent) :
+            new WithinRoleExtent(this.extent, role, containingExtent);
 
         this.extent.Invalidate();
         this.predicate = within;
@@ -59,8 +59,8 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         Within within = role.IsMany ?
-            new WithinRoleManyEnumerable(this.extent, role, containingEnumerable) :
-            new WithinRoleOneEnumerable(this.extent, role, containingEnumerable);
+            new IntersectsRoleEnumerable(this.extent, role, containingEnumerable) :
+            new WithinRoleEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.Invalidate();
         this.predicate = within;

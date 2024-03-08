@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> where T : class, IObject
+internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> where T : class, IObject
 {
     private readonly Composite objectType;
     private readonly Transaction transaction;
 
     private And filter;
 
-    public ExtentFiltered(Transaction transaction, Composite objectType)
+    public ExtentFilter(Transaction transaction, Composite objectType)
     {
         this.transaction = transaction;
         this.objectType = objectType;

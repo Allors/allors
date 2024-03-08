@@ -8,12 +8,12 @@ namespace Allors.Database.Adapters.Memory;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class WithinRoleOneExtent : Within
+internal sealed class WithinRoleExtent : Within
 {
     private readonly IExtent<IObject> containingExtent;
     private readonly RoleType roleType;
 
-    internal WithinRoleOneExtent(IInternalExtent extent, RoleType roleType, IExtent<IObject> containingExtent)
+    internal WithinRoleExtent(IInternalExtent extent, RoleType roleType, IExtent<IObject> containingExtent)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleIn(roleType, containingExtent);

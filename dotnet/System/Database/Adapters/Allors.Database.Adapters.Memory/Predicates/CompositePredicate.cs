@@ -59,8 +59,8 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public IPredicate AddWithin(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         Within within = role.IsMany
-            ? new WithinRoleManyExtent(this.extent, role, containingExtent)
-            : new WithinRoleOneExtent(this.extent, role, containingExtent);
+            ? new IntersectsRoleExtent(this.extent, role, containingExtent)
+            : new WithinRoleExtent(this.extent, role, containingExtent);
 
         this.extent.Invalidate();
         this.Filters.Add(within);
@@ -70,8 +70,8 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public IPredicate AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         Within within = role.IsMany
-            ? new WithinRoleManyEnumerable(this.extent, role, containingEnumerable)
-            : new WithinRoleOneEnumerable(this.extent, role, containingEnumerable);
+            ? new IntersectsRoleEnumerable(this.extent, role, containingEnumerable)
+            : new WithinRoleEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.Invalidate();
         this.Filters.Add(within);
@@ -80,7 +80,9 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public IPredicate AddWithin(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
-        var containedIn = new WithinAssociationExtent(this.extent, association, containingExtent);
+        Within containedIn = association.IsMany
+            ? new IntersectsAssociationExtent(this.extent, association, containingExtent)
+            : new WithinAssociationExtent(this.extent, association, containingExtent);
 
         this.extent.Invalidate();
         this.Filters.Add(containedIn);
@@ -89,7 +91,9 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public IPredicate AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        var containedIn = new WithinAssociationEnumerable(this.extent, association, containingEnumerable);
+        Within containedIn = association.IsMany
+        ? new IntersectsAssociationEnumerable(this.extent, association, containingEnumerable)
+        : new WithinAssociationEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.Invalidate();
         this.Filters.Add(containedIn);
@@ -146,7 +150,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public IPredicate AddExists(RoleType role)
     {
         var exists = new ExistsRole(this.extent, role);
-  
+
         this.extent.Invalidate();
         this.Filters.Add(exists);
         return exists;
