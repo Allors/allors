@@ -83,7 +83,7 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitIn(In visited)
+        public void VisitIn(Within visited)
         {
             var predicate = new Predicate
             {

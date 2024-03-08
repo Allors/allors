@@ -1,4 +1,4 @@
-// <copyright file="Between.cs" company="Allors bv">
+﻿// <copyright file="Between.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,13 +8,11 @@ namespace Allors.Workspace.Data
     using System.Collections.Generic;
     using Meta;
 
-    public class Between : IRolePredicate
+    public class Between(IRoleType roleType = null) : IRolePredicate
     {
         public string[] Dependencies { get; set; }
 
-        public Between(IRoleType roleType = null) => this.RoleType = roleType;
-
-        public IRoleType RoleType { get; set; }
+        public IRoleType RoleType { get; set; } = roleType;
 
         public IEnumerable<object> Values { get; set; }
 

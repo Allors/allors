@@ -1,4 +1,4 @@
-// <copyright file="GreaterThan.cs" company="Allors bv">
+﻿// <copyright file="GreaterThan.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,13 +7,11 @@ namespace Allors.Workspace.Data
 {
     using Meta;
 
-    public class GreaterThan : IRolePredicate
+    public class GreaterThan(IRoleType roleType = null) : IRolePredicate
     {
         public string[] Dependencies { get; set; }
 
-        public GreaterThan(IRoleType roleType = null) => this.RoleType = roleType;
-
-        public IRoleType RoleType { get; set; }
+        public IRoleType RoleType { get; set; } = roleType;
 
         public object Value { get; set; }
 

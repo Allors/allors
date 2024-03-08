@@ -8,14 +8,12 @@ namespace Allors.Workspace.Data
 
     using Meta;
 
-    public class Equals : IPropertyPredicate
+    public class Equals(IRelationEndType propertyType = null) : IPropertyPredicate
     {
         public string[] Dependencies { get; set; }
 
-        public Equals(IRelationEndType propertyType = null) => this.PropertyType = propertyType;
-
         /// <inheritdoc/>
-        public IRelationEndType PropertyType { get; set; }
+        public IRelationEndType PropertyType { get; set; } = propertyType;
 
         public IStrategy Object { get; set; }
 

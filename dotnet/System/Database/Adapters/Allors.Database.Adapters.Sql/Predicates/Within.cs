@@ -5,6 +5,6 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-internal abstract class In : Predicate, IPredicate
+internal abstract class Within : Predicate, IPredicate
 {
 }

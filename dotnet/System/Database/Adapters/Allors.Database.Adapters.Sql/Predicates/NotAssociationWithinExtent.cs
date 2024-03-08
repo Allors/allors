@@ -1,25 +1,23 @@
-﻿// <copyright file="NotAssociationInEnumerable.cs" company="Allors bv">
+﻿// <copyright file="NotAssociationInExtent.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Adapters.Sql;
 
-using System.Collections.Generic;
-using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class NotAssociationInEnumerable : In
+internal sealed class NotAssociationWithinExtent : Within
 {
     private readonly AssociationType association;
-    private readonly IEnumerable<IObject> enumerable;
+    private readonly IInternalExtent inExtent;
 
-    internal NotAssociationInEnumerable(IInternalExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
+    internal NotAssociationWithinExtent(IInternalExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckAssociation(association);
-        PredicateAssertions.AssertAssociationIn(association, this.enumerable);
+        PredicateAssertions.AssertAssociationIn(association, inExtent);
         this.association = association;
-        this.enumerable = enumerable;
+        this.inExtent = ((IInternalExtent)inExtent).InExtent;
     }
 
     internal override bool IsNotFilter => true;
@@ -27,37 +25,32 @@ internal sealed class NotAssociationInEnumerable : In
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
+        var inStatement = statement.CreateChild(this.inExtent, this.association);
 
-        var inStatement = new StringBuilder("0");
-        foreach (var inObject in this.enumerable)
-        {
-            inStatement.Append(",");
-            inStatement.Append(inObject.Id.ToString());
-        }
+        inStatement.UseRole(this.association.RoleType);
 
-        if ((this.association.IsMany && this.association.RelationType.RoleType.IsMany) ||
-            !this.association.RelationType.ExistExclusiveClasses)
+        if ((this.association.IsMany && this.association.RoleType.IsMany) || !this.association.RelationType.ExistExclusiveClasses)
         {
-            statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR ");
+            statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IN (\n");
             statement.Append(" SELECT " + Mapping.ColumnNameForRole + " FROM " +
                              schema.TableNameForRelationByRelationType[this.association.RelationType] + " WHERE " +
                              Mapping.ColumnNameForAssociation + " IN (");
-            statement.Append(inStatement.ToString());
-            statement.Append(" ))\n");
+            this.inExtent.BuildSql(inStatement);
+            statement.Append(" )))\n");
         }
-        else if (this.association.RelationType.RoleType.IsMany)
+        else if (this.association.RoleType.IsMany)
         {
             statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NULL OR ");
             statement.Append(" NOT " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IN (\n");
-            statement.Append(inStatement.ToString());
+            this.inExtent.BuildSql(inStatement);
             statement.Append(" ))\n");
         }
         else
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForObject + " IS NULL OR ");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForObject + " IN (\n");
-            statement.Append(inStatement.ToString());
+            this.inExtent.BuildSql(inStatement);
             statement.Append(" ))\n");
         }
 

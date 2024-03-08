@@ -62,24 +62,24 @@ internal sealed class ExtentFiltered<T> : Extent<T>, IFilter<T> where T : class,
         return this.Predicate.AddBetween(role, firstValue, secondValue);
     }
 
-    IPredicate ICompositePredicate.AddIn(RoleType role, IExtent<IObject> containingExtent)
+    IPredicate ICompositePredicate.AddWithin(RoleType role, IExtent<IObject> containingExtent)
     {
-        return this.Predicate.AddIn(role, containingExtent);
+        return this.Predicate.AddWithin(role, containingExtent);
     }
 
-    IPredicate ICompositePredicate.AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    IPredicate ICompositePredicate.AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
-        return this.Predicate.AddIn(role, containingEnumerable);
+        return this.Predicate.AddWithin(role, containingEnumerable);
     }
 
-    IPredicate ICompositePredicate.AddIn(AssociationType association, IExtent<IObject> containingExtent)
+    IPredicate ICompositePredicate.AddWithin(AssociationType association, IExtent<IObject> containingExtent)
     {
-        return this.Predicate.AddIn(association, containingExtent);
+        return this.Predicate.AddWithin(association, containingExtent);
     }
 
-    IPredicate ICompositePredicate.AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    IPredicate ICompositePredicate.AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        return this.Predicate.AddIn(association, containingEnumerable);
+        return this.Predicate.AddWithin(association, containingEnumerable);
     }
 
     IPredicate ICompositePredicate.AddContains(RoleType role, IObject containedObject)

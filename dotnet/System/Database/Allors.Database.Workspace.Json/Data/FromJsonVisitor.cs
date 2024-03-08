@@ -268,7 +268,7 @@ public class FromJsonVisitor : IVisitor
 
                     case PredicateKind.In:
 
-                        var containedIn = new In(relationEndType) { Parameter = visited.p };
+                        var containedIn = new Within(relationEndType) { Parameter = visited.p };
 
                         this.predicates.Push(containedIn);
 

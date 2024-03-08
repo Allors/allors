@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleInExtent : In
+internal sealed class RoleWithinExtent : Within
 {
     private readonly IInternalExtent inExtent;
     private readonly RoleType role;
 
-    internal RoleInExtent(IInternalExtentFiltered extent, RoleType role, Allors.Database.IExtent<IObject> inExtent)
+    internal RoleWithinExtent(IInternalExtentFiltered extent, RoleType role, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, inExtent);

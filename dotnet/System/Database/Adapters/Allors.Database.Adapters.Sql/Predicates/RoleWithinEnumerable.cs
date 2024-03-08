@@ -9,12 +9,12 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class RoleInEnumerable : In
+internal sealed class RoleWithinEnumerable : Within
 {
     private readonly IEnumerable<IObject> enumerable;
     private readonly RoleType role;
 
-    internal RoleInEnumerable(IInternalExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
+    internal RoleWithinEnumerable(IInternalExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, enumerable);

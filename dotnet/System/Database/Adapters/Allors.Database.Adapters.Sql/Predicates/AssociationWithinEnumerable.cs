@@ -9,12 +9,12 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class AssociationInEnumerable : In
+internal sealed class AssociationWithinEnumerable : Within
 {
     private readonly AssociationType association;
     private readonly IEnumerable<IObject> enumerable;
 
-    internal AssociationInEnumerable(IInternalExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
+    internal AssociationWithinEnumerable(IInternalExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, this.enumerable);

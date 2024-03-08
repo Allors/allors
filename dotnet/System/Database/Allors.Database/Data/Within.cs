@@ -8,7 +8,7 @@ namespace Allors.Database.Data;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public class In(RelationEndType relationEndType = null) : IPropertyPredicate
+public class Within(RelationEndType relationEndType = null) : IPropertyPredicate
 {
     public IExtent Extent { get; set; }
 
@@ -32,11 +32,11 @@ public class In(RelationEndType relationEndType = null) : IPropertyPredicate
             {
                 if (objects != null)
                 {
-                    compositePredicate.AddIn(roleType, objects);
+                    compositePredicate.AddWithin(roleType, objects);
                 }
                 else
                 {
-                    compositePredicate.AddIn(roleType, this.Extent.Build(transaction, arguments));
+                    compositePredicate.AddWithin(roleType, this.Extent.Build(transaction, arguments));
                 }
             }
             else
@@ -44,11 +44,11 @@ public class In(RelationEndType relationEndType = null) : IPropertyPredicate
                 var associationType = (AssociationType)this.RelationEndType;
                 if (objects != null)
                 {
-                    compositePredicate.AddIn(associationType, objects);
+                    compositePredicate.AddWithin(associationType, objects);
                 }
                 else
                 {
-                    compositePredicate.AddIn(associationType, this.Extent.Build(transaction, arguments));
+                    compositePredicate.AddWithin(associationType, this.Extent.Build(transaction, arguments));
                 }
             }
         }

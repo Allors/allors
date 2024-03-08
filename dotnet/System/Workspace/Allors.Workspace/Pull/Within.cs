@@ -9,13 +9,11 @@ namespace Allors.Workspace.Data
     using Workspace;
     using Meta;
 
-    public class In : IPropertyPredicate
+    public class Within(IRelationEndType propertyType = null) : IPropertyPredicate
     {
         public string[] Dependencies { get; set; }
 
-        public In(IRelationEndType propertyType = null) => this.PropertyType = propertyType;
-
-        public IRelationEndType PropertyType { get; set; }
+        public IRelationEndType PropertyType { get; set; } = propertyType;
 
         public Extent Extent { get; set; }
 

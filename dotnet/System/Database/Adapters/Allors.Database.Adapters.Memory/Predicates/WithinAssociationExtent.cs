@@ -1,37 +1,34 @@
-﻿// <copyright file="InAssociationEnumerable.cs" company="Allors bv">
+﻿// <copyright file="InAssociationExtent.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Adapters.Memory;
 
-using System.Collections.Generic;
+using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class InAssociationEnumerable : In
+internal sealed class WithinAssociationExtent : Within
 {
     private readonly AssociationType associationType;
-    private readonly IEnumerable<IObject> containingEnumerable;
+    private readonly Allors.Database.IExtent<IObject> containingExtent;
 
-    internal InAssociationEnumerable(IInternalExtent extent, AssociationType associationType,
-        IEnumerable<IObject> containingEnumerable)
+    internal WithinAssociationExtent(IInternalExtent extent, AssociationType associationType, Allors.Database.IExtent<IObject> containingExtent)
     {
         extent.CheckForAssociationType(associationType);
-        PredicateAssertions.AssertAssociationIn(associationType, containingEnumerable);
+        PredicateAssertions.AssertAssociationIn(associationType, containingExtent);
 
         this.associationType = associationType;
-        this.containingEnumerable = containingEnumerable;
+        this.containingExtent = containingExtent;
     }
 
     internal override ThreeValuedLogic Evaluate(Strategy strategy)
     {
-        var containing = new HashSet<IObject>(this.containingEnumerable);
-
         if (this.associationType.IsMany)
         {
             foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
             {
-                if (containing.Contains(assoc))
+                if (this.containingExtent.Contains(assoc))
                 {
                     return ThreeValuedLogic.True;
                 }
@@ -43,7 +40,7 @@ internal sealed class InAssociationEnumerable : In
         var association = strategy.GetCompositeAssociation(this.associationType);
         if (association != null)
         {
-            return containing.Contains(association)
+            return this.containingExtent.Contains(association)
                 ? ThreeValuedLogic.True
                 : ThreeValuedLogic.False;
         }

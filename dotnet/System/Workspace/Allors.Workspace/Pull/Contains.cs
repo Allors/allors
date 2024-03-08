@@ -8,13 +8,11 @@ namespace Allors.Workspace.Data
     
     using Meta;
 
-    public class Contains : IPropertyPredicate
+    public class Contains(IRelationEndType propertyType = null) : IPropertyPredicate
     {
         public string[] Dependencies { get; set; }
 
-        public Contains(IRelationEndType propertyType = null) => this.PropertyType = propertyType;
-
-        public IRelationEndType PropertyType { get; set; }
+        public IRelationEndType PropertyType { get; set; } = propertyType;
 
         public IStrategy Object { get; set; }
 

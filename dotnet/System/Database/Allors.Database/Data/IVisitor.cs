@@ -11,7 +11,7 @@ public interface IVisitor
 
     void VisitBetween(Between visited);
 
-    void VisitIn(In visited);
+    void VisitIn(Within visited);
 
     void VisitContains(Contains visited);
 

@@ -56,44 +56,44 @@ internal sealed class Not : Predicate, ICompositePredicate
         return between;
     }
 
-    public IPredicate AddIn(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
+    public IPredicate AddWithin(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
 
-        var containedIn = new RoleInExtent(this.extent, role, containingExtent);
+        var containedIn = new RoleWithinExtent(this.extent, role, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
         
-        var containedIn = new NotRoleInEnumerable(this.extent, role, containingEnumerable);
+        var containedIn = new NotRoleWithinEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddIn(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
+    public IPredicate AddWithin(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
 
-        var containedIn = new NotAssociationInExtent(this.extent, association, containingExtent);
+        var containedIn = new NotAssociationWithinExtent(this.extent, association, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
         
-        var containedIn = new NotAssociationInEnumerable(this.extent, association, containingEnumerable);
+        var containedIn = new NotAssociationWithinEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;

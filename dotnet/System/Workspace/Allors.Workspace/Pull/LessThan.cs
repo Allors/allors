@@ -1,4 +1,4 @@
-// <copyright file="LessThan.cs" company="Allors bv">
+﻿// <copyright file="LessThan.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,13 +8,11 @@ namespace Allors.Workspace.Data
     
     using Meta;
 
-    public class LessThan : IRolePredicate
+    public class LessThan(IRoleType roleType = null) : IRolePredicate
     {
         public string[] Dependencies { get; set; }
 
-        public LessThan(IRoleType roleType = null) => this.RoleType = roleType;
-
-        public IRoleType RoleType { get; set; }
+        public IRoleType RoleType { get; set; } = roleType;
 
         public object Value { get; set; }
 

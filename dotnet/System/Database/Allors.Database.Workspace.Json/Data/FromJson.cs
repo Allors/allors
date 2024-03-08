@@ -31,7 +31,7 @@ public class FromJson
 
     public void Resolve(Contains contains, long objectId) => this.resolvers.Add(new ContainsResolver(contains, objectId));
 
-    public void Resolve(In @in, long[] objectIds) => this.resolvers.Add(new InResolver(@in, objectIds));
+    public void Resolve(Within within, long[] objectIds) => this.resolvers.Add(new InResolver(within, objectIds));
 
     public void Resolve(Equals equals, long objectId) => this.resolvers.Add(new EqualsResolver(equals, objectId));
 

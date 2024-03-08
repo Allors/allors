@@ -11,19 +11,14 @@ namespace Allors.Workspace.Data
     using System.Text;
     using Meta;
 
-    public class Node : IVisitable
+    public class Node(IRelationEndType relationEndType = null, IEnumerable<Node> nodes = null)
+        : IVisitable
     {
-        public Node(IRelationEndType relationEndType = null, IEnumerable<Node> nodes = null)
-        {
-            this.RelationEndType = relationEndType;
-            this.Nodes = nodes?.ToArray() ?? Array.Empty<Node>();
-        }
-
-        public IRelationEndType RelationEndType { get; }
+        public IRelationEndType RelationEndType { get; } = relationEndType;
 
         public IComposite OfType { get; set; }
 
-        public Node[] Nodes { get; private set; }
+        public Node[] Nodes { get; private set; } = nodes?.ToArray() ?? Array.Empty<Node>();
 
         public Node Add(Node node)
         {

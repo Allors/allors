@@ -1,4 +1,4 @@
-// <copyright file="Filter.cs" company="Allors bv">
+﻿// <copyright file="Filter.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,11 +7,9 @@ namespace Allors.Workspace.Data
 {
     using Meta;
 
-    public class Filter : Extent, IPredicateContainer
+    public class Filter(IComposite objectType) : Extent, IPredicateContainer
     {
-        public Filter(IComposite objectType) => this.ObjectType = objectType;
-
-        public IComposite ObjectType { get; set; }
+        public IComposite ObjectType { get; set; } = objectType;
 
         public IPredicate Predicate { get; set; }
 

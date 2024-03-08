@@ -37,7 +37,7 @@ using Union = Allors.Workspace.Data.Union;
 namespace Allors.Workspace.Protocol.Direct
 {
     using Filter = Data.Filter;
-    using In = Data.In;
+    using Within = Data.Within;
 
     public class ToDatabaseVisitor
     {
@@ -83,7 +83,7 @@ namespace Allors.Workspace.Protocol.Direct
             {
                 And and => this.Visit(and),
                 Between between => this.Visit(between),
-                In containedIn => this.Visit(containedIn),
+                Within containedIn => this.Visit(containedIn),
                 Contains contains => this.Visit(contains),
                 Equals equals => this.Visit(equals),
                 Exists exists => this.Visit(exists),
@@ -106,7 +106,7 @@ namespace Allors.Workspace.Protocol.Direct
             Paths = this.Visit(ws.Paths)
         };
 
-        private IPredicate Visit(In ws) => new Database.Data.In(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Within ws) => new Database.Data.Within(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),

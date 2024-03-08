@@ -1,4 +1,4 @@
-// <copyright file="Intersect.cs" company="Allors bv">
+﻿// <copyright file="Intersect.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,13 +7,11 @@ namespace Allors.Workspace.Data
 {
     using Meta;
 
-    public class Intersect : IExtentOperator
+    public class Intersect(params Extent[] operands) : IExtentOperator
     {
-        public Intersect(params Extent[] operands) => this.Operands = operands;
-
         public IComposite ObjectType => this.Operands?[0].ObjectType;
 
-        public Extent[] Operands { get; set; }
+        public Extent[] Operands { get; set; } = operands;
 
         public Sort[] Sorting { get; set; }
 

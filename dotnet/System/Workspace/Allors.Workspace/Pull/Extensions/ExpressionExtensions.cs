@@ -15,9 +15,7 @@ namespace Allors.Workspace.Data
 
     internal class MemberExpressionsVisitor : ExpressionVisitor
     {
-        public MemberExpressionsVisitor() => this.MemberExpressions = new List<MemberExpression>();
-
-        public IList<MemberExpression> MemberExpressions { get; }
+        public IList<MemberExpression> MemberExpressions { get; } = new List<MemberExpression>();
 
         protected override Expression VisitMember(MemberExpression node)
         {

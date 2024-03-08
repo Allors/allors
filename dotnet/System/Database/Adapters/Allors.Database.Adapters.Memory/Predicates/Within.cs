@@ -5,6 +5,6 @@
 
 namespace Allors.Database.Adapters.Memory;
 
-internal abstract class In : Predicate, IPredicate
+internal abstract class Within : Predicate, IPredicate
 {
 }

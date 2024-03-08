@@ -1,4 +1,4 @@
-﻿// <copyright file="InRoleManyEnumerable.cs" company="Allors bv">
+﻿// <copyright file="InRoleOneEnumerable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,15 +6,14 @@
 namespace Allors.Database.Adapters.Memory;
 
 using System.Collections.Generic;
-using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class InRoleManyEnumerable : In
+internal sealed class WithinRoleOneEnumerable : Within
 {
     private readonly IEnumerable<IObject> containingEnumerable;
     private readonly RoleType roleType;
 
-    internal InRoleManyEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
+    internal WithinRoleOneEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleIn(roleType, containingEnumerable);
@@ -26,8 +25,14 @@ internal sealed class InRoleManyEnumerable : In
     internal override ThreeValuedLogic Evaluate(Strategy strategy)
     {
         var containing = new HashSet<IObject>(this.containingEnumerable);
+        var roleStrategy = strategy.GetCompositeRole(this.roleType);
 
-        return strategy.GetCompositesRole<IObject>(this.roleType).Any(role => containing.Contains(role))
+        if (roleStrategy == null)
+        {
+            return ThreeValuedLogic.False;
+        }
+
+        return containing.Contains(roleStrategy)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }
