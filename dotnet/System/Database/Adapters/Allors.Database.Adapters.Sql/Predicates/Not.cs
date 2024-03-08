@@ -60,7 +60,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        var containedIn = new RoleWithinExtent(this.extent, role, containingExtent);
+        Within containedIn = role.IsMany
+            ? new RoleIntersectsExtent(this.extent, role, containingExtent)
+            : new RoleWithinExtent(this.extent, role, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -70,8 +72,10 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
-        
-        var containedIn = new NotRoleWithinEnumerable(this.extent, role, containingEnumerable);
+
+        Within containedIn = role.IsMany
+            ? new NotRoleIntersectsEnumerable(this.extent, role, containingEnumerable)
+            : new NotRoleWithinEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -82,7 +86,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        var containedIn = new NotAssociationWithinExtent(this.extent, association, containingExtent);
+        Within containedIn = association.IsMany
+            ? new NotAssociationIntersectsExtent(this.extent, association, containingExtent)
+            : new NotAssociationWithinExtent(this.extent, association, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -92,8 +98,10 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
-        
-        var containedIn = new NotAssociationWithinEnumerable(this.extent, association, containingEnumerable);
+
+        Within containedIn = association.IsMany
+            ? new NotAssociationIntersectsEnumerable(this.extent, association, containingEnumerable)
+            : new NotAssociationWithinEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -103,7 +111,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddContains(RoleType role, IObject containedObject)
     {
         this.CheckUnarity();
-        
+
         var contains = new RoleContains(this.extent, role, containedObject);
 
         this.extent.FlushCache();
@@ -125,7 +133,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddEquals(IObject allorsObject)
     {
         this.CheckUnarity();
-        
+
         var equals = new EqualsComposite(allorsObject);
 
         this.extent.FlushCache();
@@ -159,9 +167,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddEquals(AssociationType association, IObject allorsObject)
     {
         this.CheckUnarity();
-        
+
         Equals equals = new AssociationEquals(this.extent, association, allorsObject);
-        
+
         this.extent.FlushCache();
         this.filter = equals;
         return equals;
@@ -170,7 +178,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddExists(RoleType role)
     {
         this.CheckUnarity();
-        
+
         var exists = new RoleExists(this.extent, role);
 
         this.extent.FlushCache();
@@ -181,7 +189,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddExists(AssociationType association)
     {
         this.CheckUnarity();
-        
+
         var exists = new AssociationExists(this.extent, association);
 
         this.extent.FlushCache();
@@ -215,7 +223,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddInstanceOf(Composite type)
     {
         this.CheckUnarity();
-        
+
         var instanceOf = new InstanceOfComposite(type, CompositePredicate.GetConcreteSubClasses(type));
 
         this.extent.FlushCache();
@@ -226,7 +234,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddInstanceOf(RoleType role, Composite type)
     {
         this.CheckUnarity();
-       
+
         var instanceOf = new RoleInstanceof(this.extent, role, type, CompositePredicate.GetConcreteSubClasses(type));
 
         this.extent.FlushCache();
@@ -237,7 +245,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddInstanceOf(AssociationType association, Composite type)
     {
         this.CheckUnarity();
-        
+
         var instanceOf = new AssociationInstanceOf(this.extent, association, type, CompositePredicate.GetConcreteSubClasses(type));
 
         this.extent.FlushCache();
@@ -275,7 +283,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public ICompositePredicate AddNot(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
-        
+
         var not = new Not(this.extent);
         init?.Invoke(not);
 
