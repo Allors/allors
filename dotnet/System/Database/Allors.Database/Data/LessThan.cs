@@ -7,17 +7,15 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public class LessThan : IRolePredicate
+public class LessThan(RoleType roleType = null) : IRolePredicate
 {
-    public LessThan(RoleType roleType = null) => this.RoleType = roleType;
-
     public object Value { get; set; }
 
     public RoleType Path { get; set; }
 
     public string Parameter { get; set; }
 
-    public RoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; } = roleType;
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

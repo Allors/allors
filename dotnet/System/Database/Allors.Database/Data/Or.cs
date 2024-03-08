@@ -1,4 +1,4 @@
-// <copyright file="Or.cs" company="Allors bv">
+﻿// <copyright file="Or.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,11 +7,9 @@ namespace Allors.Database.Data;
 
 using System.Linq;
 
-public class Or : ICompositePredicate
+public class Or(params IPredicate[] operands) : ICompositePredicate
 {
-    public Or(params IPredicate[] operands) => this.Operands = operands;
-
-    public IPredicate[] Operands { get; set; }
+    public IPredicate[] Operands { get; set; } = operands;
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operands.All(v => v.ShouldTreeShake(arguments));
 

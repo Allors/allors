@@ -1,4 +1,4 @@
-// <copyright file="MethodInvocation.cs" company="Allors bv">
+﻿// <copyright file="MethodInvocation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,17 +9,11 @@ namespace Allors.Database.Meta;
 
 using System;
 
-public class MethodInvocation
+public class MethodInvocation(Class @class, MethodType methodType)
 {
-    public MethodInvocation(Class @class, MethodType methodType)
-    {
-        this.Class = @class;
-        this.MethodType = methodType;
-    }
+    public Class Class { get; } = @class;
 
-    public Class Class { get; }
-
-    public MethodType MethodType { get; }
+    public MethodType MethodType { get; } = methodType;
 
     //[DebuggerStepThrough]
     public void Execute(Method method)

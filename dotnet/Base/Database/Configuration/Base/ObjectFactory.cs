@@ -1,4 +1,4 @@
-// <copyright file="ObjectFactory.cs" company="Allors bv">
+﻿// <copyright file="ObjectFactory.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -20,7 +20,7 @@ public class ObjectFactory : IObjectFactory
     /// <summary>
     ///     <see cref="ConstructorInfo" /> by <see cref="ObjectType" /> cache.
     /// </summary>
-    private readonly Dictionary<ObjectType, ConstructorInfo> contructorInfoByObjectType;
+    private readonly Dictionary<ObjectType, ConstructorInfo> constructorInfoByObjectType;
 
     /// <summary>
     ///     <see cref="ObjectType" /> by <see cref="ObjectType" /> id cache.
@@ -56,7 +56,7 @@ public class ObjectFactory : IObjectFactory
         var types = this.Assembly.GetTypes()
             .Where(type => type.Namespace != null &&
                            type.Namespace.Equals(instance.Namespace) &&
-                           type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IDataObject)))
+                           type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IObject)))
             .ToArray();
 
         this.MetaPopulation = metaPopulation;
@@ -73,7 +73,7 @@ public class ObjectFactory : IObjectFactory
         this.typeByObjectType = new Dictionary<ObjectType, Type>();
         this.objectTypeByType = new Dictionary<Type, ObjectType>();
         this.objectTypeByObjectTypeId = new Dictionary<Guid, ObjectType>();
-        this.contructorInfoByObjectType = new Dictionary<ObjectType, ConstructorInfo>();
+        this.constructorInfoByObjectType = new Dictionary<ObjectType, ConstructorInfo>();
 
         var typeByName = types.ToDictionary(type => type.Name, type => type);
 
@@ -89,7 +89,7 @@ public class ObjectFactory : IObjectFactory
             {
                 var parameterTypes = new[] { typeof(IStrategy) };
                 var constructor = type.GetTypeInfo().GetConstructor(parameterTypes);
-                this.contructorInfoByObjectType[objectType] =
+                this.constructorInfoByObjectType[objectType] =
                     constructor ?? throw new ArgumentException(objectType.SingularName + " has no Allors constructor.");
             }
         }
@@ -118,7 +118,7 @@ public class ObjectFactory : IObjectFactory
     public IObject Create(IStrategy strategy)
     {
         var objectType = strategy.Class;
-        var constructor = this.contructorInfoByObjectType[objectType];
+        var constructor = this.constructorInfoByObjectType[objectType];
         object[] parameters = [strategy];
 
         return (IObject)constructor.Invoke(parameters);

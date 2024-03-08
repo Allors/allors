@@ -7,13 +7,11 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public class Filter : IExtent, IPredicateContainer
+public class Filter(Composite objectType) : IExtent, IPredicateContainer
 {
-    public Filter(Composite objectType) => this.ObjectType = objectType;
-
     public IPredicate Predicate { get; set; }
 
-    public Composite ObjectType { get; set; }
+    public Composite ObjectType { get; set; } = objectType;
 
     public Sort[] Sorting { get; set; }
 

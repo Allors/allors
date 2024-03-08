@@ -219,14 +219,11 @@ internal abstract class Prefetcher
 
         var cache = this.Database.Cache;
 
-        foreach (var kvp in roleValueByAssociationId)
+        foreach ((long associationId, object roleIdValue) in roleValueByAssociationId)
         {
-            var associationId = kvp.Key;
             var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
 
             var cachedObject = cache.GetOrCreateCachedObject(associationReference.Class, associationId, associationReference.Version);
-
-            var roleIdValue = kvp.Value;
 
             if (roleIdValue == null || roleIdValue == DBNull.Value)
             {

@@ -1,4 +1,4 @@
-// <copyright file="PrefetchPolicyBuilder.cs" company="Allors bv">
+﻿// <copyright file="PrefetchPolicyBuilder.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,9 +12,7 @@ using Allors.Database.Meta;
 public sealed class PrefetchPolicyBuilder
 {
     private bool allowCompilation = true;
-    private List<PrefetchRule> rules;
-
-    public PrefetchPolicyBuilder() => this.rules = new List<PrefetchRule>();
+    private List<PrefetchRule> rules = new();
 
     public PrefetchPolicyBuilder WithRule(RelationEndType relationEndType)
     {

@@ -1,4 +1,4 @@
-// <copyright file="Contains.cs" company="Allors bv">
+﻿// <copyright file="Contains.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,15 +7,13 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public class Contains : IPropertyPredicate
+public class Contains(RelationEndType relationEndType = null) : IPropertyPredicate
 {
-    public Contains(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
-
     public IObject Object { get; set; }
 
     public string Parameter { get; set; }
 
-    public RelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; } = relationEndType;
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

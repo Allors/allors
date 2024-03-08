@@ -11,11 +11,12 @@ namespace Allors.Database.Configuration.Derivations.Default
     using Allors.Database.Services;
     using Allors.Database.Derivations;
     using Allors.Database.Domain;
+    using Meta;
     using Object = Allors.Database.Domain.Object;
 
     public class Derivation : IDerivation
     {
-        private RelationEnds relationEnds;
+        private Properties properties;
 
         public Derivation(ITransaction transaction, IValidation validation, Engine engine, int maxCycles, bool embedded, bool continueOnError)
         {
@@ -41,6 +42,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         public IValidation Validation { get; }
 
         IAccumulatedChangeSet IDerivation.ChangeSet => this.AccumulatedChangeSet;
+
         public AccumulatedChangeSet AccumulatedChangeSet { get; set; }
 
         public AccumulatedChangeSet PostDeriveAccumulatedChangeSet { get; set; }
@@ -99,10 +101,9 @@ namespace Allors.Database.Configuration.Derivations.Default
 
                 var matchesByRule = new Dictionary<IRule, ISet<IObject>>();
 
-                foreach (var kvp in changeSet.AssociationsByRoleType)
+                foreach ((RoleType roleType, ISet<IObject> value) in changeSet.AssociationsByRoleType)
                 {
-                    var roleType = kvp.Key;
-                    foreach (var association in kvp.Value)
+                    foreach (var association in value)
                     {
                         var strategy = association.Strategy;
                         var @class = strategy.Class;
@@ -125,10 +126,9 @@ namespace Allors.Database.Configuration.Derivations.Default
                     }
                 }
 
-                foreach (var kvp in changeSet.RolesByAssociationType)
+                foreach ((AssociationType associationType, ISet<IObject> value) in changeSet.RolesByAssociationType)
                 {
-                    var associationType = kvp.Key;
-                    foreach (var role in this.Transaction.Instantiate(kvp.Value))
+                    foreach (var role in this.Transaction.Instantiate(value))
                     {
                         var strategy = role.Strategy;
                         var @class = strategy.Class;
@@ -152,10 +152,8 @@ namespace Allors.Database.Configuration.Derivations.Default
                 }
 
                 // TODO: Prefetching
-                foreach (var kvp in matchesByRule)
+                foreach ((IRule domainDerivation, ISet<IObject> matches) in matchesByRule)
                 {
-                    var domainDerivation = kvp.Key;
-                    var matches = kvp.Value;
                     domainDerivation.Derive(domainCycle, matches);
                 }
 
@@ -228,12 +226,12 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public object this[string name]
         {
-            get => this.relationEnds?.Get(name);
+            get => this.properties?.Get(name);
 
             set
             {
-                this.relationEnds ??= new RelationEnds();
-                this.relationEnds.Set(name, value);
+                this.properties ??= new Properties();
+                this.properties.Set(name, value);
             }
         }
 

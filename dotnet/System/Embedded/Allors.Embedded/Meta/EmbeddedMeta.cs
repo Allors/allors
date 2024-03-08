@@ -82,9 +82,8 @@
 
         internal void ResetDerivations()
         {
-            foreach (var kvp in this.EmbeddedObjectTypeByType)
+            foreach ((_, EmbeddedObjectType? objectType) in this.EmbeddedObjectTypeByType)
             {
-                var objectType = kvp.Value;
                 objectType.ResetDerivations();
             }
         }

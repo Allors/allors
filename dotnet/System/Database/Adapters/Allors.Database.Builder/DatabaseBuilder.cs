@@ -1,4 +1,4 @@
-// <copyright file="DatabaseBuilder.cs" company="Allors bv">
+﻿// <copyright file="DatabaseBuilder.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -18,10 +18,10 @@ public class DatabaseBuilder
     private readonly int? commandTimeout;
     private readonly IConfiguration configuration;
     private readonly IsolationLevel? isolationLevel;
-    private readonly ObjectFactory objectFactory;
+    private readonly IObjectFactory objectFactory;
     private readonly IDatabaseServices scope;
 
-    public DatabaseBuilder(IDatabaseServices scope, IConfiguration configuration, ObjectFactory objectFactory,
+    public DatabaseBuilder(IDatabaseServices scope, IConfiguration configuration, IObjectFactory objectFactory,
         IsolationLevel? isolationLevel = null, int? commandTimeout = null)
     {
         this.scope = scope;

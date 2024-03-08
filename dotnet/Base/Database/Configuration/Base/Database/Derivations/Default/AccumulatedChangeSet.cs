@@ -1,4 +1,4 @@
-// <copyright file="DerivationChangeSet.cs" company="Allors bv">
+﻿// <copyright file="DerivationChangeSet.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -57,27 +57,27 @@ namespace Allors.Database.Configuration.Derivations.Default
             this.Associations.UnionWith(changeSet.Associations);
             this.Roles.UnionWith(changeSet.Roles);
 
-            foreach (var kvp in changeSet.RoleTypesByAssociation)
+            foreach ((IObject key, ISet<RoleType> value) in changeSet.RoleTypesByAssociation)
             {
-                if (this.RoleTypesByAssociation.TryGetValue(kvp.Key, out var roleTypes))
+                if (this.RoleTypesByAssociation.TryGetValue(key, out var roleTypes))
                 {
-                    roleTypes.UnionWith(kvp.Value);
+                    roleTypes.UnionWith(value);
                 }
                 else
                 {
-                    this.RoleTypesByAssociation[kvp.Key] = new HashSet<RoleType>(changeSet.RoleTypesByAssociation[kvp.Key]);
+                    this.RoleTypesByAssociation[key] = new HashSet<RoleType>(changeSet.RoleTypesByAssociation[key]);
                 }
             }
 
-            foreach (var kvp in changeSet.AssociationTypesByRole)
+            foreach ((IObject key, ISet<AssociationType> value) in changeSet.AssociationTypesByRole)
             {
-                if (this.AssociationTypesByRole.TryGetValue(kvp.Key, out var associationTypes))
+                if (this.AssociationTypesByRole.TryGetValue(key, out var associationTypes))
                 {
-                    associationTypes.UnionWith(kvp.Value);
+                    associationTypes.UnionWith(value);
                 }
                 else
                 {
-                    this.AssociationTypesByRole[kvp.Key] = new HashSet<AssociationType>(changeSet.AssociationTypesByRole[kvp.Key]);
+                    this.AssociationTypesByRole[key] = new HashSet<AssociationType>(changeSet.AssociationTypesByRole[key]);
                 }
             }
 

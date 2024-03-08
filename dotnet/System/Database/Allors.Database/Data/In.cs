@@ -8,17 +8,15 @@ namespace Allors.Database.Data;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public class In : IPropertyPredicate
+public class In(RelationEndType relationEndType = null) : IPropertyPredicate
 {
-    public In(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
-
     public IExtent Extent { get; set; }
 
     public IEnumerable<IObject> Objects { get; set; }
 
     public string Parameter { get; set; }
 
-    public RelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; } = relationEndType;
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingArguments(arguments);
 

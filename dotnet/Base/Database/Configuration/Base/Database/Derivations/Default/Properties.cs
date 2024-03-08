@@ -7,7 +7,7 @@ namespace Allors.Database.Configuration.Derivations.Default
 {
     using System.Collections.Generic;
 
-    public class RelationEnds
+    public class Properties
     {
         private Dictionary<string, object> properties;
 

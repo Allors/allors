@@ -16,7 +16,7 @@ namespace Allors.Database;
 ///         life cycle management, transaction management, etc.
 ///     </para>
 /// </summary>
-public interface IObject : IDataObject
+public interface IObject
 {
     /// <summary>
     ///     Gets the Strategy.

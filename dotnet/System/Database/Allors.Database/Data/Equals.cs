@@ -1,4 +1,4 @@
-// <copyright file="Equals.cs" company="Allors bv">
+﻿// <copyright file="Equals.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,10 +7,8 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public class Equals : IPropertyPredicate
+public class Equals(RelationEndType relationEndType = null) : IPropertyPredicate
 {
-    public Equals(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
-
     public IObject Object { get; set; }
 
     public object Value { get; set; }
@@ -20,7 +18,7 @@ public class Equals : IPropertyPredicate
     public string Parameter { get; set; }
 
     /// <inheritdoc />
-    public RelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; } = relationEndType;
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

@@ -1,15 +1,13 @@
-// <copyright file="Not.cs" company="Allors bv">
+﻿// <copyright file="Not.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Data;
 
-public class Not : ICompositePredicate
+public class Not(IPredicate operand = null) : ICompositePredicate
 {
-    public Not(IPredicate operand = null) => this.Operand = operand;
-
-    public IPredicate Operand { get; set; }
+    public IPredicate Operand { get; set; } = operand;
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operand == null || this.Operand.ShouldTreeShake(arguments);
 

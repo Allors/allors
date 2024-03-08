@@ -989,11 +989,8 @@ public class Strategy : IStrategy
 
             ISet<RoleType> changedRoleTypes = null;
 
-            foreach (var kvp in this.originalRoleByRoleType)
+            foreach ((RoleType roleType, object originalRole) in this.originalRoleByRoleType)
             {
-                var roleType = kvp.Key;
-                var originalRole = kvp.Value;
-
                 if (roleType.ObjectType.IsUnit)
                 {
                     var role = this.GetUnitRoleInternal(roleType);
@@ -1046,11 +1043,8 @@ public class Strategy : IStrategy
 
             ISet<AssociationType> changedAssociationTypes = null;
 
-            foreach (var kvp in this.originalAssociationByAssociationType)
+            foreach ((AssociationType associationType, object originalAssociation) in this.originalAssociationByAssociationType)
             {
-                var associationType = kvp.Key;
-                var originalAssociation = kvp.Value;
-
                 if (associationType.IsOne)
                 {
                     var association = this.GetCompositeAssociationInternal(associationType)?.ObjectId;

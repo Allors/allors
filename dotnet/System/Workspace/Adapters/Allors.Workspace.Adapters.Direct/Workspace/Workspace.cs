@@ -10,6 +10,8 @@ namespace Allors.Workspace.Adapters.Direct
     using System.Threading.Tasks;
     using System;
     using System.Collections.Generic;
+    using Database;
+    using IStrategy = Allors.Workspace.IStrategy;
 
     public class Workspace : Adapters.Workspace
     {
@@ -98,10 +100,9 @@ namespace Allors.Workspace.Adapters.Direct
 
             if (result.ObjectByNewId?.Count > 0)
             {
-                foreach (var kvp in result.ObjectByNewId)
+                foreach ((long workspaceId, IObject value) in result.ObjectByNewId)
                 {
-                    var workspaceId = kvp.Key;
-                    var databaseId = kvp.Value.Id;
+                    var databaseId = value.Id;
 
                     this.OnDatabasePushResponseNew(workspaceId, databaseId);
                 }

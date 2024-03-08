@@ -1,4 +1,4 @@
-// <copyright file="ChangeLog.cs" company="Allors bv">
+﻿// <copyright file="ChangeLog.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -120,16 +120,14 @@ internal sealed class ChangeLog
 
     private IEnumerable<KeyValuePair<IObject, ISet<RoleType>>> RoleTypesByAssociation()
     {
-        foreach (var kvp in this.roleTypesByAssociation)
+        foreach ((Strategy strategy, ISet<RoleType> roleTypes) in this.roleTypesByAssociation)
         {
-            var strategy = kvp.Key;
             if (strategy.IsDeleted)
             {
                 continue;
             }
 
-            var original = this.Original(kvp.Key);
-            var roleTypes = kvp.Value;
+            var original = this.Original(strategy);
             original.Trim(roleTypes);
 
             if (roleTypes.Count <= 0)
@@ -144,16 +142,14 @@ internal sealed class ChangeLog
 
     private IEnumerable<KeyValuePair<IObject, ISet<AssociationType>>> AssociationTypesByRole()
     {
-        foreach (var kvp in this.associationTypesByRole)
+        foreach ((Strategy strategy, ISet<AssociationType> associationTypes) in this.associationTypesByRole)
         {
-            var strategy = kvp.Key;
             if (strategy.IsDeleted)
             {
                 continue;
             }
 
-            var original = this.Original(kvp.Key);
-            var associationTypes = kvp.Value;
+            var original = this.Original(strategy);
             original.Trim(associationTypes);
 
             if (associationTypes.Count <= 0)

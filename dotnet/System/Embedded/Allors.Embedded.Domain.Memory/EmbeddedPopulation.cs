@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Embedded.Meta;
 
     public class EmbeddedPopulation : IEmbeddedPopulation
@@ -61,9 +62,8 @@
 
             while (changeSet.HashEmbeddedChanges)
             {
-                foreach (var kvp in this.EmbeddedDerivationById)
+                foreach (var derivation in this.EmbeddedDerivationById.Select(kvp => kvp.Value))
                 {
-                    var derivation = kvp.Value;
                     derivation.EmbeddedDerive(changeSet);
                 }
 

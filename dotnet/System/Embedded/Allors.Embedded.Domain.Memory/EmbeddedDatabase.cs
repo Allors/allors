@@ -96,32 +96,22 @@
 
             this.createdObjects = new HashSet<IEmbeddedObject>();
 
-            foreach (var kvp in this.changedRoleByAssociationByRoleType)
+            foreach ((EmbeddedRoleType? roleType, Dictionary<IEmbeddedObject, object>? changedRoleByAssociation) in this.changedRoleByAssociationByRoleType)
             {
-                var roleType = kvp.Key;
-                var changedRoleByAssociation = kvp.Value;
-
                 var roleByAssociation = this.RoleByAssociation(roleType);
 
-                foreach (var kvp2 in changedRoleByAssociation)
+                foreach ((IEmbeddedObject? association, object? changedRole) in changedRoleByAssociation)
                 {
-                    var association = kvp2.Key;
-                    var changedRole = kvp2.Value;
                     roleByAssociation[association] = changedRole;
                 }
             }
 
-            foreach (var kvp in this.changedAssociationByRoleByAssociationType)
+            foreach ((EmbeddedAssociationType? associationType, Dictionary<IEmbeddedObject, object>? changedAssociationByRole) in this.changedAssociationByRoleByAssociationType)
             {
-                var associationType = kvp.Key;
-                var changedAssociationByRole = kvp.Value;
-
                 var associationByRole = this.AssociationByRole(associationType);
 
-                foreach (var kvp2 in changedAssociationByRole)
+                foreach ((IEmbeddedObject? role, object? changedAssociation) in changedAssociationByRole)
                 {
-                    var role = kvp2.Key;
-                    var changedAssociation = kvp2.Value;
                     associationByRole[role] = changedAssociation;
                 }
             }

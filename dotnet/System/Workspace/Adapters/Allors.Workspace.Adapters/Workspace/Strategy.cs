@@ -567,9 +567,8 @@ namespace Allors.Workspace.Adapters
             {
                 if (this.changesByRelationType != null)
                 {
-                    foreach (var kvp in this.changesByRelationType)
+                    foreach ((IRelationType relationType, _) in this.changesByRelationType)
                     {
-                        var relationType = kvp.Key;
                         var roleType = relationType.RoleType;
 
                         var databaseRole = this.record?.GetRole(roleType);

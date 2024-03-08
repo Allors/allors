@@ -88,11 +88,8 @@ namespace Allors.Database.Configuration
             var versionedSecurityTokens = this.GetVersionedSecurityTokens(transaction, securityTokens);
 
             ISet<long> missingGrantIds = null;
-            foreach (var kvp in versionedSecurityTokens.SelectMany(v => v.VersionByGrant))
+            foreach ((long grantId, long grantVersion) in versionedSecurityTokens.SelectMany(v => v.VersionByGrant))
             {
-                var grantId = kvp.Key;
-                var grantVersion = kvp.Value;
-
                 if (result.ContainsKey(grantId) || missingGrantIds?.Contains(grantId) == true)
                 {
                     continue;
@@ -284,11 +281,8 @@ namespace Allors.Database.Configuration
             var versionedGrantById = this.versionedGrantsByWorkspace[workspaceName];
 
             IList<long> missingIds = null;
-            foreach (var kvp in grants)
+            foreach ((long grantId, long grantVersion) in grants)
             {
-                var grantId = kvp.Key;
-                var grantVersion = kvp.Value;
-
                 if (versionedGrantById.TryGetValue(grantId, out var versionedGrant) && versionedGrant.Version == grantVersion)
                 {
                     if (versionedGrant.UserSet.Contains(user.Id))

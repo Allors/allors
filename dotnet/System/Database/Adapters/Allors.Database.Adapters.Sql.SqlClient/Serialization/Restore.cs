@@ -300,10 +300,8 @@ where c = '{@class.Id}'";
         var con = this.database.ConnectionFactory.Create();
         try
         {
-            foreach (var kvp in unitRelationsByClass)
+            foreach ((Class @class, List<UnitRelation> unitRelations) in unitRelationsByClass)
             {
-                var @class = kvp.Key;
-                var unitRelations = kvp.Value;
                 var sql = this.database.Mapping.ProcedureNameForSetUnitRoleByRelationTypeByClass[@class][relationType];
                 var command = con.CreateCommand();
                 command.CommandText = sql;

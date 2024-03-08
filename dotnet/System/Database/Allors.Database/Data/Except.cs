@@ -1,4 +1,4 @@
-// <copyright file="Except.cs" company="Allors bv">
+﻿// <copyright file="Except.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,13 +8,11 @@ namespace Allors.Database.Data;
 using System.Linq;
 using Allors.Database.Meta;
 
-public class Except : IExtentOperator
+public class Except(params IExtent[] operands) : IExtentOperator
 {
-    public Except(params IExtent[] operands) => this.Operands = operands;
-
     public Composite ObjectType => this.Operands?[0].ObjectType;
 
-    public IExtent[] Operands { get; set; }
+    public IExtent[] Operands { get; set; } = operands;
 
     public Sort[] Sorting { get; set; }
 
