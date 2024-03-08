@@ -85,7 +85,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                 if (role != null)
                 {
                     var transaction = association.Strategy.Transaction;
-                    var extent = transaction.Extent(objectType, filter =>
+                    var extent = transaction.Filter(objectType, filter =>
                     {
                         filter.AddEquals(roleType, role);
                     });
@@ -115,10 +115,10 @@ namespace Allors.Database.Configuration.Derivations.Default
                     if (extent == null)
                     {
                         var transaction = association.Strategy.Transaction;
-                        extent = transaction.Extent(objectType);
+                        extent = transaction.Filter(objectType);
                     }
 
-                    extent.Predicate.AddEquals(roleType, role);
+                    extent.AddEquals(roleType, role);
                 }
 
                 if (extent != null && extent.Count != 1)

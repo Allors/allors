@@ -133,9 +133,9 @@ public interface ICompositePredicate
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the association of the object under evaluation exists.
     /// </summary>
-    /// <param name="assocation">The assocation.</param>
+    /// <param name="association">The assocation.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    IPredicate AddExists(AssociationType assocation);
+    IPredicate AddExists(AssociationType association);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is greater than the object.

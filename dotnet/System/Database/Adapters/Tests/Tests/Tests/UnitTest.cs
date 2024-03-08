@@ -189,8 +189,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsBoolean = true;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsBoolean, true);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsBoolean, true);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -473,8 +473,8 @@ public abstract class UnitTest : IDisposable
                 this.Transaction.Commit();
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsDateTime, new DateTime(1973, 03, 27, 1, 2, 3, 4, DateTimeKind.Utc));
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsDateTime, new DateTime(1973, 03, 27, 1, 2, 3, 4, DateTimeKind.Utc));
                 var first = extent.First();
                 Assert.NotNull(first);
 
@@ -684,8 +684,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsDecimal = 1M;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsDecimal, 1M);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsDecimal, 1M);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -893,8 +893,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsDouble = 1;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsDouble, 1);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsDouble, 1);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -1107,8 +1107,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsInteger = 1;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsInteger, 1);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsInteger, 1);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -1290,8 +1290,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1StringLarge = aLarge;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1StringLarge, aLarge);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1StringLarge, aLarge);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -1493,8 +1493,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsBinary = binary1;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsBinary, binary1);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsBinary, binary1);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -1691,8 +1691,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsString = "a";
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsString, "a");
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsString, "a");
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect
@@ -1864,8 +1864,8 @@ public abstract class UnitTest : IDisposable
                 c1.C1AllorsUnique = unique;
 
                 // Force a Flush
-                var extent = this.Transaction.Extent<C1>();
-                extent.Predicate.AddEquals(m.C1.C1AllorsUnique, unique);
+                var extent = this.Transaction.Filter<C1>();
+                extent.AddEquals(m.C1.C1AllorsUnique, unique);
                 Assert.NotNull(extent.First());
 
                 // Garbage Collect

@@ -379,18 +379,18 @@ public class Transaction : ITransaction
         }
     }
 
-    public IFilter<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
+    public IFilter<T> Filter<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
     {
         if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
         {
             throw new Exception("type should be a CompositeType");
         }
 
-        var extent = (IFilter<T>)this.Extent(compositeType, filter);
+        var extent = (IFilter<T>)this.Filter(compositeType, filter);
         return extent;
     }
 
-    public virtual IFilter<IObject> Extent(Composite objectType, Action<ICompositePredicate> filter = null)
+    public virtual IFilter<IObject> Filter(Composite objectType, Action<ICompositePredicate> filter = null)
     {
         Type type = typeof(ExtentFiltered<>);
         Type[] typeArgs = [objectType.BoundType];
@@ -398,7 +398,7 @@ public class Transaction : ITransaction
         var instance = Activator.CreateInstance(constructed, this, objectType);
 
         var extent = (IFilter<IObject>)instance;
-        filter?.Invoke(extent.Predicate);
+        filter?.Invoke(extent);
         return extent;
     }
 

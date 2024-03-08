@@ -45,7 +45,7 @@ namespace Tests
         {
             this.SetUser("jane@example.com");
 
-            var people = this.Transaction.Extent<Person>();
+            var people = this.Transaction.Filter<Person>();
             var person = people.First();
 
             var syncRequest = new SyncRequest
@@ -67,14 +67,14 @@ namespace Tests
         [Fact]
         public void WithoutAccessControl()
         {
-            this.Transaction.Extent<Person>().First(v => "noacl".Equals(v.UserName));
+            this.Transaction.Filter<Person>().First(v => "noacl".Equals(v.UserName));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
 
             this.SetUser("noacl");
 
-            var people = this.Transaction.Extent<Person>();
+            var people = this.Transaction.Filter<Person>();
             var person = people.First();
 
             var syncRequest = new SyncRequest

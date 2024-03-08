@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
             var m = transaction.Database.Services.Get<IMetaIndex>();
 
             var mailer = transaction.Database.Services.Get<IMailer>();
-            var emailMessages = transaction.Extent<EmailMessage>(v =>
+            var emailMessages = transaction.Filter<EmailMessage>(v =>
             {
                 v.AddNot().AddExists(m.EmailMessage.DateSending);
                 v.AddNot().AddExists(m.EmailMessage.DateSent);

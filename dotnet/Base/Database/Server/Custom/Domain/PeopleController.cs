@@ -39,7 +39,7 @@ namespace Allors.Database.Server.Controllers
 
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();
-            response.AddCollection("people", m.Person.Composite, this.Transaction.Extent<Person>());
+            response.AddCollection("people", m.Person.Composite, this.Transaction.Filter<Person>());
             return this.Ok(response.Build());
         }
     }

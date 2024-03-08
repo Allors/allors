@@ -169,7 +169,7 @@ namespace Allors.Security
 
             cancellationToken.ThrowIfCancellationRequested();
             using var transaction = this.database.CreateTransaction();
-            var user = transaction.Extent<User>().FindBy(m.User.NormalizedUserName, normalizedUserName);
+            var user = transaction.Filter<User>().FindBy(m.User.NormalizedUserName, normalizedUserName);
             return user?.AsIdentityUser();
         }
 
@@ -223,9 +223,9 @@ namespace Allors.Security
             var m = this.database.Services.Get<IMetaIndex>();
 
             using var transaction = this.database.CreateTransaction();
-            var extent = transaction.Extent<Login>();
-            extent.Predicate.AddEquals(m.Login.Provider, loginProvider);
-            extent.Predicate.AddEquals(m.Login.Key, providerKey);
+            var extent = transaction.Filter<Login>();
+            extent.AddEquals(m.Login.Provider, loginProvider);
+            extent.AddEquals(m.Login.Key, providerKey);
 
             var user = extent.FirstOrDefault()?.UserWhereLogin;
             return user?.AsIdentityUser();
@@ -247,9 +247,9 @@ namespace Allors.Security
             var m = this.database.Services.Get<IMetaIndex>();
 
             using var transaction = this.database.CreateTransaction();
-            var extent = transaction.Extent<Login>();
-            extent.Predicate.AddEquals(m.Login.Provider, loginProvider);
-            extent.Predicate.AddEquals(m.Login.Key, providerKey);
+            var extent = transaction.Filter<Login>();
+            extent.AddEquals(m.Login.Provider, loginProvider);
+            extent.AddEquals(m.Login.Key, providerKey);
 
             var login = extent.FirstOrDefault();
             login?.Delete();
@@ -298,7 +298,7 @@ namespace Allors.Security
             var m = this.database.Services.Get<IMetaIndex>();
 
             using var transaction = this.database.CreateTransaction();
-            var user = transaction.Extent<User>().FindBy(m.User.NormalizedUserEmail, normalizedEmail);
+            var user = transaction.Filter<User>().FindBy(m.User.NormalizedUserEmail, normalizedEmail);
             return user?.AsIdentityUser();
         }
 

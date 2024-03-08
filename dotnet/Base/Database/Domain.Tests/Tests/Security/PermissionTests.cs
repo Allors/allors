@@ -72,7 +72,7 @@ namespace Allors.Database.Domain.Tests
         {
             this.Transaction.Database.Services.Get<IPermissions>().Sync(this.Transaction);
 
-            var permissions = this.Transaction.Extent<Permission>().ToArray();
+            var permissions = this.Transaction.Filter<Permission>().ToArray();
 
             Assert.Empty(permissions.Where(v => v.OperandType is AssociationType associationType && associationType.RoleType.ObjectType.IsUnit));
         }
@@ -82,7 +82,7 @@ namespace Allors.Database.Domain.Tests
         {
             var domain = (Domain)this.Transaction.Database.MetaPopulation.FindById(new Guid("AB41FD0C-C887-4A1D-BEDA-CED69527E69A"));
 
-            var count = this.Transaction.Extent<Permission>().Count;
+            var count = this.Transaction.Filter<Permission>().Count;
 
             var permission = this.Transaction.Build<ExecutePermission>(v =>
             {

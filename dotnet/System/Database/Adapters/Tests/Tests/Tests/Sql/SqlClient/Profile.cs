@@ -49,7 +49,7 @@ public class Profile : Adapters.Profile
                         foreach (var @class in this.Transaction.Database.MetaPopulation.Classes)
                         {
                             var prefetchPolicy = this.prefetchers[@class];
-                            this.Transaction.Prefetch(prefetchPolicy, this.Transaction.Extent(@class).ToArray());
+                            this.Transaction.Prefetch(prefetchPolicy, this.Transaction.Filter(@class).ToArray());
                         }
                     });
             }

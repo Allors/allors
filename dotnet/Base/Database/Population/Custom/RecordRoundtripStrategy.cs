@@ -25,7 +25,7 @@
 
             var objects = this.existingRecordsByClass.Keys
                 .Where(v => v.KeyRoleType != null)
-                .SelectMany(v => transaction.Extent(v))
+                .SelectMany(v => transaction.Filter(v))
                 .ToArray();
 
             return objects;

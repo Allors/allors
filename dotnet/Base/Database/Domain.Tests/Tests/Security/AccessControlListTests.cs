@@ -34,7 +34,7 @@ namespace Allors.Database.Domain.Tests
 
                 var guest = automatedAgents.Guest;
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (var aco in transaction.Extent(this.M.Organization.Composite))
+                foreach (var aco in transaction.Filter(this.M.Organization.Composite))
                 {
                     // When
                     var accessList = acls[aco];

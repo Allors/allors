@@ -6,14 +6,6 @@
 
 namespace Allors.Database;
 
-public interface IFilter<out T> : IExtent<T> where T : class, IObject
+public interface IFilter<out T> : IExtent<T>, ICompositePredicate where T : class, IObject
 {
-    /// <summary>
-    ///     Gets the predicate.
-    /// </summary>
-    /// <value>
-    ///     The filter is a top level AND filter. If you require an OR or a NOT filter
-    ///     then simply add it to this AND filter.
-    /// </value>
-    ICompositePredicate Predicate { get; }
 }

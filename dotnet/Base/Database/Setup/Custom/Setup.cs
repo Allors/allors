@@ -210,9 +210,9 @@ namespace Allors.Database.Domain
 
                 var m = denied.M;
 
-                var databaseWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
-                var defaultWorkspaceWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty));
-                var workspaceXWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty));
+                var databaseWrite = this.transaction.Filter<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
+                var defaultWorkspaceWrite = this.transaction.Filter<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty));
+                var workspaceXWrite = this.transaction.Filter<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty));
 
                 var revocation = BuildRevocation(databaseWrite, defaultWorkspaceWrite, workspaceXWrite);
 
@@ -234,12 +234,12 @@ namespace Allors.Database.Domain
                 var m = this.transaction.Database.Services.Get<IMetaIndex>();
 
                 // Denied Permissions
-                var fromTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));
+                var fromTrimPermission = this.transaction.Filter<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));
                 var fromRevocation = BuildRevocation(fromTrimPermission);
                 fromTrimmed1.AddRevocation(fromRevocation);
                 fromTrimmed2.AddRevocation(fromRevocation);
 
-                var toTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimTo.Name));
+                var toTrimPermission = this.transaction.Filter<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimTo.Name));
                 var toRevocation = BuildRevocation(toTrimPermission);
                 toTrimmed.AddRevocation(toRevocation);
 

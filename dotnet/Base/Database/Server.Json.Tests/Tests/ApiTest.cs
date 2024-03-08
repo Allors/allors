@@ -81,7 +81,7 @@ namespace Allors.Server.Tests
 
         protected HttpClientHandler HttpClientHandler { get; set; }
 
-        protected User Administrator => this.Transaction.Extent<User>().FindBy(this.M.User.UserName, "jane@example.com");
+        protected User Administrator => this.Transaction.Filter<User>().FindBy(this.M.User.UserName, "jane@example.com");
 
         public void Dispose()
         {

@@ -37,7 +37,7 @@ namespace Allors.Database.Domain
                 {
                     var keyRoleType = @class.KeyRoleType;
 
-                    var objectByKey = this.Transaction.Extent(@class).ToDictionary(v => v.Strategy.GetUnitRole(keyRoleType));
+                    var objectByKey = this.Transaction.Filter(@class).ToDictionary(v => v.Strategy.GetUnitRole(keyRoleType));
 
                     foreach (var record in records)
                     {

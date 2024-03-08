@@ -29,7 +29,7 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = transaction.Extent<C1>().First();
+            var c1 = transaction.Filter<C1>().First();
             Assert.Equal("a", c1.C1AllorsString);
         }
 
@@ -46,13 +46,13 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database2.CreateTransaction())
         {
-            var c1 = transaction.Extent<C1>().First();
+            var c1 = transaction.Filter<C1>().First();
             c1.C1AllorsString = "c";
         }
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = transaction.Extent<C1>().First();
+            var c1 = transaction.Filter<C1>().First();
             Assert.Equal("c", c1.C1AllorsString);
         }
     }
@@ -184,7 +184,7 @@ public abstract class CacheTest : IDisposable
 
             c1a.C1C2many2one = c2a;
 
-            var extent = transaction.Extent<C1>();
+            var extent = transaction.Filter<C1>();
             var array = extent.ToArray();
 
             var nestedPrefetchPolicyBuilder = new PrefetchPolicyBuilder();
@@ -227,7 +227,7 @@ public abstract class CacheTest : IDisposable
             c1a.RemoveC1C1one2manies();
             c1a.AddC1C2one2many(c2c);
 
-            var extent = transaction.Extent<C1>();
+            var extent = transaction.Filter<C1>();
             var array = extent.ToArray();
 
             var nestedPrefetchPolicyBuilder = new PrefetchPolicyBuilder();

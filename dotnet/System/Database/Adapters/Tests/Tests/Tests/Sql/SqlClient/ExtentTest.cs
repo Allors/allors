@@ -43,7 +43,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
                 marker();
 
-                var extent = this.Transaction.Extent(m.C1.Composite);
+                var extent = this.Transaction.Filter(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString);
 
                 var sortedObjects = extent.Cast<C1>().ToArray();
@@ -55,7 +55,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
                 marker();
 
-                extent = this.Transaction.Extent(m.C1.Composite);
+                extent = this.Transaction.Filter(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
                 sortedObjects = extent.Cast<C1>().ToArray();
@@ -67,7 +67,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
                 marker();
 
-                extent = this.Transaction.Extent(m.C1.Composite);
+                extent = this.Transaction.Filter(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
                 sortedObjects = extent.Cast<C1>().ToArray();
@@ -79,7 +79,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
                 marker();
 
-                extent = this.Transaction.Extent(m.C1.Composite);
+                extent = this.Transaction.Filter(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
 
                 sortedObjects = extent.Cast<C1>().ToArray();
@@ -91,7 +91,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
                 marker();
 
-                extent = this.Transaction.Extent(m.C1.Composite);
+                extent = this.Transaction.Filter(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
 
                 sortedObjects = extent.Cast<C1>().ToArray();
@@ -107,11 +107,11 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                     {
                         marker();
 
-                        var firstExtent = this.Transaction.Extent(m.C1.Composite);
-                        firstExtent.Predicate.AddLike(m.C1.C1AllorsString, "1");
-                        var secondExtent = this.Transaction.Extent(m.C1.Composite);
+                        var firstExtent = this.Transaction.Filter(m.C1.Composite);
+                        firstExtent.AddLike(m.C1.C1AllorsString, "1");
+                        var secondExtent = this.Transaction.Filter(m.C1.Composite);
                         var union = this.Transaction.Union(firstExtent, secondExtent);
-                        secondExtent.Predicate.AddLike(m.C1.C1AllorsString, "3");
+                        secondExtent.AddLike(m.C1.C1AllorsString, "3");
                         union.AddSort(m.C1.C1AllorsString);
 
                         sortedObjects = union.Cast<C1>().ToArray();
@@ -144,7 +144,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
             this.Transaction.Commit();
 
-            var extent = this.Transaction.Extent(m.C1.Composite);
+            var extent = this.Transaction.Filter(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger);
 
@@ -155,7 +155,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
             Assert.Equal(this.c1B, sortedObjects[2]);
             Assert.Equal(this.c1C, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1.Composite);
+            extent = this.Transaction.Filter(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Ascending);
 
@@ -166,7 +166,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
             Assert.Equal(this.c1B, sortedObjects[2]);
             Assert.Equal(this.c1C, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1.Composite);
+            extent = this.Transaction.Filter(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Descending);
 
@@ -177,7 +177,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
             Assert.Equal(this.c1D, sortedObjects[2]);
             Assert.Equal(this.c1C, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1.Composite);
+            extent = this.Transaction.Filter(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Descending);
 
@@ -207,7 +207,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
             c1B.C1AllorsString = "1";
             c1C.C1AllorsString = "3";
 
-            var extent = this.Transaction.Extent(m.C1.Composite);
+            var extent = this.Transaction.Filter(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
             var sortedObjects = extent.Cast<C1>().ToArray();
@@ -226,7 +226,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
             {
                 c1A = (C1)transaction2.Instantiate(c1AId);
 
-                extent = transaction2.Extent(m.C1.Composite);
+                extent = transaction2.Filter(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
                 sortedObjects = extent.Cast<C1>().ToArray();

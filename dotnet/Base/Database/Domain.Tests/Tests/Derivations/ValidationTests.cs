@@ -22,7 +22,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
-            valiData.RequiredPerson = this.Transaction.Extent<Person>().First();
+            valiData.RequiredPerson = this.Transaction.Filter<Person>().First();
 
             Assert.False(this.Transaction.Derive(false).HasErrors);
         }

@@ -40,7 +40,7 @@ namespace Allors.Database.Domain
             this.objectsGraph = new Graph<IObjects>();
 
             this.roleById = new Dictionary<Guid, Role>();
-            foreach (Role role in transaction.Extent<Role>())
+            foreach (Role role in transaction.Filter<Role>())
             {
                 if (!role.ExistUniqueId)
                 {
@@ -56,7 +56,7 @@ namespace Allors.Database.Domain
 
             this.deniablePermissionByOperandTypeByObjectTypeId = new Dictionary<Guid, Dictionary<OperandType, Permission>>();
 
-            foreach (var permission in transaction.Extent<ReadPermission>().Cast<Permission>().Union(transaction.Extent<WritePermission>()).Union(transaction.Extent<ExecutePermission>()))
+            foreach (var permission in transaction.Filter<ReadPermission>().Cast<Permission>().Union(transaction.Filter<WritePermission>()).Union(transaction.Filter<ExecutePermission>()))
             {
                 if (!permission.ExistClassPointer || !permission.ExistOperation)
                 {
@@ -241,13 +241,13 @@ namespace Allors.Database.Domain
 
         private void BaseOnPreSetup()
         {
-            foreach (Role role in this.transaction.Extent<Role>())
+            foreach (Role role in this.transaction.Filter<Role>())
             {
                 role.RemovePermissions();
                 role.RemoveRevocations();
             }
 
-            foreach (var revocation in this.transaction.Extent<Revocation>().Where(v => v.ExistObjectStatesWhereObjectRevocation))
+            foreach (var revocation in this.transaction.Filter<Revocation>().Where(v => v.ExistObjectStatesWhereObjectRevocation))
             {
                 revocation.RemoveDeniedPermissions();
             }

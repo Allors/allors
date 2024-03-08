@@ -32,7 +32,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Derive();
 
-            var people = this.Transaction.Extent<Person>();
+            var people = this.Transaction.Filter<Person>();
             var logo = this.GetResourceBytes("Domain.Tests.Resources.logo.png");
 
             var data = new Dictionary<string, object>

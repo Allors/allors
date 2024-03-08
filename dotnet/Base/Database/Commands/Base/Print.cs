@@ -30,8 +30,8 @@ namespace Commands
             transaction.Services.Get<IUserService>().User = scheduler;
 
             var m = this.Parent.M;
-            var printDocuments = transaction.Extent<PrintDocument>();
-            printDocuments.Predicate.AddNot().AddExists(m.PrintDocument.Media);
+            var printDocuments = transaction.Filter<PrintDocument>();
+            printDocuments.AddNot().AddExists(m.PrintDocument.Media);
 
             foreach (PrintDocument printDocument in printDocuments)
             {

@@ -107,7 +107,7 @@ namespace Tests
             }
         }
 
-        protected IUser SetUser(string userName) => this.Transaction.Services.Get<IUserService>().User = this.Transaction.Extent<User>().FindBy(this.M.User.UserName, userName);
+        protected IUser SetUser(string userName) => this.Transaction.Services.Get<IUserService>().User = this.Transaction.Filter<User>().FindBy(this.M.User.UserName, userName);
 
         protected Stream GetResource(string name)
         {

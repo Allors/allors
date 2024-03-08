@@ -77,7 +77,7 @@
         public Connection Connect(string userName)
         {
             using var transaction = this.Database.CreateTransaction();
-            var user = transaction.Extent<User>().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+            var user = transaction.Filter<User>().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
             transaction.Services.Get<IUserService>().User = user;
             return new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = user.Id };
         }

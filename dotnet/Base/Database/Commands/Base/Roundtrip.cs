@@ -49,7 +49,7 @@ namespace Commands
             this.Logger.Info("Translations");
 
             using var transaction = database.CreateTransaction();
-            var enumerations = transaction.Extent<Enumeration>();
+            var enumerations = transaction.Filter<Enumeration>();
 
             // IDictionary<IClass, IDictionary< string, Translations[]>>
             var translationsByIsoCodeByClass = enumerations

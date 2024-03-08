@@ -28,7 +28,7 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object> { { "firstName", "John" } });
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.Person.Composite, v => v.AddEquals(this.M.Person.FirstName, "John"));
+            var extent = this.Transaction.Filter(this.M.Person.Composite, v => v.AddEquals(this.M.Person.FirstName, "John"));
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -43,7 +43,7 @@ namespace Allors.Database.Domain.Tests
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person.Composite);
+            var extent = this.Transaction.Filter(this.M.Person.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -79,7 +79,7 @@ namespace Allors.Database.Domain.Tests
                                 });
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.Person.Composite, v =>
+            var extent = this.Transaction.Filter(this.M.Person.Composite, v =>
             {
                 v.AddEquals(this.M.Person.FirstName, "John");
                 v.AddEquals(this.M.Person.LastName, "Doe");
@@ -118,7 +118,7 @@ namespace Allors.Database.Domain.Tests
                                     });
                 var queryExtent = filter.Build(this.Transaction, arguments);
 
-                var extent = this.Transaction.Extent(this.M.Person.Composite, v => v.AddEquals(this.M.Person.FirstName, "John"));
+                var extent = this.Transaction.Filter(this.M.Person.Composite, v => v.AddEquals(this.M.Person.FirstName, "John"));
 
                 Assert.Equal(extent.ToArray(), [.. queryExtent]);
             }
@@ -126,7 +126,7 @@ namespace Allors.Database.Domain.Tests
             {
                 var queryExtent = filter.Build(this.Transaction);
 
-                var extent = this.Transaction.Extent(this.M.Person.Composite);
+                var extent = this.Transaction.Filter(this.M.Person.Composite);
 
                 Assert.Equal(extent.ToArray(), [.. queryExtent]);
             }
@@ -154,9 +154,9 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object> { { "nested", "c2B" } });
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var c2s = this.Transaction.Extent(this.M.C2.Composite, v => v.AddEquals(this.M.C2.C2AllorsString, "c2B"));
+            var c2s = this.Transaction.Filter(this.M.C2.Composite, v => v.AddEquals(this.M.C2.C2AllorsString, "c2B"));
 
-            var extent = this.Transaction.Extent(this.M.C1.Composite, v => v.AddIn(this.M.C1.C1C2One2One, c2s));
+            var extent = this.Transaction.Filter(this.M.C1.Composite, v => v.AddIn(this.M.C1.C1C2One2One, c2s));
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -183,7 +183,7 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object>());
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.C1.Composite);
+            var extent = this.Transaction.Filter(this.M.C1.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -216,7 +216,7 @@ namespace Allors.Database.Domain.Tests
             var parameters = new Arguments(new Dictionary<string, object>());
             var queryExtent = filter.Build(this.Transaction, parameters);
 
-            var extent = this.Transaction.Extent(this.M.C1.Composite);
+            var extent = this.Transaction.Filter(this.M.C1.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -249,7 +249,7 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object>());
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.C1.Composite);
+            var extent = this.Transaction.Filter(this.M.C1.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }

@@ -173,7 +173,7 @@ namespace Tests
 
             Assert.Equal(2, pool.Length);
 
-            var c1b = this.Transaction.Extent<C1>().First(v => "c1B".Equals(v.Name));
+            var c1b = this.Transaction.Filter<C1>().First(v => "c1B".Equals(v.Name));
 
             Assert.Contains(pool, v => v.i == c1b.Id);
             Assert.Contains(pool, v => v.i == c1b.C1C2One2One.Id);
@@ -220,7 +220,7 @@ namespace Tests
 
             Assert.Equal(2, pool.Length);
 
-            var c2b = this.Transaction.Extent<C2>().First(v => "c2B".Equals(v.Name));
+            var c2b = this.Transaction.Filter<C2>().First(v => "c2B".Equals(v.Name));
 
             Assert.Contains(pool, v => v.i == c2b.Id);
             Assert.Contains(pool, v => v.i == c2b.C1WhereC1C2One2One.Id);
@@ -271,7 +271,7 @@ namespace Tests
 
             Assert.Equal(2, pool.Length);
 
-            var c1b = this.Transaction.Extent<C1>().First(v => "c1B".Equals(v.Name));
+            var c1b = this.Transaction.Filter<C1>().First(v => "c1B".Equals(v.Name));
 
             Assert.Contains(pool, v => v.i == c1b.C1C2One2One.Id);
             Assert.Contains(pool, v => v.i == c1b.C1C2One2One.C2C2One2One.Id);
@@ -322,7 +322,7 @@ namespace Tests
 
             Assert.Equal(2, pool.Length);
 
-            var c2b = this.Transaction.Extent<C2>().First(v => "c2B".Equals(v.Name));
+            var c2b = this.Transaction.Filter<C2>().First(v => "c2B".Equals(v.Name));
 
             Assert.Contains(pool, v => v.i == c2b.C1WhereC1C2One2One.Id);
             Assert.Contains(pool, v => v.i == c2b.C1WhereC1C2One2One.C1WhereC1C1One2One.Id);

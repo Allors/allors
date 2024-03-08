@@ -29,8 +29,8 @@ namespace Allors.Database.Domain
 
         public void CustomOnPostDerive(ObjectOnPostDerive method)
         {
-            var people = this.strategy.Transaction.Extent<Person>();
-            people.Predicate.AddEquals(this.m.Person.FirstName, "John");
+            var people = this.strategy.Transaction.Filter<Person>();
+            people.AddEquals(this.m.Person.FirstName, "John");
             var john = people.First();
 
             this.AutocompleteDerivedFilter ??= john;

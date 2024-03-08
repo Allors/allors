@@ -360,4 +360,109 @@ internal class ExtentFiltered<T> : Extent<T>, IInternalExtentFiltered, IFilter<T
 
         return null;
     }
+
+    ICompositePredicate ICompositePredicate.AddAnd(Action<ICompositePredicate> init)
+    {
+        return this.Predicate.AddAnd(init);
+    }
+
+    IPredicate ICompositePredicate.AddBetween(RoleType role, object firstValue, object secondValue)
+    {
+        return this.Predicate.AddBetween(role, firstValue, secondValue);
+    }
+
+    IPredicate ICompositePredicate.AddIn(RoleType role, IExtent<IObject> containingExtent)
+    {
+        return this.Predicate.AddIn(role, containingExtent);
+    }
+
+    IPredicate ICompositePredicate.AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    {
+        return this.Predicate.AddIn(role, containingEnumerable);
+    }
+
+    IPredicate ICompositePredicate.AddIn(AssociationType association, IExtent<IObject> containingExtent)
+    {
+        return this.Predicate.AddIn(association, containingExtent);
+    }
+
+    IPredicate ICompositePredicate.AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    {
+        return this.Predicate.AddIn(association, containingEnumerable);
+    }
+
+    IPredicate ICompositePredicate.AddContains(RoleType role, IObject containedObject)
+    {
+        return this.Predicate.AddContains(role, containedObject);
+    }
+
+    IPredicate ICompositePredicate.AddContains(AssociationType association, IObject containedObject)
+    {
+        return this.Predicate.AddContains(association, containedObject);
+    }
+
+    IPredicate ICompositePredicate.AddEquals(IObject allorsObject)
+    {
+        return this.Predicate.AddEquals(allorsObject);
+    }
+
+    IPredicate ICompositePredicate.AddEquals(RoleType roleType, object valueOrAllorsObject)
+    {
+        return this.Predicate.AddEquals(roleType, valueOrAllorsObject);
+    }
+
+    IPredicate ICompositePredicate.AddEquals(AssociationType association, IObject allorsObject)
+    {
+        return this.Predicate.AddEquals(association, allorsObject);
+    }
+
+    IPredicate ICompositePredicate.AddExists(RoleType role)
+    {
+        return this.Predicate.AddExists(role);
+    }
+
+    IPredicate ICompositePredicate.AddExists(AssociationType association)
+    {
+        return this.Predicate.AddExists(association);
+    }
+
+    IPredicate ICompositePredicate.AddGreaterThan(RoleType role, object value)
+    {
+        return this.Predicate.AddGreaterThan(role, value);
+    }
+
+    IPredicate ICompositePredicate.AddInstanceOf(Composite objectType)
+    {
+        return this.Predicate.AddInstanceOf(objectType);
+    }
+
+    IPredicate ICompositePredicate.AddInstanceOf(RoleType role, Composite objectType)
+    {
+        return this.Predicate.AddInstanceOf(role, objectType);
+    }
+
+    IPredicate ICompositePredicate.AddInstanceOf(AssociationType association, Composite objectType)
+    {
+        return this.Predicate.AddInstanceOf(association, objectType);
+    }
+
+    IPredicate ICompositePredicate.AddLessThan(RoleType role, object value)
+    {
+        return this.Predicate.AddLessThan(role, value);
+    }
+
+    IPredicate ICompositePredicate.AddLike(RoleType role, string value)
+    {
+        return this.Predicate.AddLike(role, value);
+    }
+
+    ICompositePredicate ICompositePredicate.AddNot(Action<ICompositePredicate> init)
+    {
+        return this.Predicate.AddNot(init);
+    }
+
+    ICompositePredicate ICompositePredicate.AddOr(Action<ICompositePredicate> init)
+    {
+        return this.Predicate.AddOr(init);
+    }
 }

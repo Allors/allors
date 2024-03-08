@@ -20,7 +20,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public async void WithParameter()
         {
-            var organisations = this.Transaction.Extent<Organization>().ToArray();
+            var organisations = this.Transaction.Filter<Organization>().ToArray();
 
             var extentService = this.Transaction.Database.Services.Get<IPreparedExtents>();
             var organizationByName = extentService.Get(PersistentPreparedExtent.ByNameId);

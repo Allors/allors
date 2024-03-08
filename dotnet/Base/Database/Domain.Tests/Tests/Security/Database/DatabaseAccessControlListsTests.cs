@@ -24,9 +24,9 @@ namespace Allors.Database.Domain.Tests
             {
                 transaction.Commit();
 
-                var guest = this.Transaction.Extent<User>().FindBy(this.M.User.UserName, "guest@example.com");
+                var guest = this.Transaction.Filter<User>().FindBy(this.M.User.UserName, "guest@example.com");
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (var aco in transaction.Extent(this.M.Organization.Composite))
+                foreach (var aco in transaction.Filter(this.M.Organization.Composite))
                 {
                     // When
                     var accessList = acls[aco];
@@ -135,7 +135,7 @@ namespace Allors.Database.Domain.Tests
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var role = transaction.Extent<Role>().FindBy(this.M.Role.Name, "Role");
+                var role = transaction.Filter<Role>().FindBy(this.M.Role.Name, "Role");
                 var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
@@ -175,7 +175,7 @@ namespace Allors.Database.Domain.Tests
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var role = transaction.Extent<Role>().FindBy(this.M.Role.Name, "Role");
+                var role = transaction.Filter<Role>().FindBy(this.M.Role.Name, "Role");
                 var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
@@ -251,7 +251,7 @@ namespace Allors.Database.Domain.Tests
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var role = transaction.Extent<Role>().FindBy(this.M.Role.Name, "Role");
+                var role = transaction.Filter<Role>().FindBy(this.M.Role.Name, "Role");
                 var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 

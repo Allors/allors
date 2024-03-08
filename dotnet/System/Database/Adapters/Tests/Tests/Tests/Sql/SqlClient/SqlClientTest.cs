@@ -80,18 +80,18 @@ public class SqlClientTest : IDisposable, IClassFixture<Fixture<SqlClientTest>>
 
             this.Transaction.Commit();
 
-            var c1s = this.Transaction.Extent<C1>().ToArray();
+            var c1s = this.Transaction.Filter<C1>().ToArray();
             this.Transaction.Prefetch(c1PrefetchPolicy, c1s);
 
-            foreach (C2 c2 in this.Transaction.Extent<C2>())
+            foreach (C2 c2 in this.Transaction.Filter<C2>())
             {
                 c2.Strategy.Delete();
 
-                foreach (C3 c3 in this.Transaction.Extent<C3>())
+                foreach (C3 c3 in this.Transaction.Filter<C3>())
                 {
                     c3.Strategy.Delete();
 
-                    c1s = this.Transaction.Extent<C1>().ToArray();
+                    c1s = this.Transaction.Filter<C1>().ToArray();
                     this.Transaction.Prefetch(c1PrefetchPolicy, c1s);
                 }
             }

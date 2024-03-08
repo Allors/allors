@@ -38,7 +38,7 @@ namespace Allors.Database.Server.Controllers
             var response = api.CreatePullResponseBuilder();
 
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
-            var organisation = this.Transaction.Extent<Organization>().FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
+            var organisation = this.Transaction.Filter<Organization>().FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
 
             response.AddObject("root", organisation,
             [

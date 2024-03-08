@@ -21,10 +21,10 @@ namespace Allors.Database.Configuration
 
         public void Sync(ITransaction transaction)
         {
-            var createPermissions = transaction.Extent<CreatePermission>().ToArray();
-            var readPermissions = transaction.Extent<ReadPermission>().ToArray();
-            var writePermissions = transaction.Extent<WritePermission>().ToArray();
-            var executePermissions = transaction.Extent<ExecutePermission>().ToArray();
+            var createPermissions = transaction.Filter<CreatePermission>().ToArray();
+            var readPermissions = transaction.Filter<ReadPermission>().ToArray();
+            var writePermissions = transaction.Filter<WritePermission>().ToArray();
+            var executePermissions = transaction.Filter<ExecutePermission>().ToArray();
 
             var database = transaction.Database;
 
@@ -213,10 +213,10 @@ namespace Allors.Database.Configuration
 
         private void ToMeta(ITransaction transaction)
         {
-            var createPermissions = transaction.Extent<CreatePermission>().ToArray();
-            var readPermissions = transaction.Extent<ReadPermission>().ToArray();
-            var writePermissions = transaction.Extent<WritePermission>().ToArray();
-            var executePermissions = transaction.Extent<ExecutePermission>().ToArray();
+            var createPermissions = transaction.Filter<CreatePermission>().ToArray();
+            var readPermissions = transaction.Filter<ReadPermission>().ToArray();
+            var writePermissions = transaction.Filter<WritePermission>().ToArray();
+            var executePermissions = transaction.Filter<ExecutePermission>().ToArray();
 
             var database = transaction.Database;
             transaction.Prefetch(database.Services.Get<IPrefetchPolicyCache>().PermissionsWithClass, createPermissions);

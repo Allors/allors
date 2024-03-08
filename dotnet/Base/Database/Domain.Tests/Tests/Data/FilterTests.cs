@@ -22,7 +22,7 @@ namespace Allors.Database.Domain.Tests
             var query = new Extent(this.M.Person.Composite);
             var queryExtent = query.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person.Composite);
+            var extent = this.Transaction.Filter(this.M.Person.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -41,7 +41,7 @@ namespace Allors.Database.Domain.Tests
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent<Person>(v => v.AddEquals(this.M.Person.FirstName, "John"));
+            var extent = this.Transaction.Filter<Person>(v => v.AddEquals(this.M.Person.FirstName, "John"));
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -72,8 +72,8 @@ namespace Allors.Database.Domain.Tests
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person.Composite);
-            extent.Predicate.AddAnd(v =>
+            var extent = this.Transaction.Filter(this.M.Person.Composite);
+            extent.AddAnd(v =>
             {
                 v.AddEquals(this.M.Person.FirstName, "John");
                 v.AddEquals(this.M.Person.LastName, "Doe");

@@ -21,11 +21,11 @@ public class Extent : IExtent, IPredicateContainer
 
     public Database.IExtent<IObject> Build(ITransaction transaction, IArguments arguments = null)
     {
-        var extent = transaction.Extent(this.ObjectType);
+        var extent = transaction.Filter(this.ObjectType);
 
         if (this.Predicate != null && !this.Predicate.ShouldTreeShake(arguments))
         {
-            this.Predicate?.Build(transaction, arguments, extent.Predicate);
+            this.Predicate?.Build(transaction, arguments, extent);
         }
 
         if (this.Sorting != null)

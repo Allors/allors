@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Build<Locale>(v =>
             {
-                v.Country = this.Transaction.Extent<Country>().FindBy(this.M.Country.Key, "BE");
+                v.Country = this.Transaction.Filter<Country>().FindBy(this.M.Country.Key, "BE");
             });
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
@@ -32,7 +32,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Build<Locale>(v =>
             {
-                v.Language = this.Transaction.Extent<Language>().FindBy(this.M.Language.Key, "en");
+                v.Language = this.Transaction.Filter<Language>().FindBy(this.M.Language.Key, "en");
             });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);
@@ -43,8 +43,8 @@ namespace Allors.Database.Domain.Tests
         {
             var locale = this.Transaction.Build<Locale>(v =>
             {
-                v.Language = this.Transaction.Extent<Language>().FindBy(this.M.Language.Key, "en");
-                v.Country = this.Transaction.Extent<Country>().FindBy(this.M.Country.Key, "BE");
+                v.Language = this.Transaction.Filter<Language>().FindBy(this.M.Language.Key, "en");
+                v.Country = this.Transaction.Filter<Country>().FindBy(this.M.Country.Key, "BE");
             });
 
             this.Transaction.Derive();
@@ -55,7 +55,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenLocaleWhenValidatingThenNameIsSet()
         {
-            var locale = this.Transaction.Extent<Locale>().FindBy(this.M.Locale.Key, "nl");
+            var locale = this.Transaction.Filter<Locale>().FindBy(this.M.Locale.Key, "nl");
 
             Assert.Equal("nl", locale.Key);
         }

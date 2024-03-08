@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
 
             var locales = this.Transaction.Scoped<LocaleByKey>();
 
-            foreach (Language language in this.Transaction.Extent<Language>())
+            foreach (Language language in this.Transaction.Filter<Language>())
             {
                 var locale = locales[language.Key];
                 if (locale != null)

@@ -16,7 +16,7 @@ namespace Allors.Database.Domain
             var singleton = (Singleton)@this.Instantiate(singletonId.Id);
             if (singleton == null)
             {
-                singleton = @this.Extent<Singleton>().FirstOrDefault();
+                singleton = @this.Filter<Singleton>().FirstOrDefault();
                 singletonId.Id = singleton?.Id ?? 0;
             }
 

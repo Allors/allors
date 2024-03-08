@@ -41,9 +41,9 @@ namespace Commands
 
             using var transaction = database.CreateTransaction();
 
-            var locales = transaction.Extent<Locale>().Where(v => localeNames.Contains(v.Key)).ToArray();
+            var locales = transaction.Filter<Locale>().Where(v => localeNames.Contains(v.Key)).ToArray();
 
-            var enumerationsByClass = transaction.Extent<Enumeration>()
+            var enumerationsByClass = transaction.Filter<Enumeration>()
                 .GroupBy(v => v.Strategy.Class)
                 .ToDictionary(v => v.Key, v => v);
 
