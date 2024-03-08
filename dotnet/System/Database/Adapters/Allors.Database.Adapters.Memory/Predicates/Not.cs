@@ -71,7 +71,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        var containedIn = new WithinAssociationExtent(this.extent, association, containingExtent);
+        Within containedIn = association.IsMany
+            ? new IntersectsAssociationExtent(this.extent, association, containingExtent)
+            : new WithinAssociationExtent(this.extent, association, containingExtent);
 
         this.extent.Invalidate();
         this.predicate = containedIn;
@@ -82,7 +84,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        var containedIn = new WithinAssociationEnumerable(this.extent, association, containingEnumerable);
+        Within containedIn = association.IsMany
+            ? new IntersectsAssociationEnumerable(this.extent, association, containingEnumerable)
+            : new WithinAssociationEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.Invalidate();
         this.predicate = containedIn;

@@ -27,19 +27,6 @@ internal sealed class WithinAssociationEnumerable : Within
     {
         var containing = new HashSet<IObject>(this.containingEnumerable);
 
-        if (this.associationType.IsMany)
-        {
-            foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
-            {
-                if (containing.Contains(assoc))
-                {
-                    return ThreeValuedLogic.True;
-                }
-            }
-
-            return ThreeValuedLogic.False;
-        }
-
         var association = strategy.GetCompositeAssociation(this.associationType);
         if (association != null)
         {

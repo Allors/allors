@@ -24,19 +24,6 @@ internal sealed class WithinAssociationExtent : Within
 
     internal override ThreeValuedLogic Evaluate(Strategy strategy)
     {
-        if (this.associationType.IsMany)
-        {
-            foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
-            {
-                if (this.containingExtent.Contains(assoc))
-                {
-                    return ThreeValuedLogic.True;
-                }
-            }
-
-            return ThreeValuedLogic.False;
-        }
-
         var association = strategy.GetCompositeAssociation(this.associationType);
         if (association != null)
         {

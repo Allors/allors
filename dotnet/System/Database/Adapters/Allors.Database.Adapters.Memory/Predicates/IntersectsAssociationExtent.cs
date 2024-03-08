@@ -24,25 +24,12 @@ internal sealed class IntersectsAssociationExtent : Within
 
     internal override ThreeValuedLogic Evaluate(Strategy strategy)
     {
-        if (this.associationType.IsMany)
+        foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
         {
-            foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
+            if (this.containingExtent.Contains(assoc))
             {
-                if (this.containingExtent.Contains(assoc))
-                {
-                    return ThreeValuedLogic.True;
-                }
+                return ThreeValuedLogic.True;
             }
-
-            return ThreeValuedLogic.False;
-        }
-
-        var association = strategy.GetCompositeAssociation(this.associationType);
-        if (association != null)
-        {
-            return this.containingExtent.Contains(association)
-                ? ThreeValuedLogic.True
-                : ThreeValuedLogic.False;
         }
 
         return ThreeValuedLogic.False;
