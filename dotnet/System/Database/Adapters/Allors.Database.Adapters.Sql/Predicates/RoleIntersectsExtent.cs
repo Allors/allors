@@ -27,7 +27,7 @@ internal sealed class RoleIntersectsExtent : Within
 
         inStatement.UseAssociation(this.role.AssociationType);
 
-        if ((this.role.IsMany && this.role.RelationType.AssociationType.IsMany) || !this.role.RelationType.ExistExclusiveClasses)
+        if (this.role.RelationType.AssociationType.IsMany || !this.role.RelationType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NOT NULL AND ");
             statement.Append(" " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForAssociation + " IN (");

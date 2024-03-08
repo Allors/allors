@@ -29,7 +29,7 @@ internal sealed class NotAssociationWithinExtent : Within
 
         inStatement.UseRole(this.association.RoleType);
 
-        if ((this.association.IsMany && this.association.RoleType.IsMany) || !this.association.RelationType.ExistExclusiveClasses)
+        if (!this.association.RelationType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IN (\n");

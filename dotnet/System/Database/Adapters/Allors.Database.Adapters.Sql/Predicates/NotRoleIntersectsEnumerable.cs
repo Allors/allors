@@ -35,7 +35,7 @@ internal sealed class NotRoleIntersectsEnumerable : Within
             inStatement.Append(inObject.Id);
         }
 
-        if ((this.role.IsMany && this.role.RelationType.AssociationType.IsMany) || !this.role.RelationType.ExistExclusiveClasses)
+        if (this.role.RelationType.AssociationType.IsMany || !this.role.RelationType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NULL OR ");
             statement.Append(" NOT " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForAssociation + " IN (");

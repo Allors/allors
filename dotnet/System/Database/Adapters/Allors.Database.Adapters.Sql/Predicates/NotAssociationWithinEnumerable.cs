@@ -35,8 +35,7 @@ internal sealed class NotAssociationWithinEnumerable : Within
             inStatement.Append(inObject.Id.ToString());
         }
 
-        if ((this.association.IsMany && this.association.RelationType.RoleType.IsMany) ||
-            !this.association.RelationType.ExistExclusiveClasses)
+        if (!this.association.RelationType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR ");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IN (\n");
