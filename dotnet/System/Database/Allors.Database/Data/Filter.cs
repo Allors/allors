@@ -7,9 +7,9 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public class Extent : IExtent, IPredicateContainer
+public class Filter : IExtent, IPredicateContainer
 {
-    public Extent(Composite objectType) => this.ObjectType = objectType;
+    public Filter(Composite objectType) => this.ObjectType = objectType;
 
     public IPredicate Predicate { get; set; }
 

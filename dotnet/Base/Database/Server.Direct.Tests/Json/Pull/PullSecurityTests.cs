@@ -37,7 +37,7 @@ namespace Tests
 
             // Extent
             {
-                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1.Composite) };
+                var pull = new Pull { Extent = new Filter(m.WorkspaceXObject1.Composite) };
                 var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
                 var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -84,7 +84,7 @@ namespace Tests
 
             // Extent
             {
-                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1.Composite) };
+                var pull = new Pull { Extent = new Filter(m.WorkspaceXObject1.Composite) };
 
                 var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)] };
 
@@ -125,7 +125,7 @@ namespace Tests
 
             // Extent
             {
-                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1.Composite) };
+                var pull = new Pull { Extent = new Filter(m.WorkspaceXObject1.Composite) };
                 var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
                 var api = new Api(this.Transaction, "None", CancellationToken.None);
@@ -168,7 +168,7 @@ namespace Tests
 
             this.Transaction.Commit();
 
-            var pull = new Pull { Extent = new Extent(m.Data.Composite) };
+            var pull = new Pull { Extent = new Filter(m.Data.Composite) };
             var pullRequest = new PullRequest
             {
                 l =
@@ -211,7 +211,7 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var pull = new Pull { Extent = new Extent(m.Denied.Composite) };
+            var pull = new Pull { Extent = new Filter(m.Denied.Composite) };
 
             var pullRequest = new PullRequest
             {
@@ -250,7 +250,7 @@ namespace Tests
 
             var uri = new Uri(@"allors/pull", UriKind.Relative);
 
-            var pull = new Pull { Extent = new Extent(this.M.Data.Composite) };
+            var pull = new Pull { Extent = new Filter(this.M.Data.Composite) };
 
             var pullRequest = new PullRequest
             {

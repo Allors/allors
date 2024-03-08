@@ -21,7 +21,7 @@ public interface IVisitor
 
     void VisitExists(Exists visited);
 
-    void VisitExtent(Extent visited);
+    void VisitExtent(Filter visited);
 
     void VisitSelect(Select visited);
 

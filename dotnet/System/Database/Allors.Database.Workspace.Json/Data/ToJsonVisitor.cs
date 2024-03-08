@@ -173,7 +173,7 @@ public class ToJsonVisitor : IVisitor
         this.predicates.Push(predicate);
     }
 
-    public void VisitExtent(Data.Extent visited)
+    public void VisitExtent(Data.Filter visited)
     {
         var extent = new Extent
         {

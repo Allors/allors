@@ -19,7 +19,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Type()
         {
-            var query = new Extent(this.M.Person.Composite);
+            var query = new Filter(this.M.Person.Composite);
             var queryExtent = query.Build(this.Transaction);
 
             var extent = this.Transaction.Filter(this.M.Person.Composite);
@@ -30,7 +30,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void RoleEquals()
         {
-            var filter = new Extent(this.M.Person.Composite)
+            var filter = new Filter(this.M.Person.Composite)
             {
                 Predicate = new Equals
                 {
@@ -50,7 +50,7 @@ namespace Allors.Database.Domain.Tests
         public void And()
         {
             // select from Person where FirstName='John' and LastName='Doe'
-            var filter = new Extent(this.M.Person.Composite)
+            var filter = new Filter(this.M.Person.Composite)
             {
                 Predicate = new And
                 {

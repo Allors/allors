@@ -62,7 +62,7 @@ public class FromJsonVisitor : IVisitor
                 }
 
                 var objectType = (Composite)this.fromJson.MetaPopulation.FindByTag(visited.t);
-                var extent = new Data.Extent(objectType);
+                var extent = new Data.Filter(objectType);
                 sortable = extent;
 
                 this.extents.Push(extent);

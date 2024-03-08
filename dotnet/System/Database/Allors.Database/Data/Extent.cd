@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Database.Data.Between" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13" Y="7.75" Width="1.5" />
+    <Position X="14.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAEAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\Between.cs</FileName>
@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.GreaterThan" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.75" Y="7.75" Width="1.5" />
+    <Position X="16.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAIAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\GreaterThan.cs</FileName>
@@ -33,7 +33,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.LessThan" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16.5" Y="7.75" Width="1.5" />
+    <Position X="18" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAIAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\LessThan.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.Like" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.25" Y="7.75" Width="1.5" />
+    <Position X="12.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\Like.cs</FileName>
@@ -72,11 +72,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Data.Extent" Collapsed="true">
+  <Class Name="Allors.Database.Data.Filter" Collapsed="true">
     <Position X="6" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAEAIAAAAAAAAAAAQAAAAgAIAAIAAAAAAAAA=</HashCode>
-      <FileName>Data\Extent.cs</FileName>
+      <FileName>Data\Filter.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Predicate" />
@@ -100,7 +100,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.In" Collapsed="true">
-    <Position X="0.75" Y="8" Width="1.5" />
+    <Position X="2.25" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>MIAAAAAAAAAAAAAAAJAAAAAAAAAQAAEAAAAACAAABAA=</HashCode>
       <FileName>Data\In.cs</FileName>
@@ -108,7 +108,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.Instanceof" Collapsed="true">
-    <Position X="2.5" Y="8" Width="1.5" />
+    <Position X="5.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAJAAAAAAAAAQAAAAAIAACAAABAA=</HashCode>
       <FileName>Data\Instanceof.cs</FileName>
@@ -116,7 +116,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.Exists" Collapsed="true">
-    <Position X="4.25" Y="8" Width="1.5" />
+    <Position X="7.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAJAAAAAAAAAQAAAAAAAACAAABAA=</HashCode>
       <FileName>Data\Exists.cs</FileName>
@@ -124,7 +124,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.Equals" Collapsed="true">
-    <Position X="6" Y="8" Width="1.5" />
+    <Position X="4" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAIgAJAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\Equals.cs</FileName>
@@ -132,7 +132,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Data.Contains" Collapsed="true">
-    <Position X="7.75" Y="8" Width="1.5" />
+    <Position X="0.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAgAJAAAAAAAAAQAAAAAAAACAAABAA=</HashCode>
       <FileName>Data\Contains.cs</FileName>
@@ -140,7 +140,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Allors.Database.Data.IPredicateContainer">
-    <Position X="14.5" Y="2.5" Width="1.75" />
+    <Position X="7.75" Y="2.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\IPredicateContainer.cs</FileName>
@@ -196,12 +196,12 @@
   </Interface>
   <Interface Name="Allors.Database.Data.ICompositePredicate">
     <Position X="11" Y="5" Width="1.75" />
-    <InheritanceLine Type="Allors.Database.Data.IPredicateContainer" FixedToPoint="true">
+    <InheritanceLine Type="Allors.Database.Data.IPredicateContainer" ManuallyRouted="true" FixedToPoint="true">
       <Path>
-        <Point X="15.375" Y="3.603" />
-        <Point X="15.375" Y="4.5" />
-        <Point X="12.24" Y="4.5" />
-        <Point X="12.24" Y="5" />
+        <Point X="8.625" Y="3.353" />
+        <Point X="8.625" Y="4.874" />
+        <Point X="11.25" Y="4.874" />
+        <Point X="11.25" Y="5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>

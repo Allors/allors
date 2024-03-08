@@ -36,6 +36,7 @@ using Union = Allors.Workspace.Data.Union;
 
 namespace Allors.Workspace.Protocol.Direct
 {
+    using Filter = Data.Filter;
     using In = Data.In;
 
     public class ToDatabaseVisitor
@@ -71,7 +72,7 @@ namespace Allors.Workspace.Protocol.Direct
                 _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
             };
 
-        private Database.Data.Extent Visit(Filter ws) => new Database.Data.Extent(this.Visit(ws.ObjectType))
+        private Database.Data.Filter Visit(Filter ws) => new Database.Data.Filter(this.Visit(ws.ObjectType))
         {
             Predicate = this.Visit(ws.Predicate),
             Sorting = this.Visit(ws.Sorting)

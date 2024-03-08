@@ -34,7 +34,7 @@ namespace Allors.Database.Configuration
                 {
                     var m = transaction.Database.Services.Get<IMetaIndex>();
 
-                    var filter = new Extent(m.PersistentPreparedSelect.Composite)
+                    var filter = new Filter(m.PersistentPreparedSelect.Composite)
                     {
                         Predicate = new Equals(m.PersistentPreparedSelect.UniqueId) { Value = id },
                     };

@@ -17,7 +17,6 @@ namespace Tests
     using Allors.Protocol.Json.Api.Pull;
     using Allors.Protocol.Json.SystemText;
     using Xunit;
-    using Extent = Allors.Database.Data.Extent;
     using Pull = Allors.Protocol.Json.Data.Pull;
     using Result = Allors.Database.Data.Result;
 
@@ -90,7 +89,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.Data.Composite),
+                Extent = new Filter(this.M.Data.Composite),
                 Results =
                 [
                     new  Result { Name = "Datas" },
@@ -142,7 +141,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C1.Composite)
+                Extent = new Filter(this.M.C1.Composite)
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
@@ -189,7 +188,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C2.Composite)
+                Extent = new Filter(this.M.C2.Composite)
                 {
                     Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },
@@ -236,7 +235,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C1.Composite)
+                Extent = new Filter(this.M.C1.Composite)
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
@@ -287,7 +286,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C2.Composite)
+                Extent = new Filter(this.M.C2.Composite)
                 {
                     Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },

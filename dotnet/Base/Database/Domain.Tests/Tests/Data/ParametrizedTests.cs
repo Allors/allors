@@ -20,7 +20,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void EqualsWithArguments()
         {
-            var filter = new Extent(this.M.Person.Composite)
+            var filter = new Filter(this.M.Person.Composite)
             {
                 Predicate = new Equals { RelationEndType = this.M.Person.FirstName, Parameter = "firstName" },
             };
@@ -36,7 +36,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void EqualsWithoutArguments()
         {
-            var filter = new Extent(this.M.Person.Composite)
+            var filter = new Filter(this.M.Person.Composite)
             {
                 Predicate = new Equals { RelationEndType = this.M.Person.FirstName, Parameter = "firstName" },
             };
@@ -52,7 +52,7 @@ namespace Allors.Database.Domain.Tests
         public void AndWithArguments()
         {
             // select from Person where FirstName='John' and LastName='Doe'
-            var filter = new Extent(this.M.Person.Composite)
+            var filter = new Filter(this.M.Person.Composite)
             {
                 Predicate = new And
                 {
@@ -92,7 +92,7 @@ namespace Allors.Database.Domain.Tests
         public void AndWithoutArguments()
         {
             // select from Person where FirstName='John' and LastName='Doe'
-            var filter = new Extent(this.M.Person.Composite)
+            var filter = new Filter(this.M.Person.Composite)
             {
                 Predicate = new And
                 {
@@ -135,12 +135,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void NestedWithArguments()
         {
-            var filter = new Extent(this.M.C1.Composite)
+            var filter = new Filter(this.M.C1.Composite)
             {
                 Predicate = new In
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
-                    Extent = new Extent(this.M.C2.Composite)
+                    Extent = new Filter(this.M.C2.Composite)
                     {
                         Predicate = new Equals
                         {
@@ -164,12 +164,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void NestedWithoutArguments()
         {
-            var filter = new Extent(this.M.C1.Composite)
+            var filter = new Filter(this.M.C1.Composite)
             {
                 Predicate = new In
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
-                    Extent = new Extent(this.M.C2.Composite)
+                    Extent = new Filter(this.M.C2.Composite)
                     {
                         Predicate = new Equals
                         {
@@ -191,7 +191,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void AndNestedInWithoutArguments()
         {
-            var filter = new Extent(this.M.C1.Composite)
+            var filter = new Filter(this.M.C1.Composite)
             {
                 Predicate = new And
                 {
@@ -200,7 +200,7 @@ namespace Allors.Database.Domain.Tests
                         new In
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
-                            Extent = new Extent(this.M.C2.Composite)
+                            Extent = new Filter(this.M.C2.Composite)
                             {
                                 Predicate = new Equals
                                 {
@@ -224,7 +224,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void AndNestedContainsWithoutArguments()
         {
-            var filter = new Extent(this.M.C1.Composite)
+            var filter = new Filter(this.M.C1.Composite)
             {
                 Predicate = new And
                 {
@@ -233,7 +233,7 @@ namespace Allors.Database.Domain.Tests
                         new In
                             {
                                 RelationEndType = this.M.C1.C1C2One2One,
-                                Extent = new Extent(this.M.C2.Composite)
+                                Extent = new Filter(this.M.C2.Composite)
                                              {
                                                  Predicate = new Contains
                                                                  {
