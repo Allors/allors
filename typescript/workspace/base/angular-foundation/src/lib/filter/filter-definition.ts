@@ -34,11 +34,13 @@ function parametrize(
       }
       break;
 
-    case 'ContainedIn':
+    case 'Within':
+    case 'Intersects':
       if (predicate.extent) {
         parametrize(predicate.extent, results);
       }
       break;
+
   }
 
   if ((predicate as ParameterizablePredicate).parameter) {

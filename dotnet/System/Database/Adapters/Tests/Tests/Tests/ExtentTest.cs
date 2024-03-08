@@ -200,7 +200,7 @@ public abstract class ExtentTest : IDisposable
     }
 
     [Fact]
-    public void AssociationMany2ManyWithin()
+    public void AssociationMany2ManyIntersects()
     {
         foreach (var init in this.Inits)
         {
@@ -227,11 +227,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, enumerable);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
                     }
 
                     Assert.Empty(extent);
@@ -253,11 +253,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, enumerable);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
                     }
 
                     Assert.Equal(3, extent.Count);
@@ -281,11 +281,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, enumerable);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
                     }
 
                     Assert.Single(extent);
@@ -310,11 +310,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, enumerable);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
                     }
 
                     Assert.Empty(extent);
@@ -336,11 +336,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, enumerable);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
                     }
 
                     Assert.Equal(3, extent.Count);
@@ -364,11 +364,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, enumerable);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                        extent.AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
                     }
 
                     Assert.Single(extent);
@@ -395,11 +395,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, enumerable);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
                     }
 
                     Assert.Empty(extent);
@@ -421,11 +421,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, enumerable);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
                     }
 
                     Assert.Equal(3, extent.Count);
@@ -449,11 +449,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, enumerable);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
                     }
 
                     Assert.Single(extent);
@@ -478,11 +478,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, enumerable);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
                     }
 
                     Assert.Empty(extent);
@@ -504,11 +504,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, enumerable);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
                     }
 
                     Assert.Equal(3, extent.Count);
@@ -532,11 +532,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, enumerable);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                        extent.AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
                     }
 
                     Assert.Single(extent);
@@ -560,11 +560,11 @@ public abstract class ExtentTest : IDisposable
                     extent = this.Transaction.Filter(m.I34.Composite);
                     if (useEnumerable)
                     {
-                        extent.AddWithin(m.I34.I12sWhereI12I34many2many, (IExtent<IObject>)inExtent);
+                        extent.AddIntersects(m.I34.I12sWhereI12I34many2many, (IExtent<IObject>)inExtent);
                     }
                     else
                     {
-                        extent.AddWithin(m.I34.I12sWhereI12I34many2many, inExtent);
+                        extent.AddIntersects(m.I34.I12sWhereI12I34many2many, inExtent);
                     }
 
                     Assert.Empty(extent);
@@ -586,11 +586,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I34.I12sWhereI12I34many2many, enumerable);
+                        extent.AddIntersects(m.I34.I12sWhereI12I34many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I34.I12sWhereI12I34many2many, inExtent);
+                        extent.AddIntersects(m.I34.I12sWhereI12I34many2many, inExtent);
                     }
 
                     Assert.Equal(7, extent.Count);
@@ -614,11 +614,11 @@ public abstract class ExtentTest : IDisposable
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)inExtent;
-                        extent.AddWithin(m.I34.I12sWhereI12I34many2many, enumerable);
+                        extent.AddIntersects(m.I34.I12sWhereI12I34many2many, enumerable);
                     }
                     else
                     {
-                        extent.AddWithin(m.I34.I12sWhereI12I34many2many, inExtent);
+                        extent.AddIntersects(m.I34.I12sWhereI12I34many2many, inExtent);
                     }
 
                     Assert.Single(extent);
@@ -3521,7 +3521,7 @@ public abstract class ExtentTest : IDisposable
     }
 
     [Fact]
-    public void NotAssociationMany2ManyWithin()
+    public void NotAssociationMany2ManyIntersects()
     {
         foreach (var init in this.Inits)
         {
@@ -3549,7 +3549,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                extent.AddNot().AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3567,7 +3567,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                extent.AddNot().AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -3587,7 +3587,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                extent.AddNot().AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3608,7 +3608,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                extent.AddNot().AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3626,7 +3626,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                extent.AddNot().AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -3646,7 +3646,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.C2.C1sWhereC1C2many2many, inExtent);
+                extent.AddNot().AddIntersects(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3669,7 +3669,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                extent.AddNot().AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3687,7 +3687,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                extent.AddNot().AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -3707,7 +3707,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                extent.AddNot().AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3728,7 +3728,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                extent.AddNot().AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -3746,7 +3746,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                extent.AddNot().AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -3766,7 +3766,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C2.Composite);
-                extent.AddNot().AddWithin(m.I12.C1sWhereC1I12many2many, inExtent);
+                extent.AddNot().AddIntersects(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -6751,7 +6751,7 @@ public abstract class ExtentTest : IDisposable
     }
 
     [Fact]
-    public void NotRoleOne2ManyWithin()
+    public void NotRoleOne2ManyIntersects()
     {
         foreach (var init in this.Inits)
         {
@@ -6777,7 +6777,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, true, true, true, true);
@@ -6795,7 +6795,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -6812,7 +6812,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.C1.C1C2one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -6829,7 +6829,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C3.Composite);
-                extent.AddNot().AddWithin(m.C3.C3C4one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -6850,7 +6850,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
                 this.AssertC1(extent, true, true, true, true);
@@ -6868,7 +6868,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -6885,7 +6885,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.C1.C1C2one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, true, false, false, true);
@@ -6902,7 +6902,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C3.Composite);
-                extent.AddNot().AddWithin(m.C3.C3C4one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -6922,7 +6922,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.I12.I12C2one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, true, false, true, true);
@@ -6940,7 +6940,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddNot().AddWithin(m.I12.I12C2one2manies, inExtent);
+                extent.AddNot().AddIntersects(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, true, false, true, true);
@@ -14513,7 +14513,7 @@ public abstract class ExtentTest : IDisposable
     }
 
     [Fact]
-    public void RoleMany2ManyWithin()
+    public void RoleMany2ManyIntersects()
     {
         foreach (var init in this.Inits)
         {
@@ -14539,7 +14539,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Empty(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -14557,7 +14557,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, true, true, true);
@@ -14577,7 +14577,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, true, true, true);
@@ -14598,7 +14598,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Empty(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -14616,7 +14616,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, true, true, true);
@@ -14636,7 +14636,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, true, true, true);
@@ -14659,7 +14659,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1I12many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Empty(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -14677,7 +14677,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1I12many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, true, false, false);
@@ -14697,7 +14697,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1I12many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, true, false, false);
@@ -14718,7 +14718,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1I12many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Empty(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -14736,7 +14736,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1I12many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, true, true, true);
@@ -14756,7 +14756,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1I12many2manies, inExtent);
+                extent.AddIntersects(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
                 this.AssertC1(extent, false, true, true, true);
@@ -14907,7 +14907,7 @@ public abstract class ExtentTest : IDisposable
     }
 
     [Fact]
-    public void RoleOne2ManyWithin()
+    public void RoleOne2ManyIntersects()
     {
         foreach (var init in this.Inits)
         {
@@ -14934,7 +14934,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 var extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Empty(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -14952,7 +14952,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, true, true, false);
@@ -14969,7 +14969,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C2one2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, true, true, false);
@@ -14986,7 +14986,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C3.Composite);
-                extent.AddWithin(m.C3.C3C4one2manies, inExtent);
+                extent.AddIntersects(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -15007,7 +15007,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Empty(extent);
                 this.AssertC1(extent, false, false, false, false);
@@ -15025,7 +15025,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C1one2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, true, true, false);
@@ -15042,7 +15042,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.C1.C1C2one2manies, inExtent);
+                extent.AddIntersects(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, true, true, false);
@@ -15059,7 +15059,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C3.Composite);
-                extent.AddWithin(m.C3.C3C4one2manies, inExtent);
+                extent.AddIntersects(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
                 this.AssertC1(extent, false, false, false, false);
@@ -15079,7 +15079,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.I12.I12C2one2manies, inExtent);
+                extent.AddIntersects(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, true, false, false);
@@ -15097,7 +15097,7 @@ public abstract class ExtentTest : IDisposable
                 }
 
                 extent = this.Transaction.Filter(m.C1.Composite);
-                extent.AddWithin(m.I12.I12C2one2manies, inExtent);
+                extent.AddIntersects(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Single(extent);
                 this.AssertC1(extent, false, true, false, false);

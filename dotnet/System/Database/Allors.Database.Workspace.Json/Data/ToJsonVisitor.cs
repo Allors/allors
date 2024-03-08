@@ -79,11 +79,31 @@ public class ToJsonVisitor : IVisitor
         this.predicates.Push(predicate);
     }
 
-    public void VisitIn(Within visited)
+    public void VisitWithin(Within visited)
     {
         var predicate = new Predicate
         {
-            k = PredicateKind.In,
+            k = PredicateKind.Within,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
+            vs = visited.Objects?.Select(v => v.Id.ToString()).ToArray(),
+            p = visited.Parameter,
+        };
+
+        this.predicates.Push(predicate);
+
+        if (visited.Extent != null)
+        {
+            visited.Extent.Accept(this);
+            predicate.e = this.extents.Pop();
+        }
+    }
+
+    public void VisitIntersects(Intersects visited)
+    {
+        var predicate = new Predicate
+        {
+            k = PredicateKind.Intersects,
             a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
             r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             vs = visited.Objects?.Select(v => v.Id.ToString()).ToArray(),

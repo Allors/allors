@@ -110,9 +110,19 @@ export function predicateToJson(from: DataPredicate): Predicate {
         p: from.parameter,
       };
 
-    case 'ContainedIn':
+    case 'Within':
       return {
-        k: PredicateKind.ContainedIn,
+        k: PredicateKind.Within,
+        a: asAssociationTypeToJson(from.relationEndType),
+        r: asRoleTypeToJson(from.relationEndType),
+        obs: from.objects?.map((v) => v.id) ?? from.objectIds,
+        p: from.parameter,
+        e: extentToJson(from.extent),
+      };
+
+    case 'Intersects':
+      return {
+        k: PredicateKind.Intersects,
         a: asAssociationTypeToJson(from.relationEndType),
         r: asRoleTypeToJson(from.relationEndType),
         obs: from.objects?.map((v) => v.id) ?? from.objectIds,

@@ -266,7 +266,7 @@ public class FromJsonVisitor : IVisitor
                         this.predicates.Push(contains);
                         break;
 
-                    case PredicateKind.In:
+                    case PredicateKind.Within:
 
                         var containedIn = new Within(relationEndType) { Parameter = visited.p };
 
@@ -284,7 +284,25 @@ public class FromJsonVisitor : IVisitor
 
                         break;
 
-                    case PredicateKind.Equals:
+                    case PredicateKind.Intersects:
+
+                        var intersects = new Intersects(relationEndType) { Parameter = visited.p };
+
+                        this.predicates.Push(intersects);
+
+                        if (visited.obs != null)
+                        {
+                            this.fromJson.Resolve(intersects, visited.obs);
+                        }
+                        else if (visited.e != null)
+                        {
+                            visited.e.Accept(this);
+                            intersects.Extent = this.extents.Pop();
+                        }
+
+                        break;
+
+case PredicateKind.Equals:
 
                         var equals = new Equals(relationEndType)
                         {

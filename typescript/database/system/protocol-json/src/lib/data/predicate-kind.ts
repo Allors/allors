@@ -13,7 +13,7 @@ export enum PredicateKind {
 
   Contains = 7,
 
-  ContainedIn = 8,
+  Within = 8,
 
   Between = 9,
 
@@ -22,4 +22,6 @@ export enum PredicateKind {
   LessThan = 11,
 
   Like = 12,
+
+  Intersects = 8,
 }

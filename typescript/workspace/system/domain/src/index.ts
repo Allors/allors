@@ -29,7 +29,7 @@ export * from './lib/data/predicate';
 export * from './lib/data/parameterizable-predicate';
 export * from './lib/data/and';
 export * from './lib/data/between';
-export * from './lib/data/contained-in';
+export * from './lib/data/within';
 export * from './lib/data/contains';
 export * from './lib/data/equals';
 export * from './lib/data/exists';

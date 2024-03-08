@@ -90,7 +90,7 @@ test('andGreaterThanLessThan', async () => {
   expect(i12s).toEqualObjects([name_c1B, name_c2B]);
 });
 
-test('associationMany2ManyContainedIn', async () => {
+test('associationMany2ManyIntersects', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -100,7 +100,7 @@ test('associationMany2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C2.C1sWhereC1C2Many2Many,
         extent: {
           kind: 'Filter',
@@ -127,7 +127,7 @@ test('associationMany2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C2.C1sWhereC1C2Many2Many,
         extent: {
           kind: 'Filter',
@@ -153,7 +153,7 @@ test('associationMany2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C2.C1sWhereC1C2Many2Many,
         extent: {
           kind: 'Filter',
@@ -236,7 +236,7 @@ test('associationMany2ManyExists', async () => {
   expect(c2s).toEqualObjects([name_c2B, name_c2C, name_c2D]);
 });
 
-test('associationMany2OneContainedIn', async () => {
+test('associationMany2OneWithin', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -246,7 +246,7 @@ test('associationMany2OneContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Within',
         relationEndType: m.C2.C1sWhereC1C2Many2One,
         extent: {
           kind: 'Filter',
@@ -302,7 +302,7 @@ test('associationMany2OneContains', async () => {
   expect(c2s).toEqualObjects([name_c2C]);
 });
 
-test('associationOne2ManyContainedIn', async () => {
+test('associationOne2ManyIntersects', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -312,7 +312,7 @@ test('associationOne2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C2.C1WhereC1C2One2Many,
         extent: {
           kind: 'Filter',
@@ -467,7 +467,7 @@ test('associationOne2ManyInstanceof', async () => {
   expect(c2s).toEqualObjects([name_c2B, name_c2C, name_c2D]);
 });
 
-test('associationOne2OneContainedIn', async () => {
+test('associationOne2OneWithin', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -477,7 +477,7 @@ test('associationOne2OneContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Within',
         relationEndType: m.C2.C1WhereC1C2One2One,
         extent: {
           kind: 'Filter',
@@ -1893,7 +1893,7 @@ test('roleUniqueEquals', async () => {
   expect(c1s).toEqualObjects([name_c1B]);
 });
 
-test('roleMany2ManyContainedIn', async () => {
+test('roleMany2ManyIntersects', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -1903,7 +1903,7 @@ test('roleMany2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C1.C1I12Many2Manies,
         extent: {
           kind: 'Filter',
@@ -1930,7 +1930,7 @@ test('roleMany2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C1.C1I12Many2Manies,
         extent: {
           kind: 'Filter',
@@ -1956,7 +1956,7 @@ test('roleMany2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C1.C1I12Many2Manies,
         extent: {
           kind: 'Filter',
@@ -2038,7 +2038,7 @@ test('roleMany2ManyContains', async () => {
   }
 });
 
-test('roleOne2ManyContainedIn', async () => {
+test('roleOne2ManyIntersects', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -2047,7 +2047,7 @@ test('roleOne2ManyContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Intersects',
         relationEndType: m.C1.C1I12One2Manies,
         extent: {
           kind: 'Filter',
@@ -2102,7 +2102,7 @@ test('roleOne2ManyContains', async () => {
   expect(c1s).toEqualObjects([name_c1C]);
 });
 
-test('roleMany2OneContainedIn', async () => {
+test('roleMany2OneWithin', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -2112,7 +2112,7 @@ test('roleMany2OneContainedIn', async () => {
         kind: 'Filter',
         objectType: m.C1,
         predicate: {
-          kind: 'ContainedIn',
+          kind: 'Within',
           relationEndType: m.C1.C1I12Many2One,
           extent: {
             kind: 'Filter',
@@ -2159,7 +2159,7 @@ test('roleMany2OneContainedIn', async () => {
         kind: 'Filter',
         objectType: m.C1,
         predicate: {
-          kind: 'ContainedIn',
+          kind: 'Within',
           relationEndType: m.C1.C1I12Many2One,
           parameter: 'objects',
         },
@@ -2181,7 +2181,7 @@ test('roleMany2OneContainedIn', async () => {
   }
 });
 
-test('roleOne2OneContainedIn', async () => {
+test('roleOne2OneWithin', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -2190,7 +2190,7 @@ test('roleOne2OneContainedIn', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'ContainedIn',
+        kind: 'Within',
         relationEndType: m.C1.C1I12One2One,
         extent: {
           kind: 'Filter',

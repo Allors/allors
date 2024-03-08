@@ -1,6 +1,6 @@
 import { ObjectType } from '@allors/workspace/system/meta';
 import { Between } from './between';
-import { ContainedIn } from './contained-in';
+import { Within } from './within';
 import { Contains } from './contains';
 import { Equals } from './equals';
 import { Exists } from './exists';
@@ -8,17 +8,19 @@ import { GreaterThan } from './greater-than';
 import { Instanceof } from './instance-of';
 import { LessThan } from './less-than';
 import { Like } from './like';
+import { Intersects } from './intersects';
 
 export type ParameterizablePredicate =
   | Between
-  | ContainedIn
+  | Within
   | Contains
   | Equals
   | Exists
   | GreaterThan
   | Instanceof
   | LessThan
-  | Like;
+  | Like
+  | Intersects;
 
 export type ParameterizablePredicateKind = ParameterizablePredicate['kind'];
 
@@ -39,7 +41,8 @@ export function parameterizablePredicateObjectType(
     case 'LessThan':
     case 'Like':
       return predicate.roleType.objectType;
-    case 'ContainedIn':
+    case 'Within':
+    case 'Intersects':
     case 'Contains':
     case 'Equals':
     case 'Exists':

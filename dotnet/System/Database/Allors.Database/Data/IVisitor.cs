@@ -1,4 +1,4 @@
-// <copyright file="TreeNode.cs" company="Allors bv">
+﻿// <copyright file="TreeNode.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,9 @@ public interface IVisitor
 
     void VisitBetween(Between visited);
 
-    void VisitIn(Within visited);
+    void VisitWithin(Within visited);
+
+    void VisitIntersects(Intersects visited);
 
     void VisitContains(Contains visited);
 

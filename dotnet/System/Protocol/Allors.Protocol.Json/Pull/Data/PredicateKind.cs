@@ -1,4 +1,4 @@
-// <copyright file="PredicateKind.cs" company="Allors bv">
+﻿// <copyright file="PredicateKind.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -21,7 +21,7 @@ namespace Allors.Protocol.Json.Data
 
         Contains = 7,
 
-        In = 8,
+        Within = 8,
 
         Between = 9,
 
@@ -30,5 +30,7 @@ namespace Allors.Protocol.Json.Data
         LessThan = 11,
 
         Like = 12,
+
+        Intersects = 13,
     }
 }

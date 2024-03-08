@@ -83,11 +83,31 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitIn(Within visited)
+        public void VisitWithin(Within visited)
         {
             var predicate = new Predicate
             {
-                k = PredicateKind.In,
+                k = PredicateKind.Within,
+                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                vs = visited.Objects?.Select(v => v.Id as object).ToArray(),
+                p = visited.Parameter,
+            };
+
+            this.predicates.Push(predicate);
+
+            if (visited.Extent != null)
+            {
+                visited.Extent.Accept(this);
+                predicate.e = this.extents.Pop();
+            }
+        }
+
+        public void VisitIntersects(Intersects visited)
+        {
+            var predicate = new Predicate
+            {
+                k = PredicateKind.Intersects,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 vs = visited.Objects?.Select(v => v.Id as object).ToArray(),

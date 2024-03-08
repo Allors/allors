@@ -38,6 +38,7 @@ namespace Allors.Workspace.Protocol.Direct
 {
     using Filter = Data.Filter;
     using Within = Data.Within;
+    using Intersects = Data.Intersects;
 
     public class ToDatabaseVisitor
     {
@@ -84,6 +85,7 @@ namespace Allors.Workspace.Protocol.Direct
                 And and => this.Visit(and),
                 Between between => this.Visit(between),
                 Within containedIn => this.Visit(containedIn),
+                Intersects intersects => this.Visit(intersects),
                 Contains contains => this.Visit(contains),
                 Equals equals => this.Visit(equals),
                 Exists exists => this.Visit(exists),
@@ -107,6 +109,13 @@ namespace Allors.Workspace.Protocol.Direct
         };
 
         private IPredicate Visit(Within ws) => new Database.Data.Within(this.Visit(ws.PropertyType))
+        {
+            Parameter = ws.Parameter,
+            Objects = this.Visit(ws.Objects),
+            Extent = this.Visit(ws.Extent),
+        };
+
+        private IPredicate Visit(Intersects ws) => new Database.Data.Intersects(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
