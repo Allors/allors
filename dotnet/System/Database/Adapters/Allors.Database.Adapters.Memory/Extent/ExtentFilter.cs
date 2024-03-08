@@ -62,6 +62,26 @@ internal sealed class ExtentFilter<T> : Extent<T>, IFilter<T> where T : class, I
         return this.Predicate.AddBetween(role, firstValue, secondValue);
     }
 
+    IPredicate ICompositePredicate.AddIntersects(RoleType role, IExtent<IObject> containingExtent)
+    {
+        return this.Predicate.AddIntersects(role, containingExtent);
+    }
+
+    IPredicate ICompositePredicate.AddIntersects(RoleType role, IEnumerable<IObject> containingEnumerable)
+    {
+        return this.Predicate.AddIntersects(role, containingEnumerable);
+    }
+
+    IPredicate ICompositePredicate.AddIntersects(AssociationType association, IExtent<IObject> containingExtent)
+    {
+        return this.Predicate.AddIntersects(association, containingExtent);
+    }
+
+    IPredicate ICompositePredicate.AddIntersects(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    {
+        return this.Predicate.AddIntersects(association, containingEnumerable);
+    }
+    
     IPredicate ICompositePredicate.AddWithin(RoleType role, IExtent<IObject> containingExtent)
     {
         return this.Predicate.AddWithin(role, containingExtent);

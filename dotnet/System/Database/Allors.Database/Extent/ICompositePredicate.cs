@@ -53,6 +53,42 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>this CompositePredicate.</returns>
+    IPredicate AddIntersects(RoleType role, IExtent<IObject> containingExtent);
+
+    /// <summary>
+    ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
+    ///     the containingExtent.
+    /// </summary>
+    /// <param name="role">The role .</param>
+    /// <param name="containingEnumerable">The enumerable.</param>
+    /// <returns>This CompositePredicate. </returns>
+    IPredicate AddIntersects(RoleType role, IEnumerable<IObject> containingEnumerable);
+
+    /// <summary>
+    ///     Adds a Predicate that evaluates to true if any object of the association of the object under evaluation is
+    ///     contained in the containingExtent.
+    /// </summary>
+    /// <param name="association">The association.</param>
+    /// <param name="containingExtent">The extent.</param>
+    /// <returns>the composing CompositePredicate.</returns>
+    IPredicate AddIntersects(AssociationType association, IExtent<IObject> containingExtent);
+
+    /// <summary>
+    ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
+    ///     the containingExtent.
+    /// </summary>
+    /// <param name="association">The association.</param>
+    /// <param name="containingEnumerable">The enumerable.</param>
+    /// <returns>This CompositePredicate. </returns>
+    IPredicate AddIntersects(AssociationType association, IEnumerable<IObject> containingEnumerable);
+    
+    /// <summary>
+    ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
+    ///     the containingExtent.
+    /// </summary>
+    /// <param name="role">The role .</param>
+    /// <param name="containingExtent">The extent.</param>
+    /// <returns>this CompositePredicate.</returns>
     IPredicate AddWithin(RoleType role, IExtent<IObject> containingExtent);
 
     /// <summary>

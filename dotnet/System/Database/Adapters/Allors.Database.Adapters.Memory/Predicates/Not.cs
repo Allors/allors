@@ -54,6 +54,58 @@ internal sealed class Not : Predicate, ICompositePredicate
         return within;
     }
 
+    public IPredicate AddIntersects(RoleType role, IEnumerable<IObject> containingEnumerable)
+    {
+        this.CheckUnarity();
+
+        Within within = role.IsMany ?
+            new IntersectsRoleEnumerable(this.extent, role, containingEnumerable) :
+            new WithinRoleEnumerable(this.extent, role, containingEnumerable);
+
+        this.extent.Invalidate();
+        this.predicate = within;
+        return within;
+    }
+
+    public IPredicate AddIntersects(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
+    {
+        this.CheckUnarity();
+
+        Within containedIn = association.IsMany
+            ? new IntersectsAssociationExtent(this.extent, association, containingExtent)
+            : new WithinAssociationExtent(this.extent, association, containingExtent);
+
+        this.extent.Invalidate();
+        this.predicate = containedIn;
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    {
+        this.CheckUnarity();
+
+        Within containedIn = association.IsMany
+            ? new IntersectsAssociationEnumerable(this.extent, association, containingEnumerable)
+            : new WithinAssociationEnumerable(this.extent, association, containingEnumerable);
+
+        this.extent.Invalidate();
+        this.predicate = containedIn;
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
+    {
+        this.CheckUnarity();
+
+        Within within = role.IsMany ?
+            new IntersectsRoleExtent(this.extent, role, containingExtent) :
+            new WithinRoleExtent(this.extent, role, containingExtent);
+
+        this.extent.Invalidate();
+        this.predicate = within;
+        return within;
+    }
+
     public IPredicate AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();

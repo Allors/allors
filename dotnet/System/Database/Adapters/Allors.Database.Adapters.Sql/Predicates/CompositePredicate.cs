@@ -70,6 +70,51 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return between;
     }
 
+    public IPredicate AddIntersects(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
+    {
+        Within containedIn = role.IsMany
+            ? new RoleIntersectsExtent(this.Extent, role, containingExtent)
+            : new RoleWithinExtent(this.Extent, role, containingExtent);
+
+        this.Extent.FlushCache();
+        this.Filters.Add(containedIn);
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(RoleType role, IEnumerable<IObject> containingEnumerable)
+    {
+        Within containedIn = role.IsMany
+            ? new RoleIntersectsEnumerable(this.Extent, role, containingEnumerable)
+            : new RoleWithinEnumerable(this.Extent, role, containingEnumerable);
+
+        this.Extent.FlushCache();
+        this.Filters.Add(containedIn);
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
+    {
+        Within containedIn = association.IsMany
+            ? new AssociationIntersectsExtent(this.Extent, association, containingExtent)
+            : new AssociationWithinExtent(this.Extent, association, containingExtent);
+
+        this.Extent.FlushCache();
+        this.Filters.Add(containedIn);
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    {
+        Within containedIn = association.IsMany
+            ? new AssociationIntersectsEnumerable(this.Extent, association, containingEnumerable)
+            : new AssociationWithinEnumerable(this.Extent, association, containingEnumerable);
+
+        this.Extent.FlushCache();
+        this.Filters.Add(containedIn);
+        return containedIn;
+    }
+
+
     public IPredicate AddWithin(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         Within containedIn = role.IsMany

@@ -56,6 +56,58 @@ internal sealed class Not : Predicate, ICompositePredicate
         return between;
     }
 
+    public IPredicate AddIntersects(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
+    {
+        this.CheckUnarity();
+
+        Within containedIn = role.IsMany
+            ? new RoleIntersectsExtent(this.extent, role, containingExtent)
+            : new RoleWithinExtent(this.extent, role, containingExtent);
+
+        this.extent.FlushCache();
+        this.filter = containedIn;
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(RoleType role, IEnumerable<IObject> containingEnumerable)
+    {
+        this.CheckUnarity();
+
+        Within containedIn = role.IsMany
+            ? new NotRoleIntersectsEnumerable(this.extent, role, containingEnumerable)
+            : new NotRoleWithinEnumerable(this.extent, role, containingEnumerable);
+
+        this.extent.FlushCache();
+        this.filter = containedIn;
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
+    {
+        this.CheckUnarity();
+
+        Within containedIn = association.IsMany
+            ? new NotAssociationIntersectsExtent(this.extent, association, containingExtent)
+            : new NotAssociationWithinExtent(this.extent, association, containingExtent);
+
+        this.extent.FlushCache();
+        this.filter = containedIn;
+        return containedIn;
+    }
+
+    public IPredicate AddIntersects(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    {
+        this.CheckUnarity();
+
+        Within containedIn = association.IsMany
+            ? new NotAssociationIntersectsEnumerable(this.extent, association, containingEnumerable)
+            : new NotAssociationWithinEnumerable(this.extent, association, containingEnumerable);
+
+        this.extent.FlushCache();
+        this.filter = containedIn;
+        return containedIn;
+    }
+
     public IPredicate AddWithin(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
