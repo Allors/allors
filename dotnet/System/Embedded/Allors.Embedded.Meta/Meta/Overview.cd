@@ -3,41 +3,46 @@
   <Class Name="Allors.Embedded.Meta.EmbeddedMeta">
     <Position X="0.5" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAAAAQAAAAAAAAAAAACYAABAgAAAAAAQACACA=</HashCode>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAJABYAABAgAAAAAAQAAACA=</HashCode>
       <FileName>Meta\EmbeddedMeta.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="ObjectTypeByType" />
+      <Property Name="EmbeddedObjectTypeByType" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Embedded.Meta.EmbeddedObjectType">
-    <Position X="5.25" Y="0.5" Width="2.5" />
+    <Position X="5.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>QAQEAAAAAAAQAABAAGAIABAQAYAABIgAAQAAgAAAACA=</HashCode>
+      <HashCode>AAAAAACCAAAQAAhCAGgAgBAAAYAABAgAAQAAAAAACCA=</HashCode>
       <FileName>Meta\EmbeddedObjectType.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="AssociationTypeByName" />
-      <Property Name="RoleTypeByName" />
       <Property Name="SuperTypes" />
+      <Property Name="EmbeddedAssociationTypeByName" />
+      <Property Name="EmbeddedRoleTypeByName" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Embedded.Meta.EmbeddedAssociationType">
-    <Position X="10" Y="0.5" Width="2.25" />
+    <Position X="11" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAIAiAAAAAAAAAIAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
+      <HashCode>AIAAiAAAAAAAAAIAAAAAAAQAAAAAAAACAABAAAAAAAA=</HashCode>
       <FileName>Meta\EmbeddedAssociationType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Embedded.Meta.EmbeddedRoleType">
-    <Position X="10" Y="4" Width="2.5" />
+    <Position X="11" Y="4" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAAAIEAAAAAQQAgCAAAAAGAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAQiAAAAABAgAIEAAAAAAQAACAAAAACAABAAAAAAAA=</HashCode>
       <FileName>Meta\EmbeddedRoleType.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="AssociationType" />
-    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Type" Collapsed="true">
+    <Position X="9" Y="2.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

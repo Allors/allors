@@ -175,9 +175,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Generate", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Embedded", "Embedded", "{093255B2-BAE1-4B44-8C19-2BA8C63C25EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded", "System\Embedded\Allors.Embedded\Allors.Embedded.csproj", "{30F189E0-DEB3-4D69-9176-CB01D839610B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Domain", "System\Embedded\Allors.Embedded.Domain\Allors.Embedded.Domain.csproj", "{30F189E0-DEB3-4D69-9176-CB01D839610B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Tests", "System\Embedded\Allors.Embedded.Tests\Allors.Embedded.Tests.csproj", "{DFFB2E23-97D8-491D-AFB2-42A36B3CA510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Meta.Tests", "System\Embedded\Allors.Embedded.Meta.Tests\Allors.Embedded.Meta.Tests.csproj", "{DFFB2E23-97D8-491D-AFB2-42A36B3CA510}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Domain.Memory", "System\Embedded\Allors.Embedded.Domain.Memory\Allors.Embedded.Domain.Memory.csproj", "{CF327445-6738-485A-9122-2E17E110FFF6}"
 EndProject
@@ -204,6 +204,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "System\Database\Adapters\Tests\Tests\Tests.csproj", "{6B31BDE0-BF6B-43FD-AA30-3EA1317C0889}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration", "System\Database\Adapters\Tests\Configuration\Configuration.csproj", "{B1612F69-2770-4CB0-B034-C0827C5B805A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Meta", "System\Embedded\Allors.Embedded.Meta\Allors.Embedded.Meta.csproj", "{6D3C9E3D-0AD8-40E1-9B30-BDA08A2AC0BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -535,6 +537,10 @@ Global
 		{B1612F69-2770-4CB0-B034-C0827C5B805A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1612F69-2770-4CB0-B034-C0827C5B805A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1612F69-2770-4CB0-B034-C0827C5B805A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3C9E3D-0AD8-40E1-9B30-BDA08A2AC0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3C9E3D-0AD8-40E1-9B30-BDA08A2AC0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3C9E3D-0AD8-40E1-9B30-BDA08A2AC0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3C9E3D-0AD8-40E1-9B30-BDA08A2AC0BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -637,6 +643,7 @@ Global
 		{386D3B0F-12CC-4E7D-855E-A42996434D0F} = {80EAA85E-9FC0-4B21-8F82-473B81C86D22}
 		{6B31BDE0-BF6B-43FD-AA30-3EA1317C0889} = {80EAA85E-9FC0-4B21-8F82-473B81C86D22}
 		{B1612F69-2770-4CB0-B034-C0827C5B805A} = {80EAA85E-9FC0-4B21-8F82-473B81C86D22}
+		{6D3C9E3D-0AD8-40E1-9B30-BDA08A2AC0BA} = {093255B2-BAE1-4B44-8C19-2BA8C63C25EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Embedded\Allors.Embedded.csproj" />
+    <ProjectReference Include="..\Allors.Embedded.Domain\Allors.Embedded.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Embedded.Domain\Allors.Embedded.Domain.csproj" />
+    <ProjectReference Include="..\Allors.Embedded.Meta\Allors.Embedded.Meta.csproj" />
   </ItemGroup>
 
 </Project>

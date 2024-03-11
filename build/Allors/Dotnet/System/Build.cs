@@ -23,7 +23,7 @@ partial class Build
         .Executes(() =>
         {
             DotNetTest(s => s
-                .SetProjectFile(Paths.AllorsDotnetSystemEmbeddedTests)
+                .SetProjectFile(Paths.AllorsDotnetSystemEmbeddedMetaTests)
                 .AddLoggers("trx;LogFileName=AllorsDotnetSystemEmbeddedTests.trx")
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });

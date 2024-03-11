@@ -14,7 +14,7 @@ public partial class Paths
     public AbsolutePath AllorsDotnetSystemRepositoryGenerate => AllorsDotnetSystemRepository / "Generate/Generate.csproj";
 
     public AbsolutePath AllorsDotnetSystemEmbedded => AllorsDotnetSystem / "Embedded";
-    public AbsolutePath AllorsDotnetSystemEmbeddedTests => AllorsDotnetSystemEmbedded / "Allors.Embedded.Tests/Allors.Embedded.Tests.csproj";
+    public AbsolutePath AllorsDotnetSystemEmbeddedMetaTests => AllorsDotnetSystemEmbedded / "Allors.Embedded.Meta.Tests/Allors.Embedded.Meta.Tests.csproj";
     public AbsolutePath AllorsDotnetSystemEmbeddedDomainMemoryTests => AllorsDotnetSystemEmbedded / "Allors.Embedded.Domain.Memory.Tests/Allors.Embedded.Domain.Memory.Tests.csproj";
 
     public AbsolutePath AllorsDotnetSystemDatabase => AllorsDotnetSystem / "Database";
