@@ -11,9 +11,9 @@ export enum PredicateKind {
 
   Equals = 6,
 
-  Contains = 7,
+  Has = 7,
 
-  Within = 8,
+  In = 8,
 
   Between = 9,
 
@@ -23,5 +23,5 @@ export enum PredicateKind {
 
   Like = 12,
 
-  Intersects = 8,
+  Intersects = 13,
 }

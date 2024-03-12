@@ -1,7 +1,7 @@
-import { Within } from './within';
+import { In } from './in';
 import { And } from './and';
 import { Between } from './between';
-import { Contains } from './contains';
+import { Has } from './has';
 import { Equals } from './equals';
 import { Exists } from './exists';
 import { GreaterThan } from './greater-than';
@@ -15,8 +15,8 @@ import { Intersects } from './intersects';
 export type Predicate =
   | And
   | Between
-  | Within
-  | Contains
+  | In
+  | Has
   | Equals
   | Exists
   | GreaterThan

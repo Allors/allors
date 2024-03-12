@@ -9,7 +9,7 @@ namespace Allors.Workspace.Data
     using Workspace;
     using Meta;
 
-    public class Within(IRelationEndType propertyType = null) : IPropertyPredicate
+    public class In(IRelationEndType propertyType = null) : IPropertyPredicate
     {
         public string[] Dependencies { get; set; }
 
@@ -21,6 +21,6 @@ namespace Allors.Workspace.Data
 
         public string Parameter { get; set; }
 
-        public void Accept(IVisitor visitor) => visitor.VisitWithin(this);
+        public void Accept(IVisitor visitor) => visitor.VisitIn(this);
     }
 }

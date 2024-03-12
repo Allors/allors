@@ -11,11 +11,11 @@ namespace Allors.Workspace.Data
 
         void VisitBetween(Between visited);
 
-        void VisitWithin(Within visited);
+        void VisitIn(In visited);
 
         void VisitIntersects(Intersects visited);
 
-        void VisitContains(Contains visited);
+        void VisitHas(Has visited);
 
         void VisitEquals(Equals visited);
 

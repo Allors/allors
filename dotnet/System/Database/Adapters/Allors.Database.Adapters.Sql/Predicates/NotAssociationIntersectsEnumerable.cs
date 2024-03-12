@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class NotAssociationIntersectsEnumerable : Within
+internal sealed class NotAssociationIntersectsEnumerable : In
 {
     private readonly AssociationType association;
     private readonly IEnumerable<IObject> enumerable;

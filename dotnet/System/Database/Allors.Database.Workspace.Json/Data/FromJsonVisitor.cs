@@ -254,9 +254,9 @@ public class FromJsonVisitor : IVisitor
                         this.predicates.Push(exists);
                         break;
 
-                    case PredicateKind.Contains:
+                    case PredicateKind.Has:
 
-                        var contains = new Contains(relationEndType) { Parameter = visited.p };
+                        var contains = new Has(relationEndType) { Parameter = visited.p };
 
                         if (visited.ob.HasValue)
                         {
@@ -266,9 +266,9 @@ public class FromJsonVisitor : IVisitor
                         this.predicates.Push(contains);
                         break;
 
-                    case PredicateKind.Within:
+                    case PredicateKind.In:
 
-                        var containedIn = new Within(relationEndType) { Parameter = visited.p };
+                        var containedIn = new In(relationEndType) { Parameter = visited.p };
 
                         this.predicates.Push(containedIn);
 

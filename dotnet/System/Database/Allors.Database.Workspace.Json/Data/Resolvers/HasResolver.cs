@@ -8,18 +8,18 @@ namespace Allors.Database.Protocol.Json;
 using System.Collections.Generic;
 using Allors.Database.Data;
 
-public class ContainsResolver : IResolver
+public class HasResolver : IResolver
 {
-    private readonly Contains contains;
+    private readonly Has has;
     private readonly long objectId;
 
-    public ContainsResolver(Contains contains, long objectId)
+    public HasResolver(Has has, long objectId)
     {
-        this.contains = contains;
+        this.has = has;
         this.objectId = objectId;
     }
 
     public void Prepare(HashSet<long> objectIds) => objectIds.Add(this.objectId);
 
-    public void Resolve(Dictionary<long, IObject> objectById) => this.contains.Object = objectById[this.objectId];
+    public void Resolve(Dictionary<long, IObject> objectById) => this.has.Object = objectById[this.objectId];
 }

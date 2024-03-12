@@ -137,7 +137,7 @@ namespace Allors.Database.Domain.Tests
         {
             var filter = new Filter(this.M.C1.Composite)
             {
-                Predicate = new Within
+                Predicate = new In
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
                     Extent = new Filter(this.M.C2.Composite)
@@ -156,7 +156,7 @@ namespace Allors.Database.Domain.Tests
 
             var c2s = this.Transaction.Filter(this.M.C2.Composite, v => v.AddEquals(this.M.C2.C2AllorsString, "c2B"));
 
-            var extent = this.Transaction.Filter(this.M.C1.Composite, v => v.AddWithin(this.M.C1.C1C2One2One, c2s));
+            var extent = this.Transaction.Filter(this.M.C1.Composite, v => v.AddIn(this.M.C1.C1C2One2One, c2s));
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -166,7 +166,7 @@ namespace Allors.Database.Domain.Tests
         {
             var filter = new Filter(this.M.C1.Composite)
             {
-                Predicate = new Within
+                Predicate = new In
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
                     Extent = new Filter(this.M.C2.Composite)
@@ -197,7 +197,7 @@ namespace Allors.Database.Domain.Tests
                 {
                     Operands =
                     [
-                        new Within
+                        new In
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
                             Extent = new Filter(this.M.C2.Composite)
@@ -230,12 +230,12 @@ namespace Allors.Database.Domain.Tests
                 {
                     Operands =
                     [
-                        new Within
+                        new In
                             {
                                 RelationEndType = this.M.C1.C1C2One2One,
                                 Extent = new Filter(this.M.C2.Composite)
                                              {
-                                                 Predicate = new Contains
+                                                 Predicate = new Has
                                                                  {
                                                                      RelationEndType = this.M.C2.C1WhereC1C2One2One,
                                                                      Parameter = "nested",

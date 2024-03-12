@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class RoleIntersectsEnumerable : Within
+internal sealed class RoleIntersectsEnumerable : In
 {
     private readonly IEnumerable<IObject> enumerable;
     private readonly RoleType role;

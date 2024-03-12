@@ -8,12 +8,12 @@ namespace Allors.Database.Adapters.Memory;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class WithinRoleEnumerable : Within
+internal sealed class InRoleEnumerable : In
 {
     private readonly IEnumerable<IObject> containingEnumerable;
     private readonly RoleType roleType;
 
-    internal WithinRoleEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
+    internal InRoleEnumerable(IInternalExtent extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleIn(roleType, containingEnumerable);

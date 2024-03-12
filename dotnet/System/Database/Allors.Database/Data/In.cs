@@ -8,7 +8,7 @@ namespace Allors.Database.Data;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public class Within(RelationEndType relationEndType = null) : IPropertyPredicate
+public class In(RelationEndType relationEndType = null) : IPropertyPredicate
 {
     public IExtent Extent { get; set; }
 
@@ -32,11 +32,11 @@ public class Within(RelationEndType relationEndType = null) : IPropertyPredicate
             {
                 if (objects != null)
                 {
-                    compositePredicate.AddWithin(roleType, objects);
+                    compositePredicate.AddIn(roleType, objects);
                 }
                 else
                 {
-                    compositePredicate.AddWithin(roleType, this.Extent.Build(transaction, arguments));
+                    compositePredicate.AddIn(roleType, this.Extent.Build(transaction, arguments));
                 }
             }
             else
@@ -44,17 +44,17 @@ public class Within(RelationEndType relationEndType = null) : IPropertyPredicate
                 var associationType = (AssociationType)this.RelationEndType;
                 if (objects != null)
                 {
-                    compositePredicate.AddWithin(associationType, objects);
+                    compositePredicate.AddIn(associationType, objects);
                 }
                 else
                 {
-                    compositePredicate.AddWithin(associationType, this.Extent.Build(transaction, arguments));
+                    compositePredicate.AddIn(associationType, this.Extent.Build(transaction, arguments));
                 }
             }
         }
     }
 
-    public void Accept(IVisitor visitor) => visitor.VisitWithin(this);
+    public void Accept(IVisitor visitor) => visitor.VisitIn(this);
 
     private bool HasMissingArguments(IArguments arguments) => (this.Parameter != null && arguments?.HasArgument(this.Parameter) != true) ||
                                                               this.Extent?.HasMissingArguments(arguments) == true;

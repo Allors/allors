@@ -179,7 +179,7 @@ test('associationMany2ManyIntersects', async () => {
   expect(c2s).toEqualObjects([name_c2B]);
 });
 
-test('associationMany2ManyContains', async () => {
+test('associationMany2ManyHas', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -191,7 +191,7 @@ test('associationMany2ManyContains', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'Contains',
+        kind: 'Has',
         relationEndType: m.C2.C1sWhereC1C2Many2Many,
         object: c1c,
       },
@@ -236,7 +236,7 @@ test('associationMany2ManyExists', async () => {
   expect(c2s).toEqualObjects([name_c2B, name_c2C, name_c2D]);
 });
 
-test('associationMany2OneWithin', async () => {
+test('associationMany2OneIn', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -246,7 +246,7 @@ test('associationMany2OneWithin', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'Within',
+        kind: 'In',
         relationEndType: m.C2.C1sWhereC1C2Many2One,
         extent: {
           kind: 'Filter',
@@ -272,7 +272,7 @@ test('associationMany2OneWithin', async () => {
   expect(c2s).toEqualObjects([name_c2B]);
 });
 
-test('associationMany2OneContains', async () => {
+test('associationMany2OneHas', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -284,7 +284,7 @@ test('associationMany2OneContains', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'Contains',
+        kind: 'Has',
         relationEndType: m.C2.C1sWhereC1C2Many2One,
         object: c1c,
       },
@@ -467,7 +467,7 @@ test('associationOne2ManyInstanceof', async () => {
   expect(c2s).toEqualObjects([name_c2B, name_c2C, name_c2D]);
 });
 
-test('associationOne2OneWithin', async () => {
+test('associationOne2OneIn', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -477,7 +477,7 @@ test('associationOne2OneWithin', async () => {
       kind: 'Filter',
       objectType: m.C2,
       predicate: {
-        kind: 'Within',
+        kind: 'In',
         relationEndType: m.C2.C1WhereC1C2One2One,
         extent: {
           kind: 'Filter',
@@ -1982,7 +1982,7 @@ test('roleMany2ManyIntersects', async () => {
   expect(c1s).toEqualObjects([name_c1B, name_c1C, name_c1D]);
 });
 
-test('roleMany2ManyContains', async () => {
+test('roleMany2ManyHas', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -1994,7 +1994,7 @@ test('roleMany2ManyContains', async () => {
   //       kind: 'Filter',
   //       objectType: m.C1,
   //       predicate: {
-  //         kind: 'Contains',
+  //         kind: 'Has',
   //         relationEndType: m.C1.C1C2Many2Manies,
   //         object: c2c,
   //       },
@@ -2018,7 +2018,7 @@ test('roleMany2ManyContains', async () => {
         kind: 'Filter',
         objectType: m.C1,
         predicate: {
-          kind: 'Contains',
+          kind: 'Has',
           relationEndType: m.C1.C1C2Many2Manies,
           parameter: 'obj',
         },
@@ -2073,7 +2073,7 @@ test('roleOne2ManyIntersects', async () => {
   expect(c1s).toEqualObjects([name_c1B]);
 });
 
-test('roleOne2ManyContains', async () => {
+test('roleOne2ManyHas', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -2084,7 +2084,7 @@ test('roleOne2ManyContains', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'Contains',
+        kind: 'Has',
         relationEndType: m.C1.C1C2One2Manies,
         object: c2d,
       },
@@ -2102,7 +2102,7 @@ test('roleOne2ManyContains', async () => {
   expect(c1s).toEqualObjects([name_c1C]);
 });
 
-test('roleMany2OneWithin', async () => {
+test('roleMany2OneIn', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -2112,7 +2112,7 @@ test('roleMany2OneWithin', async () => {
         kind: 'Filter',
         objectType: m.C1,
         predicate: {
-          kind: 'Within',
+          kind: 'In',
           relationEndType: m.C1.C1I12Many2One,
           extent: {
             kind: 'Filter',
@@ -2159,7 +2159,7 @@ test('roleMany2OneWithin', async () => {
         kind: 'Filter',
         objectType: m.C1,
         predicate: {
-          kind: 'Within',
+          kind: 'In',
           relationEndType: m.C1.C1I12Many2One,
           parameter: 'objects',
         },
@@ -2181,7 +2181,7 @@ test('roleMany2OneWithin', async () => {
   }
 });
 
-test('roleOne2OneWithin', async () => {
+test('roleOne2OneIn', async () => {
   const { workspace, m } = fixture;
   const session = workspace.createSession();
 
@@ -2190,7 +2190,7 @@ test('roleOne2OneWithin', async () => {
       kind: 'Filter',
       objectType: m.C1,
       predicate: {
-        kind: 'Within',
+        kind: 'In',
         relationEndType: m.C1.C1I12One2One,
         extent: {
           kind: 'Filter',

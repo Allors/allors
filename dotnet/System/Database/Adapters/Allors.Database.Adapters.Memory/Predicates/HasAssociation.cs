@@ -8,12 +8,12 @@ namespace Allors.Database.Adapters.Memory;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class ContainsAssociation : Contains
+internal sealed class HasAssociation : Has
 {
     private readonly AssociationType associationType;
     private readonly IObject containedObject;
 
-    internal ContainsAssociation(IInternalExtent extent, AssociationType associationType, IObject containedObject)
+    internal HasAssociation(IInternalExtent extent, AssociationType associationType, IObject containedObject)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.AssertAssociationContains(associationType, containedObject);

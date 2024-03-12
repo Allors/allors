@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Memory;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class IntersectsRoleExtent : Within
+internal sealed class IntersectsRoleExtent : In
 {
     private readonly IExtent<IObject> containingExtent;
     private readonly RoleType roleType;

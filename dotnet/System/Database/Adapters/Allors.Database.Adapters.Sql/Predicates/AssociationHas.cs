@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class AssociationContains : Contains
+internal sealed class AssociationHas : Has
 {
     private readonly IObject allorsObject;
     private readonly AssociationType association;
 
-    internal AssociationContains(IInternalExtentFiltered extent, AssociationType association, IObject allorsObject)
+    internal AssociationHas(IInternalExtentFiltered extent, AssociationType association, IObject allorsObject)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationContains(association, allorsObject);

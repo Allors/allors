@@ -79,11 +79,11 @@ public class ToJsonVisitor : IVisitor
         this.predicates.Push(predicate);
     }
 
-    public void VisitWithin(Within visited)
+    public void VisitIn(In visited)
     {
         var predicate = new Predicate
         {
-            k = PredicateKind.Within,
+            k = PredicateKind.In,
             a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
             r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             vs = visited.Objects?.Select(v => v.Id.ToString()).ToArray(),
@@ -119,11 +119,11 @@ public class ToJsonVisitor : IVisitor
         }
     }
 
-    public void VisitContains(Contains visited)
+    public void VisitHas(Has visited)
     {
         var predicate = new Predicate
         {
-            k = PredicateKind.Contains,
+            k = PredicateKind.Has,
             a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
             r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             ob = visited.Object?.Id,

@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class NotAssociationWithinExtent : Within
+internal sealed class NotAssociationInExtent : In
 {
     private readonly AssociationType association;
     private readonly IInternalExtent inExtent;
 
-    internal NotAssociationWithinExtent(IInternalExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
+    internal NotAssociationInExtent(IInternalExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationIn(association, inExtent);

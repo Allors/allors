@@ -8,12 +8,12 @@ namespace Allors.Database.Adapters.Memory;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class WithinAssociationEnumerable : Within
+internal sealed class InAssociationEnumerable : In
 {
     private readonly AssociationType associationType;
     private readonly IEnumerable<IObject> containingEnumerable;
 
-    internal WithinAssociationEnumerable(IInternalExtent extent, AssociationType associationType,
+    internal InAssociationEnumerable(IInternalExtent extent, AssociationType associationType,
         IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForAssociationType(associationType);

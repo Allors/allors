@@ -7,7 +7,7 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public class Contains(RelationEndType relationEndType = null) : IPropertyPredicate
+public class Has(RelationEndType relationEndType = null) : IPropertyPredicate
 {
     public IObject Object { get; set; }
 
@@ -25,14 +25,14 @@ public class Contains(RelationEndType relationEndType = null) : IPropertyPredica
 
         if (this.RelationEndType is RoleType roleType)
         {
-            compositePredicate.AddContains(roleType, containedObject);
+            compositePredicate.AddHas(roleType, containedObject);
         }
         else
         {
             var associationType = (AssociationType)this.RelationEndType;
-            compositePredicate.AddContains(associationType, containedObject);
+            compositePredicate.AddHas(associationType, containedObject);
         }
     }
 
-    public void Accept(IVisitor visitor) => visitor.VisitContains(this);
+    public void Accept(IVisitor visitor) => visitor.VisitHas(this);
 }

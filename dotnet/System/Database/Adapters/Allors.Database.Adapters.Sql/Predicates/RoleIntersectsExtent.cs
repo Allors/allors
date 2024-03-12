@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleIntersectsExtent : Within
+internal sealed class RoleIntersectsExtent : In
 {
     private readonly IInternalExtent inExtent;
     private readonly RoleType role;

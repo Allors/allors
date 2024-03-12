@@ -60,9 +60,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new RoleIntersectsExtent(this.extent, role, containingExtent)
-            : new RoleWithinExtent(this.extent, role, containingExtent);
+            : new RoleInExtent(this.extent, role, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -73,9 +73,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new NotRoleIntersectsEnumerable(this.extent, role, containingEnumerable)
-            : new NotRoleWithinEnumerable(this.extent, role, containingEnumerable);
+            : new NotRoleInEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -86,9 +86,9 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new NotAssociationIntersectsExtent(this.extent, association, containingExtent)
-            : new NotAssociationWithinExtent(this.extent, association, containingExtent);
+            : new NotAssociationInExtent(this.extent, association, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
@@ -99,83 +99,83 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new NotAssociationIntersectsEnumerable(this.extent, association, containingEnumerable)
-            : new NotAssociationWithinEnumerable(this.extent, association, containingEnumerable);
+            : new NotAssociationInEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddWithin(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
+    public IPredicate AddIn(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
 
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new RoleIntersectsExtent(this.extent, role, containingExtent)
-            : new RoleWithinExtent(this.extent, role, containingExtent);
+            : new RoleInExtent(this.extent, role, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
 
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new NotRoleIntersectsEnumerable(this.extent, role, containingEnumerable)
-            : new NotRoleWithinEnumerable(this.extent, role, containingEnumerable);
+            : new NotRoleInEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddWithin(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
+    public IPredicate AddIn(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
         this.CheckUnarity();
 
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new NotAssociationIntersectsExtent(this.extent, association, containingExtent)
-            : new NotAssociationWithinExtent(this.extent, association, containingExtent);
+            : new NotAssociationInExtent(this.extent, association, containingExtent);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
 
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new NotAssociationIntersectsEnumerable(this.extent, association, containingEnumerable)
-            : new NotAssociationWithinEnumerable(this.extent, association, containingEnumerable);
+            : new NotAssociationInEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.FlushCache();
         this.filter = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddContains(RoleType role, IObject containedObject)
+    public IPredicate AddHas(RoleType role, IObject containedObject)
     {
         this.CheckUnarity();
 
-        var contains = new RoleContains(this.extent, role, containedObject);
+        var contains = new RoleHas(this.extent, role, containedObject);
 
         this.extent.FlushCache();
         this.filter = contains;
         return contains;
     }
 
-    public IPredicate AddContains(AssociationType association, IObject containedObject)
+    public IPredicate AddHas(AssociationType association, IObject containedObject)
     {
         this.CheckUnarity();
 
-        var contains = new AssociationContains(this.extent, association, containedObject);
+        var contains = new AssociationHas(this.extent, association, containedObject);
 
         this.extent.FlushCache();
         this.filter = contains;

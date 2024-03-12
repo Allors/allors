@@ -83,11 +83,11 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitWithin(Within visited)
+        public void VisitIn(In visited)
         {
             var predicate = new Predicate
             {
-                k = PredicateKind.Within,
+                k = PredicateKind.In,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 vs = visited.Objects?.Select(v => v.Id as object).ToArray(),
@@ -123,11 +123,11 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitContains(Contains visited)
+        public void VisitHas(Has visited)
         {
             var predicate = new Predicate
             {
-                k = PredicateKind.Contains,
+                k = PredicateKind.Has,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 ob = visited.Object?.Id,

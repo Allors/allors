@@ -34,7 +34,7 @@ function parametrize(
       }
       break;
 
-    case 'Within':
+    case 'In':
     case 'Intersects':
       if (predicate.extent) {
         parametrize(predicate.extent, results);

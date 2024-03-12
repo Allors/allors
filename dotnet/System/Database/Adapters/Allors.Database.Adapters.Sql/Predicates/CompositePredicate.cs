@@ -72,9 +72,9 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public IPredicate AddIntersects(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new RoleIntersectsExtent(this.Extent, role, containingExtent)
-            : new RoleWithinExtent(this.Extent, role, containingExtent);
+            : new RoleInExtent(this.Extent, role, containingExtent);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
@@ -83,9 +83,9 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public IPredicate AddIntersects(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new RoleIntersectsEnumerable(this.Extent, role, containingEnumerable)
-            : new RoleWithinEnumerable(this.Extent, role, containingEnumerable);
+            : new RoleInEnumerable(this.Extent, role, containingEnumerable);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
@@ -94,9 +94,9 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public IPredicate AddIntersects(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new AssociationIntersectsExtent(this.Extent, association, containingExtent)
-            : new AssociationWithinExtent(this.Extent, association, containingExtent);
+            : new AssociationInExtent(this.Extent, association, containingExtent);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
@@ -105,9 +105,9 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public IPredicate AddIntersects(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new AssociationIntersectsEnumerable(this.Extent, association, containingEnumerable)
-            : new AssociationWithinEnumerable(this.Extent, association, containingEnumerable);
+            : new AssociationInEnumerable(this.Extent, association, containingEnumerable);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
@@ -115,62 +115,62 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     }
 
 
-    public IPredicate AddWithin(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
+    public IPredicate AddIn(RoleType role, Allors.Database.IExtent<IObject> containingExtent)
     {
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new RoleIntersectsExtent(this.Extent, role, containingExtent)
-            : new RoleWithinExtent(this.Extent, role, containingExtent);
+            : new RoleInExtent(this.Extent, role, containingExtent);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
-        Within containedIn = role.IsMany
+        In containedIn = role.IsMany
             ? new RoleIntersectsEnumerable(this.Extent, role, containingEnumerable)
-            : new RoleWithinEnumerable(this.Extent, role, containingEnumerable);
+            : new RoleInEnumerable(this.Extent, role, containingEnumerable);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddWithin(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
+    public IPredicate AddIn(AssociationType association, Allors.Database.IExtent<IObject> containingExtent)
     {
-        Within containedIn = association.IsMany 
+        In containedIn = association.IsMany 
             ? new AssociationIntersectsExtent(this.Extent, association, containingExtent)
-            : new AssociationWithinExtent(this.Extent, association, containingExtent);
+            : new AssociationInExtent(this.Extent, association, containingExtent);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        Within containedIn = association.IsMany
+        In containedIn = association.IsMany
             ? new AssociationIntersectsEnumerable(this.Extent, association, containingEnumerable)
-            : new AssociationWithinEnumerable(this.Extent, association, containingEnumerable);
+            : new AssociationInEnumerable(this.Extent, association, containingEnumerable);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddContains(RoleType role, IObject containedObject)
+    public IPredicate AddHas(RoleType role, IObject containedObject)
     {
-        var contains = new RoleContains(this.Extent, role, containedObject);
+        var contains = new RoleHas(this.Extent, role, containedObject);
 
         this.Extent.FlushCache();
         this.Filters.Add(contains);
         return contains;
     }
 
-    public IPredicate AddContains(AssociationType association, IObject containedObject)
+    public IPredicate AddHas(AssociationType association, IObject containedObject)
     {
-        var contains = new AssociationContains(this.Extent, association, containedObject);
+        var contains = new AssociationHas(this.Extent, association, containedObject);
 
         this.Extent.FlushCache();
         this.Filters.Add(contains);

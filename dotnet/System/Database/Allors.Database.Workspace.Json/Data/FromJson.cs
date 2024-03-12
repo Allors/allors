@@ -29,9 +29,9 @@ public class FromJson
 
     public IUnitConvert UnitConvert { get; }
 
-    public void Resolve(Contains contains, long objectId) => this.resolvers.Add(new ContainsResolver(contains, objectId));
+    public void Resolve(Has has, long objectId) => this.resolvers.Add(new HasResolver(has, objectId));
 
-    public void Resolve(Within within, long[] objectIds) => this.resolvers.Add(new WithinResolver(within, objectIds));
+    public void Resolve(In @in, long[] objectIds) => this.resolvers.Add(new InResolver(@in, objectIds));
 
     public void Resolve(Intersects intersects, long[] objectIds) => this.resolvers.Add(new IntersectsResolver(intersects, objectIds));
 

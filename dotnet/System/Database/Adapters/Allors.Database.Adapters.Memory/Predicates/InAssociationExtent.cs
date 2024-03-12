@@ -8,12 +8,12 @@ namespace Allors.Database.Adapters.Memory;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class WithinAssociationExtent : Within
+internal sealed class InAssociationExtent : In
 {
     private readonly AssociationType associationType;
     private readonly Allors.Database.IExtent<IObject> containingExtent;
 
-    internal WithinAssociationExtent(IInternalExtent extent, AssociationType associationType, Allors.Database.IExtent<IObject> containingExtent)
+    internal InAssociationExtent(IInternalExtent extent, AssociationType associationType, Allors.Database.IExtent<IObject> containingExtent)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.AssertAssociationIn(associationType, containingExtent);

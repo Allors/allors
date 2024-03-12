@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleInEnumerable.cs" company="Allors bv">
+﻿// <copyright file="NotRoleInEnumerable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,18 +9,20 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class RoleWithinEnumerable : Within
+internal sealed class NotRoleInEnumerable : In
 {
     private readonly IEnumerable<IObject> enumerable;
     private readonly RoleType role;
 
-    internal RoleWithinEnumerable(IInternalExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
+    internal NotRoleInEnumerable(IInternalExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleIn(role, enumerable);
         this.role = role;
         this.enumerable = enumerable;
     }
+
+    internal override bool IsNotFilter => true;
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
@@ -35,23 +37,25 @@ internal sealed class RoleWithinEnumerable : Within
 
         if (!this.role.RelationType.ExistExclusiveClasses)
         {
-            // TODO: in combination with NOT gives error
-            statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NOT NULL AND ");
-            statement.Append(" " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IN (");
+            statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NULL OR ");
+            statement.Append(" NOT " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForAssociation + " IN (");
+            statement.Append(" SELECT " + Mapping.ColumnNameForAssociation + " FROM " +
+                             schema.TableNameForRelationByRelationType[this.role.RelationType] + " WHERE " + Mapping.ColumnNameForRole +
+                             " IN (");
             statement.Append(inStatement.ToString());
-            statement.Append(" ))");
+            statement.Append(" )))");
         }
         else if (this.role.IsMany)
         {
-            statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForObject + " IS NOT NULL AND ");
-            statement.Append(" " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForObject + " IN (");
+            statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForObject + " IS NULL OR ");
+            statement.Append(" NOT " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForObject + " IN (");
             statement.Append(inStatement.ToString());
             statement.Append(" ))");
         }
         else
         {
-            statement.Append(" (" + schema.ColumnNameByRelationType[this.role.RelationType] + " IS NOT NULL AND ");
-            statement.Append(" " + schema.ColumnNameByRelationType[this.role.RelationType] + " IN (");
+            statement.Append(" (" + schema.ColumnNameByRelationType[this.role.RelationType] + " IS NULL OR ");
+            statement.Append(" NOT " + schema.ColumnNameByRelationType[this.role.RelationType] + " IN (");
             statement.Append(inStatement.ToString());
             statement.Append(" ))");
         }

@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Memory;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class IntersectsAssociationEnumerable : Within
+internal sealed class IntersectsAssociationEnumerable : In
 {
     private readonly AssociationType associationType;
     private readonly IEnumerable<IObject> containingEnumerable;

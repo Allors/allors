@@ -8,7 +8,7 @@ namespace Allors.Workspace.Data
     
     using Meta;
 
-    public class Contains(IRelationEndType propertyType = null) : IPropertyPredicate
+    public class Has(IRelationEndType propertyType = null) : IPropertyPredicate
     {
         public string[] Dependencies { get; set; }
 
@@ -18,6 +18,6 @@ namespace Allors.Workspace.Data
 
         public string Parameter { get; set; }
 
-        public void Accept(IVisitor visitor) => visitor.VisitContains(this);
+        public void Accept(IVisitor visitor) => visitor.VisitHas(this);
     }
 }

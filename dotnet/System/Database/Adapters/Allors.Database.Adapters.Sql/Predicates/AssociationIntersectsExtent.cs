@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class AssociationIntersectsExtent : Within
+internal sealed class AssociationIntersectsExtent : In
 {
     private readonly AssociationType association;
     private readonly IInternalExtent inExtent;

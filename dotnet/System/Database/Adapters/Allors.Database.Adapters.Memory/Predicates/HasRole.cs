@@ -8,12 +8,12 @@ namespace Allors.Database.Adapters.Memory;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class ContainsRole : Contains
+internal sealed class HasRole : Has
 {
     private readonly IObject containedObject;
     private readonly RoleType roleType;
 
-    internal ContainsRole(IInternalExtent extent, RoleType roleType, IObject containedObject)
+    internal HasRole(IInternalExtent extent, RoleType roleType, IObject containedObject)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleContains(roleType, containedObject);

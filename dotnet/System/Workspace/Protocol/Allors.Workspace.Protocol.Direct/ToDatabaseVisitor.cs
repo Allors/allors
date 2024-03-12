@@ -12,7 +12,6 @@ using Allors.Database.Meta;
 using Allors.Workspace.Data;
 using And = Allors.Workspace.Data.And;
 using Between = Allors.Workspace.Data.Between;
-using Contains = Allors.Workspace.Data.Contains;
 using Equals = Allors.Workspace.Data.Equals;
 using Except = Allors.Workspace.Data.Except;
 using Exists = Allors.Workspace.Data.Exists;
@@ -37,7 +36,8 @@ using Union = Allors.Workspace.Data.Union;
 namespace Allors.Workspace.Protocol.Direct
 {
     using Filter = Data.Filter;
-    using Within = Data.Within;
+    using Has = Data.Has;
+    using In = Data.In;
     using Intersects = Data.Intersects;
 
     public class ToDatabaseVisitor
@@ -84,9 +84,9 @@ namespace Allors.Workspace.Protocol.Direct
             {
                 And and => this.Visit(and),
                 Between between => this.Visit(between),
-                Within containedIn => this.Visit(containedIn),
+                In containedIn => this.Visit(containedIn),
                 Intersects intersects => this.Visit(intersects),
-                Contains contains => this.Visit(contains),
+                Has contains => this.Visit(contains),
                 Equals equals => this.Visit(equals),
                 Exists exists => this.Visit(exists),
                 GreaterThan greaterThan => this.Visit(greaterThan),
@@ -108,7 +108,7 @@ namespace Allors.Workspace.Protocol.Direct
             Paths = this.Visit(ws.Paths)
         };
 
-        private IPredicate Visit(Within ws) => new Database.Data.Within(this.Visit(ws.PropertyType))
+        private IPredicate Visit(In ws) => new Database.Data.In(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
@@ -122,7 +122,7 @@ namespace Allors.Workspace.Protocol.Direct
             Extent = this.Visit(ws.Extent),
         };
 
-        private IPredicate Visit(Contains ws) => new Database.Data.Contains(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Has ws) => new Database.Data.Has(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object)

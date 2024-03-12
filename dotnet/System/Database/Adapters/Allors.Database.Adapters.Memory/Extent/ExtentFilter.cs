@@ -82,34 +82,34 @@ internal sealed class ExtentFilter<T> : Extent<T>, IFilter<T> where T : class, I
         return this.Predicate.AddIntersects(association, containingEnumerable);
     }
     
-    IPredicate ICompositePredicate.AddWithin(RoleType role, IExtent<IObject> containingExtent)
+    IPredicate ICompositePredicate.AddIn(RoleType role, IExtent<IObject> containingExtent)
     {
-        return this.Predicate.AddWithin(role, containingExtent);
+        return this.Predicate.AddIn(role, containingExtent);
     }
 
-    IPredicate ICompositePredicate.AddWithin(RoleType role, IEnumerable<IObject> containingEnumerable)
+    IPredicate ICompositePredicate.AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
-        return this.Predicate.AddWithin(role, containingEnumerable);
+        return this.Predicate.AddIn(role, containingEnumerable);
     }
 
-    IPredicate ICompositePredicate.AddWithin(AssociationType association, IExtent<IObject> containingExtent)
+    IPredicate ICompositePredicate.AddIn(AssociationType association, IExtent<IObject> containingExtent)
     {
-        return this.Predicate.AddWithin(association, containingExtent);
+        return this.Predicate.AddIn(association, containingExtent);
     }
 
-    IPredicate ICompositePredicate.AddWithin(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    IPredicate ICompositePredicate.AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        return this.Predicate.AddWithin(association, containingEnumerable);
+        return this.Predicate.AddIn(association, containingEnumerable);
     }
 
-    IPredicate ICompositePredicate.AddContains(RoleType role, IObject containedObject)
+    IPredicate ICompositePredicate.AddHas(RoleType role, IObject containedObject)
     {
-        return this.Predicate.AddContains(role, containedObject);
+        return this.Predicate.AddHas(role, containedObject);
     }
 
-    IPredicate ICompositePredicate.AddContains(AssociationType association, IObject containedObject)
+    IPredicate ICompositePredicate.AddHas(AssociationType association, IObject containedObject)
     {
-        return this.Predicate.AddContains(association, containedObject);
+        return this.Predicate.AddHas(association, containedObject);
     }
 
     IPredicate ICompositePredicate.AddEquals(IObject allorsObject)

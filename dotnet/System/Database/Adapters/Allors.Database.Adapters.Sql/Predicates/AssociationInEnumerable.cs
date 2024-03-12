@@ -1,51 +1,57 @@
-﻿// <copyright file="AssociationInExtent.cs" company="Allors bv">
+﻿// <copyright file="AssociationInEnumerable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Adapters.Sql;
 
+using System.Collections.Generic;
+using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class AssociationWithinExtent : Within
+internal sealed class AssociationInEnumerable : In
 {
     private readonly AssociationType association;
-    private readonly IInternalExtent inExtent;
+    private readonly IEnumerable<IObject> enumerable;
 
-    internal AssociationWithinExtent(IInternalExtentFiltered extent, AssociationType association, Allors.Database.IExtent<IObject> inExtent)
+    internal AssociationInEnumerable(IInternalExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
     {
         extent.CheckAssociation(association);
-        PredicateAssertions.AssertAssociationIn(association, inExtent);
+        PredicateAssertions.AssertAssociationIn(association, this.enumerable);
         this.association = association;
-        this.inExtent = ((IInternalExtent)inExtent).InExtent;
+        this.enumerable = enumerable;
     }
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        var inStatement = statement.CreateChild(this.inExtent, this.association);
 
-        inStatement.UseRole(this.association.RoleType);
+        var inStatement = new StringBuilder("0");
+        foreach (var inObject in this.enumerable)
+        {
+            inStatement.Append(",");
+            inStatement.Append(inObject.Id.ToString());
+        }
 
         if (!this.association.RelationType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IS NOT NULL AND ");
             statement.Append(" " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IN (\n");
-            this.inExtent.BuildSql(inStatement);
+            statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
-        else if (this.association.RoleType.IsMany)
+        else if (this.association.RelationType.RoleType.IsMany)
         {
             statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NOT NULL AND ");
             statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IN (\n");
-            this.inExtent.BuildSql(inStatement);
+            statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
         else
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForObject + " IS NOT NULL AND ");
             statement.Append(" " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForObject + " IN (\n");
-            this.inExtent.BuildSql(inStatement);
+            statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
 

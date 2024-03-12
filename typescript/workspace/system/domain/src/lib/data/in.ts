@@ -1,10 +1,12 @@
 import { RelationEndType } from '@allors/workspace/system/meta';
 import { IObject } from '../iobject';
+import { Extent } from './extent';
 import { ParameterizablePredicateBase } from './parameterizable-predicate';
 
-export interface Contains extends ParameterizablePredicateBase {
-  kind: 'Contains';
+export interface In extends ParameterizablePredicateBase {
+  kind: 'In';
   relationEndType: RelationEndType;
-  object?: IObject;
-  objectId?: number;
+  extent?: Extent;
+  objects?: Array<IObject>;
+  objectIds?: Array<number>;
 }

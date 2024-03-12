@@ -94,7 +94,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Within(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -115,7 +115,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Within(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Extent = new Filter(this.M.C1)
                     }
@@ -135,7 +135,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Within(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -169,7 +169,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Contains(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new Has(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Object = c1c.Strategy
                     }
@@ -223,7 +223,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Within(m.C2.C1sWhereC1C2Many2One)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2One)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -257,7 +257,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Contains(m.C2.C1sWhereC1C2Many2One)
+                    Predicate = new Has(m.C2.C1sWhereC1C2Many2One)
                     {
                         Object = c1c.Strategy
                     }
@@ -285,7 +285,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Within(m.C2.C1WhereC1C2One2Many)
+                    Predicate = new In(m.C2.C1WhereC1C2One2Many)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -434,7 +434,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new Within(m.C2.C1WhereC1C2One2One)
+                    Predicate = new In(m.C2.C1WhereC1C2One2One)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -1759,7 +1759,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Within(m.C1.C1I12Many2Manies)
+                    Predicate = new In(m.C1.C1I12Many2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1780,7 +1780,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Within(m.C1.C1I12Many2Manies)
+                    Predicate = new In(m.C1.C1I12Many2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                     }
@@ -1800,7 +1800,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Within(m.C1.C1I12Many2Manies)
+                    Predicate = new In(m.C1.C1I12Many2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1833,7 +1833,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Contains(m.C1.C1C2Many2Manies)
+                    Predicate = new Has(m.C1.C1C2Many2Manies)
                     {
                         Object = c2c.Strategy
                     }
@@ -1861,7 +1861,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Within(m.C1.C1I12One2Manies)
+                    Predicate = new In(m.C1.C1I12One2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1894,7 +1894,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Contains(m.C1.C1C2One2Manies)
+                    Predicate = new Has(m.C1.C1C2One2Manies)
                     {
                         Object = c2d.Strategy
                     }
@@ -1922,7 +1922,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Within(m.C1.C1I12Many2One)
+                    Predicate = new In(m.C1.C1I12Many2One)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1953,7 +1953,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Within(m.C1.C1I12One2One)
+                    Predicate = new In(m.C1.C1I12One2One)
                     {
                         Extent = new Filter(this.M.I12)
                         {

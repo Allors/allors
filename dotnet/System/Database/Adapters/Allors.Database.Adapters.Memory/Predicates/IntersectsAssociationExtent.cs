@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Memory;
 using System.Linq;
 using Allors.Database.Meta;
 
-internal sealed class IntersectsAssociationExtent : Within
+internal sealed class IntersectsAssociationExtent : In
 {
     private readonly AssociationType associationType;
     private readonly Allors.Database.IExtent<IObject> containingExtent;
