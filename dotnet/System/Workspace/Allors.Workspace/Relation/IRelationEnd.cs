@@ -11,8 +11,6 @@ namespace Allors.Workspace
     {
         IStrategy Object { get; }
 
-        IRelationType RelationType { get; }
-
         object Value { get; }
     }
 }

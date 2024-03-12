@@ -258,9 +258,7 @@ namespace Allors.Workspace.Meta.Static
             this.BuildAssociationTypes(m);
             this.BuildRoleTypes(m);
 
-            var roleTypes = this.BuildRoleTypes(m);
-
-            m.RoleTypes = roleTypes;
+            m.RoleTypes = this.RoleTypes(m);
 
             this.BuildMethodTypes(m);
 
@@ -277,6 +275,13 @@ namespace Allors.Workspace.Meta.Static
             return m;
         }
 
+        private IRoleType[] RoleTypes(MetaPopulation m)
+        {
+            return [
+$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$roleType_array(roleType)$}; separator=",\n"$
+            ];
+        }
+
         private void BuildAssociationTypes(MetaPopulation m)
         {
 $meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_associationType(roleType)$}; separator="\n"$
@@ -284,16 +289,8 @@ $meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$buil
 
         private void BuildRoleTypes(MetaPopulation m)
         {
-$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_roleType(roleType)$}; separator="\n"$
-        }
-
-        private RoleType[] BuildRoleTypes(MetaPopulation m)
-        {
-		    return new RoleType[]
-            {
 $meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_compositeRoleType(roleType)$}; separator="\n"$
 $meta.WorkspaceUnitRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_unitRoleType(roleType)$}; separator="\n"$
-            };
         }
 
         private void BuildMethodTypes(MetaPopulation m)
@@ -333,16 +330,12 @@ build_associationType(roleType) ::= <<
             m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$ = new Meta$roleType.AssociationType.Name$(m);
 >>
 
-build_roleType(roleType) ::= <<
-            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new Meta$roleType.FullName$(m);
->>
-
 build_compositeRoleType(roleType) ::= <<
-                new RoleType(m, "$roleType.Tag$", m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
+            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new Meta$roleType.FullName$(m, "$roleType.Tag$", m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
 >>
 
 build_unitRoleType(roleType) ::= <<
-                new RoleType(m, "$roleType.Tag$", m.$roleType.AssociationType.ObjectType.SingularName$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
+            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new Meta$roleType.FullName$((m, "$roleType.Tag$", m.$roleType.AssociationType.ObjectType.SingularName$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
 >>
 
 isDerived(roleType) ::= <<$if(roleType.IsDerived)$isDerived: $roleType.IsDerived$$endif$>>
@@ -379,6 +372,10 @@ $composite.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodT
 
 assign_methodType(methodType) ::= <<
                 m.$composite.SingularName$.$methodType.Name$ = m.$methodType.ObjectType.SingularName$.$methodType.Name$;
+>>
+
+roleType_array(roleType) ::= <<
+            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$
 >>
 
 DropEmpty ::= ["": false, default: key]

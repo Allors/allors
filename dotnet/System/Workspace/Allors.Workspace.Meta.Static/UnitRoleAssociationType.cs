@@ -8,8 +8,8 @@ namespace Allors.Workspace.Meta
 {
     public class UnitRoleAssociationType : AssociationType
     {
-        public UnitRoleAssociationType(IComposite objectType)
-            : base(objectType)
+        public UnitRoleAssociationType(MetaPopulation metaPopulation, string tag, IComposite objectType)
+            : base(metaPopulation, tag, objectType)
         {
         }
     }

@@ -1,90 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Workspace.Meta.AssociationType" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAiAAAAAAAAAIEIEAAAAQAAAAAIAACAYACAABAAAA=</HashCode>
+      <HashCode>AAIAiAAAAEAAAAIEIAAAAAQAAAAAAAACAIAIAAAAIAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Workspace.Meta.AssociationTypeWithUnitRole" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AssociationTypeWithUnitRole.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Allors.Workspace.Meta.Class" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.25" Y="6.25" Width="1.5" />
+    <Position X="2" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BQJAiIMBAAFgAAJAACAAAwAAASCAAAACBQBAAUhAAAg=</HashCode>
+      <HashCode>BAAAgIAAAAFCAAAAAAAAAgAAAAAAAEAAQAIAAAgAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.Interface" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="6.25" Width="1.5" />
+    <Position X="4.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BQJAiIMBAAFgAAIAACAAAwAAASCAIEACAQJAAUhAAAg=</HashCode>
+      <HashCode>BAAAgIAAAAFCAAAAAAAAAgAAAAAAIEAAQAIAAAgAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.MetaPopulation" Collapsed="true">
-    <Position X="17" Y="1.5" Width="1.5" />
+    <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAgAAAAQECAABAAAAAACgAAAAABAAAEAACAAACAAA=</HashCode>
+      <HashCode>AAJAgAAAAQECAABAAAAAAAgAAAAABAAAEAACAAACAAA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.MethodType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.25" Y="1.75" Width="1.5" />
+    <Position X="7.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAEIAAAAAQAAAAAAAAAAIACAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEIAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>MethodType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Allors.Workspace.Meta.RelationType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAgAAAEAAAAAAAAiAAAAAAAEAACAABAAAA=</HashCode>
-      <FileName>RelationType.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Allors.Workspace.Meta.RoleType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.75" Y="1.5" Width="1.5" />
+    <Position X="4" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAgAoEoEIAAAQggAAAIAACAIACAADAEAA=</HashCode>
+      <HashCode>AAAAiBAAAEAAgAoEoAIAAAQwiAEAAAACEIAAAACAEAA=</HashCode>
       <FileName>RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Allors.Workspace.Meta.Unit" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1" Y="4.75" Width="1.5" />
+    <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIgIIAAAAgAAJIgAAAAAABACCAAAISAAAAAUBAAAA=</HashCode>
+      <HashCode>AAAIgIAAAAAAAABIgAAAAAABAAAAAAIQAAAAAQAAAAA=</HashCode>
       <FileName>Unit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Workspace.Meta.Composite" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="4.75" Width="1.5" />
+    <Position X="3" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAJAgIAAAAFgAAYAACAAAgAAASCAAAACAQBAAUhAAAA=</HashCode>
+      <HashCode>BAJAoAAAQAFCIAQFACAAAgQQAQAAAEAAQAJIAAgCABA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Allors.Workspace.Meta.ObjectType" Collapsed="true">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+    <Position X="2" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAAAAAYEgAAAAAABACCAAIACAAAAAUAAAAA=</HashCode>
       <FileName>ObjectType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.DataType" Collapsed="true">
-    <Position X="4.5" Y="1.75" Width="1.5" />
+    <Position X="2" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataType.cs</FileName>
@@ -92,23 +80,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.MetaIdentifiableObject" Collapsed="true">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="5.25" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAIAAAAQAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>MetaIdentifiableObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Workspace.Meta.Record" Collapsed="true">
-    <Position X="7.75" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Record.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Allors.Workspace.Meta.FieldType" Collapsed="true">
-    <Position X="10" Y="1.75" Width="1.5" />
+    <Position X="9.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FieldType.cs</FileName>
@@ -116,20 +96,27 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.CompositeMethodType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="17" Y="0.5" Width="1.5" />
+    <Position X="13.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CompositeMethodType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Allors.Workspace.Meta.CompositeRoleType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.75" Y="0.5" Width="1.5" />
+    <Position X="11.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CompositeRoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.UnitRoleAssociationType" Collapsed="true">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UnitRoleAssociationType.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

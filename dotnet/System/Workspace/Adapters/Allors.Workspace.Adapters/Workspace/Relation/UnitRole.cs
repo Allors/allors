@@ -20,8 +20,6 @@ namespace Allors.Workspace
 
         public Strategy Object { get; }
 
-        public IRelationType RelationType => this.RoleType.RelationType;
-
         public IRoleType RoleType { get; }
 
         object IRelationEnd.Value => this.Value;

@@ -18,7 +18,7 @@ namespace Allors.Workspace.Meta
 
         public IReadOnlyList<IClass> Classes { get; protected set; }
 
-        public IReadOnlyList<IRelationType> RelationTypes { get; set; }
+        public IReadOnlyList<IRoleType> RoleTypes { get; set; }
 
         public IReadOnlyList<IMethodType> MethodTypes { get; set; }
 
@@ -66,7 +66,7 @@ namespace Allors.Workspace.Meta
                 this.Units.Cast<IMetaIdentifiableObject>()
                     .Union(this.Classes)
                     .Union(this.Interfaces)
-                    .Union(this.RelationTypes)
+                    .Union(this.RoleTypes)
                     .Union(this.MethodTypes)
                     .ToDictionary(v => v.Tag, v => v);
 
@@ -113,14 +113,14 @@ namespace Allors.Workspace.Meta
 
             // RoleTypes
             {
-                foreach (RoleType roleType in this.RelationTypes.Select(v => v.RoleType))
+                foreach (RoleType roleType in this.RoleTypes)
                 {
                     roleType.InitializeSizeScaleAndPrecision();
                 }
 
-                var exclusiveRoleTypesObjectType = this.RelationTypes
+                var exclusiveRoleTypesObjectType = this.RoleTypes
                 .GroupBy(v => v.AssociationType.ObjectType)
-                .ToDictionary(g => g.Key, g => g.Select(v => v.RoleType).ToArray());
+                .ToDictionary(g => g.Key, g => g.ToArray());
 
                 foreach (Composite objectType in this.Composites)
                 {
@@ -131,8 +131,8 @@ namespace Allors.Workspace.Meta
 
             // AssociationTypes
             {
-                var exclusiveAssociationTypesByObjectType = this.RelationTypes
-                    .GroupBy(v => v.RoleType.ObjectType)
+                var exclusiveAssociationTypesByObjectType = this.RoleTypes
+                    .GroupBy(v => v.ObjectType)
                     .ToDictionary(g => g.Key, g => g.Select(v => v.AssociationType).ToArray());
 
                 foreach (Composite objectType in this.Composites)
@@ -157,12 +157,12 @@ namespace Allors.Workspace.Meta
             }
 
             // RoleTypes & AssociationTypes
-            var roleTypesByAssociationTypeObjectType = this.RelationTypes
+            var roleTypesByAssociationTypeObjectType = this.RoleTypes
                 .GroupBy(v => (Composite)v.AssociationType.ObjectType)
-                .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => (RoleType)v.RoleType)));
+                .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => (RoleType)v)));
 
-            var associationTypesByRoleTypeObjectType = this.RelationTypes
-                .GroupBy(v => (ObjectType)v.RoleType.ObjectType)
+            var associationTypesByRoleTypeObjectType = this.RoleTypes
+                .GroupBy(v => (ObjectType)v.ObjectType)
                 .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => (AssociationType)v.AssociationType)));
 
             // RoleTypes

@@ -1,4 +1,4 @@
-// <copyright file="RemoteDatabaseObject.cs" company="Allors bv">
+﻿// <copyright file="RemoteDatabaseObject.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,7 +15,7 @@ namespace Allors.Workspace.Adapters.Json
     {
         private readonly Connection database;
 
-        private Dictionary<IRelationType, object> roleByRelationType;
+        private Dictionary<IRoleType, object> roleByRoleType;
         private SyncResponseRole[] syncResponseRoles;
 
         internal Record(Connection database, IClass @class, long id, long version) : base(@class, id, version) => this.database = database;
@@ -32,18 +32,18 @@ namespace Allors.Workspace.Adapters.Json
 
         internal ValueRange<long> RevocationIds { get; private set; }
 
-        private Dictionary<IRelationType, object> RoleByRelationType
+        private Dictionary<IRoleType, object> RoleByRoleType
         {
             get
             {
                 if (this.syncResponseRoles != null)
                 {
                     var metaPopulation = this.database.Configuration.MetaPopulation;
-                    this.roleByRelationType = this.syncResponseRoles.ToDictionary(
-                        v => (IRelationType)metaPopulation.FindByTag(v.t),
+                    this.roleByRoleType = this.syncResponseRoles.ToDictionary(
+                        v => (IRoleType)metaPopulation.FindByTag(v.t),
                         v =>
                         {
-                            var roleType = ((IRelationType)metaPopulation.FindByTag(v.t)).RoleType;
+                            var roleType = ((IRoleType)metaPopulation.FindByTag(v.t));
                             var objectType = roleType.ObjectType;
 
                             if (objectType.IsUnit)
@@ -62,14 +62,14 @@ namespace Allors.Workspace.Adapters.Json
                     this.syncResponseRoles = null;
                 }
 
-                return this.roleByRelationType;
+                return this.roleByRoleType;
             }
         }
 
         public override object GetRole(IRoleType roleType)
         {
             object @object = null;
-            this.RoleByRelationType?.TryGetValue(roleType.RelationType, out @object);
+            this.RoleByRoleType?.TryGetValue(roleType, out @object);
             return @object;
         }
 

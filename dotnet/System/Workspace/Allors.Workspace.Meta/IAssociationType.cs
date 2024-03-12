@@ -10,8 +10,6 @@ namespace Allors.Workspace.Meta
     {
         new IComposite ObjectType { get; }
 
-        IRelationType RelationType { get; }
-
         IRoleType RoleType { get; }
     }
 }

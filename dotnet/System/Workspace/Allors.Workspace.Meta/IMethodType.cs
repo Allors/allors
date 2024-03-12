@@ -6,7 +6,7 @@
 
 namespace Allors.Workspace.Meta
 {
-    public interface IMethodType : IMetaIdentifiableObject, IOperandType
+    public interface IMethodType : IOperandType
     {
         IComposite ObjectType { get; }
 

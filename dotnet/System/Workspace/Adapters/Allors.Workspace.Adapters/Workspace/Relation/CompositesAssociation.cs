@@ -25,8 +25,6 @@ namespace Allors.Workspace
         public Strategy Object { get; }
 
 
-        public IRelationType RelationType => this.AssociationType.RelationType;
-
         IEnumerable<T> ICompositesAssociation<T>.Value => this.Value.Select(this.Object.Workspace.ObjectFactory.Object<T>);
 
         public IAssociationType AssociationType { get; }

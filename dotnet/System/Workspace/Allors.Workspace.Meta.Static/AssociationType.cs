@@ -13,9 +13,10 @@ namespace Allors.Workspace.Meta
     ///     This is also called the 'active', 'controlling' or 'owning' side.
     ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
     /// </summary>
-    public abstract class AssociationType : IAssociationType
+    public abstract class AssociationType : MetaIdentifiableObject, IAssociationType
     {
-        protected AssociationType(IComposite objectType)
+        protected AssociationType(MetaPopulation metaPopulation, string tag, IComposite objectType)
+            : base(metaPopulation, tag)
         {
             this.ObjectType = objectType;
         }
@@ -24,15 +25,9 @@ namespace Allors.Workspace.Meta
 
         public IComposite ObjectType { get; }
 
-        public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
-
-        IRelationType IAssociationType.RelationType => this.RelationType;
-
-        public RelationType RelationType { get; internal set; }
+        public RoleType RoleType { get; internal set; }
 
         IRoleType IAssociationType.RoleType => this.RoleType;
-
-        public RoleType RoleType => this.RelationType.RoleType;
 
         public string SingularName { get; internal set; }
 
@@ -40,12 +35,12 @@ namespace Allors.Workspace.Meta
 
         public string Name { get; internal set; }
 
-        public bool IsMany => this.RelationType.Multiplicity == Multiplicity.ManyToOne ||
-                              this.RelationType.Multiplicity == Multiplicity.ManyToMany;
+        public bool IsMany => this.RoleType.Multiplicity == Multiplicity.ManyToOne ||
+                              this.RoleType.Multiplicity == Multiplicity.ManyToMany;
 
         public bool IsOne => !this.IsMany;
 
-        public string OperandTag => this.RelationType.Tag;
+        public string OperandTag => this.RoleType.Tag;
 
         int IComparable<IRelationEndType>.CompareTo(IRelationEndType other) =>
             string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);

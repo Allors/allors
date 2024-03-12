@@ -23,8 +23,6 @@ namespace Allors.Workspace
 
         public Strategy Object { get; }
 
-        public IRelationType RelationType => this.RoleType.RelationType;
-
         T ICompositeRole<T>.Value
         {
             get => this.Object.Workspace.ObjectFactory.Object<T>(this.Value);
@@ -81,7 +79,7 @@ namespace Allors.Workspace
 
         public override string ToString()
         {
-            return $"{this.RelationType.AssociationType.ObjectType.SingularName}[{this.Object.Id}].{this.RoleType.Name} = [{Value?.Id}]";
+            return $"{this.RoleType.AssociationType.ObjectType.SingularName}[{this.Object.Id}].{this.RoleType.Name} = [{Value?.Id}]";
         }
     }
 }

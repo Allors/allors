@@ -1,4 +1,4 @@
-
+﻿
 // <copyright file="AssociationType.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
@@ -9,9 +9,11 @@ namespace Allors.Workspace.Meta
 {
     public interface IRoleType : IRelationEndType
     {
-        IRelationType RelationType { get; }
-
         IAssociationType AssociationType { get; }
+
+        Multiplicity Multiplicity { get; }
+
+        bool IsDerived { get; }
 
         bool IsRequired { get; }
     }

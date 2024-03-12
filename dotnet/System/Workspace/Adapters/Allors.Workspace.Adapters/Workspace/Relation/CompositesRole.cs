@@ -25,8 +25,6 @@ namespace Allors.Workspace
 
         public Strategy Object { get; }
 
-        public IRelationType RelationType => this.RoleType.RelationType;
-
         public IRoleType RoleType { get; }
 
         void ICompositesRole<T>.Add(T @object)
