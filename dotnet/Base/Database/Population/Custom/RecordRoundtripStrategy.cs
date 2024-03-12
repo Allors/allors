@@ -58,7 +58,7 @@
         public Func<IStrategy, RoleType, bool> RoleFilter() => (strategy, roleType) =>
             strategy.ExistRole(roleType) &&
             roleType.ObjectType.IsUnit &&
-            !roleType.RelationType.IsDerived &&
+            !roleType.IsDerived &&
             !roleType.SingularName.Equals("ExternalPrimaryKey");
     }
 }

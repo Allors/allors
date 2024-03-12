@@ -192,35 +192,35 @@ where c = '{@class.Id}'";
                         if (reader.Name.Equals(XmlBackup.RelationTypeUnit)
                             || reader.Name.Equals(XmlBackup.RelationTypeComposite))
                         {
-                            var relationTypeIdString = reader.GetAttribute(XmlBackup.Id);
-                            if (string.IsNullOrEmpty(relationTypeIdString))
+                            var roleTypeIdString = reader.GetAttribute(XmlBackup.Id);
+                            if (string.IsNullOrEmpty(roleTypeIdString))
                             {
                                 throw new Exception("Relation type has no id");
                             }
 
-                            var relationTypeId = new Guid(relationTypeIdString);
-                            var relationType = (RelationType)this.database.MetaPopulation.FindById(relationTypeId);
+                            var roleTypeId = new Guid(roleTypeIdString);
+                            var roleType = (RoleType)this.database.MetaPopulation.FindById(roleTypeId);
 
                             if (reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is Composite)
+                                if (roleType == null || roleType.ObjectType is Composite)
                                 {
-                                    this.CantRestoreUnitRole(reader.ReadSubtree(), relationTypeId);
+                                    this.CantRestoreUnitRole(reader.ReadSubtree(), roleTypeId);
                                 }
                                 else
                                 {
-                                    this.RestoreUnitRelations(reader.ReadSubtree(), relationType);
+                                    this.RestoreUnitRelations(reader.ReadSubtree(), roleType);
                                 }
                             }
                             else if (reader.Name.Equals(XmlBackup.RelationTypeComposite))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is Unit)
+                                if (roleType == null || roleType.ObjectType is Unit)
                                 {
-                                    this.CantRestoreCompositeRole(reader.ReadSubtree(), relationTypeId);
+                                    this.CantRestoreCompositeRole(reader.ReadSubtree(), roleTypeId);
                                 }
                                 else
                                 {
-                                    this.RestoreCompositeRelations(reader.ReadSubtree(), relationType);
+                                    this.RestoreCompositeRelations(reader.ReadSubtree(), roleType);
                                 }
                             }
                         }
@@ -231,9 +231,9 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void RestoreUnitRelations(XmlReader reader, RelationType relationType)
+    private void RestoreUnitRelations(XmlReader reader, RoleType roleType)
     {
-        var allowedClasses = new HashSet<Class>(relationType.AssociationType.Composite.Classes);
+        var allowedClasses = new HashSet<Class>(roleType.AssociationType.Composite.Classes);
         var unitRelationsByClass = new Dictionary<Class, List<UnitRelation>>();
 
         var skip = false;
@@ -254,7 +254,7 @@ where c = '{@class.Id}'";
 
                         if (@class == null || !allowedClasses.Contains(@class))
                         {
-                            this.CantRestoreUnitRole(reader.ReadSubtree(), relationType.Id);
+                            this.CantRestoreUnitRole(reader.ReadSubtree(), roleType.Id);
                         }
                         else
                         {
@@ -275,7 +275,7 @@ where c = '{@class.Id}'";
                                 object unit = null;
                                 if (reader.IsEmptyElement)
                                 {
-                                    var unitType = (Unit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)roleType.ObjectType;
                                     unit = unitType.Tag switch
                                     {
                                         UnitTags.String => string.Empty,
@@ -285,7 +285,7 @@ where c = '{@class.Id}'";
                                 }
                                 else
                                 {
-                                    var unitType = (Unit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)roleType.ObjectType;
                                     var unitTypeTag = unitType.Tag;
                                     unit = XmlBackup.ReadString(value, unitTypeTag);
                                 }
@@ -294,7 +294,7 @@ where c = '{@class.Id}'";
                             }
                             catch
                             {
-                                this.OnRelationNotRestored(relationType.Id, associationId, value);
+                                this.OnRelationNotRestored(roleType.Id, associationId, value);
                             }
 
                             skip = reader.IsStartElement();
@@ -310,11 +310,11 @@ where c = '{@class.Id}'";
         {
             foreach ((Class @class, List<UnitRelation> unitRelations) in unitRelationsByClass)
             {
-                var sql = this.database.Mapping.ProcedureNameForSetUnitRoleByRelationTypeByClass[@class][relationType];
+                var sql = this.database.Mapping.ProcedureNameForSetUnitRoleByRoleTypeByClass[@class][roleType];
                 var command = con.CreateCommand();
                 command.CommandText = sql;
                 command.CommandType = CommandType.StoredProcedure;
-                command.UnitTableParameter(relationType.RoleType, unitRelations);
+                command.UnitTableParameter(roleType, unitRelations);
                 command.ExecuteNonQuery();
             }
 
@@ -326,22 +326,22 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void RestoreCompositeRelations(XmlReader reader, RelationType relationType)
+    private void RestoreCompositeRelations(XmlReader reader, RoleType roleType)
     {
         var con = this.database.ConnectionFactory.Create();
         try
         {
             var relations = new CompositeRelations(
                 this.database,
-                relationType,
+                roleType,
                 this.CantRestoreCompositeRole,
                 this.OnRelationNotRestored,
                 this.classByObjectId,
                 reader);
 
-            var sql = relationType.RoleType.IsOne
-                ? this.database.Mapping.ProcedureNameForSetRoleByRelationType[relationType]
-                : this.database.Mapping.ProcedureNameForAddRoleByRelationType[relationType];
+            var sql = roleType.IsOne
+                ? this.database.Mapping.ProcedureNameForSetRoleByRoleType[roleType]
+                : this.database.Mapping.ProcedureNameForAddRoleByRoleType[roleType];
 
             var command = con.CreateCommand();
             command.CommandText = sql;

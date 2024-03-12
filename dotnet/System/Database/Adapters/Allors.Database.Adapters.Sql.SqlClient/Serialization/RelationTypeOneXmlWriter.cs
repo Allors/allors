@@ -1,4 +1,4 @@
-// <copyright file="RelationTypeOneXmlWriter.cs" company="Allors bv">
+﻿// <copyright file="RelationTypeOneXmlWriter.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -17,9 +17,9 @@ using Allors.Database.Meta;
 internal class RelationTypeOneXmlWriter : IDisposable
 {
     /// <summary>
-    ///     The <see cref="relationType" />.
+    ///     The <see cref="roleType" />.
     /// </summary>
-    private readonly RelationType relationType;
+    private readonly RoleType roleType;
 
     /// <summary>
     ///     The <see cref="xmlWriter" />.
@@ -39,11 +39,11 @@ internal class RelationTypeOneXmlWriter : IDisposable
     /// <summary>
     ///     Initializes a new state of the <see cref="RelationTypeOneXmlWriter" /> class.
     /// </summary>
-    /// <param name="relationType">Type of the relation.</param>
+    /// <param name="roleType">Type of the relation.</param>
     /// <param name="xmlWriter">The XML writer.</param>
-    internal RelationTypeOneXmlWriter(RelationType relationType, XmlWriter xmlWriter)
+    internal RelationTypeOneXmlWriter(RoleType roleType, XmlWriter xmlWriter)
     {
-        this.relationType = relationType;
+        this.roleType = roleType;
         this.xmlWriter = xmlWriter;
         this.isClosed = false;
     }
@@ -79,7 +79,7 @@ internal class RelationTypeOneXmlWriter : IDisposable
         if (!this.isInUse)
         {
             this.isInUse = true;
-            if (this.relationType.RoleType.ObjectType.IsUnit)
+            if (this.roleType.ObjectType.IsUnit)
             {
                 this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeUnit);
             }
@@ -88,7 +88,7 @@ internal class RelationTypeOneXmlWriter : IDisposable
                 this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeComposite);
             }
 
-            this.xmlWriter.WriteAttributeString(XmlBackup.Id, this.relationType.Id.ToString());
+            this.xmlWriter.WriteAttributeString(XmlBackup.Id, this.roleType.Id.ToString());
         }
 
         this.xmlWriter.WriteStartElement(XmlBackup.Relation);

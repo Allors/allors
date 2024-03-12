@@ -57,10 +57,9 @@ namespace Allors.Database.Configuration
                 .ToDictionary(v => v, v => new HashSet<long>(metaCache.GetWorkspaceClasses(v).SelectMany(w =>
                 {
                     var @class = w;
-                    var permissionIds = new HashSet<long>();
-                    permissionIds.Add(@class.CreatePermissionId());
+                    var permissionIds = new HashSet<long> { @class.CreatePermissionId() };
 
-                    foreach (var relationType in @class.RoleTypes.Select(v => v.RelationType).Where(w => w.WorkspaceNames.Contains(v)))
+                    foreach (var relationType in @class.RoleTypes.Where(w => w.WorkspaceNames.Contains(v)))
                     {
                         permissionIds.Add(@class.ReadPermissionIdByRelationTypeId()[relationType.Id]);
                         permissionIds.Add(@class.WritePermissionIdByRelationTypeId()[relationType.Id]);

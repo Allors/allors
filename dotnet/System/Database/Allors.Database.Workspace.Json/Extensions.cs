@@ -1,4 +1,4 @@
-// <copyright file="FromJsonVisitor.cs" company="Allors bv">
+﻿// <copyright file="FromJsonVisitor.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,10 +16,10 @@ public static class Extensions
     public static Composite FindComposite(this MetaPopulation @this, string tag) => tag != null ? (Composite)@this.FindByTag(tag) : null;
 
     public static AssociationType FindAssociationType(this MetaPopulation @this, string tag) =>
-        tag != null ? ((RelationType)@this.FindByTag(tag)).AssociationType : null;
+        tag != null ? ((AssociationType)@this.FindByTag(tag)) : null;
 
     public static RoleType FindRoleType(this MetaPopulation @this, string tag) =>
-        tag != null ? ((RelationType)@this.FindByTag(tag)).RoleType : null;
+        tag != null ? ((RoleType)@this.FindByTag(tag)) : null;
 
     public static Pull[] FromJson(this Allors.Protocol.Json.Data.Pull[] pulls, ITransaction transaction, IUnitConvert unitConvert)
     {

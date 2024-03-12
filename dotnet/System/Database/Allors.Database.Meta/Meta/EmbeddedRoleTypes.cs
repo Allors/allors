@@ -15,6 +15,8 @@ public class EmbeddedRoleTypes
         this.ObjectTypeSingularName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.SingularName));
         this.ObjectTypeAssignedPluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.AssignedPluralName));
         this.ObjectTypePluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.PluralName));
+
+        this.RoleTypeIsDerived = meta.AddUnit<RoleType, bool>(nameof(RoleType.IsDerived));
     }
 
     public EmbeddedRoleType ObjectTypeSingularName { get; set; }
@@ -22,4 +24,6 @@ public class EmbeddedRoleTypes
     public EmbeddedRoleType ObjectTypeAssignedPluralName { get; set; }
 
     public EmbeddedRoleType ObjectTypePluralName { get; set; }
+
+    public EmbeddedRoleType RoleTypeIsDerived { get; set; }
 }

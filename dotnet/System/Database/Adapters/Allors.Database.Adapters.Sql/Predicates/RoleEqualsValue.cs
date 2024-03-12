@@ -40,17 +40,17 @@ internal sealed class RoleEqualsValue : Equals
         var schema = statement.Mapping;
         if (this.roleType.ObjectType.IsUnit)
         {
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + "=" +
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.roleType] + "=" +
                              statement.AddParameter(this.obj));
         }
         else
         {
             var allorsObject = (IObject)this.obj;
 
-            if (this.roleType.RelationType.ExistExclusiveClasses)
+            if (this.roleType.ExistExclusiveClasses)
             {
-                statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + " IS NOT NULL AND ");
-                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + "=" +
+                statement.Append(" (" + alias + "." + schema.ColumnNameByRoleType[this.roleType] + " IS NOT NULL AND ");
+                statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.roleType] + "=" +
                                  allorsObject.Strategy.ObjectId + ")");
             }
             else

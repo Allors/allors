@@ -31,7 +31,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                 var roleTypes = new List<RoleType>();
                 foreach (var relation in this.Relations)
                 {
-                    var roleType = relation.RelationType.RoleType;
+                    var roleType = relation.RoleType;
                     if (!roleTypes.Contains(roleType))
                     {
                         roleTypes.Add(roleType);

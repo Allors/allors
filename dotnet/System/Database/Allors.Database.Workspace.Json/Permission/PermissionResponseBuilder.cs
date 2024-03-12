@@ -40,14 +40,14 @@ public class PermissionResponseBuilder
                 {
                     i = permission.Strategy.ObjectId,
                     c = permission.Class.Tag,
-                    t = permission.RelationType.Tag,
+                    t = permission.RoleType.Tag,
                     o = (long)Operations.Read,
                 },
                 IWritePermission permission => new PermissionResponsePermission
                 {
                     i = permission.Strategy.ObjectId,
                     c = permission.Class.Tag,
-                    t = permission.RelationType.Tag,
+                    t = permission.RoleType.Tag,
                     o = (long)Operations.Write,
                 },
                 IExecutePermission permission => new PermissionResponsePermission

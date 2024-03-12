@@ -455,7 +455,7 @@ case PredicateKind.Equals:
         {
             SortDirection = visited.d ?? SortDirection.Ascending,
             RoleType = !string.IsNullOrWhiteSpace(visited.r)
-                ? ((RelationType)this.fromJson.MetaPopulation.FindByTag(visited.r)).RoleType
+                ? (RoleType)this.fromJson.MetaPopulation.FindByTag(visited.r)
                 : null,
         };
 

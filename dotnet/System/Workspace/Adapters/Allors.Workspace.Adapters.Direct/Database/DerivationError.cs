@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters.Direct
             .Select(v =>
             {
                 var metaPopulation = this.workspace.MetaPopulation;
-                var relationType = (IRelationType)metaPopulation.FindByTag(v.RelationType.Tag);
+                var relationType = (IRelationType)metaPopulation.FindByTag(v.RoleType.Tag);
                 return this.workspace.Instantiate(v.Association.Id).Role(relationType.RoleType);
             });
 

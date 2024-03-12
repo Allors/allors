@@ -1,5 +1,7 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
+using System;
+using System.Collections.Generic;
 using Allors.Database.Meta.Extensions;
 using Allors.Database.Meta;
 
@@ -12,10 +14,17 @@ public class RoleTypeModel : RelationEndTypeModel
 
     protected override RelationEndType RelationEndType => this.RoleType;
 
+    public IMetaIdentifiableObject MetaObject => this.RoleType;
+
+    // IMetaIdentifiable
+    public Guid Id => this.MetaObject.Id;
+
+    public string Tag => this.MetaObject.Tag;
+
+    public IEnumerable<string> WorkspaceNames => this.MetaObject.WorkspaceNames;
+    
     // IRoleType
     public AssociationTypeModel AssociationType => this.Model.Map(this.RoleType.AssociationType);
-
-    public RelationTypeModel RelationType => this.Model.Map(this.RoleType.RelationType);
 
     public string FullName => this.RoleType.FullName;
 
@@ -36,4 +45,18 @@ public class RoleTypeModel : RelationEndTypeModel
     public bool IsRequired => this.RoleType.CompositeRoleType.IsRequired();
 
     public bool IsUnique => this.RoleType.CompositeRoleType.IsUnique();
+
+    public Multiplicity Multiplicity => this.RoleType.Multiplicity;
+
+    public bool IsOneToOne => this.RoleType.Multiplicity == Multiplicity.OneToOne;
+
+    public bool IsOneToMany => this.RoleType.Multiplicity == Multiplicity.OneToMany;
+
+    public bool IsManyToOne => this.RoleType.Multiplicity == Multiplicity.ManyToOne;
+
+    public bool IsManyToMany => this.RoleType.Multiplicity == Multiplicity.ManyToMany;
+
+    public bool IsDerived => this.RoleType.IsDerived;
+    
+    public string MediaType => this.RoleType.MediaType();
 }

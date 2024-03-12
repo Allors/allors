@@ -185,10 +185,10 @@ public class PushResponseBuilder
             var composite = (Composite)obj.Strategy.Class;
 
             // TODO: Cache and filter for workspace
-            var roleTypes = composite.RoleTypes.Where(v => v.RelationType.WorkspaceNames.Any());
+            var roleTypes = composite.RoleTypes.Where(v => v.WorkspaceNames.Any());
             var acl = this.AccessControl[obj];
 
-            var roleType = ((RelationType)this.metaPopulation.FindByTag(pushRequestRole.t)).RoleType;
+            var roleType = ((RoleType)this.metaPopulation.FindByTag(pushRequestRole.t));
             if (roleType != null)
             {
                 if (acl.CanWrite(roleType))

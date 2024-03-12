@@ -47,7 +47,7 @@
                                           .Where(attribute => attribute.Name.LocalName.Equals(HandleAttributeName, StringComparison.OrdinalIgnoreCase))
                                           .Select(attribute =>
                                           {
-                                              var roleType = @class.RoleTypes.First(roleType => roleType.RelationType.IsKey);
+                                              var roleType = @class.RoleTypes.First(roleType => roleType.IsKey);
                                               var name = attribute.Value;
                                               return new Handle(roleType, name, valueByRoleType[roleType]);
                                           })

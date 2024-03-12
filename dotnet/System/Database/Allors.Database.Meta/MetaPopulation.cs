@@ -29,7 +29,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 
     private IReadOnlyList<Domain> domains;
     private IReadOnlyList<Class> classes;
-    private IReadOnlyList<RelationType> relationTypes;
+    private IReadOnlyList<RoleType> roleTypes;
     private IReadOnlyList<Interface> interfaces;
     private IReadOnlyList<Composite> composites;
     private IReadOnlyList<Unit> units;
@@ -65,10 +65,10 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         set => this.classes = value;
     }
 
-    public IReadOnlyList<RelationType> RelationTypes
+    public IReadOnlyList<RoleType> RoleTypes
     {
-        get => this.relationTypes;
-        set => this.relationTypes = value;
+        get => this.roleTypes;
+        set => this.roleTypes = value;
     }
 
     public IReadOnlyList<Interface> Interfaces
@@ -148,7 +148,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
             @class.Validate(log);
         }
 
-        foreach (var relationType in this.relationTypes)
+        foreach (var relationType in this.roleTypes)
         {
             relationType.Validate(log);
         }
@@ -176,10 +176,10 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         this.units = this.metaObjects.OfType<Unit>().ToArray();
         this.interfaces = this.metaObjects.OfType<Interface>().ToArray();
         this.classes = this.metaObjects.OfType<Class>().ToArray();
-        this.relationTypes = this.metaObjects.OfType<RelationType>().ToArray();
+        this.roleTypes = this.metaObjects.OfType<RoleType>().ToArray();
         this.methodTypes = this.metaObjects.OfType<MethodType>().ToArray();
 
-        this.composites = this.classes.Cast<Composite>().Union(this.interfaces.Cast<Composite>()).ToArray();
+        this.composites = this.classes.Union(this.interfaces.Cast<Composite>()).ToArray();
 
         // Domains
         foreach (var domain in this.domains)
@@ -224,12 +224,12 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
 
         // RoleTypes & AssociationTypes
-        var roleTypesByAssociationTypeObjectType = this.relationTypes
+        var roleTypesByAssociationTypeObjectType = this.roleTypes
             .GroupBy(v => v.AssociationType.ObjectType)
-            .ToDictionary(g => (Composite)g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
+            .ToDictionary(g => (Composite)g.Key, g => new HashSet<RoleType>(g));
 
-        var associationTypesByRoleTypeObjectType = this.relationTypes
-            .GroupBy(v => v.RoleType.ObjectType)
+        var associationTypesByRoleTypeObjectType = this.roleTypes
+            .GroupBy(v => v.ObjectType)
             .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
@@ -256,9 +256,9 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 
         // Composite RoleTypes
         var compositeRoleTypesByComposite = this.composites.ToDictionary(v => v, v => new HashSet<CompositeRoleType>());
-        foreach (var relationType in this.relationTypes)
+        foreach (var relationType in this.roleTypes)
         {
-            relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
+            relationType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
         foreach (Composite composite in this.composites)
@@ -286,15 +286,15 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         this.metaIdentifiableObjectByTag = this.metaIdentifiableObjectById.Values.ToDictionary(v => v.Tag, v => v);
 
         // RoleType
-        foreach (var relationType in this.relationTypes)
+        foreach (var relationType in this.roleTypes)
         {
-            relationType.RoleType.DeriveScaleAndSize();
+            relationType.DeriveScaleAndSize();
         }
 
         // WorkspaceNames
         this.derivedWorkspaceNames = this.classes.SelectMany(v => v.AssignedWorkspaceNames).Distinct().ToArray();
 
-        foreach (var relationType in this.relationTypes)
+        foreach (var relationType in this.roleTypes)
         {
             relationType.DeriveWorkspaceNames();
         }
@@ -309,12 +309,12 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
             @interface.DeriveWorkspaceNames();
         }
 
-        foreach (var roleType in this.relationTypes.Select(v => v.RoleType))
+        foreach (var roleType in this.roleTypes)
         {
             roleType.DeriveIsRequired();
         }
 
-        foreach (var roleType in this.relationTypes.Select(v => v.RoleType))
+        foreach (var roleType in this.roleTypes)
         {
             roleType.DeriveIsUnique();
         }

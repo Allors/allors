@@ -8,7 +8,7 @@ public sealed class CompositeRoleType : IMetaExtensible
         this.Composite = composite;
         this.RoleType = roleType;
     }
-
+    
     public dynamic Attributes { get; }
 
     public Composite Composite { get; }

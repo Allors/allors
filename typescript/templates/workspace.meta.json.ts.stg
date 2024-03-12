@@ -66,20 +66,20 @@ $meta.WorkspaceClassesByWorkspaceName.(workspaceName):{objectType|$data_objectTy
 >>
 
 data_objectType(objectType) ::= <<
-    ['$objectType.Tag$', '$objectType.SingularName$', $data_supertypes()$, $data_relationTypes()$, $data_methodTypes()$$if(objectType.ExistAssignedPluralName)$, "$objectType.PluralName$"$endif$]
+    ['$objectType.Tag$', '$objectType.SingularName$', $data_supertypes()$, $data_roleTypes()$, $data_methodTypes()$$if(objectType.ExistAssignedPluralName)$, "$objectType.PluralName$"$endif$]
 >>
 
 data_supertypes() ::= <<[$objectType.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{supertype|'$supertype.Tag$'}; separator=","$]>>
 
-data_relationTypes() ::= <<[$objectType.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$data_relationType(relationType=roleType.RelationType, associationType=roleType.AssociationType, roleType=roleType)$}; separator=","$]>>
+data_roleTypes() ::= <<[$objectType.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$data_roleType(roleType, roleType.AssociationType)$}; separator=","$]>>
 
-data_relationType(relationType, associationType, roleType) ::= <<['$relationType.Tag$', '$roleType.ObjectType.Tag$'$data_relationType_singularAndPluralName()$$data_relationType_size_scale_precision()$]>>
+data_roleType(roleType, associationType) ::= <<['$roleType.Tag$', '$roleType.ObjectType.Tag$'$data_roleType_singularAndPluralName()$$data_roleType_size_scale_precision()$]>>
 
-data_relationType_singularAndPluralName() ::= <<$if(roleType.ExistAssignedSingularName)$, "$roleType.singularName$"$data_relationType_pluralName()$$endif$>>
+data_roleType_singularAndPluralName() ::= <<$if(roleType.ExistAssignedSingularName)$, "$roleType.singularName$"$data_roleType_pluralName()$$endif$>>
 
-data_relationType_pluralName() ::= <<$if(roleType.ExistAssignedPluralName)$, "$roleType.pluralName$"$endif$>>
+data_roleType_pluralName() ::= <<$if(roleType.ExistAssignedPluralName)$, "$roleType.pluralName$"$endif$>>
 
-data_relationType_size_scale_precision() ::= <<$if(roleType.Size)$, $roleType.Size$$endif$$if(roleType.Scale)$, $roleType.Scale$, $roleType.Precision$$endif$>>
+data_roleType_size_scale_precision() ::= <<$if(roleType.Size)$, $roleType.Size$$endif$$if(roleType.Scale)$, $roleType.Scale$, $roleType.Precision$$endif$>>
 
 data_methodTypes() ::= <<[$objectType.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|$data_methodType(methodType)$}; separator=","$]>>
 
@@ -88,5 +88,5 @@ data_methodType(methodType) ::= <<['$methodType.Tag$', "$methodType.Name$"]>>
 data_mediaType(mediaTypeName) ::= <<$meta.WorkspaceMediaTagsByMediaTypeNameByWorkspaceName.(workspaceName).(mediaTypeName):{tag|'$tag$'}; separator=","$>>
 
 data_overridden_required(objectType) ::= <<$if(objectType.WorkspaceOverriddenRequiredByWorkspaceName.(workspaceName))$
-    ['$objectType.Tag$', [$objectType.WorkspaceOverriddenRequiredByWorkspaceName.(workspaceName):{roleType|'$roleType.RelationType.tag$'}; separator=","$]],
+    ['$objectType.Tag$', [$objectType.WorkspaceOverriddenRequiredByWorkspaceName.(workspaceName):{roleType|'$roleType.tag$'}; separator=","$]],
 $endif$>>

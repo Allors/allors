@@ -23,7 +23,7 @@ internal sealed class RoleGreaterThanValue : GreaterThan
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + ">" +
+        statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.roleType] + ">" +
                          statement.AddParameter(this.obj));
         return this.Include;
     }

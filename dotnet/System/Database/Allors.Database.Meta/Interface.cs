@@ -66,8 +66,8 @@ public sealed class Interface : Composite
 
     public void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this
-            .RoleTypes.SelectMany(v => v.RelationType.WorkspaceNames)
-            .Union(this.AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
+            .RoleTypes.SelectMany(v => v.WorkspaceNames)
+            .Union(this.AssociationTypes.SelectMany(v => v.RoleType.WorkspaceNames))
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 

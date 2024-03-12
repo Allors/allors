@@ -13,7 +13,5 @@ public class AssociationTypeModel : RelationEndTypeModel
     protected override RelationEndType RelationEndType => this.AssociationType;
 
     // IAssociationType
-    public RelationTypeModel RelationType => this.Model.Map(this.AssociationType.RelationType);
-
     public RoleTypeModel RoleType => this.Model.Map(this.AssociationType.RoleType);
 }

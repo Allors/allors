@@ -23,17 +23,17 @@ internal sealed class AssociationEquals : Equals
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        if ((this.association.IsMany && this.association.RelationType.RoleType.IsMany) ||
-            !this.association.RelationType.ExistExclusiveClasses)
+        if ((this.association.IsMany && this.association.RoleType.IsMany) ||
+            !this.association.RoleType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IS NOT NULL AND ");
             statement.Append(" " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + "=" +
                              this.allorsObject.Strategy.ObjectId + ")");
         }
-        else if (this.association.RelationType.RoleType.IsMany)
+        else if (this.association.RoleType.IsMany)
         {
-            statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NOT NULL AND ");
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + "=" +
+            statement.Append(" (" + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IS NOT NULL AND ");
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + "=" +
                              this.allorsObject.Strategy.ObjectId + ")");
         }
         else

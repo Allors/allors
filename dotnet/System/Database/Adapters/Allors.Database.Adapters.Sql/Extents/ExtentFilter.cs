@@ -139,8 +139,7 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
             if (inStatement.RoleType != null)
             {
                 var inRole = inStatement.RoleType;
-                var inIRelationType = inRole.RelationType;
-                if (inIRelationType.Multiplicity == Multiplicity.ManyToMany || !inIRelationType.ExistExclusiveClasses)
+                if (inRole.Multiplicity == Multiplicity.ManyToMany || !inRole.ExistExclusiveClasses)
                 {
                     statement.Append("SELECT " + inRole.AssociationType.SingularFullName + "_A." + Mapping.ColumnNameForAssociation);
                 }
@@ -151,7 +150,7 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
                 else
                 {
                     statement.Append("SELECT " + inRole.AssociationType.SingularFullName + "_A." +
-                                     this.Mapping.ColumnNameByRelationType[inRole.RelationType]);
+                                     this.Mapping.ColumnNameByRoleType[inRole]);
                 }
 
                 statement.Append(" FROM " + this.Mapping.TableNameForObjectByClass[rootClass] + " " + alias);
@@ -173,18 +172,18 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
                     statement.Append(" WHERE ");
                 }
 
-                if (inIRelationType.Multiplicity == Multiplicity.ManyToMany || !inIRelationType.ExistExclusiveClasses)
+                if (inRole.Multiplicity == Multiplicity.ManyToMany || !inRole.ExistExclusiveClasses)
                 {
                     statement.Append(inRole.AssociationType.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IS NOT NULL ");
                 }
                 else if (inRole.IsMany)
                 {
-                    statement.Append(alias + "." + this.Mapping.ColumnNameByRelationType[inRole.RelationType] + " IS NOT NULL ");
+                    statement.Append(alias + "." + this.Mapping.ColumnNameByRoleType[inRole] + " IS NOT NULL ");
                 }
                 else
                 {
                     statement.Append(inRole.AssociationType.SingularFullName + "_A." +
-                                     this.Mapping.ColumnNameByRelationType[inRole.RelationType] + " IS NOT NULL ");
+                                     this.Mapping.ColumnNameByRoleType[inRole] + " IS NOT NULL ");
                 }
             }
             else
@@ -258,7 +257,6 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
                 foreach (var rootClass in this.objectType.Classes)
                 {
                     var inRole = inStatement.RoleType;
-                    var inIRelationType = inRole.RelationType;
 
                     if (!((Composite)inRole.ObjectType).Classes.Contains(rootClass))
                     {
@@ -276,7 +274,7 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
 
                     var alias = statement.CreateAlias();
 
-                    if (inIRelationType.Multiplicity == Multiplicity.ManyToMany || !inIRelationType.ExistExclusiveClasses)
+                    if (inRole.Multiplicity == Multiplicity.ManyToMany || !inRole.ExistExclusiveClasses)
                     {
                         statement.Append("SELECT " + inRole.AssociationType.SingularFullName + "_A." + Mapping.ColumnNameForAssociation);
                     }
@@ -286,8 +284,7 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
                     }
                     else
                     {
-                        statement.Append("SELECT " + inRole.AssociationType.SingularFullName + "_A." +
-                                         this.Mapping.ColumnNameByRelationType[inRole.RelationType]);
+                        statement.Append("SELECT " + inRole.AssociationType.SingularFullName + "_A." + this.Mapping.ColumnNameByRoleType[inRole]);
                     }
 
                     statement.Append(" FROM " + this.Mapping.TableNameForObjectByClass[rootClass] + " " + alias);
@@ -310,19 +307,19 @@ internal class ExtentFilter<T> : Extent<T>, IInternalExtentFiltered, IFilter<T> 
                         statement.Append(" WHERE ");
                     }
 
-                    if (inIRelationType.Multiplicity == Multiplicity.ManyToMany || !inIRelationType.ExistExclusiveClasses)
+                    if (inRole.Multiplicity == Multiplicity.ManyToMany || !inRole.ExistExclusiveClasses)
                     {
                         statement.Append(inRole.AssociationType.SingularFullName + "_A." + Mapping.ColumnNameForAssociation +
                                          " IS NOT NULL ");
                     }
                     else if (inRole.IsMany)
                     {
-                        statement.Append(alias + "." + this.Mapping.ColumnNameByRelationType[inRole.RelationType] + " IS NOT NULL ");
+                        statement.Append(alias + "." + this.Mapping.ColumnNameByRoleType[inRole] + " IS NOT NULL ");
                     }
                     else
                     {
                         statement.Append(inRole.AssociationType.SingularFullName + "_A." +
-                                         this.Mapping.ColumnNameByRelationType[inRole.RelationType] + " IS NOT NULL ");
+                                         this.Mapping.ColumnNameByRoleType[inRole] + " IS NOT NULL ");
                     }
                 }
             }

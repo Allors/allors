@@ -51,12 +51,12 @@ $meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|import { $co
 
 export type SingularMap = {
 $meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|  $composite.name$: $composite.name$;}; separator="\n"$
-$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$typingsSingularRelationType(relationType)$}; separator="\n"$
+$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$typingsSingularRoleType(roleType)$}; separator="\n"$
 };
 
 export type PluralMap = {
 $meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|  $composite.pluralName$: $composite.name$;}; separator="\n"$
-$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$typingsPluralRelationType(relationType)$}; separator="\n"$
+$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$typingsPluralRoleType(roleType)$}; separator="\n"$
 };
 
 export type SingularNames = keyof SingularMap;
@@ -91,14 +91,14 @@ declare module '@allors/workspace/system/domain' {
 
 >>
 
-typingsSingularRelationType(relationType) ::= <<$if(!relationType.roleType.objectType.isUnit)$
-$relationType.roleType.singularFullName$: $relationType.roleType.objectType.name$;
-$relationType.associationType.singularFullName$: $relationType.associationType.objectType.name$;
+typingsSingularRoleType(roleType) ::= <<$if(!roleType.objectType.isUnit)$
+$roleType.singularFullName$: $roleType.objectType.name$;
+$roleType.associationType.singularFullName$: $roleType.associationType.objectType.name$;
 $endif$>>
 
-typingsPluralRelationType(relationType) ::= <<$if(!relationType.roleType.objectType.isUnit)$
-$relationType.roleType.pluralFullName$: $relationType.roleType.objectType.name$;
-$relationType.associationType.pluralFullName$: $relationType.associationType.objectType.name$;
+typingsPluralRoleType(roleType) ::= <<$if(!roleType.objectType.isUnit)$
+$roleType.pluralFullName$: $roleType.objectType.name$;
+$roleType.associationType.pluralFullName$: $roleType.associationType.objectType.name$;
 $endif$>>
 
 
@@ -122,7 +122,7 @@ $objectType.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$met
 
 roleTypeWithDatabaseOrigin() ::= <<
     canRead$roleType.Name$: boolean;
-$if(!roleType.RelationType.IsDerived)$
+$if(!roleType.RoleType.IsDerived)$
     canWrite$roleType.Name$: boolean;
 $endif$
 $if(roleType.ObjectType.IsUnit)$

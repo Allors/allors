@@ -22,7 +22,7 @@ public abstract class RelationEndType : OperandType
 
     public abstract string Name { get; }
 
-    public abstract string SingularName { get; set; }
+    public abstract string SingularName { get; }
 
     public abstract string SingularFullName { get; }
 
@@ -33,6 +33,4 @@ public abstract class RelationEndType : OperandType
     public abstract bool IsOne { get; }
 
     public abstract bool IsMany { get; }
-
-    public abstract void Validate(ValidationLog validationLog);
 }

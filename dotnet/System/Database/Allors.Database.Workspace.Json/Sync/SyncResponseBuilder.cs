@@ -83,7 +83,7 @@ public class SyncResponseBuilder
 
     private SyncResponseRole CreateSyncResponseRole(IObject @object, RoleType roleType, IUnitConvert unitConvert)
     {
-        var syncResponseRole = new SyncResponseRole { t = roleType.RelationType.Tag };
+        var syncResponseRole = new SyncResponseRole { t = roleType.Tag };
 
         if (roleType.ObjectType.IsUnit)
         {

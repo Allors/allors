@@ -22,8 +22,8 @@ namespace Allors.Database.Domain
         {
             var id = operation switch
             {
-                Operations.Read => @class.ReadPermissionIdByRelationTypeId()[roleType.RelationType.Id],
-                Operations.Write => @class.WritePermissionIdByRelationTypeId()[roleType.RelationType.Id],
+                Operations.Read => @class.ReadPermissionIdByRelationTypeId()[roleType.Id],
+                Operations.Write => @class.WritePermissionIdByRelationTypeId()[roleType.Id],
                 Operations.Create => 0,
                 Operations.Execute => 0,
             };

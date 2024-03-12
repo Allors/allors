@@ -33,7 +33,7 @@ internal sealed class RoleInEnumerable : In
             inStatement.Append(inObject.Id);
         }
 
-        if (!this.role.RelationType.ExistExclusiveClasses)
+        if (!this.role.ExistExclusiveClasses)
         {
             // TODO: in combination with NOT gives error
             statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NOT NULL AND ");
@@ -50,8 +50,8 @@ internal sealed class RoleInEnumerable : In
         }
         else
         {
-            statement.Append(" (" + schema.ColumnNameByRelationType[this.role.RelationType] + " IS NOT NULL AND ");
-            statement.Append(" " + schema.ColumnNameByRelationType[this.role.RelationType] + " IN (");
+            statement.Append(" (" + schema.ColumnNameByRoleType[this.role] + " IS NOT NULL AND ");
+            statement.Append(" " + schema.ColumnNameByRoleType[this.role] + " IN (");
             statement.Append(inStatement.ToString());
             statement.Append(" ))");
         }

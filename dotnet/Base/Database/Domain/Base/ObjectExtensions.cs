@@ -1,4 +1,4 @@
-// <copyright file="ObjectExtensions.cs" company="Allors bv">
+﻿// <copyright file="ObjectExtensions.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,9 +12,9 @@ namespace Allors.Database.Domain
 
     public static partial class ObjectExtensions
     {
-        public static bool IsCloneable(this RoleType roleType) => !roleType.RelationType.IsDerived && (roleType.ObjectType.IsUnit || roleType.AssociationType.IsMany);
+        public static bool IsCloneable(this RoleType roleType) => !roleType.IsDerived && (roleType.ObjectType.IsUnit || roleType.AssociationType.IsMany);
 
-        public static bool IsMergeable(this RoleType roleType) => !roleType.RelationType.IsDerived;
+        public static bool IsMergeable(this RoleType roleType) => !roleType.IsDerived;
 
         public static void Merge<T>(this T @this, IObject inTo) where T : IObject
         {

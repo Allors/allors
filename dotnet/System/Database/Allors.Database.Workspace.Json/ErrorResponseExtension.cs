@@ -22,7 +22,7 @@ public static class ResponseExtensions
                 r = derivationError.Relations.Select(x =>
                 {
                     // TODO: Koen (Associations)
-                    return new DerivationRelation { i = x.Association.Id, r = x.RelationType.Tag };
+                    return new DerivationRelation { i = x.Association.Id, r = x.RoleType.Tag };
                 }).ToArray(),
             };
 

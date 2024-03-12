@@ -190,7 +190,7 @@ public abstract class Commands
 
         if (!commandByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForSetUnitRoleByRelationTypeByClass[exclusiveRootClass][roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForSetUnitRoleByRoleTypeByClass[exclusiveRootClass][roleType];
             command = this.connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -231,7 +231,7 @@ public abstract class Commands
 
                 ++count;
 
-                var column = this.Database.Mapping.ColumnNameByRelationType[roleType.RelationType];
+                var column = this.Database.Mapping.ColumnNameByRoleType[roleType];
                 sql.Append(column).Append('=').Append(this.Database.Mapping.ParamInvocationNameByRoleType[roleType]);
 
                 var unit = strategy.EnsureModifiedRoleByRoleType[roleType];
@@ -268,7 +268,7 @@ public abstract class Commands
 
         if (!this.getCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForGetRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForGetRoleByRoleType[roleType];
             command = this.connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -296,7 +296,7 @@ public abstract class Commands
 
         if (!this.setCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForSetRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForSetRoleByRoleType[roleType];
 
             command = this.connection.CreateCommand();
             command.CommandText = sql;
@@ -320,13 +320,13 @@ public abstract class Commands
             var associationType = roleType.AssociationType;
 
             string sql;
-            if (associationType.IsMany || !roleType.RelationType.ExistExclusiveClasses)
+            if (associationType.IsMany || !roleType.ExistExclusiveClasses)
             {
-                sql = this.Database.Mapping.ProcedureNameForGetRoleByRelationType[roleType.RelationType];
+                sql = this.Database.Mapping.ProcedureNameForGetRoleByRoleType[roleType];
             }
             else
             {
-                sql = this.Database.Mapping.ProcedureNameForGetRoleByRelationType[roleType.RelationType];
+                sql = this.Database.Mapping.ProcedureNameForGetRoleByRoleType[roleType];
             }
 
             command = this.connection.CreateCommand();
@@ -356,7 +356,7 @@ public abstract class Commands
 
         if (!this.addCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForAddRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForAddRoleByRoleType[roleType];
             command = this.connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -374,7 +374,7 @@ public abstract class Commands
 
         if (!this.removeCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForRemoveRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForRemoveRoleByRoleType[roleType];
             command = this.connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -390,7 +390,7 @@ public abstract class Commands
     {
         this.clearCompositeAndCompositesRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
-        var sql = this.Database.Mapping.ProcedureNameForClearRoleByRelationType[roleType.RelationType];
+        var sql = this.Database.Mapping.ProcedureNameForClearRoleByRoleType[roleType];
 
         if (!this.clearCompositeAndCompositesRoleByRoleType.TryGetValue(roleType, out var command))
         {
@@ -414,7 +414,7 @@ public abstract class Commands
         if (!this.getCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
             var roleType = associationType.RoleType;
-            var sql = this.Database.Mapping.ProcedureNameForGetAssociationByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForGetAssociationByRoleType[roleType];
             command = this.connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -445,7 +445,7 @@ public abstract class Commands
         if (!this.getCompositesAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
             var roleType = associationType.RoleType;
-            var sql = this.Database.Mapping.ProcedureNameForGetAssociationByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForGetAssociationByRoleType[roleType];
             command = this.connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;

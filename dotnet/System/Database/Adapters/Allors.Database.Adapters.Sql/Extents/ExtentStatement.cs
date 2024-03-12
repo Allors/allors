@@ -42,14 +42,13 @@ public abstract class ExtentStatement
     {
         foreach (var role in this.referenceRoles)
         {
-            var relationType = role.RelationType;
-            var association = relationType.AssociationType;
+            var association = role.AssociationType;
 
             if (!role.ObjectType.IsUnit)
             {
-                if ((association.IsMany && role.IsMany) || !relationType.ExistExclusiveClasses)
+                if ((association.IsMany && role.IsMany) || !role.ExistExclusiveClasses)
                 {
-                    this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForRelationByRelationType[relationType] + " " +
+                    this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForRelationByRoleType[role] + " " +
                                 role.SingularFullName + "_R");
                     this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." +
                                 Mapping.ColumnNameForAssociation);
@@ -59,18 +58,16 @@ public abstract class ExtentStatement
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[((Composite)role.ObjectType).ExclusiveClass] +
                                 " " + role.SingularFullName + "_R");
                     this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." +
-                                this.Mapping.ColumnNameByRelationType[relationType]);
+                                this.Mapping.ColumnNameByRoleType[role]);
                 }
             }
         }
 
         foreach (var role in this.referenceRoleInstances)
         {
-            var relationType = role.RelationType;
-
             if (!role.ObjectType.IsUnit && role.IsOne)
             {
-                if (!relationType.ExistExclusiveClasses)
+                if (!role.ExistExclusiveClasses)
                 {
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(role));
                     this.Append(" ON " + this.GetJoinName(role) + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." +
@@ -80,46 +77,44 @@ public abstract class ExtentStatement
                 {
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(role));
                     this.Append(" ON " + this.GetJoinName(role) + "." + Mapping.ColumnNameForObject + "=" + alias + "." +
-                                this.Mapping.ColumnNameByRelationType[relationType] + " ");
+                                this.Mapping.ColumnNameByRoleType[role] + " ");
                 }
             }
         }
 
         foreach (var association in this.referenceAssociations)
         {
-            var relationType = association.RelationType;
-            var role = relationType.RoleType;
+            var roleType = association.RoleType;
 
-            if ((association.IsMany && role.IsMany) || !relationType.ExistExclusiveClasses)
+            if ((association.IsMany && roleType.IsMany) || !roleType.ExistExclusiveClasses)
             {
-                this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForRelationByRelationType[relationType] + " " +
+                this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForRelationByRoleType[roleType] + " " +
                             association.SingularFullName + "_A");
                 this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + association.SingularFullName + "_A." +
                             Mapping.ColumnNameForRole);
             }
-            else if (!role.IsMany)
+            else if (!roleType.IsMany)
             {
                 this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[association.Composite.ExclusiveClass] + " " +
                             association.SingularFullName + "_A");
                 this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + association.SingularFullName + "_A." +
-                            this.Mapping.ColumnNameByRelationType[relationType]);
+                            this.Mapping.ColumnNameByRoleType[roleType]);
             }
         }
 
         foreach (var association in this.referenceAssociationInstances)
         {
-            var relationType = association.RelationType;
-            var role = relationType.RoleType;
+            var roleType = association.RoleType;
 
             if (!association.ObjectType.IsUnit && association.IsOne)
             {
-                if (!relationType.ExistExclusiveClasses)
+                if (!roleType.ExistExclusiveClasses)
                 {
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(association));
                     this.Append(" ON " + this.GetJoinName(association) + "." + Mapping.ColumnNameForObject + "=" +
                                 association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " ");
                 }
-                else if (role.IsOne)
+                else if (roleType.IsOne)
                 {
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(association));
                     this.Append(" ON " + this.GetJoinName(association) + "." + Mapping.ColumnNameForObject + "=" +
@@ -129,7 +124,7 @@ public abstract class ExtentStatement
                 {
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(association));
                     this.Append(" ON " + this.GetJoinName(association) + "." + Mapping.ColumnNameForObject + "=" + alias + "." +
-                                this.Mapping.ColumnNameByRelationType[relationType] + " ");
+                                this.Mapping.ColumnNameByRoleType[roleType] + " ");
                 }
             }
         }

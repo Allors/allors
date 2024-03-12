@@ -243,35 +243,35 @@ public class Restore
                         if (this.reader.Name.Equals(XmlBackup.RelationTypeUnit)
                             || this.reader.Name.Equals(XmlBackup.RelationTypeComposite))
                         {
-                            var relationTypeIdString = this.reader.GetAttribute(XmlBackup.Id);
-                            if (string.IsNullOrEmpty(relationTypeIdString))
+                            var roleTypeIdString = this.reader.GetAttribute(XmlBackup.Id);
+                            if (string.IsNullOrEmpty(roleTypeIdString))
                             {
                                 throw new Exception("Relation type has no id");
                             }
 
-                            var relationTypeId = new Guid(relationTypeIdString);
-                            var relationType = (RelationType)this.transaction.Database.MetaPopulation.FindById(relationTypeId);
+                            var roleTypeId = new Guid(roleTypeIdString);
+                            var roleType = (RoleType)this.transaction.Database.MetaPopulation.FindById(roleTypeId);
 
                             if (this.reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is Composite)
+                                if (roleType == null || roleType.ObjectType is Composite)
                                 {
-                                    this.CantRestoreUnitRole(relationTypeId);
+                                    this.CantRestoreUnitRole(roleTypeId);
                                 }
                                 else
                                 {
-                                    this.RestoreUnitRelations(relationType);
+                                    this.RestoreUnitRelations(roleType);
                                 }
                             }
                             else if (this.reader.Name.Equals(XmlBackup.RelationTypeComposite))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is Unit)
+                                if (roleType == null || roleType.ObjectType is Unit)
                                 {
-                                    this.CantRestoreCompositeRole(relationTypeId);
+                                    this.CantRestoreCompositeRole(roleTypeId);
                                 }
                                 else
                                 {
-                                    this.RestoreCompositeRelations(relationType);
+                                    this.RestoreCompositeRoles(roleType);
                                 }
                             }
                         }
@@ -296,7 +296,7 @@ public class Restore
         }
     }
 
-    private void RestoreUnitRelations(RelationType relationType)
+    private void RestoreUnitRelations(RoleType roleType)
     {
         var skip = false;
         while (skip || this.reader.Read())
@@ -325,39 +325,39 @@ public class Restore
 
                         if (strategy == null)
                         {
-                            this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, value);
+                            this.transaction.Database.OnRelationNotRestored(roleType.Id, associationId, value);
                         }
                         else
                         {
                             try
                             {
-                                this.transaction.Database.UnitRoleChecks(strategy, relationType.RoleType);
+                                this.transaction.Database.UnitRoleChecks(strategy, roleType);
                                 if (this.reader.IsEmptyElement)
                                 {
-                                    var unitType = (Unit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)roleType.ObjectType;
                                     switch (unitType.Tag)
                                     {
                                         case UnitTags.String:
-                                            strategy.SetUnitRole(relationType.RoleType, string.Empty);
+                                            strategy.SetUnitRole(roleType, string.Empty);
                                             break;
 
                                         case UnitTags.Binary:
-                                            strategy.SetUnitRole(relationType.RoleType, emptyByteArray);
+                                            strategy.SetUnitRole(roleType, emptyByteArray);
                                             break;
                                     }
                                 }
                                 else
                                 {
-                                    var unitType = (Unit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)roleType.ObjectType;
                                     var unitTypeTag = unitType.Tag;
 
                                     var unit = XmlBackup.ReadString(value, unitTypeTag);
-                                    strategy.SetUnitRole(relationType.RoleType, unit);
+                                    strategy.SetUnitRole(roleType, unit);
                                 }
                             }
                             catch
                             {
-                                this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, value);
+                                this.transaction.Database.OnRelationNotRestored(roleType.Id, associationId, value);
                             }
                         }
                     }
@@ -380,7 +380,7 @@ public class Restore
         }
     }
 
-    private void RestoreCompositeRelations(RelationType relationType)
+    private void RestoreCompositeRoles(RoleType roleType)
     {
         var skip = false;
         while (skip || this.reader.Read())
@@ -410,31 +410,31 @@ public class Restore
 
                             if (association == null ||
                                 !this.transaction.Database.ContainsClass(
-                                    relationType.AssociationType.Composite, association.UncheckedObjectType) ||
-                                (relationType.RoleType.IsOne && roleIdStringArray.Length != 1))
+                                    roleType.AssociationType.Composite, association.UncheckedObjectType) ||
+                                (roleType.IsOne && roleIdStringArray.Length != 1))
                             {
                                 foreach (var roleId in roleIdStringArray)
                                 {
-                                    this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleId);
+                                    this.transaction.Database.OnRelationNotRestored(roleType.Id, associationId, roleId);
                                 }
                             }
-                            else if (relationType.RoleType.IsOne)
+                            else if (roleType.IsOne)
                             {
                                 var roleIdString = long.Parse(roleIdStringArray[0]);
                                 var roleStrategy = this.RestoreInstantiateStrategy(roleIdString);
                                 if (roleStrategy == null ||
-                                    !this.transaction.Database.ContainsClass((Composite)relationType.RoleType.ObjectType,
+                                    !this.transaction.Database.ContainsClass((Composite)roleType.ObjectType,
                                         roleStrategy.UncheckedObjectType))
                                 {
-                                    this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleIdStringArray[0]);
+                                    this.transaction.Database.OnRelationNotRestored(roleType.Id, associationId, roleIdStringArray[0]);
                                 }
-                                else if (relationType.RoleType.AssociationType.IsMany)
+                                else if (roleType.AssociationType.IsMany)
                                 {
-                                    association.SetCompositeRoleMany2One(relationType.RoleType, roleStrategy);
+                                    association.SetCompositeRoleMany2One(roleType, roleStrategy);
                                 }
                                 else
                                 {
-                                    association.SetCompositeRoleOne2One(relationType.RoleType, roleStrategy);
+                                    association.SetCompositeRoleOne2One(roleType, roleStrategy);
                                 }
                             }
                             else
@@ -446,10 +446,10 @@ public class Restore
                                     var role = this.RestoreInstantiateStrategy(roleId);
                                     if (role == null ||
                                         !this.transaction.Database.ContainsClass(
-                                            (Composite)relationType.RoleType.ObjectType,
+                                            (Composite)roleType.ObjectType,
                                             role.UncheckedObjectType))
                                     {
-                                        this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleId.ToString());
+                                        this.transaction.Database.OnRelationNotRestored(roleType.Id, associationId, roleId.ToString());
                                     }
                                     else
                                     {
@@ -457,13 +457,13 @@ public class Restore
                                     }
                                 }
 
-                                if (relationType.RoleType.AssociationType.IsMany)
+                                if (roleType.AssociationType.IsMany)
                                 {
-                                    association.SetCompositesRolesMany2Many(relationType.RoleType, roleStrategies);
+                                    association.SetCompositesRolesMany2Many(roleType, roleStrategies);
                                 }
                                 else
                                 {
-                                    association.SetCompositesRolesOne2Many(relationType.RoleType, roleStrategies);
+                                    association.SetCompositesRolesOne2Many(roleType, roleStrategies);
                                 }
                             }
                         }

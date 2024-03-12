@@ -36,12 +36,12 @@ namespace Allors.Database.Domain
 
         public bool ExistOperation => true;
 
-        public OperandType OperandType => this.RelationType.RoleType;
+        public OperandType OperandType => this.RoleType;
 
-        RelationType IWritePermission.RelationType => this.RelationType;
-        public RelationType RelationType
+        RoleType IWritePermission.RoleType => this.RoleType;
+        public RoleType RoleType
         {
-            get => (RelationType)this.Transaction().Database.MetaPopulation.FindById(this.RelationTypePointer);
+            get => (RoleType)this.Transaction().Database.MetaPopulation.FindById(this.RelationTypePointer);
 
             set
             {
@@ -58,7 +58,7 @@ namespace Allors.Database.Domain
 
         public Operations Operation => Operations.Write;
 
-        public bool InWorkspace(string workspaceName) => this.Class.WorkspaceNames.Contains(workspaceName) && this.RelationType.WorkspaceNames.Contains(workspaceName);
+        public bool InWorkspace(string workspaceName) => this.Class.WorkspaceNames.Contains(workspaceName) && this.RoleType.WorkspaceNames.Contains(workspaceName);
         
         public override string ToString()
         {

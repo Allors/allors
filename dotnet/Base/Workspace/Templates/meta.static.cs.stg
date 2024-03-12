@@ -258,9 +258,9 @@ namespace Allors.Workspace.Meta.Static
             this.BuildAssociationTypes(m);
             this.BuildRoleTypes(m);
 
-            var relationTypes = this.BuildRelationTypes(m);
+            var roleTypes = this.BuildRoleTypes(m);
 
-            m.RelationTypes = relationTypes;
+            m.RoleTypes = roleTypes;
 
             this.BuildMethodTypes(m);
 
@@ -279,20 +279,20 @@ namespace Allors.Workspace.Meta.Static
 
         private void BuildAssociationTypes(MetaPopulation m)
         {
-$meta.WorkspaceCompositeRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_associationType(relationType)$}; separator="\n"$
+$meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_associationType(roleType)$}; separator="\n"$
         }
 
         private void BuildRoleTypes(MetaPopulation m)
         {
-$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_roleType(relationType)$}; separator="\n"$
+$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_roleType(roleType)$}; separator="\n"$
         }
 
-        private RelationType[] BuildRelationTypes(MetaPopulation m)
+        private RoleType[] BuildRoleTypes(MetaPopulation m)
         {
-		    return new RelationType[]
+		    return new RoleType[]
             {
-$meta.WorkspaceCompositeRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_compositeRelationType(relationType)$}; separator="\n"$
-$meta.WorkspaceUnitRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_unitRelationType(relationType)$}; separator="\n"$
+$meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_compositeRoleType(roleType)$}; separator="\n"$
+$meta.WorkspaceUnitRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_unitRoleType(roleType)$}; separator="\n"$
             };
         }
 
@@ -319,7 +319,7 @@ $class.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$\n$         
 >>
 
 assign_roleClasses(class) ::= <<
-$class.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$\n$                 this.$class.Name$$roleType.Name$ = relationTypes.$roleType.RelationType.Name$.RoleType;}$
+$class.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$\n$                 this.$class.Name$$roleType.Name$ = roleTypes.$roleType.Name$;}$
 >>
 
 build_unit(unit) ::= <<
@@ -329,32 +329,32 @@ build_unit(unit) ::= <<
 inheritance(composite) ::= <<$composite.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{superType|$build_inheritance(composite, superType)$}$>>
 build_inheritance(composite, superType) ::= <<$\n$                new Inheritance(m.$composite.SingularName$, m.$superType.SingularName$),>>
 
-build_associationType(relationType) ::= <<
-            m.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$ = new Meta$relationType.AssociationType.Name$(m);
+build_associationType(roleType) ::= <<
+            m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$ = new Meta$roleType.AssociationType.Name$(m);
 >>
 
-build_roleType(relationType) ::= <<
-            m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$ = new Meta$relationType.RoleType.FullName$(m);
+build_roleType(roleType) ::= <<
+            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new Meta$roleType.FullName$(m);
 >>
 
-build_compositeRelationType(relationType) ::= <<
-                new RelationType(m, "$relationType.Tag$", m.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$, m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$, Allors.Multiplicity.$relationType.Multiplicity$),
+build_compositeRoleType(roleType) ::= <<
+                new RoleType(m, "$roleType.Tag$", m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
 >>
 
-build_unitRelationType(relationType) ::= <<
-                new RelationType(m, "$relationType.Tag$", m.$relationType.AssociationType.ObjectType.SingularName$, m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$, Allors.Multiplicity.$relationType.Multiplicity$),
+build_unitRoleType(roleType) ::= <<
+                new RoleType(m, "$roleType.Tag$", m.$roleType.AssociationType.ObjectType.SingularName$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
 >>
 
-isDerived(relationType) ::= <<$if(relationType.IsDerived)$isDerived: $relationType.IsDerived$$endif$>>
+isDerived(roleType) ::= <<$if(roleType.IsDerived)$isDerived: $roleType.IsDerived$$endif$>>
 
 singularName(roleType) ::= <<$if(roleType.ExistAssignedSingularName)$singularName: "$roleType.SingularName$"$endif$>>
 pluralName(roleType) ::= <<$if(roleType.ExistAssignedPluralName)$pluralName: "$roleType.PluralName$"$endif$>>
-size(roleType) ::= <<$if(relationType.RoleType.Size)$size: $relationType.RoleType.Size$ $endif$>>
-precision(roleType) ::= <<$if(relationType.RoleType.Precision)$precision: $relationType.RoleType.Precision$$endif$>>
-scale(roleType) ::= <<$if(relationType.RoleType.Scale)$scale: $relationType.RoleType.Scale$$endif$>>
-isRequired(roleType) ::= <<$if(relationType.RoleType.IsRequired)$isRequired: $relationType.RoleType.IsRequired$$endif$>>
-isUnique(roleType) ::= <<$if(relationType.RoleType.IsUnique)$isUnique: $relationType.RoleType.IsUnique$$endif$>>
-mediaType(roleType) ::= <<$if(relationType.MediaType)$mediaType: "$relationType.MediaType$"$endif$>>
+size(roleType) ::= <<$if(roleType.Size)$size: $roleType.Size$ $endif$>>
+precision(roleType) ::= <<$if(roleType.Precision)$precision: $roleType.Precision$$endif$>>
+scale(roleType) ::= <<$if(roleType.Scale)$scale: $roleType.Scale$$endif$>>
+isRequired(roleType) ::= <<$if(roleType.IsRequired)$isRequired: $roleType.IsRequired$$endif$>>
+isUnique(roleType) ::= <<$if(roleType.IsUnique)$isUnique: $roleType.IsUnique$$endif$>>
+mediaType(roleType) ::= <<$if(roleType.MediaType)$mediaType: "$roleType.MediaType$"$endif$>>
 
 build_methodType(methodType) ::= <<
             m.$methodType.ObjectType.SingularName$.$methodType.Name$ = new MethodType(m, "$methodType.Tag$", m.$methodType.ObjectType.Name$, "$methodType.Name$");

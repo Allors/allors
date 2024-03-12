@@ -19,44 +19,44 @@ namespace Allors.Database.Meta.Configuration
 
         static void AddWorkspace(MethodType methodType, params string[] workspaceNames) => methodType.AssignedWorkspaceNames = (methodType.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
 
-        static void AddWorkspace(RelationType relationType, params string[] workspaceNames) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
+        static void AddWorkspace(RoleType roleType, params string[] workspaceNames) => roleType.AssignedWorkspaceNames = (roleType.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
 
-        private void BuildCustom(MetaPopulation m, Domains domains, ObjectTypes objectTypes, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void BuildCustom(MetaPopulation m, Domains domains, ObjectTypes objectTypes, RoleTypes roleTypes, MethodTypes methodTypes)
         {
-            this.DefaultWorkspace(m, domains, objectTypes, relationTypes, methodTypes);
+            this.DefaultWorkspace(m, domains, objectTypes, roleTypes, methodTypes);
         }
 
-        private void DefaultWorkspace(MetaPopulation m, Domains domains, ObjectTypes objectTypes, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void DefaultWorkspace(MetaPopulation m, Domains domains, ObjectTypes objectTypes, RoleTypes roleTypes, MethodTypes methodTypes)
         {
 
             // RelationTypes & MethodTypes
             // Counter;
 
             // Singleton;
-            AddWorkspace(relationTypes.SingletonDefaultLocale, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.SingletonAdditionalLocales, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.SingletonLocales, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.SingletonLogoImage, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.SingletonAutocompleteDefault, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.SingletonSelectDefault, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.SingletonDefaultLocale, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.SingletonAdditionalLocales, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.SingletonLocales, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.SingletonLogoImage, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.SingletonAutocompleteDefault, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.SingletonSelectDefault, DefaultWorkspaceNames);
 
             // Media;
-            AddWorkspace(relationTypes.MediaRevision, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaMediaContent, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaInType, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaInData, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaInDataUri, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaInFileName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaType, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaFileName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaRevision, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaMediaContent, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaInType, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaInData, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaInDataUri, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaInFileName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaType, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaFileName, DefaultWorkspaceNames);
 
             // MediaContent;
-            AddWorkspace(relationTypes.MediaContentType, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.MediaContentData, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaContentType, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaContentData, DefaultWorkspaceNames);
 
             // PrintDocument;
-            AddWorkspace(relationTypes.PrintDocumentMedia, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PrintDocumentMedia, DefaultWorkspaceNames);
 
             // Template;
 
@@ -67,114 +67,114 @@ namespace Allors.Database.Meta.Configuration
             // PersistentPreparedSelect;
 
             // Country;
-            AddWorkspace(relationTypes.CountryCurrency, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.CountryCurrency, DefaultWorkspaceNames);
 
             // Currency;
 
             // Language;
-            AddWorkspace(relationTypes.LanguageNativeName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.LanguageNativeName, DefaultWorkspaceNames);
 
             // Locale;
-            AddWorkspace(relationTypes.LocaleLanguage, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.LocaleCountry, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.LocaleLanguage, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.LocaleCountry, DefaultWorkspaceNames);
 
             // LocalisedMedia;
-            AddWorkspace(relationTypes.LocalisedMediaMedia, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.LocalisedMediaMedia, DefaultWorkspaceNames);
 
             // LocalisedText;
-            AddWorkspace(relationTypes.LocalisedTextText, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.LocalisedTextText, DefaultWorkspaceNames);
 
             // AutomatedAgent;
 
             // Person;
-            AddWorkspace(relationTypes.PersonFirstName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonMiddleName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonLastName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonFirstName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonMiddleName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonLastName, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.PersonMailboxAddress, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonMailboxAddress, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.PersonBirthDate, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonFullName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonDomainFullName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonDomainGreeting, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonGender, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonBirthDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonFullName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonDomainFullName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonDomainGreeting, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonGender, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.PersonIsStudent, DefaultWorkspaceNames);
-
-
-            AddWorkspace(relationTypes.PersonPhoto, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonPictures, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonIsStudent, DefaultWorkspaceNames);
 
 
+            AddWorkspace(roleTypes.PersonPhoto, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonPictures, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.PersonWeight, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonCycleOne, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PersonCycleMany, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.PersonDefaultWorkspaceField, DefaultWorkspaceNames);
+
+            AddWorkspace(roleTypes.PersonWeight, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonCycleOne, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PersonCycleMany, DefaultWorkspaceNames);
+
+            AddWorkspace(roleTypes.PersonDefaultWorkspaceField, DefaultWorkspaceNames);
 
             // EmailMessage;
-            AddWorkspace(relationTypes.EmailMessageDateCreated, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageDateCreated, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.EmailMessageDateSent, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EmailMessageSender, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EmailMessageRecipients, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EmailMessageRecipientEmailAddress, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EmailMessageSubject, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EmailMessageBody, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageDateSent, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageSender, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageRecipients, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageRecipientEmailAddress, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageSubject, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmailMessageBody, DefaultWorkspaceNames);
 
             // Notification;
-            AddWorkspace(relationTypes.NotificationConfirmed, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.NotificationTitle, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.NotificationDescription, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.NotificationDateCreated, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationConfirmed, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationTitle, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationDescription, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationDateCreated, DefaultWorkspaceNames);
             AddWorkspace(methodTypes.NotificationConfirm, DefaultWorkspaceNames);
 
             // NotificationList;
-            AddWorkspace(relationTypes.NotificationListNotifications, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.NotificationListUnconfirmedNotifications, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.NotificationListConfirmedNotifications, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationListNotifications, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationListUnconfirmedNotifications, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.NotificationListConfirmedNotifications, DefaultWorkspaceNames);
 
             // TaskAssignment;
-            AddWorkspace(relationTypes.TaskAssignmentUser, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskAssignmentUser, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.TaskAssignmentTask, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskAssignmentTask, DefaultWorkspaceNames);
 
             // AccessClass
-            AddWorkspace(relationTypes.AccessClassProperty, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.AccessClassAnotherProperty, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AccessClassProperty, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AccessClassAnotherProperty, DefaultWorkspaceNames);
 
 
             // Employment;
-            AddWorkspace(relationTypes.EmploymentEmployee, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EmploymentEmployer, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmploymentEmployee, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EmploymentEmployer, DefaultWorkspaceNames);
 
             // Gender;
 
             // Organization;
-            AddWorkspace(relationTypes.OrganizationEmployees, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationManager, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationOwner, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationShareholders, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationActiveEmployments, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationInactiveEmployments, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationActiveEmployees, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationEmployees, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationManager, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationOwner, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationShareholders, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationActiveEmployments, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationInactiveEmployments, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationActiveEmployees, DefaultWorkspaceNames);
 
 
-            AddWorkspace(relationTypes.OrganizationIncorporationDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationIncorporationDate, DefaultWorkspaceNames);
 
 
 
 
-            AddWorkspace(relationTypes.OrganizationName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationName, DefaultWorkspaceNames);
 
-            AddWorkspace(relationTypes.OrganizationCycleOne, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationCycleMany, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationOneData, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationManyDatas, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationJustDidIt, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationJustDidItDerived, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrganizationCountry, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationCycleOne, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationCycleMany, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationOneData, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationManyDatas, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationJustDidIt, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationJustDidItDerived, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrganizationCountry, DefaultWorkspaceNames);
             AddWorkspace(methodTypes.OrganizationJustDoIt, DefaultWorkspaceNames);
             AddWorkspace(methodTypes.OrganizationToggleCanWrite, DefaultWorkspaceNames);
 
@@ -183,117 +183,117 @@ namespace Allors.Database.Meta.Configuration
             // Build;
 
             // C1;
-            AddWorkspace(relationTypes.C1C1AllorsBinary, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsBoolean, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsDateTime, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DateTimeLessThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DateTimeGreaterThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DateTimeBetweenA, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DateTimeBetweenB, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsDecimal, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DecimalLessThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DecimalGreaterThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DecimalBetweenA, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DecimalBetweenB, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsDouble, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DoubleLessThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DoubleGreaterThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DoubleBetweenA, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1DoubleBetweenB, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsInteger, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1IntegerLessThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1IntegerGreaterThan, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1IntegerBetweenA, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1IntegerBetweenB, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsStringEquals, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1AllorsStringMax, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1AllorsUnique, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1C2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I12Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I12Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I12One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I12One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C1C1I2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsBinary, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsBoolean, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DateTimeLessThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DateTimeGreaterThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DateTimeBetweenA, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DateTimeBetweenB, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DecimalLessThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DecimalGreaterThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DecimalBetweenA, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DecimalBetweenB, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsDouble, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DoubleLessThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DoubleGreaterThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DoubleBetweenA, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1DoubleBetweenB, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsInteger, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1IntegerLessThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1IntegerGreaterThan, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1IntegerBetweenA, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1IntegerBetweenB, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsStringEquals, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1AllorsStringMax, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1AllorsUnique, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1C2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I12Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I12Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I12One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I12One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C1C1I2One2One, DefaultWorkspaceNames);
             AddWorkspace(methodTypes.C1ClassMethod, DefaultWorkspaceNames);
 
 
             // C2;
-            AddWorkspace(relationTypes.C2C2AllorsDecimal, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsUnique, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I12Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I12One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsDouble, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsInteger, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I12Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsBoolean, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I12One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsDateTime, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2I2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2C1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2C2AllorsBinary, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.C2S1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsUnique, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I12Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I12One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsDouble, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsInteger, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I12Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsBoolean, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I12One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2I2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2C1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2C2AllorsBinary, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.C2S1One2One, DefaultWorkspaceNames);
 
             // ClassWithoutRoles;
 
             // Data;
-            AddWorkspace(relationTypes.DataCheckbox, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataChips, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataDecimal, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataDate, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataDateTime, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataDateTime2, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataFile, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataMonth, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataMultipleFiles, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataRadioGroup, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataSlider, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataSlideToggle, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataPlainText, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataMarkdown, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataHtml, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataStatic, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataAutocompleteFilter, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataAutocompleteOptions, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataAutocompleteAssignedFilter, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataAutocompleteDerivedFilter, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataAutocompleteAssignedOptions, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataAutocompleteDerivedOptions, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataSelect, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataSelectAssigned, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataSelectDerived, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataLocalisedTexts, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.DataLocalisedMarkdowns, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataCheckbox, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataChips, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataDateTime2, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataFile, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataMonth, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataMultipleFiles, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataRadioGroup, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataSlider, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataSlideToggle, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataPlainText, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataMarkdown, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataHtml, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataStatic, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataAutocompleteFilter, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataAutocompleteOptions, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataAutocompleteAssignedFilter, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataAutocompleteDerivedFilter, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataAutocompleteAssignedOptions, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataAutocompleteDerivedOptions, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataSelect, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataSelectAssigned, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataSelectDerived, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataLocalisedTexts, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.DataLocalisedMarkdowns, DefaultWorkspaceNames);
 
             // Dependee;
 
@@ -308,28 +308,28 @@ namespace Allors.Database.Meta.Configuration
             // From;
 
             // HomeAddress;
-            AddWorkspace(relationTypes.HomeAddressStreet, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.HomeAddressHouseNumber, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.HomeAddressStreet, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.HomeAddressHouseNumber, DefaultWorkspaceNames);
 
             // Left;
 
             // MailboxAddress;
-            AddWorkspace(relationTypes.MailboxAddressPoBox, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MailboxAddressPoBox, DefaultWorkspaceNames);
 
             // MediaTyped;
-            AddWorkspace(relationTypes.MediaTypedMarkdown, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.MediaTypedMarkdown, DefaultWorkspaceNames);
 
             // Middle;
 
             // One;
 
             // Order;
-            AddWorkspace(relationTypes.OrderCurrentVersion, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrderAllVersions, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrderCurrentVersion, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrderAllVersions, DefaultWorkspaceNames);
 
             // OrderLine;
-            AddWorkspace(relationTypes.OrderLineCurrentVersion, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.OrderLineAllVersions, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrderLineCurrentVersion, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.OrderLineAllVersions, DefaultWorkspaceNames);
 
             // OrderLineVersion;
 
@@ -338,8 +338,8 @@ namespace Allors.Database.Meta.Configuration
             // OrderVersion;
 
             // Page;
-            AddWorkspace(relationTypes.PageName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PageContent, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PageName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PageContent, DefaultWorkspaceNames);
 
             // PaymentState;
 
@@ -374,14 +374,14 @@ namespace Allors.Database.Meta.Configuration
             // Two;
 
             // UnitSample;
-            AddWorkspace(relationTypes.UnitSampleAllorsBinary, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsDateTime, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsBoolean, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsDouble, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsInteger, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsUnique, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UnitSampleAllorsDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsBinary, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsBoolean, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsDouble, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsInteger, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsUnique, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UnitSampleAllorsDecimal, DefaultWorkspaceNames);
 
 
 
@@ -396,18 +396,18 @@ namespace Allors.Database.Meta.Configuration
             // ValidationC2;
 
             // WorkspaceNoneObject1;
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceXString, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceYString, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceXYString, XYWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceXString, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceYString, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceXYString, XYWorkspaceNames);
 
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceNoneObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceNoneObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
 
 
 
@@ -420,18 +420,18 @@ namespace Allors.Database.Meta.Configuration
             // WorkspaceNonObject2;
 
             // WorkspaceXObject1;
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceXString, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceYString, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceXYString, XYWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceXString, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceYString, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceXYString, XYWorkspaceNames);
 
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
 
 
 
@@ -444,18 +444,18 @@ namespace Allors.Database.Meta.Configuration
             // WorkspaceXObject2;
 
             // WorkspaceXYObject1;
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceXString, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceYString, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceXYString, XYWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceXString, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceYString, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceXYString, XYWorkspaceNames);
 
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceXYObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceXYObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
 
 
 
@@ -468,18 +468,18 @@ namespace Allors.Database.Meta.Configuration
             // WorkspaceXYObject2;
 
             // WorkspaceYObject1;
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceXString, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceYString, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceXYString, XYWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceXString, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceYString, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceXYString, XYWorkspaceNames);
 
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
-            AddWorkspace(relationTypes.WorkspaceYObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceXToWorkspaceXObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceXToWorkspaceYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceXToWorkspaceXYObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceXToWorkspaceNonObject2, XWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceYToWorkspaceXObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceYToWorkspaceYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceYToWorkspacXYObject2, YWorkspaceNames);
+            AddWorkspace(roleTypes.WorkspaceYObject1WorkspaceYToWorkspaceNonObject2, YWorkspaceNames);
 
 
 
@@ -506,76 +506,76 @@ namespace Allors.Database.Meta.Configuration
             // Revocation;
 
             // Role;
-            AddWorkspace(relationTypes.RoleName, "Default");
+            AddWorkspace(roleTypes.RoleName, "Default");
 
             // SecurityToken;
 
             // UserGroup;
-            AddWorkspace(relationTypes.UserGroupMembers, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UserGroupName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserGroupMembers, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserGroupName, DefaultWorkspaceNames);
 
             // Cacheable;
 
             // Enumeration;
-            AddWorkspace(relationTypes.EnumerationKey, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EnumerationLocalisedNames, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.EnumerationIsActive, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EnumerationKey, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EnumerationLocalisedNames, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.EnumerationIsActive, DefaultWorkspaceNames);
 
             // Period;
-            AddWorkspace(relationTypes.PeriodFromDate, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.PeriodThroughDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PeriodFromDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PeriodThroughDate, DefaultWorkspaceNames);
 
             // Version;
-            AddWorkspace(relationTypes.VersionDerivationTimeStamp, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.VersionDerivationTimeStamp, DefaultWorkspaceNames);
 
             // Versioned;
 
             // Printable;
-            AddWorkspace(relationTypes.PrintablePrintDocument, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.PrintablePrintDocument, DefaultWorkspaceNames);
             AddWorkspace(methodTypes.PrintablePrint, DefaultWorkspaceNames);
 
             // Localised;
-            AddWorkspace(relationTypes.LocalisedLocale, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.LocalisedLocale, DefaultWorkspaceNames);
 
             // Auditable;
-            AddWorkspace(relationTypes.AuditableCreatedBy, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.AuditableLastModifiedBy, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.AuditableCreationDate, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.AuditableLastModifiedDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AuditableCreatedBy, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AuditableLastModifiedBy, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AuditableCreationDate, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AuditableLastModifiedDate, DefaultWorkspaceNames);
 
             // ApproveTask;
-            AddWorkspace(relationTypes.ApproveTaskComment, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.ApproveTaskComment, DefaultWorkspaceNames);
 
 
             AddWorkspace(methodTypes.ApproveTaskApprove, DefaultWorkspaceNames);
             AddWorkspace(methodTypes.ApproveTaskReject, DefaultWorkspaceNames);
 
             // Task;
-            AddWorkspace(relationTypes.TaskWorkItem, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TaskTitle, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TaskDateCreated, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TaskDateDue, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TaskDateClosed, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TaskParticipants, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TaskPerformer, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskWorkItem, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskTitle, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskDateCreated, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskDateDue, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskDateClosed, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskParticipants, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TaskPerformer, DefaultWorkspaceNames);
 
             // Transitional;
 
             // TransitionalVersion;
 
             // TrimFrom
-            AddWorkspace(relationTypes.TrimFromName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TrimFromMany2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.TrimFromMany2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TrimFromName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TrimFromMany2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TrimFromMany2One, DefaultWorkspaceNames);
 
             // TrimTo
-            AddWorkspace(relationTypes.TrimToName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.TrimToName, DefaultWorkspaceNames);
 
             // User;
-            AddWorkspace(relationTypes.UserNotificationList, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UserGroupMembers, "Default");
-            AddWorkspace(relationTypes.UserUserName, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UserUserEmail, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserNotificationList, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserGroupMembers, "Default");
+            AddWorkspace(roleTypes.UserUserName, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserUserEmail, DefaultWorkspaceNames);
 
 
 
@@ -584,108 +584,108 @@ namespace Allors.Database.Meta.Configuration
 
 
             // WorkItem;
-            AddWorkspace(relationTypes.WorkItemWorkItemDescription, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.WorkItemWorkItemDescription, DefaultWorkspaceNames);
 
             // AccessInterface;
 
             // Address;
 
             // Addressable;
-            AddWorkspace(relationTypes.AddressableAddress, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.AddressableAddress, DefaultWorkspaceNames);
 
             // DerivationCounted;
 
             // I1;
-            AddWorkspace(relationTypes.I1I1I1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I12Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I12Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsDateTime, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsInteger, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsBoolean, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsDecimal, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I12One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsBinary, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsDouble, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1I12One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1C2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I1I1AllorsUnique, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I12Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I12Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsInteger, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsBoolean, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I12One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsBinary, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsDouble, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1I12One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1C2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I1I1AllorsUnique, DefaultWorkspaceNames);
 
             // I12;
-            AddWorkspace(relationTypes.I12I12AllorsBinary, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsDouble, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I12Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsDecimal, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I12One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12Name, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12Order, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsUnique, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsInteger, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I12One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12Dependencies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I12Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsBoolean, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12I1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12C1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I12I12AllorsDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsBinary, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsDouble, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I12Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I12One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12Name, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12Order, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsUnique, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsInteger, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I12One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12Dependencies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I12Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsBoolean, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12I1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12C1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I12I12AllorsDateTime, DefaultWorkspaceNames);
 
             // I2;
-            AddWorkspace(relationTypes.I2I2I2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I12Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsBoolean, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsDecimal, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsBinary, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsUnique, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I1Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsDateTime, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I12One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I12One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C2Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C2Many2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsString, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I1One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I1One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I12Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsInteger, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2I2One2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C1Many2Manies, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2C2One2One, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.I2I2AllorsDouble, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I12Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsBoolean, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsDecimal, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsBinary, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsUnique, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I1Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsDateTime, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I12One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I12One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C2Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C2Many2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsString, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I1One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I1One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I12Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsInteger, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2I2One2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C1Many2Manies, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2C2One2One, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.I2I2AllorsDouble, DefaultWorkspaceNames);
 
             // S1;
 
@@ -701,7 +701,7 @@ namespace Allors.Database.Meta.Configuration
             // Object;
 
             // UniquelyIdentifiable;
-            AddWorkspace(relationTypes.UniquelyIdentifiableUniqueId, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UniquelyIdentifiableUniqueId, DefaultWorkspaceNames);
 
             // DelegatedAccessObject;
 
@@ -710,8 +710,8 @@ namespace Allors.Database.Meta.Configuration
             // SecurityTokenOwner;
 
             // UserPasswordReset;
-            AddWorkspace(relationTypes.UserPasswordResetInExistingUserPassword, DefaultWorkspaceNames);
-            AddWorkspace(relationTypes.UserPasswordResetInUserPassword, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserPasswordResetInExistingUserPassword, DefaultWorkspaceNames);
+            AddWorkspace(roleTypes.UserPasswordResetInUserPassword, DefaultWorkspaceNames);
 
             // Classes
             AddWorkspace(objectTypes.AccessClass, DefaultWorkspaceNames);

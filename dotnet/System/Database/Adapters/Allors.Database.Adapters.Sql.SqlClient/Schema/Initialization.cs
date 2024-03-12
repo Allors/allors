@@ -173,14 +173,11 @@ CREATE SCHEMA {this.database.SchemaName}";
                 this.TruncateTable(connection, tableName);
             }
 
-            foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
+            foreach (var roleType in this.mapping.Database.MetaPopulation.RoleTypes)
             {
-                var associationType = relationType.AssociationType;
-                var roleType = relationType.RoleType;
-
-                if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
+                if (!roleType.ObjectType.IsUnit && ((roleType.AssociationType.IsMany && roleType.IsMany) || !roleType.ExistExclusiveClasses))
                 {
-                    var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
+                    var tableName = this.mapping.TableNameForRelationByRoleType[roleType];
                     this.TruncateTable(connection, tableName);
                 }
             }
@@ -206,14 +203,11 @@ CREATE SCHEMA {this.database.SchemaName}";
                 this.DropTable(connection, tableName);
             }
 
-            foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
+            foreach (var roleType in this.mapping.Database.MetaPopulation.RoleTypes)
             {
-                var associationType = relationType.AssociationType;
-                var roleType = relationType.RoleType;
-
-                if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
+                if (!roleType.ObjectType.IsUnit && ((roleType.AssociationType.IsMany && roleType.IsMany) || !roleType.ExistExclusiveClasses))
                 {
-                    var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
+                    var tableName = this.mapping.TableNameForRelationByRoleType[roleType];
                     this.DropTable(connection, tableName);
                 }
             }
@@ -255,28 +249,23 @@ CREATE SCHEMA {this.database.SchemaName}";
 
                 foreach (var associationType in @class.AssociationTypes)
                 {
-                    var relationType = associationType.RelationType;
-                    var roleType = relationType.RoleType;
-                    if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && roleType.IsMany)
+                    var roleType = associationType.RoleType;
+                    if (!(associationType.IsMany && roleType.IsMany) && associationType.RoleType.ExistExclusiveClasses && roleType.IsMany)
                     {
-                        sql.Append(
-                            $",\n{this.mapping.ColumnNameByRelationType[relationType]} {Mapping.SqlTypeForObject}");
+                        sql.Append($",\n{this.mapping.ColumnNameByRoleType[associationType.RoleType]} {Mapping.SqlTypeForObject}");
                     }
                 }
 
                 foreach (var roleType in @class.RoleTypes)
                 {
-                    var relationType = roleType.RelationType;
-                    var associationType3 = relationType.AssociationType;
+                    var associationType = roleType.AssociationType;
                     if (roleType.ObjectType.IsUnit)
                     {
-                        sql.Append(
-                            $",\n{this.mapping.ColumnNameByRelationType[relationType]} {this.mapping.GetSqlType(roleType)}");
+                        sql.Append($",\n{this.mapping.ColumnNameByRoleType[roleType]} {this.mapping.GetSqlType(roleType)}");
                     }
-                    else if (!(associationType3.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
+                    else if (!(associationType.IsMany && roleType.IsMany) && roleType.ExistExclusiveClasses && !roleType.IsMany)
                     {
-                        sql.Append(
-                            $",\n{this.mapping.ColumnNameByRelationType[relationType]} {Mapping.SqlTypeForObject}");
+                        sql.Append($",\n{this.mapping.ColumnNameByRoleType[roleType]} {Mapping.SqlTypeForObject}");
                     }
                 }
 
@@ -286,22 +275,21 @@ CREATE SCHEMA {this.database.SchemaName}";
                 command.ExecuteNonQuery();
             }
 
-            foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
+            foreach (var roleType in this.mapping.Database.MetaPopulation.RoleTypes)
             {
-                var associationType = relationType.AssociationType;
-                var roleType = relationType.RoleType;
+                var associationType = roleType.AssociationType;
 
-                if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
+                if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !roleType.ExistExclusiveClasses))
                 {
-                    var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
+                    var tableName = this.mapping.TableNameForRelationByRoleType[roleType];
 
-                    var primaryKeyName = $"pk_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
+                    var primaryKeyName = $"pk_{roleType.SingularFullName.ToLowerInvariant()}";
 
                     var sql =
                         $@"CREATE TABLE {tableName}(
     {Sql.Mapping.ColumnNameForAssociation} {Mapping.SqlTypeForObject},
     {Sql.Mapping.ColumnNameForRole} {Mapping.SqlTypeForObject},
-    {(relationType.RoleType.IsOne
+    {(roleType.IsOne
         ? $"CONSTRAINT {primaryKeyName} PRIMARY KEY ({Sql.Mapping.ColumnNameForAssociation})\n"
         : $"CONSTRAINT {primaryKeyName} PRIMARY KEY ({Sql.Mapping.ColumnNameForAssociation}, {Sql.Mapping.ColumnNameForRole})\n")}
 
@@ -348,24 +336,21 @@ CREATE SCHEMA {this.database.SchemaName}";
                 var tableName = this.mapping.TableNameForObjectByClass[@class];
                 foreach (var associationType in @class.AssociationTypes)
                 {
-                    var relationType = associationType.RelationType;
-                    if (relationType.IsIndexed())
+                    var roleType = associationType.RoleType;
+                    if (roleType.IsIndexed())
                     {
-                        var roleType = relationType.RoleType;
-
-                        if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && roleType.IsMany)
+                        if (!(associationType.IsMany && roleType.IsMany) && roleType.ExistExclusiveClasses && roleType.IsMany)
                         {
                             var indexName =
-                                $"idx_{@class.SingularName.ToLowerInvariant()}_{relationType.AssociationType.SingularFullName.ToLowerInvariant()}";
-                            this.CreateIndex(connection, indexName, relationType, tableName);
+                                $"idx_{@class.SingularName.ToLowerInvariant()}_{roleType.AssociationType.SingularFullName.ToLowerInvariant()}";
+                            this.CreateIndex(connection, indexName, roleType, tableName);
                         }
                     }
                 }
 
                 foreach (var roleType in @class.RoleTypes)
                 {
-                    var relationType = roleType.RelationType;
-                    if (relationType.IsIndexed())
+                    if (roleType.IsIndexed())
                     {
                         if (roleType.ObjectType.IsUnit)
                         {
@@ -379,34 +364,32 @@ CREATE SCHEMA {this.database.SchemaName}";
                             }
                         }
 
-                        var associationType = relationType.AssociationType;
+                        var associationType = roleType.AssociationType;
                         if (roleType.ObjectType.IsUnit)
                         {
                             var indexName =
-                                $"idx_{@class.SingularName.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
-                            this.CreateIndex(connection, indexName, relationType, tableName);
+                                $"idx_{@class.SingularName.ToLowerInvariant()}_{roleType.SingularFullName.ToLowerInvariant()}";
+                            this.CreateIndex(connection, indexName, roleType, tableName);
                         }
-                        else if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
+                        else if (!(associationType.IsMany && roleType.IsMany) && roleType.ExistExclusiveClasses && !roleType.IsMany)
                         {
                             var indexName =
-                                $"idx_{@class.SingularName.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
-                            this.CreateIndex(connection, indexName, relationType, tableName);
+                                $"idx_{@class.SingularName.ToLowerInvariant()}_{roleType.SingularFullName.ToLowerInvariant()}";
+                            this.CreateIndex(connection, indexName, roleType, tableName);
                         }
                     }
                 }
             }
 
-            foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
+            foreach (var roleType in this.mapping.Database.MetaPopulation.RoleTypes)
             {
-                if (relationType.IsIndexed())
+                if (roleType.IsIndexed())
                 {
-                    var associationType = relationType.AssociationType;
-                    var roleType = relationType.RoleType;
-                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
+                    var associationType = roleType.AssociationType;
+                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !roleType.ExistExclusiveClasses))
                     {
-                        var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
-                        var indexName =
-                            $"idx_{relationType.RoleType.SingularFullName.ToLowerInvariant()}_{Sql.Mapping.ColumnNameForRole.ToLowerInvariant()}";
+                        var tableName = this.mapping.TableNameForRelationByRoleType[roleType];
+                        var indexName = $"idx_{roleType.SingularFullName.ToLowerInvariant()}_{Sql.Mapping.ColumnNameForRole.ToLowerInvariant()}";
                         var sql = new StringBuilder();
                         sql.Append($"CREATE INDEX {indexName}\n");
                         sql.Append($"ON {tableName} ({Sql.Mapping.ColumnNameForRole})");
@@ -438,11 +421,11 @@ CREATE SCHEMA {this.database.SchemaName}";
         }
     }
 
-    private void CreateIndex(SqlConnection connection, string indexName, RelationType relationType, string tableName)
+    private void CreateIndex(SqlConnection connection, string indexName, RoleType roleType, string tableName)
     {
         var sql = new StringBuilder();
-        sql.Append($"CREATE INDEX {indexName}\n");
-        sql.Append($"ON {tableName} ({this.mapping.ColumnNameByRelationType[relationType]})");
+        _ = sql.Append($"CREATE INDEX {indexName}\n");
+        _ = sql.Append($"ON {tableName} ({this.mapping.ColumnNameByRoleType[roleType]})");
         using var command = new SqlCommand(sql.ToString(), connection);
         command.ExecuteNonQuery();
     }

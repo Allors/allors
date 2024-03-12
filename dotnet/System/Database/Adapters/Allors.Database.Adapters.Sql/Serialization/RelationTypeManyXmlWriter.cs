@@ -1,4 +1,4 @@
-// <copyright file="RelationTypeManyXmlWriter.cs" company="Allors bv">
+﻿// <copyright file="RelationTypeManyXmlWriter.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -17,9 +17,9 @@ using Allors.Database.Meta;
 internal class RelationTypeManyXmlWriter : IDisposable
 {
     /// <summary>
-    ///     The <see cref="relationType" />.
+    ///     The <see cref="roleType" />.
     /// </summary>
-    private readonly RelationType relationType;
+    private readonly RoleType roleType;
 
     /// <summary>
     ///     The <see cref="xmlWriter" />.
@@ -49,11 +49,11 @@ internal class RelationTypeManyXmlWriter : IDisposable
     /// <summary>
     ///     Initializes a new state of the <see cref="RelationTypeManyXmlWriter" /> class.
     /// </summary>
-    /// <param name="relationType">The relation type.</param>
+    /// <param name="roleType">The relation type.</param>
     /// <param name="xmlWriter">The XML writer.</param>
-    internal RelationTypeManyXmlWriter(RelationType relationType, XmlWriter xmlWriter)
+    internal RelationTypeManyXmlWriter(RoleType roleType, XmlWriter xmlWriter)
     {
-        this.relationType = relationType;
+        this.roleType = roleType;
         this.xmlWriter = xmlWriter;
         this.rolesStringBuilder = new StringBuilder();
         this.previousAssociationId = -1;
@@ -93,7 +93,7 @@ internal class RelationTypeManyXmlWriter : IDisposable
         if (!this.isInUse)
         {
             this.isInUse = true;
-            if (this.relationType.RoleType.ObjectType.IsUnit)
+            if (this.roleType.ObjectType.IsUnit)
             {
                 this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeUnit);
             }
@@ -102,7 +102,7 @@ internal class RelationTypeManyXmlWriter : IDisposable
                 this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeComposite);
             }
 
-            this.xmlWriter.WriteAttributeString(XmlBackup.Id, this.relationType.Id.ToString());
+            this.xmlWriter.WriteAttributeString(XmlBackup.Id, this.roleType.Id.ToString());
         }
 
         if (this.previousAssociationId != associationId)

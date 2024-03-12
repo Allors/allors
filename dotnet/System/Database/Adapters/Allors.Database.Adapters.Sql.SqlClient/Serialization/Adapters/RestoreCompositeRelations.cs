@@ -18,18 +18,18 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
     private readonly Database database;
     private readonly Action<Guid, long, string> onRelationNotRestored;
     private readonly XmlReader reader;
-    private readonly RelationType relationType;
+    private readonly RoleType roleType;
 
     public RestoreCompositeRelations(
         Database database,
-        RelationType relationType,
+        RoleType roleType,
         Action<XmlReader, Guid> cantRestoreCompositeRole,
         Action<Guid, long, string> onRelationNotRestored,
         Dictionary<long, Class> classByObjectId,
         XmlReader reader)
     {
         this.database = database;
-        this.relationType = relationType;
+        this.roleType = roleType;
         this.cantRestoreCompositeRole = cantRestoreCompositeRole;
         this.onRelationNotRestored = onRelationNotRestored;
         this.classByObjectId = classByObjectId;
@@ -38,8 +38,8 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
 
     public IEnumerator<CompositeRelation> GetEnumerator()
     {
-        var allowedAssociationClasses = new HashSet<Class>(this.relationType.AssociationType.Composite.Classes);
-        var allowedRoleClasses = new HashSet<Class>(((Composite)this.relationType.RoleType.ObjectType).Classes);
+        var allowedAssociationClasses = new HashSet<Class>(this.roleType.AssociationType.Composite.Classes);
+        var allowedRoleClasses = new HashSet<Class>(((Composite)this.roleType.ObjectType).Classes);
 
         var skip = false;
         while (skip || this.reader.Read())
@@ -59,7 +59,7 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
 
                         if (associationClass == null || !allowedAssociationClasses.Contains(associationClass))
                         {
-                            this.cantRestoreCompositeRole(this.reader.ReadSubtree(), this.relationType.Id);
+                            this.cantRestoreCompositeRole(this.reader.ReadSubtree(), this.roleType.Id);
                         }
                         else
                         {
@@ -71,14 +71,14 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
                                 var roleIdsString = value;
                                 var roleIdStringArray = roleIdsString.Split(XmlBackup.ObjectsSplitterCharArray);
 
-                                if (this.relationType.RoleType.IsOne && roleIdStringArray.Length != 1)
+                                if (this.roleType.IsOne && roleIdStringArray.Length != 1)
                                 {
                                     foreach (var roleId in roleIdStringArray)
                                     {
-                                        this.onRelationNotRestored(this.relationType.Id, associationId, roleId);
+                                        this.onRelationNotRestored(this.roleType.Id, associationId, roleId);
                                     }
                                 }
-                                else if (this.relationType.RoleType.IsOne)
+                                else if (this.roleType.IsOne)
                                 {
                                     var roleId = long.Parse(roleIdStringArray[0]);
 
@@ -86,7 +86,7 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
 
                                     if (roleClass == null || !allowedRoleClasses.Contains(roleClass))
                                     {
-                                        this.onRelationNotRestored(this.relationType.Id, associationId, roleIdStringArray[0]);
+                                        this.onRelationNotRestored(this.roleType.Id, associationId, roleIdStringArray[0]);
                                     }
                                     else
                                     {
@@ -103,7 +103,7 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
 
                                         if (roleClass == null || !allowedRoleClasses.Contains(roleClass))
                                         {
-                                            this.onRelationNotRestored(this.relationType.Id, associationId, roleId.ToString());
+                                            this.onRelationNotRestored(this.roleType.Id, associationId, roleId.ToString());
                                         }
                                         else
                                         {

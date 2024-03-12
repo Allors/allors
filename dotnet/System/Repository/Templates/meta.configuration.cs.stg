@@ -96,8 +96,8 @@ $repository.Classes:{class|$define_classes(class)$}; separator="\n"$
         }
         #endregion
 
-        #region RelationTypes
-        internal class RelationTypes
+        #region RoleTypes
+        internal class RoleTypes
         {
 $repository.Composites:{composite|$define_relationTypes(composite)$}; separator="\n"$
         }
@@ -114,22 +114,22 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             var meta =  new MetaPopulation();
             var domains = new Domains();
             var objectTypes = new ObjectTypes();
-            var relationTypes = new RelationTypes();
+            var roleTypes = new RoleTypes();
             var methodTypes = new MethodTypes();
 
             this.BuildDomains(meta, domains);
             this.BuildUnits(meta, objectTypes);
             this.BuildInterfaces(meta, objectTypes);
             this.BuildClasses(meta, objectTypes);
-            this.BuildRelationTypes(meta, domains, objectTypes, relationTypes);
+            this.BuildRoleTypes(meta, domains, objectTypes, roleTypes);
             this.BuildMethodTypes(meta, domains, objectTypes, methodTypes);
 
             meta.Initialize();
 
-            this.ExtendCompositeRoleTypes(meta, relationTypes);
+            this.ExtendCompositeRoleTypes(meta, roleTypes);
             this.ExtendCompositeMethodTypes(meta, methodTypes);
 
-$repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, objectTypes, relationTypes, methodTypes);}; separator="\n"$
+$repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, objectTypes, roleTypes, methodTypes);}; separator="\n"$
 
             meta.Derive();
 
@@ -156,7 +156,7 @@ $repository.Interfaces:{interface|$build_interface(interface)$}; separator="\n"$
 $repository.Classes:{class|$build_class(class)$}; separator="\n"$
         }
 
-        private void BuildRelationTypes(MetaPopulation meta, Domains domains, ObjectTypes objectTypes, RelationTypes relationTypes)
+        private void BuildRoleTypes(MetaPopulation meta, Domains domains, ObjectTypes objectTypes, RoleTypes roleTypes)
         {
 $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
         }
@@ -166,7 +166,7 @@ $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 $repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
         }
 
-        private void ExtendCompositeRoleTypes(MetaPopulation meta, RelationTypes relationTypes)
+        private void ExtendCompositeRoleTypes(MetaPopulation meta, RoleTypes roleTypes)
         {
 $repository.Composites:{composite|$extend_compositeRoleTypes(composite)$}; separator="\n"$
         }
@@ -192,7 +192,7 @@ define_classes(class) ::= <<
 >>
 
 define_relationTypes(composite) ::= <<
-$composite.DefinedProperties:{property|             public RelationType $property.DefiningType.SingularName$$property.RoleName$;}; separator="\n"$
+$composite.DefinedProperties:{property|             public RoleType $property.DefiningType.SingularName$$property.RoleName$;}; separator="\n"$
 >>
 
 define_roleClasses(class) ::= <<
@@ -200,7 +200,7 @@ $class.ImplementedProperties:{property|             public RoleClass $class.Sing
 >>
 
 assign_roleClasses(class) ::= <<
-$class.ImplementedProperties:{property|                 Metathis.$class.SingularName$$property.RoleName$ = relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleClassBy(objectTypes.$class.SingularName$);}; separator="\n"$
+$class.ImplementedProperties:{property|                 Metathis.$class.SingularName$$property.RoleName$ = roleTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleClassBy(objectTypes.$class.SingularName$);}; separator="\n"$
 >>
 
 define_methods(composite) ::= <<
@@ -261,27 +261,41 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 
 build_relation(property) ::= <<
             {
+                var associationType = meta.Create<AssociationType>(v=>
+                {
+                    v.Id = System.Guid.NewGuid();
+                    v.Tag = v.Id.Tag();
+                    v.Composite = objectTypes.$property.DefiningType.SingularName$;
+
+                    // Attributes
+                    $property.AssociationTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+                });
+
                 var roleType = meta.Create<RoleType>(v=>
                 {
+                    v.Id = Ids.$property.DefiningType.SingularName$$property.RoleName$;
+                    v.Tag = v.Id.Tag();
                     v.ObjectType = objectTypes.$property.ObjectType.SingularName$;
 $if(property.AssignedRoleSingularName)$                 v.AssignedSingularName = "$property.RoleSingularName$";$endif$
 $if(property.AssignedRolePluralName)$                   v.AssignedPluralName = "$property.RolePluralName$";$endif$
+$if(property.AttributeByName.Size)$                     v.Size = $property.AttributeByName.Size.Value$;$endif$
+$if(property.AttributeByName.Precision)$                 v.Precision = $property.AttributeByName.Precision.Value$;$endif$
+$if(property.AttributeByName.Scale)$                    v.Scale = $property.AttributeByName.Scale.Value$;$endif$
+                    v.AssignedMultiplicity = $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$;
+                    v.IsDerived = $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$;
+
+                    v.AssociationType = associationType;
+
+                    // Attributes
+                    $property.RelationTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+                    $property.RoleTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
                 });
 
-                var associationType = meta.Create<AssociationType>(v=>
-                {
-                    v.Composite = objectTypes.$property.DefiningType.SingularName$;
-                });
+                roleType.CompositeRoleType = new CompositeRoleType(associationType.Composite, roleType);
+$property.CompositeRoleTypeExtensionAttributes:{attribute|              roleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
 
-                var relationType = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, associationType, roleType);
-                $property.RelationTypeExtensionAttributes:{attribute|relationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-                $property.AssociationTypeExtensionAttributes:{attribute|relationType.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
-                $property.RoleTypeExtensionAttributes:{attribute|relationType.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-                $property.CompositeRoleTypeExtensionAttributes:{attribute|relationType.RoleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
-                $if(property.AttributeByName.Size)$relationType.RoleType.Size = $property.AttributeByName.Size.Value$;$endif$
-                $if(property.AttributeByName.Precision)$relationType.RoleType.Precision = $property.AttributeByName.Precision.Value$;$endif$
-                $if(property.AttributeByName.Scale)$relationType.RoleType.Scale = $property.AttributeByName.Scale.Value$;$endif$
-                relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = relationType; 
+                associationType.RoleType = roleType;
+                roleTypes.$property.DefiningType.SingularName$$property.RoleName$ = roleType; 
             }
 >>
 
@@ -314,7 +328,7 @@ $property.ExtensionAttributes:{attribute|$extend_compositeRoleType_attribute(att
 
 extend_compositeRoleType_attribute(attribute) ::= <<
 $if(property.DefiningProperty)$
-            relationTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[objectTypes.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
+            roleTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[objectTypes.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $endif$
 >>
 

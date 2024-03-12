@@ -36,7 +36,7 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.MethodTypes.Where(v => this.Equals(v.ObjectType));
 
-    public IEnumerable<RoleTypeModel> KeyRoleTypes => this.Composite.RoleTypes.Where(v => v.RelationType.IsKey).Select(this.Model.Map);
+    public IEnumerable<RoleTypeModel> KeyRoleTypes => this.Composite.RoleTypes.Where(v => v.IsKey).Select(this.Model.Map);
 
     // IComposite Extra
     public bool ExistDirectSupertypes => this.DirectSupertypes.Any();
@@ -79,42 +79,42 @@ public abstract class CompositeModel : ObjectTypeModel
     public IReadOnlyDictionary<string, IEnumerable<AssociationTypeModel>> WorkspaceAssociationTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.AssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.AssociationTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<AssociationTypeModel>> WorkspaceExclusiveAssociationTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.ExclusiveAssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.ExclusiveAssociationTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<AssociationTypeModel>> WorkspaceInheritedAssociationTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.InheritedAssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.InheritedAssociationTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceRoleTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.RoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.RoleTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceCompositeRoleTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.RoleTypes.Where(w => w.ObjectType.IsComposite && w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.RoleTypes.Where(w => w.ObjectType.IsComposite && w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceInheritedRoleTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.InheritedRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.InheritedRoleTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceExclusiveRoleTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.ExclusiveRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.ExclusiveRoleTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceExclusiveCompositeRoleTypesByWorkspaceName => this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.ExclusiveRoleTypes.Where(w => w.ObjectType.IsComposite && w.RelationType.WorkspaceNames.Contains(v)));
+                v => this.ExclusiveRoleTypes.Where(w => w.ObjectType.IsComposite && w.RoleType.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IEnumerable<MethodTypeModel>> WorkspaceExclusiveMethodTypesByWorkspaceName => this.WorkspaceNames.ToDictionary(
             v => v,

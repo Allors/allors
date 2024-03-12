@@ -7,6 +7,7 @@
 namespace Allors.Database.Meta;
 
 using System;
+using System.Collections.Generic;
 using Embedded.Meta;
 
 /// <summary>
@@ -17,7 +18,7 @@ using Embedded.Meta;
 public sealed class AssociationType : RelationEndType, IComparable
 {
     private Composite objectType;
-    private RelationType relationType;
+    private RoleType roleType;
 
     /// <summary>
     ///     Used to create property names.
@@ -27,6 +28,7 @@ public sealed class AssociationType : RelationEndType, IComparable
     public AssociationType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
+        this.MetaPopulation.OnCreated(this);
     }
 
     public override ObjectType ObjectType
@@ -41,12 +43,10 @@ public sealed class AssociationType : RelationEndType, IComparable
         set { this.objectType = value; }
     }
 
-    public RoleType RoleType => this.relationType.RoleType;
-
-    public RelationType RelationType
+    public RoleType RoleType
     {
-        get => this.relationType;
-        set => this.relationType = value;
+        get => this.roleType;
+        set => this.roleType = value;
     }
 
     public override string Name => this.IsMany ? this.PluralName : this.SingularName;
@@ -55,28 +55,35 @@ public sealed class AssociationType : RelationEndType, IComparable
 
     public override string SingularName
     {
-        get => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
-        set => throw new NotSupportedException();
+        get => this.objectType.SingularName + Where + this.RoleType.SingularName;
     }
 
     public override string PluralFullName => this.PluralName;
 
-    public override string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
+    public override string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
 
     public override bool IsOne => !this.IsMany;
     private string ValidationName => "association type " + this.Name;
 
     public override bool IsMany =>
-        this.relationType.Multiplicity switch
+        this.roleType.Multiplicity switch
         {
             Multiplicity.ManyToOne => true,
             Multiplicity.ManyToMany => true,
             _ => false,
         };
 
-    public int CompareTo(object other) => this.relationType.Id.CompareTo((other as AssociationType)?.relationType.Id);
+    public override IEnumerable<string> WorkspaceNames
+    {
+        get
+        {
+            return this.roleType.WorkspaceNames;
+        }
+    }
 
-    public override string ToString() => $"{this.relationType.RoleType.ObjectType.SingularName}.{this.Name}";
+    public int CompareTo(object other) => this.RoleType.Id.CompareTo((other as AssociationType)?.RoleType.Id);
+
+    public override string ToString() => $"{this.RoleType.ObjectType.SingularName}.{this.Name}";
 
     public override void Validate(ValidationLog validationLog)
     {
@@ -86,7 +93,7 @@ public sealed class AssociationType : RelationEndType, IComparable
             validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.IObjectType");
         }
 
-        if (this.relationType == null)
+        if (this.roleType == null)
         {
             var message = this.ValidationName + " has no relation type";
             validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.RelationType");

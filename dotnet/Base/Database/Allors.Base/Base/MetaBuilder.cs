@@ -7,10 +7,10 @@ namespace Allors.Database.Meta.Configuration
 {
     public partial class MetaBuilder
     {
-        private void BuildBase(MetaPopulation meta, Domains domains, ObjectTypes objectTypes, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void BuildBase(MetaPopulation meta, Domains domains, ObjectTypes objectTypes, RoleTypes roleTypes, MethodTypes methodTypes)
         {
-            relationTypes.EnumerationKey.IsKey = true;
-            relationTypes.UniquelyIdentifiableUniqueId.IsKey = true;
+            roleTypes.EnumerationKey.IsKey = true;
+            roleTypes.UniquelyIdentifiableUniqueId.IsKey = true;
         }
     }
 }

@@ -27,7 +27,7 @@ internal sealed class AssociationInExtent : In
 
         inStatement.UseRole(this.association.RoleType);
 
-        if (!this.association.RelationType.ExistExclusiveClasses)
+        if (!this.association.RoleType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IS NOT NULL AND ");
             statement.Append(" " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IN (\n");
@@ -36,8 +36,8 @@ internal sealed class AssociationInExtent : In
         }
         else if (this.association.RoleType.IsMany)
         {
-            statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NOT NULL AND ");
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IN (\n");
+            statement.Append(" (" + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IS NOT NULL AND ");
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IN (\n");
             this.inExtent.BuildSql(inStatement);
             statement.Append(" ))\n");
         }

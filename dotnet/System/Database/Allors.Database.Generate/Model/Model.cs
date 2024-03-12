@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Database.Meta;
+using Database.Meta.Extensions;
 using Database.Population;
 
 public partial class Model
@@ -42,11 +43,10 @@ public partial class Model
             }
         }
 
-        foreach (var relationType in this.MetaPopulation.RelationTypes)
+        foreach (var roleType in this.MetaPopulation.RoleTypes)
         {
-            this.mapping.Add(relationType, new RelationTypeModel(this, relationType));
-            this.mapping.Add(relationType.AssociationType, new AssociationTypeModel(this, relationType.AssociationType));
-            this.mapping.Add(relationType.RoleType, new RoleTypeModel(this, relationType.RoleType));
+            this.mapping.Add(roleType, new RoleTypeModel(this, roleType));
+            this.mapping.Add(roleType.AssociationType, new AssociationTypeModel(this, roleType.AssociationType));
         }
 
         foreach (var methodType in this.MetaPopulation.MethodTypes)
@@ -79,7 +79,7 @@ public partial class Model
 
     public IEnumerable<ClassModel> Classes => this.MetaPopulation.Classes.Select(this.Map);
 
-    public IEnumerable<RelationTypeModel> RelationTypes => this.MetaPopulation.RelationTypes.Select(this.Map);
+    public IEnumerable<RoleTypeModel> RoleTypes => this.MetaPopulation.RoleTypes.Select(this.Map);
 
     public IEnumerable<MethodTypeModel> MethodTypes => this.MetaPopulation.MethodTypes.Select(this.Map);
 
@@ -98,25 +98,25 @@ public partial class Model
         this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.RelationTypes.Where(w => w.IsDerived && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));
+                v => this.RoleTypes.Where(w => w.IsDerived && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceRequiredTagsByWorkspaceName =>
         this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.RelationTypes.Where(w => w.RoleType.IsRequired && w.WorkspaceNames.Contains(v)).Select(w => w.Tag)
+                v => this.RoleTypes.Where(w => w.IsRequired && w.WorkspaceNames.Contains(v)).Select(w => w.Tag)
                     .OrderBy(w => w));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceUniqueTagsByWorkspaceName =>
         this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.RelationTypes.Where(w => w.RoleType.IsUnique && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));
+                v => this.RoleTypes.Where(w => w.IsUnique && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));
 
     public IReadOnlyDictionary<string, Dictionary<string, IOrderedEnumerable<string>>> WorkspaceMediaTagsByMediaTypeNameByWorkspaceName =>
         this.WorkspaceNames
             .ToDictionary(v => v, v =>
-                this.RelationTypes.Where(w => !string.IsNullOrWhiteSpace(w.MediaType) && w.WorkspaceNames.Contains(v))
+                this.RoleTypes.Where(w => !string.IsNullOrWhiteSpace(w.MediaType) && w.WorkspaceNames.Contains(v))
                     .GroupBy(w => w.MediaType, w => w.Tag)
                     .ToDictionary(w => w.Key, w => w.OrderBy(x => x)));
 
@@ -132,17 +132,17 @@ public partial class Model
         this.WorkspaceNames
             .ToDictionary(v => v, v => this.Classes.Where(w => w.WorkspaceNames.Contains(v)));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RelationTypeModel>> WorkspaceRelationTypesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceRoleTypesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
+            .ToDictionary(v => v, v => this.RoleTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RelationTypeModel>> WorkspaceCompositeRelationTypesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceCompositeRoleTypesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.WorkspaceNames.Contains(v) && w.RoleType.ObjectType.IsComposite).OrderBy(w => w.Tag));
+            .ToDictionary(v => v, v => this.RoleTypes.Where(w => w.WorkspaceNames.Contains(v) && w.RoleType.ObjectType.IsComposite).OrderBy(w => w.Tag));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RelationTypeModel>> WorkspaceUnitRelationTypesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceUnitRoleTypesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.WorkspaceNames.Contains(v) && w.RoleType.ObjectType.IsUnit).OrderBy(w => w.Tag));
+            .ToDictionary(v => v, v => this.RoleTypes.Where(w => w.WorkspaceNames.Contains(v) && w.RoleType.ObjectType.IsUnit).OrderBy(w => w.Tag));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<MethodTypeModel>> WorkspaceMethodTypesByWorkspaceName =>
         this.WorkspaceNames
@@ -152,7 +152,7 @@ public partial class Model
         this.WorkspaceNames
             .ToDictionary(
                 v => v,
-                v => this.RelationTypes
+                v => this.RoleTypes
                     .Where(w => w.RoleType.ObjectType.IsComposite && w.Multiplicity == multiplicity && w.WorkspaceNames.Contains(v))
                     .Select(w => w.Tag).OrderBy(w => w));
 
@@ -172,8 +172,6 @@ public partial class Model
     public InterfaceModel Map(Interface v) => v != null ? (InterfaceModel)this.mapping[v] : null;
 
     public ClassModel Map(Class v) => v != null ? (ClassModel)this.mapping[v] : null;
-
-    public RelationTypeModel Map(RelationType v) => v != null ? (RelationTypeModel)this.mapping[v] : null;
 
     public AssociationTypeModel Map(AssociationType v) => v != null ? (AssociationTypeModel)this.mapping[v] : null;
 

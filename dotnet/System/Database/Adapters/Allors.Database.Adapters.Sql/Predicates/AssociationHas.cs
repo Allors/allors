@@ -23,12 +23,12 @@ internal sealed class AssociationHas : Has
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        if ((this.association.IsMany && this.association.RoleType.IsMany) || !this.association.RelationType.ExistExclusiveClasses)
+        if ((this.association.IsMany && this.association.RoleType.IsMany) || !this.association.RoleType.ExistExclusiveClasses)
         {
             statement.Append("\n");
             statement.Append("EXISTS(\n");
             statement.Append("SELECT " + alias + "." + Mapping.ColumnNameForObject + "\n");
-            statement.Append("FROM " + schema.TableNameForRelationByRelationType[this.association.RelationType] + "\n");
+            statement.Append("FROM " + schema.TableNameForRelationByRoleType[this.association.RoleType] + "\n");
             statement.Append("WHERE " + Mapping.ColumnNameForAssociation + "=" + this.allorsObject.Strategy.ObjectId + "\n");
             statement.Append("AND " + Mapping.ColumnNameForRole + "=" + alias + "." + Mapping.ColumnNameForObject + "\n");
             statement.Append(")");

@@ -44,8 +44,8 @@ $meta.interfaces:{objectType|$metaObjectType_Id()$}; separator="\n"$
 		// Classes
 $meta.classes:{objectType|$metaObjectType_Id()$}; separator="\n"$
 	
-		// RelationTypes
-$meta.relationTypes:{relationType|$metaRelationType_Id()$}; separator="\n"$
+		// RoleTypes
+$meta.roleTypes:{roleType|$metaRoleType_Id()$}; separator="\n"$
 
 		// MethodTypes
 $meta.methodTypes:{methodType|$metaMethodType_Id()$}; separator="\n"$
@@ -57,8 +57,8 @@ metaObjectType_Id() ::= <<
 		public static readonly Guid $objectType.SingularName$ = new Guid("$objectType.Id$");
 >>
 
-metaRelationType_Id() ::= <<
-		public static readonly Guid $relationType.RoleType.FullName$ = new Guid("$relationType.Id$");
+metaRoleType_Id() ::= <<
+		public static readonly Guid $roleType.RoleType.FullName$ = new Guid("$roleType.Id$");
 >>
 
 metaMethodType_Id() ::= <<

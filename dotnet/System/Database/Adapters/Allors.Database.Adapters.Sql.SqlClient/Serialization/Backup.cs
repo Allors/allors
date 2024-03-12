@@ -109,17 +109,15 @@ internal class Backup
     {
         var exclusiveRootClassesByObjectType = new Dictionary<ObjectType, HashSet<ObjectType>>();
 
-        var relations = new List<RelationType>(this.database.MetaPopulation.RelationTypes);
+        var relations = new List<RoleType>(this.database.MetaPopulation.RoleTypes);
         relations.Sort();
 
-        foreach (var relation in relations)
+        foreach (var roleType in relations)
         {
-            var associationType = relation.AssociationType;
+            var associationType = roleType.AssociationType;
 
             if (associationType.Composite.Classes.Count > 0)
             {
-                var roleType = relation.RoleType;
-
                 var sql = string.Empty;
                 if (roleType.ObjectType.IsUnit)
                 {
@@ -147,19 +145,19 @@ internal class Backup
                         }
 
                         sql +=
-                            $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
+                            $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRoleType[roleType]} As {Sql.Mapping.ColumnNameForRole}\n";
                         sql +=
                             $"FROM {this.database.Mapping.TableNameForObjectByClass[(Class)exclusiveRootClass]}\n";
                         sql +=
-                            $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
+                            $"WHERE {this.database.Mapping.ColumnNameByRoleType[roleType]} IS NOT NULL\n";
                     }
 
                     sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";
                 }
-                else if ((roleType.IsMany && associationType.IsMany) || !relation.ExistExclusiveClasses)
+                else if ((roleType.IsMany && associationType.IsMany) || !roleType.ExistExclusiveClasses)
                 {
                     sql += $"SELECT {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}\n";
-                    sql += $"FROM {this.database.Mapping.TableNameForRelationByRelationType[relation]}\n";
+                    sql += $"FROM {this.database.Mapping.TableNameForRelationByRoleType[roleType]}\n";
                     sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}";
                 }
                 else
@@ -168,22 +166,22 @@ internal class Backup
                     if (roleType.IsOne)
                     {
                         sql +=
-                            $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
+                            $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRoleType[roleType]} As {Sql.Mapping.ColumnNameForRole}\n";
                         sql +=
                             $"FROM {this.database.Mapping.TableNameForObjectByClass[associationType.Composite.ExclusiveClass]}\n";
                         sql +=
-                            $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
+                            $"WHERE {this.database.Mapping.ColumnNameByRoleType[roleType]} IS NOT NULL\n";
                         sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";
                     }
                     else
                     {
                         // role.Many
                         sql +=
-                            $"SELECT {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} As {Sql.Mapping.ColumnNameForAssociation}, {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForRole}\n";
+                            $"SELECT {this.database.Mapping.ColumnNameByRoleType[associationType.RoleType]} As {Sql.Mapping.ColumnNameForAssociation}, {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForRole}\n";
                         sql +=
                             $"FROM {this.database.Mapping.TableNameForObjectByClass[((Composite)roleType.ObjectType).ExclusiveClass]}\n";
                         sql +=
-                            $"WHERE {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} IS NOT NULL\n";
+                            $"WHERE {this.database.Mapping.ColumnNameByRoleType[associationType.RoleType]} IS NOT NULL\n";
                         sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}";
                     }
                 }
@@ -195,7 +193,7 @@ internal class Backup
                     {
                         if (roleType.IsMany)
                         {
-                            using (var relationTypeManyXmlWriter = new RelationTypeManyXmlWriter(relation, this.writer))
+                            using (var relationTypeManyXmlWriter = new RelationTypeManyXmlWriter(roleType, this.writer))
                             {
                                 while (reader.Read())
                                 {
@@ -207,7 +205,7 @@ internal class Backup
                         }
                         else
                         {
-                            using (var relationTypeOneXmlWriter = new RelationTypeOneXmlWriter(relation, this.writer))
+                            using (var relationTypeOneXmlWriter = new RelationTypeOneXmlWriter(roleType, this.writer))
                             {
                                 while (reader.Read())
                                 {

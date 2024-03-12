@@ -7,12 +7,13 @@
 namespace Allors.Database.Meta;
 
 using System;
+using System.Collections.Generic;
 using Embedded.Meta;
 
 /// <summary>
 ///     A <see cref="OperandType" /> can be a <see cref="AssociationType" /> or a <see cref="RoleType" />.
 /// </summary>
-public abstract class OperandType : EmbeddedObject, IMetaExtensible
+public abstract class OperandType : EmbeddedObject, IMetaIdentifiableObject
 {
     protected OperandType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
@@ -23,7 +24,15 @@ public abstract class OperandType : EmbeddedObject, IMetaExtensible
 
     public MetaPopulation MetaPopulation { get; }
 
+    public abstract IEnumerable<string> WorkspaceNames { get; }
+
     public dynamic Attributes { get; }
+
+    public Guid Id { get; set; }
+
+    public string Tag { get; set; }
+
+    public abstract void Validate(ValidationLog validationLog);
 
     public override bool Equals(object obj)
     {

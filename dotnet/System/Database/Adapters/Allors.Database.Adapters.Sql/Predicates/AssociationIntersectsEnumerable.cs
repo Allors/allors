@@ -33,17 +33,17 @@ internal sealed class AssociationIntersectsEnumerable : In
             inStatement.Append(inObject.Id.ToString());
         }
 
-        if (this.association.RelationType.RoleType.IsMany || !this.association.RelationType.ExistExclusiveClasses)
+        if (this.association.RoleType.IsMany || !this.association.RoleType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IS NOT NULL AND ");
             statement.Append(" " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " IN (\n");
             statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
-        else if (this.association.RelationType.RoleType.IsMany)
+        else if (this.association.RoleType.IsMany)
         {
-            statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NOT NULL AND ");
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IN (\n");
+            statement.Append(" (" + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IS NOT NULL AND ");
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IN (\n");
             statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }

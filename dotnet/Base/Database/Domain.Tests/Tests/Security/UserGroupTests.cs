@@ -31,7 +31,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.Single(derivationError.Relations);
             Assert.Equal(typeof(DerivationErrorRequired), derivationError.GetType());
-            Assert.Equal(this.M.UserGroup.Name.RelationType, derivationError.Relations[0].RelationType);
+            Assert.Equal(this.M.UserGroup.Name, derivationError.Relations[0].RoleType);
         }
     }
 }

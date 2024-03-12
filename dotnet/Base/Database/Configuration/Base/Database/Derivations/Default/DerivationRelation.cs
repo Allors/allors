@@ -14,16 +14,16 @@ namespace Allors.Database.Configuration.Derivations.Default
         public DerivationRelation(IObject association, RoleType roleType)
         {
             this.Association = association;
-            this.RelationType = roleType.RelationType;
+            this.RoleType = roleType;
         }
 
         public DerivationRelation(IObject role, AssociationType associationType)
         {
             this.Role = role;
-            this.RelationType = associationType.RelationType;
+            this.RoleType = associationType.RoleType;
         }
 
-        public RelationType RelationType { get; }
+        public RoleType RoleType { get; }
 
         public IObject Association { get; }
 
@@ -76,17 +76,17 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
             if (this.Association != null)
             {
-                if (this.RelationType != null)
+                if (this.RoleType != null)
                 {
-                    return this.Association.Strategy.Class.SingularName + "." + this.RelationType.RoleType.Name;
+                    return this.Association.Strategy.Class.SingularName + "." + this.RoleType.Name;
                 }
 
                 return this.Association.Strategy.Class.SingularName;
             }
 
-            if (this.RelationType != null)
+            if (this.RoleType != null)
             {
-                return this.Role.Strategy.Class.SingularName + "." + this.RelationType.AssociationType.Name;
+                return this.Role.Strategy.Class.SingularName + "." + this.RoleType.AssociationType.Name;
             }
 
             return this.Role.Strategy.Class.SingularName;

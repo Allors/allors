@@ -35,12 +35,12 @@ internal sealed class NotRoleIntersectsEnumerable : In
             inStatement.Append(inObject.Id);
         }
 
-        if (this.role.RelationType.AssociationType.IsMany || !this.role.RelationType.ExistExclusiveClasses)
+        if (this.role.AssociationType.IsMany || !this.role.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NULL OR ");
             statement.Append(" NOT " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForAssociation + " IN (");
             statement.Append(" SELECT " + Mapping.ColumnNameForAssociation + " FROM " +
-                             schema.TableNameForRelationByRelationType[this.role.RelationType] + " WHERE " + Mapping.ColumnNameForRole +
+                             schema.TableNameForRelationByRoleType[this.role] + " WHERE " + Mapping.ColumnNameForRole +
                              " IN (");
             statement.Append(inStatement.ToString());
             statement.Append(" )))");
@@ -54,8 +54,8 @@ internal sealed class NotRoleIntersectsEnumerable : In
         }
         else
         {
-            statement.Append(" (" + schema.ColumnNameByRelationType[this.role.RelationType] + " IS NULL OR ");
-            statement.Append(" NOT " + schema.ColumnNameByRelationType[this.role.RelationType] + " IN (");
+            statement.Append(" (" + schema.ColumnNameByRoleType[this.role] + " IS NULL OR ");
+            statement.Append(" NOT " + schema.ColumnNameByRoleType[this.role] + " IN (");
             statement.Append(inStatement.ToString());
             statement.Append(" ))");
         }

@@ -25,9 +25,9 @@ internal sealed class RoleBetweenRole : Between
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + " BETWEEN " + alias + "." +
-                         schema.ColumnNameByRelationType[this.first.RelationType] + " AND " + alias + "." +
-                         schema.ColumnNameByRelationType[this.second.RelationType] + ")");
+        statement.Append(" (" + alias + "." + schema.ColumnNameByRoleType[this.role] + " BETWEEN " + alias + "." +
+                         schema.ColumnNameByRoleType[this.first] + " AND " + alias + "." +
+                         schema.ColumnNameByRoleType[this.second] + ")");
         return this.Include;
     }
 

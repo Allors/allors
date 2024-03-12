@@ -31,20 +31,20 @@ internal sealed class RoleEqualsRole : Equals
         {
             if (this.role.ObjectType.Tag == UnitTags.String)
             {
-                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] +
+                statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.role] +
                                  $" {schema.StringCollation} =" + alias + "." +
-                                 schema.ColumnNameByRelationType[this.equalsRole.RelationType] + $" {schema.StringCollation}");
+                                 schema.ColumnNameByRoleType[this.equalsRole] + $" {schema.StringCollation}");
             }
             else
             {
-                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." +
-                                 schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
+                statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.role] + "=" + alias + "." +
+                                 schema.ColumnNameByRoleType[this.equalsRole]);
             }
         }
         else if (((Composite)this.role.ObjectType).ExclusiveClass != null && ((Composite)this.equalsRole.ObjectType).ExclusiveClass != null)
         {
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." +
-                             schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.role] + "=" + alias + "." +
+                             schema.ColumnNameByRoleType[this.equalsRole]);
         }
         else
         {

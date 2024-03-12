@@ -1,4 +1,4 @@
-// <copyright file="Backup.cs" company="Allors bv">
+﻿// <copyright file="Backup.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -110,12 +110,10 @@ public class Backup
             strategies.Sort(strategySorter);
         }
 
-        var sortedRelationTypes = new List<RelationType>(((IDatabase)this.transaction.Database).MetaPopulation.RelationTypes);
+        var sortedRelationTypes = new List<RoleType>(((IDatabase)this.transaction.Database).MetaPopulation.RoleTypes);
         sortedRelationTypes.Sort();
-        foreach (var relationType in sortedRelationTypes)
+        foreach (var roleType in sortedRelationTypes)
         {
-            var roleType = relationType.RoleType;
-
             sortedStrategiesByRoleType.TryGetValue(roleType, out var strategies);
 
             if (strategies != null)
@@ -124,7 +122,7 @@ public class Backup
                     ? XmlBackup.RelationTypeUnit
                     : XmlBackup.RelationTypeComposite);
 
-                this.writer.WriteAttributeString(XmlBackup.Id, relationType.Id.ToString("N").ToLowerInvariant());
+                this.writer.WriteAttributeString(XmlBackup.Id, roleType.Id.ToString("N").ToLowerInvariant());
 
                 if (roleType.ObjectType is Unit)
                 {

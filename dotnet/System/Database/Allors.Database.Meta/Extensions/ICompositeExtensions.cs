@@ -13,7 +13,7 @@ public static class ICompositeExtensions
 {
     internal static void ValidateComposite(this Composite @this, ValidationLog validationLog)
     {
-        if (@this.RoleTypes.Count(v => v.RelationType.IsKey) > 1)
+        if (@this.RoleTypes.Count(v => v.IsKey) > 1)
         {
             var message = @this.ValidationName() + " has more than 1 key";
             validationLog.AddError(message, @this, ValidationKind.Multiplicity, "IComposite.KeyRoleType");
@@ -113,6 +113,6 @@ public static class ICompositeExtensions
 
     internal static void DeriveKeyRoleType(this Composite @this)
     {
-        @this.DerivedKeyRoleType = @this.RoleTypes.FirstOrDefault(v => v.RelationType.IsKey);
+        @this.DerivedKeyRoleType = @this.RoleTypes.FirstOrDefault(v => v.IsKey);
     }
 }

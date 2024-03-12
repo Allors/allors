@@ -81,7 +81,7 @@ namespace Allors.Database.Configuration
                     transaction.Build<CreatePermission>(v => v.ClassPointer = @class.Id);
                 }
 
-                var relationTypeIds = new HashSet<Guid>(@class.RoleTypes.Select(v => v.RelationType.Id));
+                var relationTypeIds = new HashSet<Guid>(@class.RoleTypes.Select(v => v.Id));
 
                 // Read
                 if (readPermissionsByClassId.TryGetValue(@class.Id, out var classReadPermissions))
@@ -92,7 +92,7 @@ namespace Allors.Database.Configuration
 
                     var existingRelationTypeIds = new HashSet<Guid>(classReadPermissions
                         .Except(removedPermissions)
-                        .Select(v => v.RelationType.Id));
+                        .Select(v => v.RoleType.Id));
 
                     foreach (var removedPermission in removedPermissions)
                     {
@@ -129,7 +129,7 @@ namespace Allors.Database.Configuration
 
                     var existingRelationTypeIds = new HashSet<Guid>(classWritePermissions
                         .Except(removedPermissions)
-                        .Select(v => v.RelationType.Id));
+                        .Select(v => v.RoleType.Id));
 
                     foreach (var removedPermission in removedPermissions)
                     {
@@ -263,7 +263,7 @@ namespace Allors.Database.Configuration
                     @class.CreatePermissionId(0);
                 }
 
-                var relationTypeIds = new HashSet<Guid>(@class.RoleTypes.Select(v => v.RelationType.Id));
+                var relationTypeIds = new HashSet<Guid>(@class.RoleTypes.Select(v => v.Id));
 
                 if (readPermissionsByClassId.TryGetValue(@class.Id, out var classReadPermissions))
                 {

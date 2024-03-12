@@ -1,4 +1,4 @@
-// <copyright file="Validation.cs" company="Allors bv">
+﻿// <copyright file="Validation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,6 +7,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient;
 
 using System.Collections.Generic;
 using System.Text;
+using Meta;
 using static Mapping;
 
 public class Validation : Sql.Validation
@@ -155,34 +156,31 @@ public class Validation : Sql.Validation
 
                 foreach (var associationType in @class.AssociationTypes)
                 {
-                    var relationType = associationType.RelationType;
-                    var roleType = relationType.RoleType;
-                    if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses
-                                                                     && roleType.IsMany)
+                    var roleType = associationType.RoleType;
+                    if (!(associationType.IsMany && roleType.IsMany) && roleType.ExistExclusiveClasses && roleType.IsMany)
                     {
                         this.ValidateColumn(
                             table,
-                            this.mapping.ColumnNameByRelationType[relationType],
+                            this.mapping.ColumnNameByRoleType[roleType],
                             SqlTypeForObject);
                     }
                 }
 
                 foreach (var roleType in @class.RoleTypes)
                 {
-                    var relationType = roleType.RelationType;
-                    var associationType = relationType.AssociationType;
+                    var associationType = roleType.AssociationType;
                     if (roleType.ObjectType.IsUnit)
                     {
                         this.ValidateColumn(
                             table,
-                            this.mapping.ColumnNameByRelationType[relationType],
-                            this.mapping.GetSqlType(relationType.RoleType));
+                            this.mapping.ColumnNameByRoleType[roleType],
+                            this.mapping.GetSqlType(roleType));
                     }
-                    else if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
+                    else if (!(associationType.IsMany && roleType.IsMany) && roleType.ExistExclusiveClasses && !roleType.IsMany)
                     {
                         this.ValidateColumn(
                             table,
-                            this.mapping.ColumnNameByRelationType[relationType],
+                            this.mapping.ColumnNameByRoleType[roleType],
                             SqlTypeForObject);
                     }
                 }
@@ -190,15 +188,14 @@ public class Validation : Sql.Validation
         }
 
         // Relation Tables
-        foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
+        foreach (var roleType in this.Database.MetaPopulation.RoleTypes)
         {
-            var associationType = relationType.AssociationType;
-            var roleType = relationType.RoleType;
+            var associationType = roleType.AssociationType;
 
             if (!roleType.ObjectType.IsUnit &&
-                ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
+                ((associationType.IsMany && roleType.IsMany) || !roleType.ExistExclusiveClasses))
             {
-                var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
+                var tableName = this.mapping.TableNameForRelationByRoleType[roleType];
                 var table = this.Schema.GetTable(tableName);
 
                 if (table == null)
@@ -214,9 +211,9 @@ public class Validation : Sql.Validation
 
                     this.ValidateColumn(table, Sql.Mapping.ColumnNameForAssociation, SqlTypeForObject);
 
-                    var roleSqlType = relationType.RoleType.ObjectType.IsComposite
+                    var roleSqlType = roleType.ObjectType.IsComposite
                         ? SqlTypeForObject
-                        : this.mapping.GetSqlType(relationType.RoleType);
+                        : this.mapping.GetSqlType(roleType);
                     this.ValidateColumn(table, Sql.Mapping.ColumnNameForRole, roleSqlType);
                 }
             }

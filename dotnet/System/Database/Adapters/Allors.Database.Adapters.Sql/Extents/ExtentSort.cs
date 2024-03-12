@@ -39,8 +39,8 @@ public class ExtentSort
     {
         statement.Append(
             statement.Sorter.Equals(this)
-                ? $" ORDER BY {statement.Mapping.ColumnNameByRelationType[this.roleType.RelationType]}"
-                : $" , {statement.Mapping.ColumnNameByRelationType[this.roleType.RelationType]}");
+                ? $" ORDER BY {statement.Mapping.ColumnNameByRoleType[this.roleType]}"
+                : $" , {statement.Mapping.ColumnNameByRoleType[this.roleType]}");
 
         statement.Append(this.direction == SortDirection.Ascending ? $" {this.mapping.Ascending} " : $" {this.mapping.Descending} ");
 
@@ -51,8 +51,8 @@ public class ExtentSort
     {
         statement.Append(
             statement.Sorter.Equals(this)
-                ? $" ORDER BY {alias}.{statement.Mapping.ColumnNameByRelationType[this.roleType.RelationType]}"
-                : $" , {alias}.{statement.Mapping.ColumnNameByRelationType[this.roleType.RelationType]}");
+                ? $" ORDER BY {alias}.{statement.Mapping.ColumnNameByRoleType[this.roleType]}"
+                : $" , {alias}.{statement.Mapping.ColumnNameByRoleType[this.roleType]}");
 
         statement.Append(this.direction == SortDirection.Ascending
             ? $" {this.mapping.Ascending} "
@@ -63,13 +63,13 @@ public class ExtentSort
 
     internal void BuildSelect(ExtentStatement statement)
     {
-        statement.Append($" , {statement.Mapping.ColumnNameByRelationType[this.roleType.RelationType]} ");
+        statement.Append($" , {statement.Mapping.ColumnNameByRoleType[this.roleType]} ");
         this.subSorter?.BuildSelect(statement);
     }
 
     internal void BuildSelect(ExtentStatement statement, string alias)
     {
-        statement.Append($" , {alias}.{statement.Mapping.ColumnNameByRelationType[this.roleType.RelationType]} ");
+        statement.Append($" , {alias}.{statement.Mapping.ColumnNameByRoleType[this.roleType]} ");
         this.subSorter?.BuildSelect(statement, alias);
     }
 }

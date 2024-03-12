@@ -35,20 +35,20 @@ internal sealed class NotAssociationInEnumerable : In
             inStatement.Append(inObject.Id.ToString());
         }
 
-        if (!this.association.RelationType.ExistExclusiveClasses)
+        if (!this.association.RoleType.ExistExclusiveClasses)
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR ");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IN (\n");
             statement.Append(" SELECT " + Mapping.ColumnNameForRole + " FROM " +
-                             schema.TableNameForRelationByRelationType[this.association.RelationType] + " WHERE " +
+                             schema.TableNameForRelationByRoleType[this.association.RoleType] + " WHERE " +
                              Mapping.ColumnNameForAssociation + " IN (");
             statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
-        else if (this.association.RelationType.RoleType.IsMany)
+        else if (this.association.RoleType.IsMany)
         {
-            statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NULL OR ");
-            statement.Append(" NOT " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IN (\n");
+            statement.Append(" (" + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IS NULL OR ");
+            statement.Append(" NOT " + alias + "." + schema.ColumnNameByRoleType[this.association.RoleType] + " IN (\n");
             statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }

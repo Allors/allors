@@ -26,12 +26,12 @@ internal sealed class RoleHas : Has
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        if ((this.role.IsMany && this.role.RelationType.AssociationType.IsMany) || !this.role.RelationType.ExistExclusiveClasses)
+        if ((this.role.IsMany && this.role.AssociationType.IsMany) || !this.role.ExistExclusiveClasses)
         {
             statement.Append("\n");
             statement.Append("EXISTS(\n");
             statement.Append("SELECT " + alias + "." + Mapping.ColumnNameForObject + "\n");
-            statement.Append("FROM " + schema.TableNameForRelationByRelationType[this.role.RelationType] + "\n");
+            statement.Append("FROM " + schema.TableNameForRelationByRoleType[this.role] + "\n");
             statement.Append("WHERE   " + Mapping.ColumnNameForAssociation + "=" + alias + "." + Mapping.ColumnNameForObject + "\n");
             statement.Append("AND " + Mapping.ColumnNameForRole + "=" + this.allorsObject.Strategy.ObjectId + "\n");
             statement.Append(")\n");
@@ -48,7 +48,7 @@ internal sealed class RoleHas : Has
             statement.Append("SELECT " + Mapping.ColumnNameForObject + "\n");
             statement.Append("FROM " + schema.TableNameForObjectByClass[((Composite)this.role.ObjectType).ExclusiveClass] + "\n");
             statement.Append("WHERE " + Mapping.ColumnNameForObject + "=" + this.allorsObject.Strategy.ObjectId + "\n");
-            statement.Append("AND " + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + ".O\n");
+            statement.Append("AND " + schema.ColumnNameByRoleType[this.role] + "=" + alias + ".O\n");
             statement.Append(")\n");
         }
 

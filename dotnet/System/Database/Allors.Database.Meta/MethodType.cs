@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Embedded.Meta;
 
-public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObject 
+public sealed class MethodType : OperandType, IComparable 
 {
     private string[] derivedWorkspaceNames;
 
@@ -25,10 +25,6 @@ public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObje
         this.MetaPopulation.OnCreated(this);
     }
 
-    public Guid Id { get; set; }
-
-    public string Tag { get; set; }
-    
     public CompositeMethodType CompositeMethodType { get; set; }
 
     public IReadOnlyDictionary<Composite, CompositeMethodType> CompositeMethodTypeByComposite { get; private set; }
@@ -39,7 +35,7 @@ public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObje
 
     public string Name { get; set; }
 
-    public IEnumerable<string> WorkspaceNames
+    public override IEnumerable<string> WorkspaceNames
     {
         get
         {
@@ -64,7 +60,7 @@ public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObje
 
     public override string ToString() => this.Name;
 
-    public void Validate(ValidationLog validationLog)
+    public override void Validate(ValidationLog validationLog)
     {
         if (string.IsNullOrEmpty(this.Name))
         {

@@ -23,9 +23,9 @@ internal sealed class RoleExists : Exists
         var schema = statement.Mapping;
         if (this.role.ObjectType.IsUnit)
         {
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + " IS NOT NULL");
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.role] + " IS NOT NULL");
         }
-        else if ((this.role.IsMany && this.role.RelationType.AssociationType.IsMany) || !this.role.RelationType.ExistExclusiveClasses)
+        else if ((this.role.IsMany && this.role.AssociationType.IsMany) || !this.role.ExistExclusiveClasses)
         {
             statement.Append(" " + this.role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NOT NULL");
         }
@@ -35,7 +35,7 @@ internal sealed class RoleExists : Exists
         }
         else
         {
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + " IS NOT NULL");
+            statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.role] + " IS NOT NULL");
         }
 
         return this.Include;

@@ -1,4 +1,4 @@
-// <copyright file="StringTemplate.cs" company="Allors bv">
+﻿// <copyright file="StringTemplate.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -126,13 +126,13 @@ public class StringTemplate
                         case ObjectTypeModel objectType:
                             template.Add(ObjectTypeKey, objectType);
                             break;
-                        case RelationTypeModel relationType:
-                            template.Add(RelationTypeKey, relationType);
-                            break;
-                        case MethodTypeModel methodType:
-                            template.Add(MethodTypeKey, methodType);
-                            break;
-                        default:
+                    case RoleTypeModel relationType:
+                        template.Add(RelationTypeKey, relationType);
+                        break;
+                    case MethodTypeModel methodType:
+                        template.Add(MethodTypeKey, methodType);
+                        break;
+                    default:
                             throw new ArgumentException(input + " was not found");
                     }
                 }

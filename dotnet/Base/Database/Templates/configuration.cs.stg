@@ -50,10 +50,10 @@ $meta.interfaces:{objectType|$metaInterface_Init()$}; separator="\n"$
 $meta.classes:{objectType|$metaClass_Init()$}; separator="\n"$
 
 			// RoleTypes
-$meta.relationTypes:{relationType|$metaRoleType_Init()$}; separator="\n"$
+$meta.roleTypes:{roleType|$metaRoleType_Init()$}; separator="\n"$
 	
 			// AssociationTypes
-$meta.relationTypes:{relationType|$metaAssociationType_Init()$}; separator="\n"$
+$meta.roleTypes:{roleType|$metaAssociationType_Init()$}; separator="\n"$
 
 			// MethodTypes
 $meta.methodTypes:{methodType|$metaMethodType_Init()$}; separator="\n"$
@@ -68,8 +68,8 @@ $meta.classes:{objectType|$metaClass_Init_Properties()$}; separator="\n"$
 $meta.units:{objectType|$metaUnit_Property()$}; separator="\n"$
 $meta.interfaces:{objectType|$metaComposite_Property()$}; separator="\n"$
 $meta.classes:{objectType|$metaComposite_Property()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
+$meta.roleTypes:{roleType|$metaRoleType_Property()$}; separator="\n"$
+$meta.roleTypes:{roleType|$metaAssociationType_Property()$}; separator="\n"$
 $meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
     }
 }
@@ -86,12 +86,12 @@ metaComposite_Property() ::= <<
 >>
 
 metaRoleType_Property() ::= <<
-		public RoleType $relationType.RoleType.FullName$ { get; set; }
+		public RoleType $roleType.FullName$ { get; set; }
 
 >>
 
 metaAssociationType_Property() ::= <<
-		public AssociationType $relationType.AssociationType.Name$ { get; set; }
+		public AssociationType $roleType.AssociationType.Name$ { get; set; }
 
 >>
 
@@ -113,11 +113,11 @@ metaClass_Init() ::= <<
 >>
 
 metaRoleType_Init() ::= <<
-			this.$relationType.RoleType.FullName$ = ((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType;
+			this.$roleType.FullName$ = ((RoleType)meta.FindById(MetaIds.$roleType.FullName$));
 >>
 
 metaAssociationType_Init() ::= <<
-			this.$relationType.AssociationType.Name$ = ((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType;
+			this.$roleType.AssociationType.Name$ = ((RoleType)meta.FindById(MetaIds.$roleType.FullName$)).AssociationType;
 >>
 
 metaMethodType_Init() ::= <<

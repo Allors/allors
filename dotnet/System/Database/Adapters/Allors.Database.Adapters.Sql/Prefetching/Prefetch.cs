@@ -1,4 +1,4 @@
-// <copyright file="Prefetch.cs" company="Allors bv">
+﻿// <copyright file="Prefetch.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -84,10 +84,9 @@ internal class Prefetch
                         nestedObjectIdsByRoleType[roleType] = nestedObjectIds;
                     }
 
-                    var relationType = roleType.RelationType;
                     if (roleType.IsOne)
                     {
-                        if (relationType.ExistExclusiveClasses)
+                        if (roleType.ExistExclusiveClasses)
                         {
                             this.prefetcher.PrefetchCompositeRoleObjectTable(this.references, roleType, nestedObjectIds, leafs);
                         }
@@ -98,8 +97,8 @@ internal class Prefetch
                     }
                     else
                     {
-                        var associationType = relationType.AssociationType;
-                        if (associationType.IsOne && relationType.ExistExclusiveClasses)
+                        var associationType = roleType.AssociationType;
+                        if (associationType.IsOne && roleType.ExistExclusiveClasses)
                         {
                             this.prefetcher.PrefetchCompositesRoleObjectTable(this.references, roleType, nestedObjectIds, leafs);
                         }
@@ -113,8 +112,7 @@ internal class Prefetch
             else
             {
                 var associationType = (AssociationType)relationEndType;
-                var relationType = associationType.RelationType;
-                var roleType = relationType.RoleType;
+                var roleType = associationType.RoleType;
 
                 var nestedPrefetchPolicy = prefetchRule.PrefetchPolicy;
                 var existNestedPrefetchPolicy = nestedPrefetchPolicy != null;
@@ -124,7 +122,7 @@ internal class Prefetch
                     nestedObjectIdsByRoleType[roleType] = nestedObjectIds;
                 }
 
-                if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses)
+                if (!(associationType.IsMany && roleType.IsMany) && associationType.RoleType.ExistExclusiveClasses)
                 {
                     if (associationType.IsOne)
                     {
@@ -182,8 +180,7 @@ internal class Prefetch
             else
             {
                 var associationType = (AssociationType)relationEndType;
-                var relationType = associationType.RelationType;
-                var roleType = relationType.RoleType;
+                var roleType = associationType.RoleType;
 
                 var nestedPrefetchPolicy = prefetchRule.PrefetchPolicy;
                 var existNestedPrefetchPolicy = nestedPrefetchPolicy != null;

@@ -4,9 +4,5 @@ public static class ICompositeRoleTypeExtensions
 {
     public static bool IsRequired(this CompositeRoleType @this) => @this.Attributes.IsRequired ?? @this.RoleType.IsRequired();
 
-    public static bool IsRequired(this CompositeRoleType @this, bool value) => @this.Attributes.IsRequired = value;
-
     public static bool IsUnique(this CompositeRoleType @this) => @this.Attributes.IsUnique ?? @this.RoleType.IsUnique();
-
-    public static bool IsUnique(this CompositeRoleType @this, bool value) => @this.Attributes.IsUnique = value;
 }

@@ -26,7 +26,7 @@ public sealed class ClassModel : CompositeModel
     public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceOverriddenRequiredByWorkspaceName => this.WorkspaceNames
         .ToDictionary(
             v => v,
-            v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+            v => this.OverriddenRequiredRoleTypes.Where(w => w.RoleType.WorkspaceNames.Contains(v)));
 
     // Population
     public IEnumerable<RecordModel> Objects

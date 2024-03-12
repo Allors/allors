@@ -23,7 +23,7 @@ internal sealed class Like : Predicate, IPredicate
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + " LIKE " +
+        statement.Append(" " + alias + "." + schema.ColumnNameByRoleType[this.role] + " LIKE " +
                          statement.AddParameter(this.like));
         return this.Include;
     }

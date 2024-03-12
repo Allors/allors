@@ -193,7 +193,7 @@ internal abstract class Prefetcher
         if (!this.PrefetchCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
             command = this.Transaction.Connection.CreateCommand();
-            command.CommandText = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            command.CommandText = this.Database.Mapping.ProcedureNameForPrefetchRoleByRoleType[roleType];
             command.CommandType = CommandType.StoredProcedure;
             this.prefetchCompositeRoleByRoleType[roleType] = command;
         }
@@ -256,7 +256,7 @@ internal abstract class Prefetcher
 
         if (!this.PrefetchCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -311,7 +311,7 @@ internal abstract class Prefetcher
 
         if (!this.PrefetchCompositesRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -380,7 +380,7 @@ internal abstract class Prefetcher
 
         if (!this.PrefetchCompositesRoleByRoleType.TryGetValue(roleType, out var command))
         {
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -450,7 +450,7 @@ internal abstract class Prefetcher
         if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
             var roleType = associationType.RoleType;
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -508,7 +508,7 @@ internal abstract class Prefetcher
         if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
             var roleType = associationType.RoleType;
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -571,7 +571,7 @@ internal abstract class Prefetcher
         if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
             var roleType = associationType.RoleType;
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
@@ -652,7 +652,7 @@ internal abstract class Prefetcher
         if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
             var roleType = associationType.RoleType;
-            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRoleType[roleType];
             command = this.Transaction.Connection.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
