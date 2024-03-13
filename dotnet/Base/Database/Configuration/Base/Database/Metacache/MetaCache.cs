@@ -9,7 +9,6 @@ namespace Allors.Database.Configuration
     using System.Collections.Generic;
     using System.Linq;
     using Meta;
-    using Meta.Extensions;
     using Services;
 
     public class MetaCache : IMetaCache
@@ -44,10 +43,10 @@ namespace Allors.Database.Configuration
                 .ToDictionary(v => v, v => (IReadOnlySet<RoleType>)new HashSet<RoleType>(v.RoleTypes));
 
             this.requiredRoleTypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => v, v => (IReadOnlySet<RoleType>)new HashSet<RoleType>(v.RoleTypes.Where(w => w.CompositeRoleType.IsRequired())));
+                .ToDictionary(v => v, v => (IReadOnlySet<RoleType>)new HashSet<RoleType>(v.RoleTypes.Where(w => w.CompositeRoleType.IsRequired)));
 
             this.requiredCompositeRoleTypesByClass = metaPopulation.Classes
-                .ToDictionary(v => v, v => (IReadOnlySet<CompositeRoleType>)new HashSet<CompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.IsRequired())));
+                .ToDictionary(v => v, v => (IReadOnlySet<CompositeRoleType>)new HashSet<CompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.IsRequired)));
 
             this.builderTypeByClass = metaPopulation.Classes.
                 ToDictionary(

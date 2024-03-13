@@ -17,10 +17,6 @@ public class DomainModel : IMetaIdentifiableObjectModel
 
     public Domain Domain { get; }
 
-    public IMetaExtensible MetaExtensible => this.MetaObject;
-
-    public dynamic Extensions => this.MetaExtensible.Attributes;
-
     public IEnumerable<string> WorkspaceNames => this.MetaObject.WorkspaceNames;
 
     public IMetaIdentifiableObject MetaObject => this.Domain;

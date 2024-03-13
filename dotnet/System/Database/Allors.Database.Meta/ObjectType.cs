@@ -20,8 +20,6 @@ public abstract class ObjectType : EmbeddedObject, IMetaIdentifiableObject, ICom
     protected ObjectType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
-        this.Attributes = new MetaExtension();
-
         this.MetaPopulation = metaPopulation;
 
         this.singularName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeSingularName);
@@ -31,8 +29,6 @@ public abstract class ObjectType : EmbeddedObject, IMetaIdentifiableObject, ICom
     }
 
     public MetaPopulation MetaPopulation { get; }
-
-    public dynamic Attributes { get; }
 
     public Guid Id { get; set; }
 

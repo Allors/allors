@@ -58,4 +58,13 @@ public sealed class Class : Composite
     public override IEnumerable<string> WorkspaceNames => this.AssignedWorkspaceNames;
 
     public override bool IsAssignableFrom(Composite objectType) => this.Equals(objectType);
+
+    // Security
+    public long CreatePermissionId { get; set; }
+    
+    public IReadOnlyDictionary<Guid, long> ReadPermissionIdByRelationTypeId { get; set; }
+
+    public IReadOnlyDictionary<Guid, long> WritePermissionIdByRelationTypeId { get; set; }
+
+    public IReadOnlyDictionary<Guid, long> ExecutePermissionIdByMethodTypeId { get; set; }
 }

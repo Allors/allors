@@ -3,8 +3,6 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using Allors.Database.Meta.Extensions;
-
 namespace Allors.Workspace.Adapters.Direct
 {
     using System;
@@ -90,13 +88,13 @@ namespace Allors.Workspace.Adapters.Direct
             switch (operation)
             {
                 case Operations.Read:
-                    @class.ReadPermissionIdByRelationTypeId().TryGetValue(operandId, out permission);
+                    @class.ReadPermissionIdByRelationTypeId.TryGetValue(operandId, out permission);
                     break;
                 case Operations.Write:
-                    @class.WritePermissionIdByRelationTypeId().TryGetValue(operandId, out permission);
+                    @class.WritePermissionIdByRelationTypeId.TryGetValue(operandId, out permission);
                     break;
                 case Operations.Execute:
-                    @class.ExecutePermissionIdByMethodTypeId().TryGetValue(operandId, out permission);
+                    @class.ExecutePermissionIdByMethodTypeId.TryGetValue(operandId, out permission);
                     break;
                 case Operations.Create:
                     throw new NotSupportedException("Create is not supported");

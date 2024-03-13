@@ -6,7 +6,6 @@
 
 namespace Allors.Database.Domain
 {
-    using Allors.Database.Meta.Extensions;
     using Allors.Database.Meta;
 
     public partial class PermissionByMeta : IScoped
@@ -22,8 +21,8 @@ namespace Allors.Database.Domain
         {
             var id = operation switch
             {
-                Operations.Read => @class.ReadPermissionIdByRelationTypeId()[roleType.Id],
-                Operations.Write => @class.WritePermissionIdByRelationTypeId()[roleType.Id],
+                Operations.Read => @class.ReadPermissionIdByRelationTypeId[roleType.Id],
+                Operations.Write => @class.WritePermissionIdByRelationTypeId[roleType.Id],
                 Operations.Create => 0,
                 Operations.Execute => 0,
             };
@@ -34,7 +33,7 @@ namespace Allors.Database.Domain
         // TODO: Make extension method on Class
         public Permission Get(Class @class, MethodType methodType)
         {
-            var id = @class.ExecutePermissionIdByMethodTypeId()[methodType.Id];
+            var id = @class.ExecutePermissionIdByMethodTypeId[methodType.Id];
             return (Permission)this.Transaction.Instantiate(id);
         }
     }

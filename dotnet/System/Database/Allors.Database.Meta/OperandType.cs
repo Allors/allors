@@ -19,12 +19,9 @@ public abstract class OperandType : EmbeddedObject, IMetaExtensible
         : base(metaPopulation, embeddedObjectType)
     {
         this.MetaPopulation = metaPopulation;
-        this.Attributes = new MetaExtension();
     }
 
     public MetaPopulation MetaPopulation { get; }
-
-    public dynamic Attributes { get; }
     
     public abstract void Validate(ValidationLog validationLog);
 

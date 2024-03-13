@@ -11,11 +11,6 @@ public abstract class RelationEndTypeModel : IMetaExtensibleModel
 
     public Model Model { get; }
 
-    // IMetaExtensible
-    public IMetaExtensible MetaExtensible => this.RelationEndType;
-
-    public dynamic Extensions => this.MetaExtensible.Attributes;
-
     // IRelationEndType
     public ObjectTypeModel ObjectType => this.Model.Map(this.RelationEndType.ObjectType);
 

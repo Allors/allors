@@ -17,14 +17,9 @@ public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IComparabl
     public Domain(IEmbeddedPopulation embeddedPopulation, EmbeddedObjectType embeddedObjectType)
      : base(embeddedPopulation, embeddedObjectType)
     {
-        this.Attributes = new MetaExtension();
         this.MetaPopulation = (MetaPopulation)embeddedPopulation;
         this.MetaPopulation.OnCreated(this);
     }
-
-    public dynamic Attributes { get; }
-
-    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
     

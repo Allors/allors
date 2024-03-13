@@ -42,12 +42,11 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         this.metaObjects = new List<IMetaIdentifiableObject>();
 
         this.EmbeddedRoleTypes = new EmbeddedRoleTypes(this.EmbeddedMeta);
-        this.EmbeddedDerivations = new EmbeddedDerivations(this);
+
+        this.RegisterDerivations();
     }
 
     public EmbeddedRoleTypes EmbeddedRoleTypes { get; set; }
-
-    public EmbeddedDerivations EmbeddedDerivations { get; set; }
 
     public bool IsBound { get; private set; }
 

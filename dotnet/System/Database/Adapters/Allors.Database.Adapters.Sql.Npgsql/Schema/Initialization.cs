@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Sql.Npgsql;
 
 using System.Text;
-using Allors.Database.Meta.Extensions;
 using global::Npgsql;
 using Allors.Database.Meta;
 
@@ -295,7 +294,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                     foreach (var associationType in @class.AssociationTypes)
                     {
                         var roleType = associationType.RoleType;
-                        if (roleType.IsIndexed())
+                        if (roleType.IsIndexed)
                         {
                             if (!(associationType.IsMany && roleType.IsMany) && roleType.ExistExclusiveClasses && roleType.IsMany)
                             {
@@ -308,7 +307,7 @@ CREATE SCHEMA " + this.database.SchemaName;
 
                     foreach (var roleType in @class.RoleTypes)
                     {
-                        if (roleType.IsIndexed())
+                        if (roleType.IsIndexed)
                         {
                             if (roleType.ObjectType.IsUnit)
                             {
@@ -341,7 +340,7 @@ CREATE SCHEMA " + this.database.SchemaName;
 
                 foreach (var roleType in this.mapping.Database.MetaPopulation.RoleTypes)
                 {
-                    if (roleType.IsIndexed())
+                    if (roleType.IsIndexed)
                     {
                         var associationType = roleType.AssociationType;
 

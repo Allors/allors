@@ -8,7 +8,6 @@ namespace Allors.Database.Configuration
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Database.Meta.Extensions;
     using Allors.Database.Security;
     using Allors.Database.Domain;
     using Allors.Database.Meta;
@@ -57,17 +56,17 @@ namespace Allors.Database.Configuration
                 .ToDictionary(v => v, v => new HashSet<long>(metaCache.GetWorkspaceClasses(v).SelectMany(w =>
                 {
                     var @class = w;
-                    var permissionIds = new HashSet<long> { @class.CreatePermissionId() };
+                    var permissionIds = new HashSet<long> { @class.CreatePermissionId };
 
                     foreach (var relationType in @class.RoleTypes.Where(w => w.WorkspaceNames.Contains(v)))
                     {
-                        permissionIds.Add(@class.ReadPermissionIdByRelationTypeId()[relationType.Id]);
-                        permissionIds.Add(@class.WritePermissionIdByRelationTypeId()[relationType.Id]);
+                        permissionIds.Add(@class.ReadPermissionIdByRelationTypeId[relationType.Id]);
+                        permissionIds.Add(@class.WritePermissionIdByRelationTypeId[relationType.Id]);
                     }
 
                     foreach (var methodType in @class.MethodTypes.Where(w => w.WorkspaceNames.Contains(v)))
                     {
-                        permissionIds.Add(@class.ExecutePermissionIdByMethodTypeId()[methodType.Id]);
+                        permissionIds.Add(@class.ExecutePermissionIdByMethodTypeId[methodType.Id]);
                     }
 
                     return permissionIds;

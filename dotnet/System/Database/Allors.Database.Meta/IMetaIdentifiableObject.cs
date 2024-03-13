@@ -19,7 +19,5 @@ public interface IMetaIdentifiableObject : IMetaExtensible
 
     string Tag { get; }
 
-    MetaPopulation MetaPopulation { get; }
-
     internal void Validate(ValidationLog validationLog);
 }

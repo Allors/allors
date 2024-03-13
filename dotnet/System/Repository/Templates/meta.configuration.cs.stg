@@ -266,7 +266,7 @@ build_relation(property) ::= <<
                      v.Composite = objectTypes.$property.DefiningType.SingularName$;
 
                     // Attributes
-                    $property.AssociationTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+                    $property.AssociationTypeExtensionAttributes:{attribute|v.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
                 });
 
                 var roleType = meta.Create<RoleType>(v=>
@@ -285,12 +285,12 @@ $if(property.AttributeByName.Scale)$                    v.Scale = $property.Attr
                     v.AssociationType = associationType;
 
                     // Attributes
-                    $property.RelationTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-                    $property.RoleTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+                    $property.RelationTypeExtensionAttributes:{attribute|v.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+                    $property.RoleTypeExtensionAttributes:{attribute|v.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
                 });
 
                 roleType.CompositeRoleType = new CompositeRoleType(associationType.Composite, roleType);
-$property.CompositeRoleTypeExtensionAttributes:{attribute|              roleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
+$property.CompositeRoleTypeExtensionAttributes:{attribute|              roleType.CompositeRoleType.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
 
                 associationType.RoleType = roleType;
                 roleTypes.$property.DefiningType.SingularName$$property.RoleName$ = roleType; 
@@ -326,7 +326,7 @@ $property.ExtensionAttributes:{attribute|$extend_compositeRoleType_attribute(att
 
 extend_compositeRoleType_attribute(attribute) ::= <<
 $if(property.DefiningProperty)$
-            roleTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[objectTypes.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
+            roleTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[objectTypes.$composite.SingularName$].$attribute.Name$ = $attribute.Value$;
 $endif$
 >>
 
@@ -340,7 +340,7 @@ $method.ExtensionAttributes:{attribute|$extend_compositeMethodType_attribute(att
 
 extend_compositeMethodType_attribute(attribute) ::= <<
 $if(method.DefiningMethod)$
-            methodTypes.$method.DefiningMethod.DefiningType.ObjectType.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[objectTypes.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
+            methodTypes.$method.DefiningMethod.DefiningType.ObjectType.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[objectTypes.$composite.SingularName$].$attribute.Name$ = $attribute.Value$;
 $endif$
 >>
 

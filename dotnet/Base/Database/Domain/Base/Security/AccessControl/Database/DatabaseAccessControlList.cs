@@ -8,7 +8,6 @@ namespace Allors.Database.Domain
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Database.Meta.Extensions;
     using Allors.Database.Security;
     using Allors.Database.Meta;
 
@@ -35,9 +34,9 @@ namespace Allors.Database.Domain
             if (this.Object != null)
             {
                 var @class = this.Object.Strategy.Class;
-                this.readPermissionIdByRelationTypeId = @class.ReadPermissionIdByRelationTypeId();
-                this.writePermissionIdByRelationTypeId = @class.WritePermissionIdByRelationTypeId();
-                this.executePermissionIdByMethodTypeId = @class.ExecutePermissionIdByMethodTypeId();
+                this.readPermissionIdByRelationTypeId = @class.ReadPermissionIdByRelationTypeId;
+                this.writePermissionIdByRelationTypeId = @class.WritePermissionIdByRelationTypeId;
+                this.executePermissionIdByMethodTypeId = @class.ExecutePermissionIdByMethodTypeId;
             }
         }
 

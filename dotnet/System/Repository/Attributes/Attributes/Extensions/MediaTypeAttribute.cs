@@ -26,7 +26,7 @@ public partial class MediaTypeAttribute : RepositoryAttribute, IExtensionAttribu
 
     public bool ForCompositeMethodType => false;
 
-    public string Name => "AssignedMediaType";
+    public string Name => "MediaType";
 
     public string Value { get; }
 }

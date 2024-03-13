@@ -15,10 +15,6 @@ public abstract class ObjectTypeModel : IMetaIdentifiableObjectModel
 
     public abstract IMetaIdentifiableObject MetaObject { get; }
 
-    public IMetaExtensible MetaExtensible => this.MetaObject;
-
-    public dynamic Extensions => this.MetaExtensible.Attributes;
-
     public IEnumerable<string> WorkspaceNames => this.MetaObject.WorkspaceNames;
 
     protected abstract ObjectType ObjectType { get; }

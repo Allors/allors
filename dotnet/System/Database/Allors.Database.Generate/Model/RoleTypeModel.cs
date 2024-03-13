@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Allors.Database.Meta.Extensions;
 using Allors.Database.Meta;
 
 public class RoleTypeModel : RelationEndTypeModel, IMetaIdentifiableObjectModel
@@ -42,9 +41,9 @@ public class RoleTypeModel : RelationEndTypeModel, IMetaIdentifiableObjectModel
 
     public int? Scale => this.RoleType.Scale;
 
-    public bool IsRequired => this.RoleType.CompositeRoleType.IsRequired();
+    public bool IsRequired => this.RoleType.CompositeRoleType.IsRequired;
 
-    public bool IsUnique => this.RoleType.CompositeRoleType.IsUnique();
+    public bool IsUnique => this.RoleType.CompositeRoleType.IsUnique;
 
     public Multiplicity Multiplicity => this.RoleType.Multiplicity;
 
@@ -58,5 +57,5 @@ public class RoleTypeModel : RelationEndTypeModel, IMetaIdentifiableObjectModel
 
     public bool IsDerived => this.RoleType.IsDerived;
     
-    public string MediaType => this.RoleType.MediaType();
+    public string MediaType => this.RoleType.MediaType;
 }

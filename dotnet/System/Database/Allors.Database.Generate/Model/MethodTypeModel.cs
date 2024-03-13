@@ -14,10 +14,6 @@ public class MethodTypeModel : IMetaIdentifiableObjectModel
 
     public Model Model { get; }
 
-    public IMetaExtensible MetaExtensible => this.MetaObject;
-
-    public dynamic Extensions => this.MetaExtensible.Attributes;
-
     public Guid Id => this.MetaObject.Id;
 
     public string Tag => this.MetaObject.Tag;

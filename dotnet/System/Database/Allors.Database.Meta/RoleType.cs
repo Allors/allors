@@ -47,6 +47,14 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
 
     public bool IsDerived { get => this.isDerived.Value; set => this.isDerived.Value = value; }
 
+    public bool IsRequired { get; set; }
+
+    public bool IsUnique { get; set; }
+
+    public string MediaType { get; set; }
+
+    public bool IsIndexed { get; set; }
+
     public AssociationType AssociationType
     {
         get => this.associationType;
@@ -68,7 +76,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
     private string ValidationName => "RoleType: " + this.Name;
 
     public Multiplicity Multiplicity => this.ObjectType.IsUnit ? Multiplicity.OneToOne : this.AssignedMultiplicity ?? Multiplicity.ManyToOne;
-    
+
     public IEnumerable<string> WorkspaceNames
     {
         get
@@ -173,7 +181,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
 
         return this == other;
     }
-    
+
     /// <summary>
     ///     Derive multiplicity, scale and size.
     /// </summary>
@@ -308,11 +316,10 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
         foreach (var composite in composites)
         {
             var compositeRoleType = this.CompositeRoleTypeByComposite[composite];
-            var attributes = compositeRoleType.Attributes;
-            bool? assignedIsRequired = attributes.AssignedIsRequired;
+            bool? assignedIsRequired = compositeRoleType.AssignedIsRequired;
 
             var required = previousRequired || assignedIsRequired is true;
-            attributes.IsRequired = required;
+            this.IsRequired = required;
             previousRequired = required;
         }
     }
@@ -325,11 +332,10 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
         foreach (var composite in composites)
         {
             var compositeRoleType = this.CompositeRoleTypeByComposite[composite];
-            var attributes = compositeRoleType.Attributes;
-            bool? assignedIsUnique = attributes.AssignedIsUnique;
+            bool? assignedIsUnique = compositeRoleType.AssignedIsUnique;
 
             var required = previousUnique || assignedIsUnique is true;
-            attributes.IsUnique = required;
+            this.IsUnique = required;
             previousUnique = required;
         }
     }
