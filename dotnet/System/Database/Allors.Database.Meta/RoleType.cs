@@ -16,14 +16,12 @@ using Text;
 
 public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, IComparable
 {
-
-    private ObjectType objectType;
-
     private AssociationType associationType;
     private CompositeRoleType compositeRoleType;
 
     private string[] derivedWorkspaceNames;
 
+    private readonly IEmbeddedCompositeRole<ObjectType> objectType;
     private readonly IEmbeddedUnitRole<bool> isDerived;
 
     /// <summary>
@@ -34,6 +32,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
     public RoleType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
+        this.objectType = this.EmbeddedPopulation.EmbeddedGetCompositeRole<ObjectType>(this, metaPopulation.MetaMeta.RoleTypeObjectType);
         this.isDerived = this.EmbeddedPopulation.EmbeddedGetUnitRole<bool>(this, metaPopulation.MetaMeta.RoleTypeIsDerived);
 
         this.AssignedWorkspaceNames = Array.Empty<string>();
@@ -45,7 +44,17 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
 
     public string Tag { get; set; }
 
-    public bool IsDerived { get => this.isDerived.Value; set => this.isDerived.Value = value; }
+    public override ObjectType ObjectType
+    {
+        get => this.objectType.Value;
+        set => this.objectType.Value = value;
+    }
+
+    public bool IsDerived
+    {
+        get => this.isDerived.Value; 
+        set => this.isDerived.Value = value;
+    }
 
     public bool IsRequired { get; set; }
 
@@ -88,13 +97,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
     public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 
     public bool IsKey { get; set; }
-
-    public override ObjectType ObjectType
-    {
-        get { return this.objectType; }
-        set { this.objectType = value; }
-    }
-
+    
     public bool ExistExclusiveClasses
     {
         get
@@ -187,7 +190,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
     /// </summary>
     public void DeriveScaleAndSize()
     {
-        if (this.objectType is Unit unitType)
+        if (this.ObjectType is Unit unitType)
         {
             switch (unitType.Tag)
             {

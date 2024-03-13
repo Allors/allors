@@ -25,7 +25,6 @@ public abstract class ObjectType : EmbeddedObject, IMetaIdentifiableObject, ICom
         this.singularName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.MetaMeta.ObjectTypeSingularName);
         this.assignedPluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.MetaMeta.ObjectTypeAssignedPluralName);
         this.pluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.MetaMeta.ObjectTypePluralName);
-
     }
 
     public MetaPopulation MetaPopulation { get; }

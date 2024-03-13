@@ -1,4 +1,4 @@
-﻿// <copyright file="IMetaPopulation.cs" company="Allors bv">
+﻿// <copyright file="MetaMeta.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,6 +16,7 @@ public class MetaMeta
         this.ObjectTypeAssignedPluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.AssignedPluralName));
         this.ObjectTypePluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.PluralName));
 
+        this.RoleTypeObjectType = meta.AddUnit<RoleType, ObjectType>(nameof(RoleType.ObjectType));
         this.RoleTypeIsDerived = meta.AddUnit<RoleType, bool>(nameof(RoleType.IsDerived));
     }
 
@@ -24,6 +25,8 @@ public class MetaMeta
     public EmbeddedRoleType ObjectTypeAssignedPluralName { get; set; }
 
     public EmbeddedRoleType ObjectTypePluralName { get; set; }
+
+    public EmbeddedRoleType RoleTypeObjectType { get; set; }
 
     public EmbeddedRoleType RoleTypeIsDerived { get; set; }
 }
