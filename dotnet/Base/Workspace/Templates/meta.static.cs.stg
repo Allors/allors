@@ -348,7 +348,7 @@ build_methodType(methodType) ::= <<
 
 assign_properties(composite) ::= <<
 $composite.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|$assign_roleType(roleType)$}; separator="\n"$
-$composite.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|$assign_associationType(associationType)$}; separator="\n"$
+$composite.WorkspaceAssociationTypesByWorkspaceName.(workspaceName):{associationType|$assign_associationType(associationType)$}; separator="\n"$
 >>
 
 assign_roleType(roleType) ::= <<
