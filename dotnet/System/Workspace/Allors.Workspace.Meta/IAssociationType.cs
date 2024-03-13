@@ -6,7 +6,7 @@
 
 namespace Allors.Workspace.Meta
 {
-    public interface IAssociationType : IRelationEndType
+    public interface IAssociationType : IRelationEndType, IMetaExtensible
     {
         new IComposite ObjectType { get; }
 

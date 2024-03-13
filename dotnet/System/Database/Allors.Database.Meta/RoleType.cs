@@ -69,7 +69,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
 
     public Multiplicity Multiplicity => this.ObjectType.IsUnit ? Multiplicity.OneToOne : this.AssignedMultiplicity ?? Multiplicity.ManyToOne;
     
-    public override IEnumerable<string> WorkspaceNames
+    public IEnumerable<string> WorkspaceNames
     {
         get
         {

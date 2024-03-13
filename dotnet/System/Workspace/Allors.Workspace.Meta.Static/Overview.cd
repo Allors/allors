@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Workspace.Meta.AssociationType" Collapsed="true">
-    <Position X="5.75" Y="1.75" Width="1.5" />
+    <Position X="10" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAiAAAAEAAAAIEIAAAAAQAAAAAAAACAIAIAAAAIAA=</HashCode>
+      <HashCode>AAIAiAAAAEAAAAIEIAAAAAQQAAAAAAACAIAIAAAAIAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -33,7 +33,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.MethodType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+    <Position X="5.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEIAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>MethodType.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Allors.Workspace.Meta.RoleType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4" Y="1.75" Width="1.5" />
+    <Position X="7.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAiBAAAEAAgAoEoAIAAAQwiAEAAAACEIAAAACAEAA=</HashCode>
       <FileName>RoleType.cs</FileName>
@@ -88,7 +88,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.FieldType" Collapsed="true">
-    <Position X="9.5" Y="1.75" Width="1.5" />
+    <Position X="3.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FieldType.cs</FileName>
@@ -96,7 +96,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Meta.CompositeMethodType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="0.5" Width="2" />
+    <Position X="5.5" Y="2.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CompositeMethodType.cs</FileName>
@@ -104,7 +104,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Allors.Workspace.Meta.CompositeRoleType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="0.5" Width="1.75" />
+    <Position X="7.75" Y="2.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CompositeRoleType.cs</FileName>
@@ -112,7 +112,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Allors.Workspace.Meta.UnitRoleAssociationType" Collapsed="true">
-    <Position X="5.75" Y="3" Width="1.5" />
+    <Position X="10" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UnitRoleAssociationType.cs</FileName>

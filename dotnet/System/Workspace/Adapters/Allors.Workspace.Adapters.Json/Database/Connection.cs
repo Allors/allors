@@ -169,49 +169,49 @@ namespace Allors.Workspace.Adapters.Json
                     var id = syncResponsePermission.i;
                     var @class = (IClass)this.Configuration.MetaPopulation.FindByTag(syncResponsePermission.c);
                     var metaObject = this.Configuration.MetaPopulation.FindByTag(syncResponsePermission.t);
-                    var operandType = (IOperandType)(metaObject as IRelationType)?.RoleType ?? (IMethodType)metaObject;
+                    var operandType = (IOperandType)(metaObject as IRoleType) ?? (IMethodType)metaObject;
                     var operation = (Operations)syncResponsePermission.o;
 
                     this.Permissions.Add(id);
 
                     switch (operation)
                     {
-                        case Operations.Read:
-                            if (!this.readPermissionByOperandTypeByClass.TryGetValue(@class, out var readPermissionByOperandType))
-                            {
-                                readPermissionByOperandType = new Dictionary<IOperandType, long>();
-                                this.readPermissionByOperandTypeByClass[@class] = readPermissionByOperandType;
-                            }
+                    case Operations.Read:
+                        if (!this.readPermissionByOperandTypeByClass.TryGetValue(@class, out var readPermissionByOperandType))
+                        {
+                            readPermissionByOperandType = new Dictionary<IOperandType, long>();
+                            this.readPermissionByOperandTypeByClass[@class] = readPermissionByOperandType;
+                        }
 
-                            readPermissionByOperandType[operandType] = id;
+                        readPermissionByOperandType[operandType] = id;
 
-                            break;
+                        break;
 
-                        case Operations.Write:
-                            if (!this.writePermissionByOperandTypeByClass.TryGetValue(@class, out var writePermissionByOperandType))
-                            {
-                                writePermissionByOperandType = new Dictionary<IOperandType, long>();
-                                this.writePermissionByOperandTypeByClass[@class] = writePermissionByOperandType;
-                            }
+                    case Operations.Write:
+                        if (!this.writePermissionByOperandTypeByClass.TryGetValue(@class, out var writePermissionByOperandType))
+                        {
+                            writePermissionByOperandType = new Dictionary<IOperandType, long>();
+                            this.writePermissionByOperandTypeByClass[@class] = writePermissionByOperandType;
+                        }
 
-                            writePermissionByOperandType[operandType] = id;
+                        writePermissionByOperandType[operandType] = id;
 
-                            break;
+                        break;
 
-                        case Operations.Execute:
-                            if (!this.executePermissionByOperandTypeByClass.TryGetValue(@class, out var executePermissionByOperandType))
-                            {
-                                executePermissionByOperandType = new Dictionary<IOperandType, long>();
-                                this.executePermissionByOperandTypeByClass[@class] = executePermissionByOperandType;
-                            }
+                    case Operations.Execute:
+                        if (!this.executePermissionByOperandTypeByClass.TryGetValue(@class, out var executePermissionByOperandType))
+                        {
+                            executePermissionByOperandType = new Dictionary<IOperandType, long>();
+                            this.executePermissionByOperandTypeByClass[@class] = executePermissionByOperandType;
+                        }
 
-                            executePermissionByOperandType[operandType] = id;
+                        executePermissionByOperandType[operandType] = id;
 
-                            break;
-                        case Operations.Create:
-                            throw new NotSupportedException("Create not supported");
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        break;
+                    case Operations.Create:
+                        throw new NotSupportedException("Create not supported");
+                    default:
+                        throw new ArgumentOutOfRangeException();
                     }
                 }
             }
@@ -221,38 +221,38 @@ namespace Allors.Workspace.Adapters.Json
         {
             switch (operation)
             {
-                case Operations.Read:
-                    if (this.readPermissionByOperandTypeByClass.TryGetValue(@class,
-                        out var readPermissionByOperandType) && readPermissionByOperandType.TryGetValue(operandType, out var readPermission))
-                    {
-                        return readPermission;
-                    }
+            case Operations.Read:
+                if (this.readPermissionByOperandTypeByClass.TryGetValue(@class,
+                    out var readPermissionByOperandType) && readPermissionByOperandType.TryGetValue(operandType, out var readPermission))
+                {
+                    return readPermission;
+                }
 
-                    return 0;
+                return 0;
 
-                case Operations.Write:
-                    if (this.writePermissionByOperandTypeByClass.TryGetValue(@class,
-                        out var writePermissionByOperandType) && writePermissionByOperandType.TryGetValue(operandType, out var writePermission))
-                    {
-                        return writePermission;
-                    }
+            case Operations.Write:
+                if (this.writePermissionByOperandTypeByClass.TryGetValue(@class,
+                    out var writePermissionByOperandType) && writePermissionByOperandType.TryGetValue(operandType, out var writePermission))
+                {
+                    return writePermission;
+                }
 
-                    return 0;
+                return 0;
 
-                case Operations.Execute:
-                    if (this.executePermissionByOperandTypeByClass.TryGetValue(@class,
-                        out var executePermissionByOperandType) && executePermissionByOperandType.TryGetValue(operandType, out var executePermission))
-                    {
-                        return executePermission;
-                    }
+            case Operations.Execute:
+                if (this.executePermissionByOperandTypeByClass.TryGetValue(@class,
+                    out var executePermissionByOperandType) && executePermissionByOperandType.TryGetValue(operandType, out var executePermission))
+                {
+                    return executePermission;
+                }
 
-                    return 0;
+                return 0;
 
-                case Operations.Create:
-                    throw new NotSupportedException("Create is not supported");
+            case Operations.Create:
+                throw new NotSupportedException("Create is not supported");
 
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(operation));
+            default:
+                throw new ArgumentOutOfRangeException(nameof(operation));
             }
         }
 

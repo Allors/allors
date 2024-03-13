@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void PushRequestRoles(Strategy local, IObject obj)
         {
-            if (local.ChangesByRelationType == null)
+            if (local.ChangesByRoleType == null)
             {
                 return;
             }
@@ -148,10 +148,10 @@ namespace Allors.Workspace.Adapters.Direct
             // TODO: Cache and filter for workspace
             var acl = this.AccessControl[obj];
 
-            foreach (var keyValuePair in local.ChangesByRelationType)
+            foreach (var keyValuePair in local.ChangesByRoleType)
             {
                 var relationType = keyValuePair.Key;
-                var roleType = ((RelationType)this.M.FindByTag(relationType.Tag)).RoleType;
+                var roleType = ((RoleType)this.M.FindByTag(relationType.Tag));
 
                 if (acl.CanWrite(roleType))
                 {

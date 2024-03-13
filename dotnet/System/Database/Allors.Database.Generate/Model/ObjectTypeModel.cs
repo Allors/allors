@@ -1,14 +1,25 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
 using System;
+using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
+public abstract class ObjectTypeModel : IMetaIdentifiableObjectModel
 {
     protected ObjectTypeModel(Model model)
-        : base(model)
     {
+        this.Model = model;
     }
+
+    public Model Model { get; }
+
+    public abstract IMetaIdentifiableObject MetaObject { get; }
+
+    public IMetaExtensible MetaExtensible => this.MetaObject;
+
+    public dynamic Extensions => this.MetaExtensible.Attributes;
+
+    public IEnumerable<string> WorkspaceNames => this.MetaObject.WorkspaceNames;
 
     protected abstract ObjectType ObjectType { get; }
 
@@ -36,4 +47,6 @@ public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
     public string PluralName => this.ObjectType.PluralName;
 
     public bool ExistAssignedPluralName => this.PluralName != null;
+
+    public override string ToString() => this.MetaObject.ToString();
 }

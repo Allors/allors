@@ -26,7 +26,7 @@ namespace Allors.Workspace.Adapters.Json
         public IEnumerable<IRole> Roles =>
             from r in this.responseDerivationError.r
             let association = this.workspace.Instantiate(r.i)
-            let relationType = (IRelationType)this.workspace.MetaPopulation.FindByTag(r.r)
-            select association.Role(relationType.RoleType);
+            let roleType = (IRoleType)this.workspace.MetaPopulation.FindByTag(r.r)
+            select association.Role(roleType);
     }
 }

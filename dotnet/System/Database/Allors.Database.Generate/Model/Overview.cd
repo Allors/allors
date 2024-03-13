@@ -1,88 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Meta.Generation.Model.AssociationTypeModel" Collapsed="true">
-    <Position X="6.25" Y="6" Width="1.75" />
+    <Position X="8.25" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAABAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\AssociationTypeModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Meta.Generation.Model.ClassModel" Collapsed="true">
-    <Position X="4" Y="6" Width="1.5" />
+    <Position X="5.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABIAAAAAAAAAAIEAAKAAAgAAAAA=</HashCode>
       <FileName>Model\ClassModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Meta.Generation.Model.CompositeModel" Collapsed="true">
-    <Position X="3" Y="4.5" Width="1.5" />
+    <Position X="4.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAJDggAAQQMACYAJCTAwAgAIAQQSEIAAQxJEAAgBAAE=</HashCode>
       <FileName>Model\CompositeModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Meta.Generation.Model.InterfaceModel" Collapsed="true">
-    <Position X="2" Y="6" Width="1.5" />
+    <Position X="3.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABBAAAAAAAAAAIAAAIAAAAAAAAA=</HashCode>
       <FileName>Model\InterfaceModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Meta.Generation.Model.ObjectTypeModel" Collapsed="true">
-    <Position X="1.75" Y="3" Width="1.5" />
+    <Position X="3.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAIAAAAAgAAIAAAAAAAQBACCAAAACAIAAAUAAAAA=</HashCode>
+      <HashCode>AAACAIAAAAAgAAIMAAAAAAQBACCAAIACAIgAAUAAAEA=</HashCode>
       <FileName>Model\ObjectTypeModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Meta.Generation.Model.Model">
-    <Position X="13.25" Y="2.25" Width="4" />
+  <Class Name="Allors.Meta.Generation.Model.Model" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgJAAAAhQBECAAAIgSAIACgAAABAAABQkAAAQCBhECA=</HashCode>
       <FileName>Model\Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Meta.Generation.Model.MethodTypeModel" Collapsed="true">
-    <Position X="10" Y="3" Width="2" />
+    <Position X="6.5" Y="3" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAIAAAAAAAAQAAAAAAIAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAIAgAIAMAAAAAAQAAAAAAIAAAIgAAAAAAEA=</HashCode>
       <FileName>Model\MethodTypeModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Meta.Generation.Model.RelationEndTypeModel" Collapsed="true">
-    <Position X="7.25" Y="4.5" Width="1.5" />
+    <Position X="9.25" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEiAAAAAAAAAIAABAAAAQAAAAAAAACAJgAAAAAAEA=</HashCode>
       <FileName>Model\RelationEndTypeModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Meta.Generation.Model.RoleTypeModel" Collapsed="true">
-    <Position X="8.25" Y="6" Width="1.5" />
+    <Position X="10.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAICAAAAAAAggKgIgJIABAAhiAAAAJAAEAAAAAAAUAA=</HashCode>
       <FileName>Model\RoleTypeModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Meta.Generation.Model.UnitModel" Collapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+    <Position X="2" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAABIoAAAAAABAAAAAIIQAIAAAQAAAAA=</HashCode>
       <FileName>Model\UnitModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Allors.Meta.Generation.Model.MetaIdentifiableObjectModel" Collapsed="true">
-    <Position X="4" Y="1.5" Width="2" />
+  <Class Name="Allors.Meta.Generation.Model.DomainModel" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAgAAAMAAAAAAAAAAAAAIAAAAgAAAAAAEA=</HashCode>
-      <FileName>Model\MetaIdentifiableObjectModel.cs</FileName>
+      <HashCode>AAACAAAAAAAgAAAMAAAAAAQAAgAAAIAAAAgAAAAAAEA=</HashCode>
+      <FileName>Model\DomainModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Allors.Meta.Generation.Model.IMetaExtensibleModel" Collapsed="true">
-    <Position X="7.25" Y="0.5" Width="1.75" />
+    <Position X="6" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAEA=</HashCode>
       <FileName>Model\IMetaExtensibleModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Meta.Generation.Model.IMetaIdentifiableObjectModel" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAIAAAAAAAAAAAAAIAAAAgAAAAAAAA=</HashCode>
+      <FileName>Model\IMetaIdentifiableObjectModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

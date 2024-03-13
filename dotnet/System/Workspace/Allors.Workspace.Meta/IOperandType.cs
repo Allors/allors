@@ -9,7 +9,7 @@ namespace Allors.Workspace.Meta
     /// <summary>
     ///     A <see cref="IOperandType" /> can be a <see cref="AssociationType" /> or a <see cref="RoleType" />.
     /// </summary>
-    public interface IOperandType : IMetaIdentifiableObject
+    public interface IOperandType : IMetaExtensible
     {
         string OperandTag { get; }
     }

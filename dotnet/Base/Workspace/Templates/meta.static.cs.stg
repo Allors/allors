@@ -27,8 +27,6 @@ For more information visit http://www.allors.com/legal
 	<generation template="units" output="units.g.cs"/>
 	<generation template="interfaces" output="interfaces.g.cs"/>
 	<generation template="classes" output="classes.g.cs"/>
-	<generation template="associationTypes" output="associationTypes.g.cs"/>
-	<generation template="roleTypes" output="roleTypes.g.cs"/>
     <generation template="builder" output="builder.g.cs"/>
 </generations>
 >>
@@ -157,11 +155,11 @@ $interface.WorkspaceSubtypesByWorkspaceName.(workspaceName):{subtype|        pub
 $interface.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; internal set; \}}; separator="\n"$
 $interface.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; internal set; \}}; separator="\n"$
 
-$interface.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IMeta$roleType.FullName$ $roleType.Name$ { get; internal set; \}}; separator="\n"$
-$interface.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IMeta$roleType.FullName$ $roleType.Name$ { get; internal set; \}}; separator="\n"$
+$interface.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IRoleType $roleType.Name$ { get; internal set; \}}; separator="\n"$
+$interface.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IRoleType $roleType.Name$ { get; internal set; \}}; separator="\n"$
 
-$interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IMeta$associationType.Name$ $associationType.Name$ { get; internal set; \}}; separator="\n"$
-$interface.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IMeta$associationType.Name$ $associationType.Name$ { get; internal set; \}}; separator="\n"$
+$interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IAssociationType $associationType.Name$ { get; internal set; \}}; separator="\n"$
+$interface.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IAssociationType $associationType.Name$ { get; internal set; \}}; separator="\n"$
 
     }
 
@@ -184,11 +182,11 @@ define_class(class) ::= <<
 $class.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; internal set; \}}; separator="\n"$
 $class.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; internal set; \}}; separator="\n"$
 
-$class.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IMeta$roleType.FullName$ $roleType.Name$ { get; internal set; \}}; separator="\n"$
-$class.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IMeta$roleType.FullName$ $roleType.Name$ { get; internal set; \}}; separator="\n"$
+$class.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IRoleType $roleType.Name$ { get; internal set; \}}; separator="\n"$
+$class.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        public IRoleType $roleType.Name$ { get; internal set; \}}; separator="\n"$
 
-$class.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IMeta$associationType.Name$ $associationType.Name$ { get; internal set; \}}; separator="\n"$
-$class.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IMeta$associationType.Name$ $associationType.Name$ { get; internal set; \}}; separator="\n"$
+$class.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IAssociationType $associationType.Name$ { get; internal set; \}}; separator="\n"$
+$class.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public IAssociationType $associationType.Name$ { get; internal set; \}}; separator="\n"$
     }
 
 >>
@@ -211,7 +209,7 @@ define_associationType(associationType) ::= <<
         {
         }
 
-        IMeta$associationType.ObjectType.SingularName$ IMeta$associationType.Name$.ObjectType => ((M)this.MetaPopulation).$associationType.ObjectType.SingularName$;
+        IMeta$associationType.ObjectType.SingularName$ IMeta$associationType.Name$.ObjectType => (IMeta$associationType.ObjectType.SingularName$)this.ObjectType;
     }
 
 >>
@@ -230,7 +228,7 @@ $composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|
 define_roleType(roleType) ::= <<
     public class Meta$roleType.FullName$ : RoleType, IMeta$roleType.FullName$
     {
-        public Meta$roleType.FullName$(MetaPopulation m) : base(m.$roleType.ObjectType.SingularName$$if(roleType.AssignedSingularName)$, "$roleType.AssignedSingularName$"$endif$$if(roleType.AssignedPluralName)$, "$roleType.AssignedPluralName$"$endif$)
+        public Meta$roleType.FullName$(MetaPopulation m) : base(m, m.$roleType.ObjectType.Name$.$roleType.AssociationType.Name$, "$roleType.Tag$", m.$roleType.ObjectType.SingularName$$if(roleType.AssignedSingularName)$, "$roleType.AssignedSingularName$"$endif$$if(roleType.AssignedPluralName)$, "$roleType.AssignedPluralName$"$endif$)
         {
 $if(roleType.Size)$             this.Size = $roleType.Size$;$endif$        
 $if(roleType.Precision)$            this.Precision = $roleType.Precision$;$endif$        
@@ -255,17 +253,21 @@ namespace Allors.Workspace.Meta.Static
         public MetaPopulation Build() {
             var m =  new MetaPopulation();
 
-            this.BuildAssociationTypes(m);
-            this.BuildRoleTypes(m);
+            this.BuildRelationEndTypes(m);
 
-            m.RoleTypes = this.RoleTypes(m);
+            #region RoleTypes
+            m.RoleTypes = [
+$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$roleType_array(roleType)$}; separator=",\n"$
+            ];
+            #endregion
 
             this.BuildMethodTypes(m);
 
-            m.MethodTypes = new MethodType[]
-            {
-                $meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|(MethodType)m.$methodType.ObjectType.Name$.$methodType.Name$}; separator=",\n"$
-            };
+            #region MethodTypes
+            m.MethodTypes = [
+$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$methodType_array(methodType)$}; separator=",\n"$
+            ];
+            #endregion
 
             m.Init();
             
@@ -275,22 +277,10 @@ namespace Allors.Workspace.Meta.Static
             return m;
         }
 
-        private IRoleType[] RoleTypes(MetaPopulation m)
+        private void BuildRelationEndTypes(MetaPopulation m)
         {
-            return [
-$meta.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$roleType_array(roleType)$}; separator=",\n"$
-            ];
-        }
-
-        private void BuildAssociationTypes(MetaPopulation m)
-        {
-$meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_associationType(roleType)$}; separator="\n"$
-        }
-
-        private void BuildRoleTypes(MetaPopulation m)
-        {
-$meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_compositeRoleType(roleType)$}; separator="\n"$
-$meta.WorkspaceUnitRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_unitRoleType(roleType)$}; separator="\n"$
+$meta.WorkspaceUnitRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_relationEndType(roleType)$}; separator="\n"$
+$meta.WorkspaceCompositeRoleTypesByWorkspaceName.(workspaceName):{roleType|$build_relationEndType(roleType)$}; separator="\n"$
         }
 
         private void BuildMethodTypes(MetaPopulation m)
@@ -330,12 +320,15 @@ build_associationType(roleType) ::= <<
             m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$ = new Meta$roleType.AssociationType.Name$(m);
 >>
 
-build_compositeRoleType(roleType) ::= <<
-            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new Meta$roleType.FullName$(m, "$roleType.Tag$", m.$roleType.ObjectType.SingularName$.$roleType.AssociationType.Name$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
->>
-
-build_unitRoleType(roleType) ::= <<
-            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new Meta$roleType.FullName$((m, "$roleType.Tag$", m.$roleType.AssociationType.ObjectType.SingularName$, m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, Allors.Multiplicity.$roleType.Multiplicity$),
+build_relationEndType(roleType) ::= <<
+            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new RoleType(m, "$roleType.Tag$", "$roleType.SingularName$", "$roleType.PluralName$", m.$roleType.ObjectType.SingularName$, m.$roleType.AssociationType.ObjectType.SingularName$, Allors.Multiplicity.$roleType.Multiplicity$)
+            {
+$if(roleType.Size)$                 Size = $roleType.Size$,$endif$
+$if(roleType.Precision)$                Precision = $roleType.Precision$,$endif$
+$if(roleType.Scale)$                Scale = $roleType.Scale$,$endif$
+$if(roleType.IsRequired)$               IsRequired = $roleType.IsRequired$,$endif$
+$if(roleType.IsUnique)$             IsUnique = $roleType.IsUnique$,$endif$
+            };
 >>
 
 isDerived(roleType) ::= <<$if(roleType.IsDerived)$isDerived: $roleType.IsDerived$$endif$>>
@@ -363,7 +356,7 @@ assign_roleType(roleType) ::= <<
 >>
 
 assign_associationType(associationType) ::= <<
-                m.$composite.SingularName$.$associationType.Name$ = (Meta$associationType.Name$) m.$associationType.ObjectType.SingularName$.$associationType.RoleType.Name$.AssociationType;
+                m.$composite.SingularName$.$associationType.Name$ = m.$associationType.ObjectType.SingularName$.$associationType.RoleType.Name$.AssociationType;
 >>
 
 assign_methods(composite) ::= <<
@@ -375,7 +368,11 @@ assign_methodType(methodType) ::= <<
 >>
 
 roleType_array(roleType) ::= <<
-            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$
+                	m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$
+>>
+
+methodType_array(methodType) ::= <<
+                	m.$methodType.ObjectType.Name$.$methodType.Name$
 >>
 
 DropEmpty ::= ["": false, default: key]

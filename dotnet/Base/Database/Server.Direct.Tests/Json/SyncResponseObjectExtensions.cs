@@ -1,4 +1,4 @@
-// <copyright file="DomainTest.cs" company="Allors bv">
+﻿// <copyright file="DomainTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,6 +12,6 @@ namespace Tests
 
     public static class SyncResponseObjectExtensions
     {
-        public static SyncResponseRole GetRole(this SyncResponseObject @this, RoleType roletype) => @this.ro.FirstOrDefault(v => v.t.Equals(roletype.RelationType.Tag));
+        public static SyncResponseRole GetRole(this SyncResponseObject @this, RoleType roletype) => @this.ro.FirstOrDefault(v => v.t.Equals(roletype.Tag));
     }
 }

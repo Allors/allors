@@ -220,7 +220,7 @@ namespace Allors.Workspace.Protocol.Direct
                 _ => throw new ArgumentException("Invalid property type")
             };
 
-        private Database.Meta.AssociationType Visit(IAssociationType ws) => ws != null ? ((AssociationType)this.metaPopulation.FindByTag(ws.OperandTag)) : null;
+        private Database.Meta.AssociationType Visit(IAssociationType ws) => ws != null ? ((RoleType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
 
         private Database.Meta.RoleType Visit(IRoleType ws) => ws != null ? ((RoleType)this.metaPopulation.FindByTag(ws.OperandTag)) : null;
 

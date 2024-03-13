@@ -13,13 +13,13 @@ using System.Collections.Generic;
 /// </summary>
 public interface IMetaIdentifiableObject : IMetaExtensible
 {
-    MetaPopulation MetaPopulation { get; }
-
     IEnumerable<string> WorkspaceNames { get; }
 
     Guid Id { get; }
 
     string Tag { get; }
+
+    MetaPopulation MetaPopulation { get; }
 
     internal void Validate(ValidationLog validationLog);
 }

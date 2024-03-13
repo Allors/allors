@@ -59,10 +59,10 @@ namespace Allors.Workspace.Adapters.Direct
                 {
                     var id = @object.Id;
                     var databaseClass = @object.Strategy.Class;
-                    var roleTypes = databaseClass.RoleTypes.Where(w => w.RelationType.WorkspaceNames.Any());
+                    var roleTypes = databaseClass.RoleTypes.Where(w => w.WorkspaceNames.Any());
 
                     var workspaceClass = (IClass)this.Configuration.MetaPopulation.FindByTag(databaseClass.Tag);
-                    var roleByRoleType = roleTypes.ToDictionary(w => ((IRelationType)this.Configuration.MetaPopulation.FindByTag(w.RelationType.Tag)).RoleType, w => this.GetRole(@object, w));
+                    var roleByRoleType = roleTypes.ToDictionary(w => (Allors.Workspace.Meta.IRoleType)this.Configuration.MetaPopulation.FindByTag(w.Tag), w => this.GetRole(@object, w));
 
                     var acl = accessControl[@object];
 

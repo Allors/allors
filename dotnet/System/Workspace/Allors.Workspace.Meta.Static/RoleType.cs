@@ -14,7 +14,7 @@ namespace Allors.Workspace.Meta
     ///     This is also called the 'passive' side.
     ///     RoleTypes can have composite and unit <see cref="ObjectType" />s.
     /// </summary>
-    public abstract class RoleType : MetaIdentifiableObject, IRoleType
+    public sealed class RoleType : MetaIdentifiableObject, IRoleType
     {
         /// <summary>
         ///     The maximum size value.
@@ -22,8 +22,8 @@ namespace Allors.Workspace.Meta
         public const int MaximumSize = -1;
 
         private const string Where = "Where";
-        
-        protected RoleType(MetaPopulation metaPopulation, AssociationType associationType, string tag, IObjectType objectType, string singularName = null, string pluralName = null, Multiplicity multiplicity = Multiplicity.ManyToOne) 
+
+        public RoleType(MetaPopulation metaPopulation, string tag, string singularName, string pluralName, IObjectType objectType, IComposite associationObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
             : base(metaPopulation, tag)
         {
 
@@ -31,9 +31,8 @@ namespace Allors.Workspace.Meta
             this.SingularName = singularName ?? this.ObjectType.SingularName;
             this.PluralName = pluralName ?? Pluralizer.Pluralize(this.SingularName);
             this.Multiplicity = this.ObjectType.IsUnit ? Multiplicity.OneToOne : multiplicity;
-            
-            this.AssociationType = associationType;
-            this.AssociationType.RoleType = this;
+
+            this.AssociationType = new AssociationType(associationObjectType) { RoleType = this };
             this.AssociationType.SingularName = this.AssociationType.ObjectType.SingularName + Where + this.SingularName;
             this.AssociationType.PluralName = this.AssociationType.ObjectType.PluralName + Where + this.SingularName;
             this.AssociationType.Name = this.AssociationType.IsMany ? this.AssociationType.PluralName : this.AssociationType.SingularName;
@@ -59,21 +58,21 @@ namespace Allors.Workspace.Meta
 
         public bool IsOne => !this.IsMany;
 
-        public string OperandTag => this.AssociationType.Tag;
+        public string OperandTag => this.Tag;
 
-        public int? Size { get; protected set; }
+        public int? Size { get; set; }
 
-        public int? Precision { get; protected set; }
+        public int? Precision { get; set; }
 
-        public int? Scale { get; protected set; }
+        public int? Scale { get; set; }
 
         public bool IsDerived { get; set; }
 
-        public bool IsRequired { get; protected set; }
+        public bool IsRequired { get; set; }
 
-        public bool IsUnique { get; protected set; }
+        public bool IsUnique { get; set; }
 
-        public string MediaType { get; protected set; }
+        public string MediaType { get; set; }
 
         int IComparable<IRelationEndType>.CompareTo(IRelationEndType other) => string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
 

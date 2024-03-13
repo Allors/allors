@@ -5,7 +5,7 @@
       //"commandLineArgs": "repository.csproj ../../../../../system/repository/templates/meta.cs.stg ../database/meta/generated",
       "commandLineArgs": "repository.csproj ../../system/repository/templates/meta.configuration.cs.stg ../database/allors.base/generated",
       //"commandLineArgs": "repository.csproj ../../system/repository/templates/meta.extensions.cs.stg /temp/meta.extensions",
-      "workingDirectory": "\\repos\\allors\\dotnet\\base\\repository"
+      "workingDirectory": "\\source\\allors\\dotnet\\base\\repository"
     }
   }
 }

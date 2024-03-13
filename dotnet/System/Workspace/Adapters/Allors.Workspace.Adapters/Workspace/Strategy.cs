@@ -21,7 +21,7 @@ namespace Allors.Workspace.Adapters
         // Role
         private Record record;
 
-        private Dictionary<IRoleType, Change[]> changesByRelationType;
+        private Dictionary<IRoleType, Change[]> changesByRoleType;
         private Dictionary<IRoleType, RefRange<Strategy>> dependentsByRelationType;
 
         // Association
@@ -53,7 +53,7 @@ namespace Allors.Workspace.Adapters
 
         public bool IsDeleted => this.Id == 0;
 
-        public bool HasChanges => this.changesByRelationType != null;
+        public bool HasChanges => this.changesByRoleType != null;
 
         private bool IsVersionInitial => this.Version == Allors.Version.WorkspaceInitial.Value;
 
@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters
 
         protected bool ExistRecord => this.record != null;
 
-        public Dictionary<IRoleType, Change[]> ChangesByRelationType => this.changesByRelationType;
+        public Dictionary<IRoleType, Change[]> ChangesByRoleType => this.changesByRoleType;
 
         int IComparable<Strategy>.CompareTo(Strategy other)
         {
@@ -240,16 +240,16 @@ namespace Allors.Workspace.Adapters
 
         public bool IsModified(IRoleType roleType) =>
             this.CanRead(roleType) &&
-            (this.changesByRelationType?.ContainsKey(roleType) ?? false);
+            (this.changesByRoleType?.ContainsKey(roleType) ?? false);
 
         public void RestoreRole(IRoleType roleType)
         {
-            if (!this.CanRead(roleType) || this.changesByRelationType == null)
+            if (!this.CanRead(roleType) || this.changesByRoleType == null)
             {
                 return;
             }
 
-            if (!this.changesByRelationType.TryGetValue(roleType, out var changes))
+            if (!this.changesByRoleType.TryGetValue(roleType, out var changes))
             {
                 return;
             }
@@ -258,11 +258,11 @@ namespace Allors.Workspace.Adapters
 
             if (changes.Length == 0)
             {
-                this.changesByRelationType.Remove(roleType);
+                this.changesByRoleType.Remove(roleType);
             }
             else
             {
-                this.changesByRelationType[roleType] = changes;
+                this.changesByRoleType[roleType] = changes;
             }
 
             if (this.dependentsByRelationType?.TryGetValue(roleType, out var dependents) == true)
@@ -300,7 +300,7 @@ namespace Allors.Workspace.Adapters
                 return null;
             }
 
-            if (this.changesByRelationType?.TryGetValue(roleType, out var changes) == true)
+            if (this.changesByRoleType?.TryGetValue(roleType, out var changes) == true)
             {
                 var change = (SetUnitChange)changes[0];
                 return change.Role;
@@ -352,16 +352,16 @@ namespace Allors.Workspace.Adapters
 
             if (Equals(recordRole, role))
             {
-                this.changesByRelationType?.Remove(roleType);
-                if (this.changesByRelationType?.Count == 0)
+                this.changesByRoleType?.Remove(roleType);
+                if (this.changesByRoleType?.Count == 0)
                 {
-                    this.changesByRelationType = null;
+                    this.changesByRoleType = null;
                 }
             }
             else
             {
-                this.changesByRelationType ??= new Dictionary<IRoleType, Change[]>();
-                this.changesByRelationType[roleType] =
+                this.changesByRoleType ??= new Dictionary<IRoleType, Change[]>();
+                this.changesByRoleType[roleType] =
                 [
                     new SetUnitChange(role)
                 ];
@@ -562,9 +562,9 @@ namespace Allors.Workspace.Adapters
 
             if (!this.isPushed)
             {
-                if (this.changesByRelationType != null)
+                if (this.changesByRoleType != null)
                 {
-                    foreach ((IRoleType roleType, _) in this.changesByRelationType)
+                    foreach ((IRoleType roleType, _) in this.changesByRoleType)
                     {
                         var databaseRole = this.record?.GetRole(roleType);
                         var newDatabaseRole = newRecord?.GetRole(roleType);
@@ -647,7 +647,7 @@ namespace Allors.Workspace.Adapters
 
         internal void Reset()
         {
-            this.changesByRelationType = null;
+            this.changesByRoleType = null;
             this.dependentsByRelationType = null;
 
             this.involvedAssociationsByAssociationType.Clear();
@@ -660,7 +660,7 @@ namespace Allors.Workspace.Adapters
 
         private Strategy GetCompositeRoleStrategy(IRoleType roleType, bool assertStrategy = true)
         {
-            if (this.changesByRelationType?.TryGetValue(roleType, out var changes) == true)
+            if (this.changesByRoleType?.TryGetValue(roleType, out var changes) == true)
             {
                 var change = (SetCompositeChange)changes[0];
                 return change.Role;
@@ -785,7 +785,7 @@ namespace Allors.Workspace.Adapters
                     return strategy;
                 }));
 
-            if (this.changesByRelationType?.TryGetValue(roleType, out var changes) == true)
+            if (this.changesByRoleType?.TryGetValue(roleType, out var changes) == true)
             {
                 foreach (var change in changes)
                 {
@@ -860,7 +860,7 @@ namespace Allors.Workspace.Adapters
 
         private void AddCompositesRoleStrategyChange(IRoleType roleType, Strategy roleToAdd)
         {
-            if (this.changesByRelationType?.TryGetValue(roleType, out var changes) == true)
+            if (this.changesByRoleType?.TryGetValue(roleType, out var changes) == true)
             {
                 AddCompositeChange add = null;
                 RemoveCompositeChange remove = null;
@@ -887,12 +887,12 @@ namespace Allors.Workspace.Adapters
                     changes = [.. changes, new AddCompositeChange(roleToAdd, null)];
                 }
 
-                this.changesByRelationType[roleType] = changes;
+                this.changesByRoleType[roleType] = changes;
             }
             else
             {
-                this.changesByRelationType ??= new Dictionary<IRoleType, Change[]>();
-                this.changesByRelationType[roleType] = [new AddCompositeChange(roleToAdd, null)];
+                this.changesByRoleType ??= new Dictionary<IRoleType, Change[]>();
+                this.changesByRoleType[roleType] = [new AddCompositeChange(roleToAdd, null)];
             }
         }
 
@@ -907,7 +907,7 @@ namespace Allors.Workspace.Adapters
             }
 
             // A ----> R
-            if (this.changesByRelationType?.TryGetValue(roleType, out var changes) == true)
+            if (this.changesByRoleType?.TryGetValue(roleType, out var changes) == true)
             {
                 AddCompositeChange add = null;
                 RemoveCompositeChange remove = null;
@@ -934,12 +934,12 @@ namespace Allors.Workspace.Adapters
                     changes = [.. changes, new RemoveCompositeChange(role, dependee)];
                 }
 
-                this.changesByRelationType[roleType] = changes;
+                this.changesByRoleType[roleType] = changes;
             }
             else
             {
-                this.changesByRelationType ??= new Dictionary<IRoleType, Change[]>();
-                this.changesByRelationType[roleType] = [new RemoveCompositeChange(role, dependee)];
+                this.changesByRoleType ??= new Dictionary<IRoleType, Change[]>();
+                this.changesByRoleType[roleType] = [new RemoveCompositeChange(role, dependee)];
             }
 
             dependee?.AddDependent(roleType, this);
@@ -961,7 +961,7 @@ namespace Allors.Workspace.Adapters
             }
 
             // A ----> R
-            if (this.changesByRelationType?.TryGetValue(roleType, out var changes) == true)
+            if (this.changesByRoleType?.TryGetValue(roleType, out var changes) == true)
             {
                 AddCompositeChange add = null;
                 RemoveCompositeChange remove = null;
@@ -988,12 +988,12 @@ namespace Allors.Workspace.Adapters
                     changes = [.. changes, new RemoveCompositeChange(role, dependee)];
                 }
 
-                this.changesByRelationType[roleType] = changes;
+                this.changesByRoleType[roleType] = changes;
             }
             else
             {
-                this.changesByRelationType ??= new Dictionary<IRoleType, Change[]>();
-                this.changesByRelationType[roleType] = [new RemoveCompositeChange(role, dependee)];
+                this.changesByRoleType ??= new Dictionary<IRoleType, Change[]>();
+                this.changesByRoleType[roleType] = [new RemoveCompositeChange(role, dependee)];
             }
 
             dependee?.AddDependent(roleType, this);
@@ -1176,7 +1176,7 @@ namespace Allors.Workspace.Adapters
 
         private void RestoreDependentRole(IRoleType roleType, Strategy dependee)
         {
-            if (!this.changesByRelationType.TryGetValue(roleType, out var changes))
+            if (!this.changesByRoleType.TryGetValue(roleType, out var changes))
             {
                 return;
             }
@@ -1185,17 +1185,17 @@ namespace Allors.Workspace.Adapters
 
             if (changes.Length == 0)
             {
-                this.changesByRelationType.Remove(roleType);
+                this.changesByRoleType.Remove(roleType);
             }
             else
             {
-                this.changesByRelationType[roleType] = changes;
+                this.changesByRoleType[roleType] = changes;
             }
         }
 
         private bool SameRoleStrategy(IRoleType roleType, Strategy role)
         {
-            if (this.changesByRelationType != null && this.changesByRelationType.TryGetValue(roleType, out var changes))
+            if (this.changesByRoleType != null && this.changesByRoleType.TryGetValue(roleType, out var changes))
             {
                 var change = (SetCompositeChange)changes[0];
                 return role == change.Role;
@@ -1218,8 +1218,8 @@ namespace Allors.Workspace.Adapters
 
         private void SetCompositeChange(IRoleType roleType, SetCompositeChange setCompositeChange)
         {
-            this.changesByRelationType ??= new Dictionary<IRoleType, Change[]>();
-            this.changesByRelationType[roleType] =
+            this.changesByRoleType ??= new Dictionary<IRoleType, Change[]>();
+            this.changesByRoleType[roleType] =
             [
                 setCompositeChange
             ];

@@ -28,7 +28,6 @@ public sealed class AssociationType : RelationEndType, IComparable
     public AssociationType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
-        this.MetaPopulation.OnCreated(this);
     }
 
     public override ObjectType ObjectType
@@ -73,7 +72,7 @@ public sealed class AssociationType : RelationEndType, IComparable
             _ => false,
         };
 
-    public override IEnumerable<string> WorkspaceNames
+    public IEnumerable<string> WorkspaceNames
     {
         get
         {

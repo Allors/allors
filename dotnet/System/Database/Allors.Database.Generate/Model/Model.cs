@@ -159,7 +159,7 @@ public partial class Model
     #region Mappers
     public IMetaExtensibleModel Map(IMetaExtensible v) => v != null ? this.mapping[v] : null;
 
-    public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => v != null ? (MetaIdentifiableObjectModel)this.mapping[v] : null;
+    public IMetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => v != null ? (IMetaIdentifiableObjectModel)this.mapping[v] : null;
 
     public DomainModel Map(Domain v) => v != null ? (DomainModel)this.mapping[v] : null;
 

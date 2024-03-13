@@ -13,13 +13,14 @@ namespace Allors.Workspace.Meta
     ///     This is also called the 'active', 'controlling' or 'owning' side.
     ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
     /// </summary>
-    public abstract class AssociationType : MetaIdentifiableObject, IAssociationType
+    public sealed class AssociationType : IAssociationType
     {
-        protected AssociationType(MetaPopulation metaPopulation, string tag, IComposite objectType)
-            : base(metaPopulation, tag)
+        internal AssociationType(IComposite objectType)
         {
             this.ObjectType = objectType;
         }
+
+        public dynamic Attributes { get; }
 
         IObjectType IRelationEndType.ObjectType => this.ObjectType;
 

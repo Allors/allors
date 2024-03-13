@@ -27,8 +27,6 @@ For more information visit http://www.allors.com/legal
 	<generation template="units" output="units.g.cs"/>
 	<generation template="interfaces" output="interfaces.g.cs"/>
 	<generation template="classes" output="classes.g.cs"/>
-	<generation template="associationTypes" output="associationTypes.g.cs"/>
-	<generation template="roleTypes" output="roleTypes.g.cs"/>
 </generations>
 >>
 
@@ -79,11 +77,11 @@ $interface.WorkspaceSubtypesByWorkspaceName.(workspaceName):{subtype|        IMe
 $interface.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|        IMethodType $methodType.Name$ { get; \}}; separator="\n"$
 $interface.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|        IMethodType $methodType.Name$ { get; \}}; separator="\n"$
 
-$interface.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        IMeta$roleType.FullName$ $roleType.Name$ { get; \}}; separator="\n"$
-$interface.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        IMeta$roleType.FullName$ $roleType.Name$ { get; \}}; separator="\n"$
+$interface.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        IRoleType $roleType.Name$ { get; \}}; separator="\n"$
+$interface.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        IRoleType $roleType.Name$ { get; \}}; separator="\n"$
 
-$interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IMeta$associationType.Name$ $associationType.Name$ { get; \}}; separator="\n"$
-$interface.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IMeta$associationType.Name$ $associationType.Name$ { get; \}}; separator="\n"$
+$interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IAssociationType $associationType.Name$ { get; \}}; separator="\n"$
+$interface.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IAssociationType $associationType.Name$ { get; \}}; separator="\n"$
 
     }
 
@@ -102,52 +100,11 @@ define_class(class) ::= <<
 $class.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|        IMethodType $methodType.Name$ { get; \}}; separator="\n"$
 $class.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|        IMethodType $methodType.Name$ { get; \}}; separator="\n"$
 
-$class.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        IMeta$roleType.FullName$ $roleType.Name$ { get; \}}; separator="\n"$
-$class.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        IMeta$roleType.FullName$ $roleType.Name$ { get; \}}; separator="\n"$
+$class.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        IRoleType $roleType.Name$ { get; \}}; separator="\n"$
+$class.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        IRoleType $roleType.Name$ { get; \}}; separator="\n"$
 
-$class.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IMeta$associationType.Name$ $associationType.Name$ { get; \}}; separator="\n"$
-$class.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IMeta$associationType.Name$ $associationType.Name$ { get; \}}; separator="\n"$
-    }
-
->>
-
-associationTypes(meta, workspaceName) ::= <<
-namespace Allors.Workspace.Meta
-{
-$meta.Composites:{composite|$define_associationTypes(composite)$}; separator="\n"$
-}
->>
-
-define_associationTypes(composite) ::= <<
-$composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$define_associationType(roleType.associationType)$}; separator="\n"$
->>
-
-define_associationType(associationType) ::= <<
-    public interface IMeta$associationType.Name$ : IAssociationType
-    {
-        new IMeta$associationType.ObjectType.SingularName$ ObjectType { get; }
-    }
-
->>
-
-roleTypes(meta, workspaceName) ::= <<
-namespace Allors.Workspace.Meta
-{
-$meta.Composites:{composite|$define_roleTypes(composite)$}; separator="\n"$
-}
->>
-
-define_roleTypes(composite) ::= <<
-$composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$define_roleType(roleType)$}; separator="\n"$
->>
-
-define_roleType(roleType) ::= <<
-    public interface IMeta$roleType.FullName$ : IRoleType
-    {
-
-$if(roleType.ObjectType.IsComposite)$
-        IMeta$roleType.ObjectType.SingularName$ ObjectType { get; }
-$endif$
+$class.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IAssociationType $associationType.Name$ { get; \}}; separator="\n"$
+$class.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        IAssociationType $associationType.Name$ { get; \}}; separator="\n"$
     }
 
 >>

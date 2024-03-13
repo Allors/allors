@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Allors.Database.Meta.Extensions;
 using Allors.Database.Meta;
 
-public class RoleTypeModel : RelationEndTypeModel
+public class RoleTypeModel : RelationEndTypeModel, IMetaIdentifiableObjectModel
 {
     public RoleTypeModel(Model model, RoleType roleType)
         : base(model) => this.RoleType = roleType;

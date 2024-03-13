@@ -33,24 +33,24 @@ namespace Allors.Workspace.Adapters.Json
 
         private PushRequestRole[] PushRoles()
         {
-            if (this.ChangesByRelationType?.Count > 0)
+            if (this.ChangesByRoleType?.Count > 0)
             {
                 var database = this.Workspace.Connection;
                 var roles = new List<PushRequestRole>();
 
-                foreach (var keyValuePair in this.ChangesByRelationType)
+                foreach (var keyValuePair in this.ChangesByRoleType)
                 {
-                    var relationType = keyValuePair.Key;
+                    var roleType = keyValuePair.Key;
                     var changes = keyValuePair.Value;
 
-                    var pushRequestRole = new PushRequestRole { t = relationType.Tag };
+                    var pushRequestRole = new PushRequestRole { t = roleType.Tag };
 
-                    if (relationType.RoleType.ObjectType.IsUnit)
+                    if (roleType.ObjectType.IsUnit)
                     {
                         var setUnit = (SetUnitChange)changes[0];
                         pushRequestRole.u = ((Connection)database).UnitConvert.ToJson(setUnit.Role);
                     }
-                    else if (relationType.RoleType.IsOne)
+                    else if (roleType.IsOne)
                     {
 
                         var setComposite = (SetCompositeChange)changes[0];

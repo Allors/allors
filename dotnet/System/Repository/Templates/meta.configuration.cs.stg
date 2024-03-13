@@ -263,9 +263,7 @@ build_relation(property) ::= <<
             {
                 var associationType = meta.Create<AssociationType>(v=>
                 {
-                    v.Id = System.Guid.NewGuid();
-                    v.Tag = v.Id.Tag();
-                    v.Composite = objectTypes.$property.DefiningType.SingularName$;
+                     v.Composite = objectTypes.$property.DefiningType.SingularName$;
 
                     // Attributes
                     $property.AssociationTypeExtensionAttributes:{attribute|v.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
