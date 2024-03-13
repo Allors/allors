@@ -8,9 +8,9 @@ namespace Allors.Database.Meta;
 
 using Embedded.Meta;
 
-public class EmbeddedRoleTypes
+public class MetaMeta
 {
-    public EmbeddedRoleTypes(EmbeddedMeta meta)
+    public MetaMeta(EmbeddedMeta meta)
     {
         this.ObjectTypeSingularName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.SingularName));
         this.ObjectTypeAssignedPluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.AssignedPluralName));

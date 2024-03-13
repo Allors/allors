@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// <summary>
 ///     Base interface for Meta objects.
 /// </summary>
-public interface IMetaIdentifiableObject : IMetaExtensible
+public interface IMetaIdentifiableObject : IMetaObject
 {
     IEnumerable<string> WorkspaceNames { get; }
 

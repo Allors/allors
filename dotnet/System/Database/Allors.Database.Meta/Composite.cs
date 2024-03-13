@@ -8,6 +8,7 @@ namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Allors.Embedded;
 using Embedded.Meta;
 
@@ -58,4 +59,109 @@ public abstract class Composite : ObjectType
     }
 
     public abstract bool IsAssignableFrom(Composite objectType);
+
+    internal void ValidateComposite(ValidationLog validationLog)
+    {
+        if (this.RoleTypes.Count(v => v.IsKey) > 1)
+        {
+            var message = this.ValidationName() + " has more than 1 key";
+            validationLog.AddError(message, this, ValidationKind.Multiplicity, "IComposite.KeyRoleType");
+        }
+    }
+
+    internal void InitializeSupertypes()
+    {
+        var supertypes = new HashSet<Interface>();
+        this.InitializeSupertypesRecursively(this, supertypes);
+        this.Supertypes = supertypes.ToArray();
+    }
+
+    internal void InitializeRoleTypes(Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
+    {
+        var roleTypes = new HashSet<RoleType>();
+
+        if (roleTypesByAssociationObjectType.TryGetValue(this, out var directRoleTypes))
+        {
+            roleTypes.UnionWith(directRoleTypes);
+        }
+
+        foreach (var superType in this.Supertypes.Cast<Composite>())
+        {
+            if (roleTypesByAssociationObjectType.TryGetValue(superType, out var inheritedRoleTypes))
+            {
+                roleTypes.UnionWith(inheritedRoleTypes);
+            }
+        }
+
+        this.RoleTypes = roleTypes.ToArray();
+    }
+
+    internal void InitializeAssociationTypes(Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
+    {
+        var associationTypes = new HashSet<AssociationType>();
+
+        if (relationTypesByRoleObjectType.TryGetValue(this, out var classAssociationTypes))
+        {
+            associationTypes.UnionWith(classAssociationTypes);
+        }
+
+        foreach (var superType in this.Supertypes.Cast<Interface>())
+        {
+            if (relationTypesByRoleObjectType.TryGetValue(superType, out var interfaceAssociationTypes))
+            {
+                associationTypes.UnionWith(interfaceAssociationTypes);
+            }
+        }
+
+        this.AssociationTypes = associationTypes.ToArray();
+    }
+
+    internal void InitializeMethodTypes(Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
+    {
+        var methodTypes = new HashSet<MethodType>();
+
+        if (methodTypeByClass.TryGetValue(this, out var directMethodTypes))
+        {
+            methodTypes.UnionWith(directMethodTypes);
+        }
+
+        foreach (var superType in this.Supertypes.Cast<Interface>())
+        {
+            if (methodTypeByClass.TryGetValue(superType, out var inheritedMethodTypes))
+            {
+                methodTypes.UnionWith(inheritedMethodTypes);
+            }
+        }
+
+        this.MethodTypes = methodTypes.ToArray();
+    }
+
+    internal void InitializeCompositeRoleTypes(Dictionary<Composite, HashSet<CompositeRoleType>> compositeRoleTypesByComposite)
+    {
+        var compositeRoleTypes = compositeRoleTypesByComposite[this];
+        this.CompositeRoleTypeByRoleType = compositeRoleTypes.ToDictionary(v => v.RoleType, v => v);
+    }
+
+    internal void InitializeCompositeMethodTypes(Dictionary<Composite, HashSet<CompositeMethodType>> compositeMethodTypesByComposite)
+    {
+        var compositeMethodTypes = compositeMethodTypesByComposite[this];
+        this.CompositeMethodTypeByMethodType = compositeMethodTypes.ToDictionary(v => v.MethodType, v => v);
+    }
+
+    internal void InitializeSupertypesRecursively(ObjectType type, ISet<Interface> superTypes)
+    {
+        foreach (var directSupertype in this.DirectSupertypes.Cast<Interface>())
+        {
+            if (!Equals(directSupertype, type))
+            {
+                superTypes.Add(directSupertype);
+                directSupertype.InitializeSupertypesRecursively(type, superTypes);
+            }
+        }
+    }
+
+    internal void DeriveKeyRoleType()
+    {
+        this.DerivedKeyRoleType = this.RoleTypes.FirstOrDefault(v => v.IsKey);
+    }
 }

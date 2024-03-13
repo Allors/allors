@@ -3,7 +3,7 @@
   <Class Name="Allors.Database.Meta.ObjectType" Collapsed="true">
     <Position X="3.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAgCgAAYIgAIAAAAAACKAAIACQAAAAUBAAAA=</HashCode>
+      <HashCode>AAACAAAAAgCgAA4IgAKAAAAAACKAAIACQAAAAUBAAAA=</HashCode>
       <FileName>ObjectType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -11,7 +11,7 @@
   <Class Name="Allors.Database.Meta.Composite" Collapsed="true">
     <Position X="2.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAAAAAAFGAAAAACAAAAQAAWCCAEAAQAJAAAAAABA=</HashCode>
+      <HashCode>AAJAIAAAAAFGAAQNACABAAQQAWCCAEAAQAJIAAgAABA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -60,7 +60,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.OperandType" Collapsed="true">
-    <Position X="7.75" Y="2.5" Width="1.5" />
+    <Position X="8" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>OperandType.cs</FileName>
@@ -78,24 +78,23 @@
   <Class Name="Allors.Database.Meta.MetaPopulation" Collapsed="true">
     <Position X="0.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAJAgEEAQBGCBQDJGggAAAhAQCARAEAAEAQAQAACEEA=</HashCode>
+      <HashCode>AAJAgEEAQBGCBQDJCggAAAhAQCARAEAAEAQAQgACEEA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="Allors.Database.Meta.IMetaExtensible" Collapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>IMetaExtensible.cs</FileName>
-      <NewMemberFileName>IMetaIdentifiableObject.cs</NewMemberFileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Allors.Database.Meta.IMetaIdentifiableObject" Collapsed="true">
     <Position X="5.5" Y="1.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAACgAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IMetaIdentifiableObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Database.Meta.IMetaObject" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IMetaObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

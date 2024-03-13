@@ -1,6 +1,6 @@
 ﻿namespace Allors.Database.Meta;
 
-public sealed class CompositeRoleType : IMetaExtensible
+public sealed class CompositeRoleType : IMetaObject
 {
     public CompositeRoleType(Composite composite, RoleType roleType)
     {

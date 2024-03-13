@@ -7,7 +7,7 @@ using Database.Population;
 
 public partial class Model
 {
-    private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
+    private readonly Dictionary<IMetaObject, IMetaExtensibleModel> mapping;
     private readonly Dictionary<Record, RecordModel> recordMapping;
     private readonly Dictionary<Handle, HandleModel> handleMapping;
 
@@ -16,7 +16,7 @@ public partial class Model
         this.MetaPopulation = metaPopulation;
         this.RecordsByClass = recordsByClass;
 
-        this.mapping = new Dictionary<IMetaExtensible, IMetaExtensibleModel>();
+        this.mapping = new Dictionary<IMetaObject, IMetaExtensibleModel>();
 
         foreach (var domain in this.MetaPopulation.Domains)
         {
@@ -156,7 +156,7 @@ public partial class Model
                     .Select(w => w.Tag).OrderBy(w => w));
 
     #region Mappers
-    public IMetaExtensibleModel Map(IMetaExtensible v) => v != null ? this.mapping[v] : null;
+    public IMetaExtensibleModel Map(IMetaObject v) => v != null ? this.mapping[v] : null;
 
     public IMetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => v != null ? (IMetaIdentifiableObjectModel)this.mapping[v] : null;
 

@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 /// <summary>
 ///     Base interface for Meta objects.
 /// </summary>
-public interface IMetaExtensible
+public interface IMetaObject
 {
     MetaPopulation MetaPopulation { get; }
 }

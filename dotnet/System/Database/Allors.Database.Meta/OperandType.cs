@@ -13,7 +13,7 @@ using Embedded.Meta;
 /// <summary>
 ///     A <see cref="OperandType" /> can be a <see cref="AssociationType" /> or a <see cref="RoleType" />.
 /// </summary>
-public abstract class OperandType : EmbeddedObject, IMetaExtensible
+public abstract class OperandType : EmbeddedObject, IMetaObject
 {
     protected OperandType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)

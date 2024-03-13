@@ -34,7 +34,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
     public RoleType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
-        this.isDerived = this.EmbeddedPopulation.EmbeddedGetUnitRole<bool>(this, metaPopulation.EmbeddedRoleTypes.RoleTypeIsDerived);
+        this.isDerived = this.EmbeddedPopulation.EmbeddedGetUnitRole<bool>(this, metaPopulation.MetaMeta.RoleTypeIsDerived);
 
         this.AssignedWorkspaceNames = Array.Empty<string>();
 
