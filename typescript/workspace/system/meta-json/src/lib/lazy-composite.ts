@@ -119,7 +119,7 @@ export abstract class LazyComposite implements InternalComposite {
     );
   }
 
-  deriveOriginRoleType() {
+  deriveRoleType() {
     this.databaseOriginRoleTypes = new Set(
       this.databaseOriginRoleTypesGenerator()
     );

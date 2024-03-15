@@ -16,7 +16,7 @@ public static class Extensions
     public static Composite FindComposite(this MetaPopulation @this, string tag) => tag != null ? (Composite)@this.FindByTag(tag) : null;
 
     public static AssociationType FindAssociationType(this MetaPopulation @this, string tag) =>
-        tag != null ? ((RoleType)@this.FindByTag(tag)).AssociationType : null;
+        tag != null ? ((AssociationType)@this.FindByTag(tag)) : null;
 
     public static RoleType FindRoleType(this MetaPopulation @this, string tag) =>
         tag != null ? ((RoleType)@this.FindByTag(tag)) : null;

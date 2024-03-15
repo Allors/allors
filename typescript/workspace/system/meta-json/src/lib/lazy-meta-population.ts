@@ -17,9 +17,10 @@ import { LazyInterface } from './lazy-interface';
 import { LazyClass } from './lazy-class';
 import {
   MetaObject,
-  MethodType,
   ObjectType,
-  RelationType,
+  AssociationType,
+  RoleType,
+  MethodType,
   Unit,
 } from '@allors/workspace/system/meta';
 
@@ -32,7 +33,8 @@ export class LazyMetaPopulation implements InternalMetaPopulation {
   interfaces: Set<InternalInterface>;
   classes: Set<InternalClass>;
   composites = new Set<InternalComposite>();
-  relationTypes: Set<RelationType>;
+  associationTypes: Set<AssociationType>;
+  roleTypes: Set<RoleType>;
   methodTypes: Set<MethodType>;
 
   constructor(data: MetaData) {
@@ -54,14 +56,15 @@ export class LazyMetaPopulation implements InternalMetaPopulation {
       data.i?.map((v) => new LazyInterface(this, v)) ?? []
     );
     this.classes = new Set(data.c?.map((v) => new LazyClass(this, v)) ?? []);
-    this.relationTypes = new Set();
+    this.associationTypes = new Set();
+    this.roleTypes = new Set();
     this.methodTypes = new Set();
 
     this.composites.forEach((v) => v.derive(lookup));
     this.composites.forEach((v) => v.deriveSuper());
     this.interfaces.forEach((v) => v.deriveSub());
     this.composites.forEach((v) => v.deriveOperand());
-    this.composites.forEach((v) => v.deriveOriginRoleType());
+    this.composites.forEach((v) => v.deriveRoleType());
     this.composites.forEach((v) => v.deriveRelationEndTypeByPropertyName());
     this.classes.forEach((v) => v.deriveOverridden(lookup));
 

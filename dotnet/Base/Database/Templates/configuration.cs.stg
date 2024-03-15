@@ -117,7 +117,7 @@ metaRoleType_Init() ::= <<
 >>
 
 metaAssociationType_Init() ::= <<
-			this.$roleType.AssociationType.Name$ = ((RoleType)meta.FindById(MetaIds.$roleType.FullName$)).AssociationType;
+			this.$roleType.AssociationType.Name$ = ((AssociationType)meta.FindById(MetaIds.$associationType.FullName$));
 >>
 
 metaMethodType_Init() ::= <<
