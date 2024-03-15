@@ -14,13 +14,6 @@ public class RoleTypeModel : RelationEndTypeModel, IMetaIdentifiableObjectModel
     protected override RelationEndType RelationEndType => this.RoleType;
 
     public IMetaIdentifiableObject MetaObject => this.RoleType;
-
-    // IMetaIdentifiable
-    public Guid Id => this.MetaObject.Id;
-
-    public string Tag => this.MetaObject.Tag;
-
-    public IEnumerable<string> WorkspaceNames => this.MetaObject.WorkspaceNames;
     
     // IRoleType
     public AssociationTypeModel AssociationType => this.Model.Map(this.RoleType.AssociationType);

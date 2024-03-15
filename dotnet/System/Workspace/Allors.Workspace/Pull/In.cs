@@ -13,7 +13,7 @@ namespace Allors.Workspace.Data
     {
         public string[] Dependencies { get; set; }
 
-        public IRelationEndType PropertyType { get; set; } = propertyType;
+        public IRelationEndType RelationEndType { get; set; } = propertyType;
 
         public Extent Extent { get; set; }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Embedded.Meta;
 
-public sealed class MethodType : OperandType, IMetaIdentifiableObject, IComparable 
+public sealed class MethodType : OperandType, IComparable 
 {
     private string[] derivedWorkspaceNames;
 
@@ -25,9 +25,7 @@ public sealed class MethodType : OperandType, IMetaIdentifiableObject, IComparab
         this.MetaPopulation.OnCreated(this);
     }
 
-    public Guid Id { get; set; }
-
-    public string Tag { get; set; }
+  
 
     public CompositeMethodType CompositeMethodType { get; set; }
 
@@ -39,7 +37,7 @@ public sealed class MethodType : OperandType, IMetaIdentifiableObject, IComparab
 
     public string Name { get; set; }
 
-    public IEnumerable<string> WorkspaceNames
+    public override IEnumerable<string> WorkspaceNames
     {
         get
         {

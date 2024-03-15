@@ -584,7 +584,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new Equals { PropertyType = this.M.C1.Name, Value = "c1A" }
+                    Predicate = new Equals { RelationEndType = this.M.C1.Name, Value = "c1A" }
                 }
             };
 

@@ -9,6 +9,6 @@ namespace Allors.Workspace.Data
 
     public interface IPropertyPredicate : IPredicate
     {
-        IRelationEndType PropertyType { get; set; }
+        IRelationEndType RelationEndType { get; set; }
     }
 }

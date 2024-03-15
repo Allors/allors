@@ -321,7 +321,7 @@ build_associationType(roleType) ::= <<
 >>
 
 build_relationEndType(roleType) ::= <<
-            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new RoleType(m, "$roleType.Tag$", "$roleType.SingularName$", "$roleType.PluralName$", m.$roleType.ObjectType.SingularName$, m.$roleType.AssociationType.ObjectType.SingularName$, Allors.Multiplicity.$roleType.Multiplicity$)
+            m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$ = new RoleType(m, "$roleType.Tag$", "$roleType.SingularName$", "$roleType.PluralName$", m.$roleType.ObjectType.SingularName$, "$roleType.AssociationType.Tag$", m.$roleType.AssociationType.ObjectType.SingularName$, Allors.Multiplicity.$roleType.Multiplicity$)
             {
 $if(roleType.Size)$                 Size = $roleType.Size$,$endif$
 $if(roleType.Precision)$                Precision = $roleType.Precision$,$endif$

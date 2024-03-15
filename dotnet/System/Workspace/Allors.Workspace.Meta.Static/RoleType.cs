@@ -23,16 +23,15 @@ namespace Allors.Workspace.Meta
 
         private const string Where = "Where";
 
-        public RoleType(MetaPopulation metaPopulation, string tag, string singularName, string pluralName, IObjectType objectType, IComposite associationObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
+        public RoleType(MetaPopulation metaPopulation, string tag, string singularName, string pluralName, IObjectType objectType, string associationTag, IComposite associationObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
             : base(metaPopulation, tag)
         {
-
             this.ObjectType = objectType;
             this.SingularName = singularName ?? this.ObjectType.SingularName;
             this.PluralName = pluralName ?? Pluralizer.Pluralize(this.SingularName);
             this.Multiplicity = this.ObjectType.IsUnit ? Multiplicity.OneToOne : multiplicity;
 
-            this.AssociationType = new AssociationType(associationObjectType) { RoleType = this };
+            this.AssociationType = new AssociationType(metaPopulation, associationTag, associationObjectType) { RoleType = this };
             this.AssociationType.SingularName = this.AssociationType.ObjectType.SingularName + Where + this.SingularName;
             this.AssociationType.PluralName = this.AssociationType.ObjectType.PluralName + Where + this.SingularName;
             this.AssociationType.Name = this.AssociationType.IsMany ? this.AssociationType.PluralName : this.AssociationType.SingularName;
@@ -53,8 +52,7 @@ namespace Allors.Workspace.Meta
 
         public Multiplicity Multiplicity { get; }
 
-        public bool IsMany => this.Multiplicity == Multiplicity.OneToMany ||
-                              this.Multiplicity == Multiplicity.ManyToMany;
+        public bool IsMany => this.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany;
 
         public bool IsOne => !this.IsMany;
 

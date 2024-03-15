@@ -14,7 +14,7 @@ using Allors.Embedded.Meta;
 using Allors.Graph;
 using Text;
 
-public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, IComparable
+public sealed class RoleType : RelationEndType, IComparable
 {
     private AssociationType associationType;
     private CompositeRoleType compositeRoleType;
@@ -39,10 +39,6 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
 
         this.MetaPopulation.OnCreated(this);
     }
-
-    public Guid Id { get; set; }
-
-    public string Tag { get; set; }
 
     public override ObjectType ObjectType
     {
@@ -86,7 +82,7 @@ public sealed class RoleType : RelationEndType, IMetaIdentifiableObject, ICompar
 
     public Multiplicity Multiplicity => this.ObjectType.IsUnit ? Multiplicity.OneToOne : this.AssignedMultiplicity ?? Multiplicity.ManyToOne;
 
-    public IEnumerable<string> WorkspaceNames
+    public override IEnumerable<string> WorkspaceNames
     {
         get
         {

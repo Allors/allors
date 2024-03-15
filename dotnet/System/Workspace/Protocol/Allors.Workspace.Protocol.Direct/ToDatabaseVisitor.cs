@@ -108,27 +108,27 @@ namespace Allors.Workspace.Protocol.Direct
             Paths = this.Visit(ws.Paths)
         };
 
-        private IPredicate Visit(In ws) => new Database.Data.In(this.Visit(ws.PropertyType))
+        private IPredicate Visit(In ws) => new Database.Data.In(this.Visit(ws.RelationEndType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
             Extent = this.Visit(ws.Extent),
         };
 
-        private IPredicate Visit(Intersects ws) => new Database.Data.Intersects(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Intersects ws) => new Database.Data.Intersects(this.Visit(ws.RelationEndType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
             Extent = this.Visit(ws.Extent),
         };
 
-        private IPredicate Visit(Has ws) => new Database.Data.Has(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Has ws) => new Database.Data.Has(this.Visit(ws.RelationEndType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object)
         };
 
-        private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.RelationEndType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object) ?? this.Visit(ws.ObjectId),
@@ -136,7 +136,7 @@ namespace Allors.Workspace.Protocol.Direct
             Path = this.Visit(ws.Path),
         };
 
-        private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.RelationEndType))
         {
             Parameter = ws.Parameter,
         };
@@ -148,7 +148,7 @@ namespace Allors.Workspace.Protocol.Direct
             Path = this.Visit(ws.Path)
         };
 
-        private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.RelationEndType))
         {
             Parameter = ws.Parameter,
             ObjectType = this.Visit(ws.ObjectType)

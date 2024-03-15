@@ -13,7 +13,7 @@ using Embedded.Meta;
 /// <summary>
 ///     A <see cref="OperandType" /> can be a <see cref="AssociationType" /> or a <see cref="RoleType" />.
 /// </summary>
-public abstract class OperandType : EmbeddedObject, IMetaObject
+public abstract class OperandType : EmbeddedObject, IMetaIdentifiableObject
 {
     protected OperandType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
@@ -22,7 +22,13 @@ public abstract class OperandType : EmbeddedObject, IMetaObject
     }
 
     public MetaPopulation MetaPopulation { get; }
-    
+
+    public Guid Id { get; set; }
+
+    public string Tag { get; set; }
+
+    public abstract IEnumerable<string> WorkspaceNames { get; }
+
     public abstract void Validate(ValidationLog validationLog);
 
     public override bool Equals(object obj)

@@ -1,5 +1,6 @@
 ﻿namespace Allors.Repository.Model;
 
+using System;
 using Allors;
 using Allors.Repository;
 using Allors.Repository.Domain;
@@ -40,4 +41,6 @@ public class PropertyModel : RepositoryObjectModel
     public string AssignedRolePluralName => this.Property.AssignedRolePluralName;
 
     public string AssociationName => this.Property.AssociationName;
+
+    public Guid AssociationId => Guid.NewGuid();
 }
