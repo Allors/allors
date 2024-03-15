@@ -80,6 +80,8 @@ public partial class Model
 
     public IEnumerable<RoleTypeModel> RoleTypes => this.MetaPopulation.RoleTypes.Select(this.Map);
 
+    public IEnumerable<AssociationTypeModel> AssociationTypes => this.MetaPopulation.RoleTypes.Select(this.Map).Select(v=>v.AssociationType);
+
     public IEnumerable<MethodTypeModel> MethodTypes => this.MetaPopulation.MethodTypes.Select(this.Map);
 
     public IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;

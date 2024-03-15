@@ -63,7 +63,7 @@ $composite.DefinedMethods:{method|$ids_composite_methodType(method)$}; separator
 
 ids_composite_property(property) ::= <<
         public static readonly Guid $composite.SingularName$$property.RoleName$ = new Guid("$property.Id$");
-        public static readonly Guid $composite.SingularName$$property.AssociationName$ = new Guid("$property.AssociationId$");
+        public static readonly Guid $property.AssociationName$ = new Guid("$property.AssociationId$");
 >>
 
 ids_composite_methodType(method) ::= <<
@@ -264,7 +264,7 @@ build_relation(property) ::= <<
             {
                 var associationType = meta.Create<AssociationType>(v=>
                 {
-                     v.Id = Ids.$property.DefiningType.SingularName$$property.AssociationName$;
+                     v.Id = Ids.$property.AssociationName$;
                      v.Tag = v.Id.Tag();
                      v.Composite = objectTypes.$property.DefiningType.SingularName$;
 

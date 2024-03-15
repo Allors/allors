@@ -47,6 +47,9 @@ $meta.classes:{objectType|$metaObjectType_Id()$}; separator="\n"$
 		// RoleTypes
 $meta.roleTypes:{roleType|$metaRoleType_Id()$}; separator="\n"$
 
+		// AssociationTypes
+$meta.associationTypes:{associationType|$metaAssociationType_Id()$}; separator="\n"$
+
 		// MethodTypes
 $meta.methodTypes:{methodType|$metaMethodType_Id()$}; separator="\n"$
     }
@@ -59,6 +62,10 @@ metaObjectType_Id() ::= <<
 
 metaRoleType_Id() ::= <<
 		public static readonly Guid $roleType.RoleType.FullName$ = new Guid("$roleType.Id$");
+>>
+
+metaAssociationType_Id() ::= <<
+		public static readonly Guid $associationType.Name$ = new Guid("$associationType.Id$");
 >>
 
 metaMethodType_Id() ::= <<
