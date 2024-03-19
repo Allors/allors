@@ -9,6 +9,7 @@
     "workspace-system-meta-json:test": "npx nx test workspace-system-meta-json-tests --skipNxCache",
     "workspace-system-adapters:test": "npx nx test workspace-system-adapters-tests --skipNxCache",
     "workspace-system-adapters-json:test": "npx nx test workspace-system-adapters-json-tests --skipNxCache",
+    "test:local": "npm run workspace-system-meta:test && npm run workspace-system-meta-json:test && npm run workspace-system-adapters:test",
     "test:all": "npm run workspace-system-meta:test && npm run workspace-system-meta-json:test && npm run workspace-system-adapters:test && npm run workspace-system-adapters-json:test"
   },
   "private": true,

@@ -1,7 +1,6 @@
 import { RelationTypeData } from '@allors/database/system/protocol/json';
 import {
   AssociationType,
-  Multiplicity,
   ObjectType,
   RelationType,
   RoleType,
@@ -19,8 +18,6 @@ export class LazyRelationType implements RelationType {
   metaPopulation: InternalMetaPopulation;
 
   tag: string;
-  multiplicity: Multiplicity;
-  isDerived: boolean;
 
   associationType: AssociationType;
   roleType: RoleType;
@@ -39,11 +36,7 @@ export class LazyRelationType implements RelationType {
     ) as ObjectType;
 
     this.tag = roleTag;
-    this.multiplicity = roleObjectType.isUnit
-      ? Multiplicity.OneToOne
-      : lookup.m.get(roleTag) ?? Multiplicity.ManyToOne;
-    this.isDerived = lookup.d.has(roleTag);
-
+    
     this.metaPopulation.onNew(this);
 
     this.roleType = new LazyRoleType(
@@ -52,7 +45,6 @@ export class LazyRelationType implements RelationType {
       associationTag,
       associationObjectType,
       roleObjectType,
-      this.multiplicity,
       data,
       lookup
     );

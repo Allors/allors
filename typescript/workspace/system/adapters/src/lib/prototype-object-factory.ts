@@ -24,7 +24,7 @@ export class PrototypeObjectFactory implements IObjectFactory {
 
       DynamicClass.prototype = Object.create(ObjectBase.prototype);
       DynamicClass.prototype.constructor = DynamicClass;
-      this.constructorByObjectType.set(objectType, DynamicClass as any);
+      this.constructorByObjectType.set(objectType, DynamicClass as unknown);
 
       const prototype = DynamicClass.prototype;
 
@@ -49,9 +49,8 @@ export class PrototypeObjectFactory implements IObjectFactory {
           },
         });
 
-        const relationType = roleType.relationType;
         const isDatabase = true;
-        const isDerived = relationType.isDerived;
+        const isDerived = roleType.isDerived;
 
         if (isDatabase && isDerived) {
           Object.defineProperty(prototype, roleType.name, {

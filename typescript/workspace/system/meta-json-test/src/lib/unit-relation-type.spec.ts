@@ -40,12 +40,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -99,12 +99,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeDefined();
       expect(roleType.mediaType).toBe('application/pdf');
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeTruthy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeTruthy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -145,12 +145,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBe(21);
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -191,12 +191,11 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBe(21);
       expect(roleType.precision).toBe(3);
       expect(roleType.mediaType).toBeUndefined();
-
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -239,12 +238,11 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBe(25);
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
-
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -292,12 +290,11 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBe(25);
       expect(roleType.precision).toBe(2);
       expect(roleType.mediaType).toBeUndefined();
-
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -345,12 +342,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBe(26);
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -398,12 +395,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBe(26);
       expect(roleType.precision).toBe(5);
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -444,12 +441,11 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
-
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -490,12 +486,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -536,12 +532,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -584,12 +580,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -637,12 +633,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
@@ -690,12 +686,12 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.scale).toBeUndefined();
       expect(roleType.precision).toBeUndefined();
       expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
 
       const { relationType, associationType } = roleType;
 
       expect(relationType).toBeDefined;
-      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;

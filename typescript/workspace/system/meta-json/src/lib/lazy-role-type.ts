@@ -25,6 +25,7 @@ export class LazyRoleType implements RoleType {
   isMethodType = false;
 
   objectType: ObjectType;
+  multiplicity: Multiplicity;
   isOne: boolean;
   isMany: boolean;
   name: string;
@@ -47,17 +48,21 @@ export class LazyRoleType implements RoleType {
     associationTag: string,
     associationObjectType: InternalComposite,
     roleObjectType: ObjectType,
-    multiplicity: Multiplicity,
     data: RelationTypeData,
     lookup: Lookup
   ) {
     this.metaPopulation = relationType.metaPopulation as InternalMetaPopulation;
-
-    this.isOne = (multiplicity & 1) == 0;
-    this.isMany = !this.isOne;
-    this.operandTag = this.tag;
     this.objectType = roleObjectType;
 
+    this.multiplicity = roleObjectType.isUnit
+      ? Multiplicity.OneToOne
+      : lookup.m.get(this.tag) ?? Multiplicity.ManyToOne;
+    this.isDerived = lookup.d.has(this.tag);
+
+    this.isOne = (this.multiplicity & 1) == 0;
+    this.isMany = !this.isOne;
+    this.operandTag = this.tag;
+  
     this.isDerived = lookup.d.has(this.tag);
     this.isRequired = lookup.r.has(this.tag);
     this.mediaType = lookup.t.get(this.tag);
@@ -102,7 +107,7 @@ export class LazyRoleType implements RoleType {
       this,
       associationTag,
       associationObjectType,
-      multiplicity
+      this.multiplicity
     );
   }
 
