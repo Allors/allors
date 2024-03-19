@@ -1,6 +1,6 @@
 cd ..
 
-npx create-nx-workspace@latest allors --preset=apps --nxCloud=skip
+npm init nx-workspace allors --package-manager=npm --preset=apps --nxCloud=skip
 
 cd allors
 
