@@ -7,4 +7,6 @@ export interface Configuration {
   metaPopulation: MetaPopulation;
 
   objectFactory: IObjectFactory;
+
+  idGenerator(): number;
 }

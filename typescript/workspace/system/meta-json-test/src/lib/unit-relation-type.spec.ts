@@ -21,7 +21,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', UnitTags.String, 'Name']]]],
+      c: [['10', 'Organization', [], [['11', '12', UnitTags.String, 'Name']]]],
     }) as M;
 
     const { Organization, String } = metaPopulation;
@@ -72,7 +72,7 @@ describe('Unit Relation in MetaPopulation', () => {
           '10',
           'Organization',
           [],
-          [['11', UnitTags.String, 'Name', 'Names', 1024]],
+          [['11', '12', UnitTags.String, 'Name', 'Names', 1024]],
         ],
       ],
       m: [['11']],
@@ -126,7 +126,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', UnitTags.Decimal, 21]]]],
+      c: [['10', 'Organization', [], [['11', '12', UnitTags.Decimal, 21]]]],
     }) as M;
 
     const { Organization, Decimal } = metaPopulation;
@@ -172,7 +172,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', UnitTags.Decimal, 21, 3]]]],
+      c: [['10', 'Organization', [], [['11', '12', UnitTags.Decimal, 21, 3]]]],
     }) as M;
 
     const { Organization, Decimal } = metaPopulation;
@@ -219,7 +219,7 @@ describe('Unit Relation in MetaPopulation', () => {
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
-        ['10', 'Organization', [], [['11', UnitTags.Decimal, 'Balance', 25]]],
+        ['10', 'Organization', [], [['11', '12', UnitTags.Decimal, 'Balance', 25]]],
       ],
     }) as M;
 
@@ -271,7 +271,7 @@ describe('Unit Relation in MetaPopulation', () => {
           '10',
           'Organization',
           [],
-          [['11', UnitTags.Decimal, 'Balance', 25, 2]],
+          [['11', '12', UnitTags.Decimal, 'Balance', 25, 2]],
         ],
       ],
     }) as M;
@@ -324,7 +324,7 @@ describe('Unit Relation in MetaPopulation', () => {
           '10',
           'Organization',
           [],
-          [['11', UnitTags.Decimal, 'Balance', 'PluralBalance', 26]],
+          [['11', '12', UnitTags.Decimal, 'Balance', 'PluralBalance', 26]],
         ],
       ],
     }) as M;
@@ -377,7 +377,7 @@ describe('Unit Relation in MetaPopulation', () => {
           '10',
           'Organization',
           [],
-          [['11', UnitTags.Decimal, 'Balance', 'PluralBalance', 26, 5]],
+          [['11', '12', UnitTags.Decimal, 'Balance', 'PluralBalance', 26, 5]],
         ],
       ],
     }) as M;
@@ -425,7 +425,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', UnitTags.String, 256]]]],
+      c: [['10', 'Organization', [], [['11', '12', UnitTags.String, 256]]]],
     }) as M;
 
     const { Organization, String } = metaPopulation;
@@ -471,7 +471,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', UnitTags.String, 256, 5]]]],
+      c: [['10', 'Organization', [], [['11', '12', UnitTags.String, 256, 5]]]],
     }) as M;
 
     const { Organization, String } = metaPopulation;
@@ -517,7 +517,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', UnitTags.String, 'Text', 512]]]],
+      c: [['10', 'Organization', [], [['11', '12', UnitTags.String, 'Text', 512]]]],
     }) as M;
 
     const { Organization, String } = metaPopulation;
@@ -564,7 +564,7 @@ describe('Unit Relation in MetaPopulation', () => {
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
-        ['10', 'Organization', [], [['11', UnitTags.String, 'Text', 512, 10]]],
+        ['10', 'Organization', [], [['11', '12', UnitTags.String, 'Text', 512, 10]]],
       ],
     }) as M;
 
@@ -616,7 +616,7 @@ describe('Unit Relation in MetaPopulation', () => {
           '10',
           'Organization',
           [],
-          [['11', UnitTags.String, 'Text', 'PluralText', 512]],
+          [['11', '12', UnitTags.String, 'Text', 'PluralText', 512]],
         ],
       ],
     }) as M;
@@ -669,7 +669,7 @@ describe('Unit Relation in MetaPopulation', () => {
           '10',
           'Organization',
           [],
-          [['11', UnitTags.String, 'Text', 'PluralText', 512, 1]],
+          [['11', '12', UnitTags.String, 'Text', 'PluralText', 512, 1]],
         ],
       ],
     }) as M;
@@ -723,7 +723,7 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      i: [['9', 'Named', [], [['11', UnitTags.String, 'Name']]]],
+      i: [['9', 'Named', [], [['11', '12', UnitTags.String, 'Name']]]],
       c: [['10', 'Organization', ['9']]],
     }) as M;
 
