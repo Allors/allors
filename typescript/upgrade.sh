@@ -1,6 +1,6 @@
 cd ..
 
-npx create-nx-workspace@latest allors --preset=apps --nxCloud=false
+npx create-nx-workspace@latest allors --preset=apps --nxCloud=skip
 
 cd allors
 
@@ -21,8 +21,8 @@ npm install luxon
 
 # Workspace
 # Base
-npx nx g @nx/angular:application --projectNameAndRootFormat=as-provided --name=workspace-base-angular-foundation-app --directory=workspace/base/angular-foundation-app --bundler=esbuild --routing=true --ssr=false --standalone=false --style=scss --skipTests=true --e2eTestRunner=none --minimal=true --strict=false
-npx nx g @nx/angular:application --projectNameAndRootFormat=as-provided --name=workspace-base-angular-material-app --directory=workspace/base/angular-material-app --bundler=esbuild --routing=false --ssr=false --standalone=false --style=scss --skipTests=true --e2eTestRunner=none --minimal=true --strict=false
+npx nx g @nx/angular:application --directory=workspace/base/angular-app --prefix=allors --bundler=esbuild --routing=true --ssr=false --standalone=false --style=scss --skipTests=true --e2eTestRunner=none --minimal=true --strict=false
+npx nx g @nx/angular:application --directory=workspace/base/angular-material-app --prefix=allors --bundler=esbuild --routing=false --ssr=false --standalone=false --style=scss --skipTests=true --e2eTestRunner=none --minimal=true --strict=false
 npx nx g @nx/js:lib --projectNameAndRootFormat=as-provided --name=workspace-base-angular-foundation --directory=workspace/base/angular-foundation --bundler=none --unitTestRunner=none --minimal=true --strict=false
 npx nx g @nx/js:lib --projectNameAndRootFormat=as-provided --name=workspace-base-angular-application --directory=workspace/base/angular-application --bundler=none --unitTestRunner=none --minimal=true --strict=false
 npx nx g @nx/js:lib --projectNameAndRootFormat=as-provided --name=workspace-base-angular-material-foundation --directory=workspace/base/angular-material-foundation --bundler=none --unitTestRunner=none --minimal=true --strict=false

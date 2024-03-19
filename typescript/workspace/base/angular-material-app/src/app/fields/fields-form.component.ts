@@ -137,7 +137,7 @@ export class FieldsComponent implements OnInit, OnDestroy {
 
         this.locale = loaded
           .collection<Locale>(this.m.Locale)
-          .find((v) => v.Name === 'nl');
+          .find((v) => v.Key === 'nl');
         this.jane = this.people.find((v) => v.FirstName === 'Jane');
 
         if (datas && datas.length > 0) {

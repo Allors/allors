@@ -36,7 +36,7 @@ export class PersonInlineComponent implements OnInit, OnDestroy {
 
     const pulls = [
       pull.Locale({
-        sorting: [{ roleType: this.m.Locale.Name }],
+        sorting: [{ roleType: this.m.Locale.Key }],
       }),
     ];
 

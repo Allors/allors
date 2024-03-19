@@ -1,26 +1,23 @@
 {
-  "name": "workspace-base-angular-material-application-app",
+  "name": "workspace-base-angular-material-app",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "allors",
-  "sourceRoot": "workspace/base/angular-material-application-app/src",
+  "sourceRoot": "workspace/base/angular-material-app/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/workspace/base/angular-material-application-app",
-        "index": "workspace/base/angular-material-application-app/src/index.html",
-        "browser": "workspace/base/angular-material-application-app/src/main.ts",
+        "outputPath": "dist/workspace/base/angular-material-app",
+        "index": "workspace/base/angular-material-app/src/index.html",
+        "browser": "workspace/base/angular-material-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "workspace/base/angular-material-application-app/tsconfig.app.json",
+        "tsConfig": "workspace/base/angular-material-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "workspace/base/angular-material-application-app/src/favicon.ico",
-          "workspace/base/angular-material-application-app/src/assets"
-        ],
-        "styles": ["workspace/base/angular-material-application-app/src/styles.scss", "./node_modules/easymde/dist/easymde.min.css"],
+        "assets": ["workspace/base/angular-material-app/src/favicon.ico", "workspace/base/angular-material-app/src/assets"],
+        "styles": ["workspace/base/angular-material-app/src/styles.scss", "./node_modules/easymde/dist/easymde.min.css"],
         "scripts": [],
         "allowedCommonJsDependencies": ["easymde", "codemirror", "codemirror-spell-checker"]
       },
@@ -52,12 +49,12 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "workspace-base-angular-material-application-app:build:production",
-          "proxyConfig": "workspace/base/angular-material-application-app/proxy.conf.json"
+          "buildTarget": "workspace-base-angular-material-app:build:production",
+          "proxyConfig": "workspace/base/angular-material-app/proxy.conf.json"
         },
         "development": {
-          "buildTarget": "workspace-base-angular-material-application-app:build:development",
-          "proxyConfig": "workspace/base/angular-material-application-app/proxy.conf.json"
+          "buildTarget": "workspace-base-angular-material-app:build:development",
+          "proxyConfig": "workspace/base/angular-material-app/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
@@ -65,7 +62,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "workspace-base-angular-material-application-app:build"
+        "buildTarget": "workspace-base-angular-material-app:build"
       }
     },
     "lint": {
@@ -76,7 +73,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "workspace/base/angular-material-application-app/jest.config.ts"
+        "jestConfig": "workspace/base/angular-material-app/jest.config.ts"
       }
     }
   }

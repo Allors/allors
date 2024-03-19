@@ -55,7 +55,7 @@ export class OrganizationFormComponent extends AllorsFormComponent<Organization>
 
     pulls.push(
       p.Country({
-        sorting: [{ roleType: m.Country.IsoCode }],
+        sorting: [{ roleType: m.Country.Key }],
       })
     );
   }

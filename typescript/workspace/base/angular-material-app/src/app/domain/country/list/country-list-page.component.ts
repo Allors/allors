@@ -160,7 +160,7 @@ export class CountryListPageComponent
         this.table.data = objects?.map((v) => {
           return {
             object: v,
-            isoCode: v.IsoCode,
+            isoCode: v.Key,
           } as Row;
         });
       });

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "workspace-base-angular-foundation:serve": "npx nx serve workspace-base-angular-foundation-app",
-    "workspace-base-angular-material-application:serve": "npx nx serve workspace-base-angular-material-application-app",
+    "workspace-base-angular-app:serve": "npx nx serve workspace-base-angular-app",
+    "workspace-base-angular-material-app:serve": "npx nx serve workspace-base-angular-material-app",
     "workspace-system-meta:test": "npx nx test workspace-system-meta-tests --skipNxCache",
     "workspace-system-meta-json:test": "npx nx test workspace-system-meta-json-tests --skipNxCache",
     "workspace-system-adapters:test": "npx nx test workspace-system-adapters-tests --skipNxCache",

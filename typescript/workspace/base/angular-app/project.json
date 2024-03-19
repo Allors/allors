@@ -1,26 +1,23 @@
 {
-  "name": "workspace-base-angular-foundation-app",
+  "name": "workspace-base-angular-app",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "allors",
-  "sourceRoot": "workspace/base/angular-foundation-app/src",
+  "sourceRoot": "workspace/base/angular-app/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/workspace/base/angular-foundation-app",
-        "index": "workspace/base/angular-foundation-app/src/index.html",
-        "browser": "workspace/base/angular-foundation-app/src/main.ts",
+        "outputPath": "dist/workspace/base/angular-app",
+        "index": "workspace/base/angular-app/src/index.html",
+        "browser": "workspace/base/angular-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "workspace/base/angular-foundation-app/tsconfig.app.json",
+        "tsConfig": "workspace/base/angular-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "workspace/base/angular-foundation-app/src/favicon.ico",
-          "workspace/base/angular-foundation-app/src/assets"
-        ],
-        "styles": ["workspace/base/angular-foundation-app/src/styles.scss"],
+        "assets": ["workspace/base/angular-app/src/favicon.ico", "workspace/base/angular-app/src/assets"],
+        "styles": ["workspace/base/angular-app/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -51,12 +48,12 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "workspace-base-angular-foundation-app:build:production",
-          "proxyConfig": "workspace/base/angular-foundation-app/proxy.conf.json"
+          "buildTarget": "workspace-base-angular-app:build:production",
+          "proxyConfig": "workspace/base/angular-app/proxy.conf.json"
         },
         "development": {
-          "buildTarget": "workspace-base-angular-foundation-app:build:development",
-          "proxyConfig": "workspace/base/angular-foundation-app/proxy.conf.json"
+          "buildTarget": "workspace-base-angular-app:build:development",
+          "proxyConfig": "workspace/base/angular-app/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
@@ -64,7 +61,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "workspace-base-angular-foundation-app:build"
+        "buildTarget": "workspace-base-angular-app:build"
       }
     },
     "lint": {
@@ -75,7 +72,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "workspace/base/angular-foundation-app/jest.config.ts"
+        "jestConfig": "workspace/base/angular-app/jest.config.ts"
       }
     }
   }

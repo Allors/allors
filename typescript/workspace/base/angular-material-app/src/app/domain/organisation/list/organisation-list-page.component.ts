@@ -158,7 +158,7 @@ export class OrganizationListPageComponent
           return {
             object: v,
             name: v.Name,
-            country: v.Country?.IsoCode ?? null,
+            country: v.Country?.Key ?? null,
             owner: v.Owner?.UserName ?? null,
           } as Row;
         });

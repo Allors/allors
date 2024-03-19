@@ -1,10 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'workspace-base-angular-material-application-app',
+  displayName: 'workspace-base-angular-material-app',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory:
-    '../../../coverage/workspace/base/angular-material-application-app',
+  coverageDirectory: '../../../coverage/workspace/base/angular-material-app',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

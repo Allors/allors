@@ -50,7 +50,7 @@ export abstract class LocalisedRoleField extends RoleField {
 
   get localisedName(): string {
     if (this.locale) {
-      return this.name + '_' + this.locale.Name;
+      return this.name + '_' + this.locale.Key;
     }
 
     return null;
@@ -66,7 +66,7 @@ export abstract class LocalisedRoleField extends RoleField {
       }
 
       const label = this.assignedLabel ? this.assignedLabel : humanize(name);
-      return label + ' (' + this.locale.Language?.IsoCode + ')';
+      return label + ' (' + this.locale.Language?.Key + ')';
     }
 
     return null;

@@ -31,7 +31,7 @@ export class AppFilterService implements FilterService {
             operands: [
               {
                 kind: 'Like',
-                roleType: m.Country.IsoCode,
+                roleType: m.Country.Key,
                 parameter: 'isoCode',
               },
             ],
@@ -50,7 +50,7 @@ export class AppFilterService implements FilterService {
               },
               {
                 kind: 'Like',
-                roleType: m.Country.IsoCode,
+                roleType: m.Country.Key,
                 parameter: 'country',
               },
             ],

@@ -20,7 +20,7 @@ export class AppSorterService implements SorterService {
 
     switch (composite.tag) {
       case tags.Country:
-        return new Sorter({ isoCode: m.Country.IsoCode});
+        return new Sorter({ isoCode: m.Country.Key });
 
       case tags.Organization:
         return new Sorter({ name: m.Organization.Name });
