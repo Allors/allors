@@ -1,6 +1,4 @@
-import { MetaObject } from "./meta-object";
-
-export interface OperandType extends MetaObject {
+export interface OperandType {
   operandTag: string;
   name: string;
 }

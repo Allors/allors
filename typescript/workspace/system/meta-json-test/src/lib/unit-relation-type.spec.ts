@@ -282,20 +282,23 @@ describe('Unit Relation in MetaPopulation', () => {
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
       expect(roleType.objectType).toBe(Decimal);
-      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isOne).toBeTruthy();
       expect(roleType.isMany).toBeFalsy();
       expect(roleType.singularName).toBe('Balance');
       expect(roleType.pluralName).toBe('Balances');
       expect(roleType.name).toBe('Balance');
-      expect(roleType.isDerived).toBeFalsy();
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(25);
       expect(roleType.precision).toBe(2);
       expect(roleType.mediaType).toBeUndefined();
 
-      const { associationType } = roleType;
+      const { relationType, associationType } = roleType;
+
+      expect(relationType).toBeDefined;
+      expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(relationType.isDerived).toBeFalsy();
+      expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
