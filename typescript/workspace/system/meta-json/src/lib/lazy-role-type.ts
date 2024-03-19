@@ -13,8 +13,11 @@ import { Lookup } from './utils/lookup';
 import { InternalComposite } from './internal/internal-composite';
 
 import { LazyAssociationType } from './lazy-association-type';
+import { InternalMetaPopulation } from './internal/internal-meta-population';
 
 export class LazyRoleType implements RoleType {
+  metaPopulation: InternalMetaPopulation;
+
   readonly kind = 'RoleType';
   readonly _ = {};
   isRoleType = true;
@@ -40,22 +43,26 @@ export class LazyRoleType implements RoleType {
 
   constructor(
     public relationType: RelationType,
+    public tag: string,
+    associationTag: string,
     associationObjectType: InternalComposite,
     roleObjectType: ObjectType,
     multiplicity: Multiplicity,
     data: RelationTypeData,
     lookup: Lookup
   ) {
+    this.metaPopulation = relationType.metaPopulation as InternalMetaPopulation;
+
     this.isOne = (multiplicity & 1) == 0;
     this.isMany = !this.isOne;
-    this.operandTag = relationType.tag;
+    this.operandTag = this.tag;
     this.objectType = roleObjectType;
 
-    this.isDerived = lookup.d.has(this.relationType.tag);
-    this.isRequired = lookup.r.has(this.relationType.tag);
-    this.mediaType = lookup.t.get(this.relationType.tag);
+    this.isDerived = lookup.d.has(this.tag);
+    this.isRequired = lookup.r.has(this.tag);
+    this.mediaType = lookup.t.get(this.tag);
 
-    const [, , v0, v1, v2, v3] = data;
+    const [, , , v0, v1, v2, v3] = data;
 
     this.singularName =
       (!Number.isInteger(v0) ? (v0 as string) : undefined) ??
@@ -93,6 +100,7 @@ export class LazyRoleType implements RoleType {
 
     this.associationType = new LazyAssociationType(
       this,
+      associationTag,
       associationObjectType,
       multiplicity
     );

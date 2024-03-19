@@ -73,7 +73,7 @@ data_supertypes() ::= <<[$objectType.WorkspaceDirectSupertypesByWorkspaceName.(w
 
 data_roleTypes() ::= <<[$objectType.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$data_roleType(roleType, roleType.AssociationType)$}; separator=","$]>>
 
-data_roleType(roleType, associationType) ::= <<['$roleType.Tag$', '$roleType.ObjectType.Tag$'$data_roleType_singularAndPluralName()$$data_roleType_size_scale_precision()$]>>
+data_roleType(roleType, associationType) ::= <<['$roleType.Tag$', '$associationType.Tag$', '$roleType.ObjectType.Tag$'$data_roleType_singularAndPluralName()$$data_roleType_size_scale_precision()$]>>
 
 data_roleType_singularAndPluralName() ::= <<$if(roleType.ExistAssignedSingularName)$, "$roleType.singularName$"$data_roleType_pluralName()$$endif$>>
 

@@ -17,7 +17,7 @@ export abstract class RoleField extends Field {
 
   @HostBinding('attr.data-allors-roletype')
   get dataAllorsRoleType() {
-    return this.roleType?.relationType.tag;
+    return this.roleType?.tag;
   }
 
   @Input()

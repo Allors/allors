@@ -33,21 +33,23 @@ export class LazyRelationType implements RelationType {
     this.metaPopulation =
       associationObjectType.metaPopulation as InternalMetaPopulation;
 
-    const [t, r] = data;
+    const [roleTag, associationTag, r] = data;
     const roleObjectType = this.metaPopulation.metaObjectByTag.get(
       r
     ) as ObjectType;
 
-    this.tag = t;
+    this.tag = roleTag;
     this.multiplicity = roleObjectType.isUnit
       ? Multiplicity.OneToOne
-      : lookup.m.get(t) ?? Multiplicity.ManyToOne;
-    this.isDerived = lookup.d.has(t);
+      : lookup.m.get(roleTag) ?? Multiplicity.ManyToOne;
+    this.isDerived = lookup.d.has(roleTag);
 
     this.metaPopulation.onNew(this);
 
     this.roleType = new LazyRoleType(
       this,
+      roleTag,
+      associationTag,
       associationObjectType,
       roleObjectType,
       this.multiplicity,

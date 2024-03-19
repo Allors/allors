@@ -6,8 +6,11 @@ import {
 } from '@allors/workspace/system/meta';
 
 import { InternalComposite } from './internal/internal-composite';
+import { InternalMetaPopulation } from './internal/internal-meta-population';
 
 export class LazyAssociationType implements AssociationType {
+  metaPopulation: InternalMetaPopulation;
+  
   readonly kind = 'AssociationType';
   readonly _ = {};
   isRoleType = false;
@@ -25,11 +28,14 @@ export class LazyAssociationType implements AssociationType {
 
   constructor(
     public roleType: RoleType,
+    public tag: string,
     public objectType: InternalComposite,
     multiplicity: Multiplicity
   ) {
+    this.metaPopulation = roleType.metaPopulation as InternalMetaPopulation;
+
     this.relationType = roleType.relationType;
-    this.operandTag = this.relationType.tag;
+    this.operandTag = this.tag;
     this.isOne = (multiplicity & 2) == 0;
     this.isMany = !this.isOne;
     this.singularName =

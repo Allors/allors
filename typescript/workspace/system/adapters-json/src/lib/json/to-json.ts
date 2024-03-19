@@ -214,7 +214,7 @@ function sortingsToJson(from: DataSort[]): Sort[] {
 
   return from.map((v) => {
     return {
-      r: v.roleType.relationType.tag,
+      r: v.roleType.tag,
       d: v.sortDirection,
     };
   });
@@ -312,12 +312,12 @@ export function objectTypeToJson(from: ObjectType): string {
 }
 
 export function roleTypeToJson(from: RoleType): string {
-  return from?.relationType.tag;
+  return from?.tag;
 }
 
 export function asAssociationTypeToJson(from: RelationEndType): string {
   if (from?.isAssociationType) {
-    return (from as AssociationType).relationType.tag;
+    return (from as AssociationType).tag;
   }
 
   return null;
@@ -325,7 +325,7 @@ export function asAssociationTypeToJson(from: RelationEndType): string {
 
 export function asRoleTypeToJson(from: RelationEndType): string {
   if (from?.isRoleType) {
-    return (from as RoleType).relationType.tag;
+    return (from as RoleType).tag;
   }
 
   return null;
@@ -366,7 +366,7 @@ export function poolToJson(from: Map<IObject, number>): number[][] {
 }
 
 export function pathsToJson(from: RoleType[]): string[] {
-  return from?.map((v) => v.relationType.tag);
+  return from?.map((v) => v.tag);
 }
 
 function map<T1, T2>(

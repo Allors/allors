@@ -1,19 +1,22 @@
 export type RelationTypeData =
   | [
-      tag: string,
+      roleTag: string,
+      associationTag: string,
       roleObjectType: string,
       sizeOrScale?: number,
       precision?: number
     ]
   | [
-      tag: string,
+      roleTag: string,
+      associationTag: string,
       roleObjectType: string,
       singularName?: string,
       sizeOrScale?: number,
       precision?: number
     ]
   | [
-      tag: string,
+      roleTag: string,
+      associationTag: string,
       roleObjectType: string,
       singularName?: string,
       pluralName?: string,

@@ -24,7 +24,7 @@ export abstract class AssociationField extends Field {
 
   @HostBinding('attr.data-allors-associationtype')
   get dataAllorsAssociationType() {
-    return this.associationType?.relationType.tag;
+    return this.associationType?.tag;
   }
 
   @Input()

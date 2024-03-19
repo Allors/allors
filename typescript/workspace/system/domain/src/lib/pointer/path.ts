@@ -121,7 +121,7 @@ export function pathTag(path: Path): string {
 
   let next = path;
   while (next.next) {
-    tag = `${tag ? `_${tag}` : tag}${next.relationEndType.relationType.tag}`;
+    tag = `${tag ? `_${tag}` : tag}${next.relationEndType.tag}`;
     next = next.next;
   }
 
