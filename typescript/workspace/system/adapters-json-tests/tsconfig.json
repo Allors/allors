@@ -3,6 +3,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "paths": {
+      // System
       "@allors/database-system-protocol-json": ["database/system/protocol-json/src/index.ts"],
       "@allors/workspace-system-adapters": ["workspace/system/adapters/src/index.ts"],
       "@allors/workspace-system-adapters-json": ["workspace/system/adapters-json/src/index.ts"],
@@ -12,6 +13,7 @@
       "@allors/workspace-system-meta": ["workspace/system/meta/src/index.ts"],
       "@allors/workspace-system-meta/tests": ["libs/system/workspace/meta-tests/src/index.ts"],
       "@allors/workspace-system-domain": ["workspace/system/domain/src/index.ts"],
+      // Default
       "@allors/workspace-default-meta": ["workspace/base/meta/src/index.ts"],
       "@allors/workspace-default-meta-json": ["workspace/base/meta-json/src/index.ts"],
       "@allors/workspace-default-domain": ["workspace/base/domain/src/index.ts"]
