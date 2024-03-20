@@ -38,7 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   AllorsFocusDirective,
   AllorsBarcodeDirective,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 import {
   AllorsMaterialDialogComponent,

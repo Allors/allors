@@ -5,8 +5,8 @@ import {
   Interface,
   UnitTags,
   Multiplicity,
-} from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
+} from '@allors/workspace-system-meta';
+import { LazyMetaPopulation } from '@allors/workspace-system-meta-json';
 
 describe('Unit Relation in MetaPopulation', () => {
   describe('with minimal unit relation metadata', () => {

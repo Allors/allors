@@ -6,10 +6,10 @@ import { Subscription } from 'rxjs';
 import {
   ContextService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { Organization } from '@allors/workspace/default/domain';
-import { M } from '@allors/workspace/default/meta';
+} from '@allors/workspace-base-angular-foundation';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
+import { Organization } from '@allors/workspace-default-domain';
+import { M } from '@allors/workspace-default-meta';
 
 @Component({
   templateUrl: './fetch.component.html',

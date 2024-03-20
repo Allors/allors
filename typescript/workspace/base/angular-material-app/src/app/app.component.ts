@@ -4,8 +4,8 @@ import {
   RefreshService,
   SharedPullService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
-import { SharedPullHandler } from '@allors/workspace/system/domain';
+} from '@allors/workspace-base-angular-foundation';
+import { SharedPullHandler } from '@allors/workspace-system-domain';
 import { Router } from '@angular/router';
 
 @Component({

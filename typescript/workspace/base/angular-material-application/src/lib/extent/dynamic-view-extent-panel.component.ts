@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { Composite, humanize, RoleType } from '@allors/workspace/system/meta';
+import { Composite, humanize, RoleType } from '@allors/workspace-system-meta';
 import {
   IObject,
   IPullResult,
@@ -8,22 +8,22 @@ import {
   SharedPullHandler,
   selectLeaf,
   toSelect,
-} from '@allors/workspace/system/domain';
-import { Period } from '@allors/workspace/default/domain';
+} from '@allors/workspace-system-domain';
+import { Period } from '@allors/workspace-default-domain';
 import {
   SharedPullService,
   RefreshService,
   WorkspaceService,
   DisplayService,
   MetaService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   PanelService,
   ScopedService,
   AllorsDynamicViewExtentPanelComponent,
-} from '@allors/workspace/base/angular/application';
-import { M } from '@allors/workspace/default/meta';
-import { PeriodSelection } from '@allors/workspace/base/angular/material/foundation';
+} from '@allors/workspace-base-angular-application';
+import { M } from '@allors/workspace-default-meta';
+import { PeriodSelection } from '@allors/workspace-base-angular-material-foundation';
 
 @Component({
   selector: 'a-mat-dyn-view-extent-panel',

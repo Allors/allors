@@ -35,12 +35,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import {} from '@allors/workspace/base/angular/material/foundation';
+import {} from '@allors/workspace-base-angular-material-foundation';
 
 import {
   AllorsFocusDirective,
   AllorsBarcodeDirective,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 import {
   AllorsMaterialAssociationAutoCompleteComponent,
@@ -66,7 +66,7 @@ import {
   AllorsMaterialStaticComponent,
   AllorsMaterialTextareaComponent,
   AllorsMaterialTableComponent,
-} from '@allors/workspace/base/angular/material/foundation';
+} from '@allors/workspace-base-angular-material-foundation';
 
 import {
   AllorsMaterialErrorDialogComponent,

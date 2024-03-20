@@ -3,7 +3,7 @@ import {
   Composite,
   RelationEndType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import { IObject } from '../iobject';
 import { IStrategy } from '../istrategy';
 

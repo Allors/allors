@@ -74,13 +74,13 @@ import {
   ActionService,
   TemplateHostDirective,
   ThrottledDirective,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 import {
   // Services
   NavigationService,
   MenuService,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 
 import {
   // Components
@@ -109,12 +109,12 @@ import {
   AllorsMaterialStaticComponent,
   AllorsMaterialTextareaComponent,
   AllorsMaterialTableComponent,
-} from '@allors/workspace/base/angular/material/foundation';
+} from '@allors/workspace-base-angular-material-foundation';
 
 import {
   // Service
   HyperlinkService,
-} from '@allors/workspace/base/angular/material/application';
+} from '@allors/workspace-base-angular-material-application';
 
 import {
   // Services
@@ -143,7 +143,7 @@ import {
   AllorsMaterialDynamicSummaryPanelComponent,
   AllorsMaterialDynamicViewDetailPanelComponent,
   AllorsMaterialDynamicViewExtentPanelComponent,
-} from '@allors/workspace/base/angular/material/application';
+} from '@allors/workspace-base-angular-material-application';
 
 import { routes, components as routeComponents } from './app.routes';
 import { components as dialogComponents } from './app.dialog';

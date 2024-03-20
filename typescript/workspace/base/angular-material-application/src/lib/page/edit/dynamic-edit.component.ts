@@ -13,8 +13,8 @@ import {
   FormService,
   MetaService,
   TemplateHostDirective,
-} from '@allors/workspace/base/angular/foundation';
-import { Composite, humanize } from '@allors/workspace/system/meta';
+} from '@allors/workspace-base-angular-foundation';
+import { Composite, humanize } from '@allors/workspace-system-meta';
 import { Subscription, tap } from 'rxjs';
 
 @Component({

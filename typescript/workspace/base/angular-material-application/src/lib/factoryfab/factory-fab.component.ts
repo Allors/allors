@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Class, Composite } from '@allors/workspace/system/meta';
-import { IObject, Initializer } from '@allors/workspace/system/domain';
+import { Class, Composite } from '@allors/workspace-system-meta';
+import { IObject, Initializer } from '@allors/workspace-system-domain';
 import {
   AllorsComponent,
   CreateRequest,
   CreateService,
   MetaService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { IconService } from '../icon/icon.service';
 
 @Component({

@@ -1,13 +1,13 @@
 import { Component, Self } from '@angular/core';
-import { Country } from '@allors/workspace/default/domain';
+import { Country } from '@allors/workspace-default-domain';
 import {
   AllorsFormComponent,
   ErrorService,
-} from '@allors/workspace/base/angular/foundation';
-import { ContextService } from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
+import { ContextService } from '@allors/workspace-base-angular-foundation';
 import { NgForm } from '@angular/forms';
-import { M } from '@allors/workspace/default/meta';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
+import { M } from '@allors/workspace-default-meta';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
 
 @Component({
   templateUrl: 'country-form.component.html',

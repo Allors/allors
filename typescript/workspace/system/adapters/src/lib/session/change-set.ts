@@ -1,10 +1,10 @@
-import { IChangeSet, IObject } from '@allors/workspace/system/domain';
+import { IChangeSet, IObject } from '@allors/workspace-system-domain';
 import {
   AssociationType,
   RelationEndType,
   RelationType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { MapMap } from '../collections/map-map';
 import { frozenEmptySet } from '../collections/frozen-empty-set';

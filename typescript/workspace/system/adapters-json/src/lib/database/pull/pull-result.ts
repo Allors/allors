@@ -4,16 +4,16 @@ import {
   ISession,
   IWorkspace,
   IUnit,
-} from '@allors/workspace/system/domain';
-import { PullResponse } from '@allors/database/system/protocol/json';
+} from '@allors/workspace-system-domain';
+import { PullResponse } from '@allors/database-system-protocol-json';
 import { Result } from '../result';
 import {
   AssociationType,
   Class,
   Interface,
   RoleType,
-} from '@allors/workspace/system/meta';
-import { frozenEmptyMap } from '@allors/workspace/system/adapters';
+} from '@allors/workspace-system-meta';
+import { frozenEmptyMap } from '@allors/workspace-system-adapters';
 
 export class PullResult extends Result implements IPullResult {
   mergeErrors: IObject[];

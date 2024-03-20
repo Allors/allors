@@ -1,8 +1,8 @@
 import {
   Session,
   Strategy as SystemStrategy,
-} from '@allors/workspace/system/adapters';
-import { Class } from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-adapters';
+import { Class } from '@allors/workspace-system-meta';
 import { DatabaseState } from './originstate/database-origin-state';
 import { DatabaseRecord } from '../database/database-record';
 

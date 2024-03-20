@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import {
   AllorsComponent,
   PromptType,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { AllorsMaterialDialogData } from './dialog.data';
 
 @Component({

@@ -1,5 +1,5 @@
-import { IObject } from '@allors/workspace/system/domain';
-import { RelationEndType } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace-system-domain';
+import { RelationEndType } from '@allors/workspace-system-meta';
 import { MapMap } from '../../collections/map-map';
 import { IRange, Ranges } from '../../collections/ranges/ranges';
 

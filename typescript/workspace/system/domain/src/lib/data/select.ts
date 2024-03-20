@@ -1,4 +1,4 @@
-import { Composite, RelationEndType } from '@allors/workspace/system/meta';
+import { Composite, RelationEndType } from '@allors/workspace-system-meta';
 import { Node } from '../pointer/node';
 
 export interface Select {

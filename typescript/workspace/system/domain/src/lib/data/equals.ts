@@ -1,4 +1,4 @@
-import { RelationEndType, RoleType } from '@allors/workspace/system/meta';
+import { RelationEndType, RoleType } from '@allors/workspace-system-meta';
 import { IObject } from '../iobject';
 import { IUnit } from '../types';
 import { ParameterizablePredicateBase } from './parameterizable-predicate';

@@ -1,14 +1,14 @@
 import { Component, Self } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Country, Organization } from '@allors/workspace/default/domain';
+import { Country, Organization } from '@allors/workspace-default-domain';
 import {
   AllorsFormComponent,
   ContextService,
   SearchFactory,
-} from '@allors/workspace/base/angular/foundation';
-import { ErrorService } from '@allors/workspace/base/angular/foundation';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/workspace/default/meta';
+} from '@allors/workspace-base-angular-foundation';
+import { ErrorService } from '@allors/workspace-base-angular-foundation';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
+import { M } from '@allors/workspace-default-meta';
 
 @Component({
   templateUrl: './organisation-form.component.html',

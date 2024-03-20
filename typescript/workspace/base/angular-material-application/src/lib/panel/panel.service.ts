@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import {
   EditBlocking,
   RefreshService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   Panel,
   PanelService,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 
 @Injectable()
 export class AllorsMaterialPanelService extends PanelService {

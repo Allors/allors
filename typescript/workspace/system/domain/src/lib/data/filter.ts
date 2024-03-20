@@ -1,4 +1,4 @@
-import { Composite } from '@allors/workspace/system/meta';
+import { Composite } from '@allors/workspace-system-meta';
 import { Predicate } from './predicate';
 import { Sort } from './sort';
 

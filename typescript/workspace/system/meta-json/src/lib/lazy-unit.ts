@@ -1,4 +1,4 @@
-import { Unit, UnitTags } from '@allors/workspace/system/meta';
+import { Unit, UnitTags } from '@allors/workspace-system-meta';
 import { InternalMetaPopulation } from './internal/internal-meta-population';
 
 export class LazyUnit implements Unit {

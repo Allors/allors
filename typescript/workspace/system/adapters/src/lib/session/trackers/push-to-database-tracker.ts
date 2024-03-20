@@ -1,4 +1,4 @@
-import { IObject } from '@allors/workspace/system/domain';
+import { IObject } from '@allors/workspace-system-domain';
 import { DatabaseState } from '../state/database-state';
 
 export class PushToDatabaseTracker {

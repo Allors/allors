@@ -1,9 +1,9 @@
-import { M, tags } from '@allors/workspace/default/meta';
-import { Composite } from '@allors/workspace/system/meta';
+import { M, tags } from '@allors/workspace-default-meta';
+import { Composite } from '@allors/workspace-system-meta';
 import {
   FormService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 import { CountryFormComponent } from '../domain/country/form/country-form.component';
 import { EmploymentFormComponent } from '../domain/employment/form/employment-form.component';

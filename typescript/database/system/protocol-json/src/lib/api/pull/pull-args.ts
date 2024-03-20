@@ -1,4 +1,4 @@
-import { IUnit } from '@allors/workspace/system/domain';
+import { IUnit } from '@allors/workspace-system-domain';
 
 export interface PullArgs {
   /** Collections */

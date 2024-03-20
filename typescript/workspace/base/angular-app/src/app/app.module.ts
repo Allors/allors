@@ -7,13 +7,13 @@ import {
   ThrottledConfig,
   ThrottledDirective,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
-import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
-import { DatabaseConnection } from '@allors/workspace/system/adapters/json';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
-import { data } from '@allors/workspace/default/meta/json';
+} from '@allors/workspace-base-angular-foundation';
+import { PrototypeObjectFactory } from '@allors/workspace-system-adapters';
+import { DatabaseConnection } from '@allors/workspace-system-adapters-json';
+import { LazyMetaPopulation } from '@allors/workspace-system-meta-json';
+import { data } from '@allors/workspace-default-meta-json';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { M } from '@allors/workspace/default/meta';
+import { M } from '@allors/workspace-default-meta';
 
 import { AngularClient } from '../allors/angular-client';
 import { environment } from '../environments/environment';
@@ -23,7 +23,7 @@ import { HomeComponent } from './home/home.component';
 import { QueryComponent } from './query/query.component';
 import { FetchComponent } from './fetch/fetch.component';
 import { CoreContext } from '../allors/core-context';
-import { Configuration } from '@allors/workspace/system/domain';
+import { Configuration } from '@allors/workspace-system-domain';
 
 export function appInitFactory(
   workspaceService: WorkspaceService,

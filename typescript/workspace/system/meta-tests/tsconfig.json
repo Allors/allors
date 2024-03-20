@@ -4,7 +4,7 @@
     "module": "commonjs",
     "paths": {
       // System
-      "@allors/workspace/system/meta": ["workspace/system/meta/src/index.ts"],
+      "@allors/workspace-system-meta": ["workspace/system/meta/src/index.ts"],
     }
   },
   "files": [],

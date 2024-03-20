@@ -2,8 +2,8 @@ import {
   IObject,
   IObjectFactory,
   IStrategy,
-} from '@allors/workspace/system/domain';
-import { MetaPopulation, ObjectType } from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-domain';
+import { MetaPopulation, ObjectType } from '@allors/workspace-system-meta';
 
 import { ObjectBase } from './object-base';
 

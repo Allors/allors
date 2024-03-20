@@ -1,16 +1,16 @@
 import { Component, Self } from '@angular/core';
-import { Employment } from '@allors/workspace/default/domain';
+import { Employment } from '@allors/workspace-default-domain';
 import {
   AllorsFormComponent,
   ContextService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   ErrorService,
   SearchFactory,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { NgForm } from '@angular/forms';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/workspace/default/meta';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
+import { M } from '@allors/workspace-default-meta';
 
 @Component({
   templateUrl: './employment-form.component.html',

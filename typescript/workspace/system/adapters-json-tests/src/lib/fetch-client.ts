@@ -12,8 +12,8 @@ import {
   AccessResponse,
   PermissionRequest,
   PermissionResponse,
-} from '@allors/database/system/protocol/json';
-import { IDatabaseJsonClient } from '@allors/workspace/system/adapters/json';
+} from '@allors/database-system-protocol-json';
+import { IDatabaseJsonClient } from '@allors/workspace-system-adapters-json';
 
 interface AuthenticationTokenRequest {
   /** login */

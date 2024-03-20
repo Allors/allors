@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IObject } from '@allors/workspace/system/domain';
-import { Class, Composite, RoleType } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace-system-domain';
+import { Class, Composite, RoleType } from '@allors/workspace-system-meta';
 import {
   DisplayService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
-import { M } from '@allors/workspace/default/meta';
+} from '@allors/workspace-base-angular-foundation';
+import { M } from '@allors/workspace-default-meta';
 
 @Injectable()
 export class AppDisplayService implements DisplayService {

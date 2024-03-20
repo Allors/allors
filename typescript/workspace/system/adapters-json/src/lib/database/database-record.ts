@@ -1,12 +1,12 @@
-import { Class, RelationType, RoleType } from '@allors/workspace/system/meta';
+import { Class, RelationType, RoleType } from '@allors/workspace-system-meta';
 import {
   DatabaseRecord as SystemDatabaseRecord,
   IRange,
-} from '@allors/workspace/system/adapters';
+} from '@allors/workspace-system-adapters';
 import {
   SyncResponseObject,
   SyncResponseRole,
-} from '@allors/database/system/protocol/json';
+} from '@allors/database-system-protocol-json';
 import { DatabaseConnection } from './database-connection';
 import { ResponseContext } from './security/response-context';
 import { unitFromJson } from '../json/from-json';

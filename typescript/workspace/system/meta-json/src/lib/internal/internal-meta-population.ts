@@ -2,7 +2,7 @@ import {
   MetaObject,
   MetaPopulation,
   ObjectType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import { InternalComposite } from './internal-composite';
 
 export interface InternalMetaPopulation extends MetaPopulation {

@@ -6,18 +6,18 @@ import {
   humanize,
   RelationEndType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import {
   isPath,
   Path,
   pathLeaf,
   pathObjectType,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   MetaService,
   RefreshService,
   SharedPullService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { AllorsScopedPanelComponent } from '../../scoped/scoped-panel.component';
 import { ScopedService } from '../../scoped/scoped.service';
 import { PanelService } from '../../panel/panel.service';

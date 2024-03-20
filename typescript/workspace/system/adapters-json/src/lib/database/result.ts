@@ -1,10 +1,10 @@
-import { Response } from '@allors/database/system/protocol/json';
+import { Response } from '@allors/database-system-protocol-json';
 import {
   IDatabaseDerivationError,
   IObject,
   IResult,
   ISession,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import { DerivationError } from './derivation-error';
 
 export abstract class Result implements IResult {

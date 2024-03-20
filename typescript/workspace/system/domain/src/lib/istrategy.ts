@@ -3,7 +3,7 @@ import {
   Class,
   MethodType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import { IDiff } from './diff/idiff';
 import { IObject } from './iobject';
 import { ISession } from './isession';

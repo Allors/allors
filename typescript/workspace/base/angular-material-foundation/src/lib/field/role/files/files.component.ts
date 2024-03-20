@@ -6,13 +6,13 @@ import {
   Output,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { M } from '@allors/workspace/default/meta';
-import { Media } from '@allors/workspace/default/domain';
-import { WorkspaceService } from '@allors/workspace/base/angular/foundation';
+import { M } from '@allors/workspace-default-meta';
+import { Media } from '@allors/workspace-default-domain';
+import { WorkspaceService } from '@allors/workspace-base-angular-foundation';
 import {
   MediaService,
   RoleField,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 @Component({
   selector: 'a-mat-files',

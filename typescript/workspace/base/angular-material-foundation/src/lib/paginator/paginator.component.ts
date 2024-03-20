@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AllorsComponent } from '@allors/workspace/base/angular/foundation';
+import { AllorsComponent } from '@allors/workspace-base-angular-foundation';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({

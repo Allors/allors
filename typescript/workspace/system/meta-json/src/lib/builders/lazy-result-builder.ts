@@ -1,5 +1,5 @@
-import { Result } from '@allors/workspace/system/domain';
-import { MetaPopulation } from '@allors/workspace/system/meta';
+import { Result } from '@allors/workspace-system-domain';
+import { MetaPopulation } from '@allors/workspace-system-meta';
 import { LazySelectBuilder } from './lazy-select-builder';
 import { LazyTreeBuilder } from './lazy-tree-builder';
 

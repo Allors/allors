@@ -36,7 +36,7 @@ export { data } from './data.g';
 >>
 
 data(meta, workspaceName) ::= <<
-import { MetaData } from '@allors/database/system/protocol/json';
+import { MetaData } from '@allors/database-system-protocol-json';
 
 export const data: MetaData =
 {

@@ -1,8 +1,8 @@
-import { MetaPopulation } from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
-import { M } from '@allors/workspace/base/meta';
-import { data } from '@allors/workspace/base/meta/json';
-import { Filter } from '@allors/workspace/system/domain';
+import { MetaPopulation } from '@allors/workspace-system-meta';
+import { LazyMetaPopulation } from '@allors/workspace-system-meta-json';
+import { M } from '@allors/workspace-base-meta';
+import { data } from '@allors/workspace-base-meta-json';
+import { Filter } from '@allors/workspace-system-domain';
 
 describe('Pulls', () => {
   const metaPopulation = new LazyMetaPopulation(data) as MetaPopulation;

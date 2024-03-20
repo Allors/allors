@@ -2,11 +2,11 @@ import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { IObject } from '@allors/workspace/system/domain';
+import { IObject } from '@allors/workspace-system-domain';
 import {
   EditRequest,
   EditDialogService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 @Injectable()
 export class AllorsMaterialEditDialogService extends EditDialogService {

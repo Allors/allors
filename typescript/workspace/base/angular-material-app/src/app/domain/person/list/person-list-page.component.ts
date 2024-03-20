@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 
-import { Person } from '@allors/workspace/default/domain';
+import { Person } from '@allors/workspace-default-domain';
 import {
   Action,
   ContextService,
@@ -18,16 +18,16 @@ import {
   TableRow,
   Table,
   MetaService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   AllorsListPageComponent,
   NavigationService,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 import {
   DeleteActionService,
   OverviewActionService,
   SorterService,
-} from '@allors/workspace/base/angular/material/application';
+} from '@allors/workspace-base-angular-material-application';
 
 interface Row extends TableRow {
   object: Person;

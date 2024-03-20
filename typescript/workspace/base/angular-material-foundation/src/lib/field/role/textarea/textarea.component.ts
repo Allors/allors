@@ -2,7 +2,7 @@ import { take } from 'rxjs/operators';
 import { Component, Optional, ViewChild, NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { RoleField } from '@allors/workspace/base/angular/foundation';
+import { RoleField } from '@allors/workspace-base-angular-foundation';
 
 @Component({
   selector: 'a-mat-textarea',

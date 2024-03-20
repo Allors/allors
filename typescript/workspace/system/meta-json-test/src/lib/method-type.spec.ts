@@ -2,8 +2,8 @@ import {
   Composite,
   Interface,
   MethodType,
-} from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
+} from '@allors/workspace-system-meta';
+import { LazyMetaPopulation } from '@allors/workspace-system-meta-json';
 
 interface Action extends Interface {
   Do: MethodType;

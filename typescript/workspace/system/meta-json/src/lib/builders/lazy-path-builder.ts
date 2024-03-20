@@ -1,5 +1,5 @@
-import { Path } from '@allors/workspace/system/domain';
-import { Composite, MetaPopulation } from '@allors/workspace/system/meta';
+import { Path } from '@allors/workspace-system-domain';
+import { Composite, MetaPopulation } from '@allors/workspace-system-meta';
 
 export class LazyPathBuilder {
   constructor(metaPopulation: MetaPopulation) {

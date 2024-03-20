@@ -3,17 +3,17 @@ import { switchMap } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, Self, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { M } from '@allors/workspace/default/meta';
-import { Locale, Person, Organization } from '@allors/workspace/default/domain';
+import { M } from '@allors/workspace-default-meta';
+import { Locale, Person, Organization } from '@allors/workspace-default-domain';
 import {
   ContextService,
   CreateRequest,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   RefreshService,
   ErrorService,
-} from '@allors/workspace/base/angular/foundation';
-import { NavigationService } from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-foundation';
+import { NavigationService } from '@allors/workspace-base-angular-application';
 
 @Component({
   templateUrl: './person-create-dialog.component.html',

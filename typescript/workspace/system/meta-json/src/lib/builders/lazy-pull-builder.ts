@@ -1,10 +1,10 @@
-import { MetaPopulation } from '@allors/workspace/system/meta';
+import { MetaPopulation } from '@allors/workspace-system-meta';
 import {
   Filter,
   FlatPull,
   Pull,
   Result,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import { LazySelectBuilder } from './lazy-select-builder';
 import { LazyTreeBuilder } from './lazy-tree-builder';
 import { LazyResultBuilder } from './lazy-result-builder';

@@ -3,20 +3,20 @@ import { switchMap } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, Self } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { M } from '@allors/workspace/default/meta';
+import { M } from '@allors/workspace-default-meta';
 import {
   Data,
   Organization,
   Person,
   Locale,
-} from '@allors/workspace/default/domain';
-import { IPullResult } from '@allors/workspace/system/domain';
-import { ContextService } from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-default-domain';
+import { IPullResult } from '@allors/workspace-system-domain';
+import { ContextService } from '@allors/workspace-base-angular-foundation';
 import {
   ErrorService,
   SearchFactory,
-} from '@allors/workspace/base/angular/foundation';
-import { RadioGroupOption } from '@allors/workspace/base/angular/material/foundation';
+} from '@allors/workspace-base-angular-foundation';
+import { RadioGroupOption } from '@allors/workspace-base-angular-material-foundation';
 
 @Component({
   templateUrl: './fields-form.component.html',

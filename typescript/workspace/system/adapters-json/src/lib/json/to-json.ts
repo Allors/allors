@@ -4,7 +4,7 @@ import {
   ObjectType,
   RelationEndType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import {
   IUnit,
   TypeForParameter,
@@ -16,7 +16,7 @@ import {
   Select as DataSelect,
   Node as DataNode,
   IObject,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   Extent,
   ExtentKind,
@@ -27,7 +27,7 @@ import {
   Sort,
   Node,
   PredicateKind,
-} from '@allors/database/system/protocol/json';
+} from '@allors/database-system-protocol-json';
 
 export function unitToJson(from: unknown): IUnit {
   if (from == null) {

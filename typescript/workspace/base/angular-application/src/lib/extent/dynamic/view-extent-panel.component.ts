@@ -2,7 +2,7 @@ import {
   SharedPullService,
   RefreshService,
   MetaService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { Directive } from '@angular/core';
 import { PanelService } from '../../panel/panel.service';
 import { ScopedService } from '../../scoped/scoped.service';

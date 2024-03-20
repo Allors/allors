@@ -8,7 +8,7 @@ import {
   IPullResult,
   Pull,
   SharedPullHandler,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   combineLatest,
   delay,
@@ -23,13 +23,13 @@ import {
   RefreshService,
   SharedPullService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { ScopedService } from '../scoped/scoped.service';
 import { Scoped } from '../scoped/scoped';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationActivatedRoute } from '../navigation/navigation-activated-route';
 import { PanelService } from '../panel/panel.service';
-import { Composite } from '@allors/workspace/system/meta';
+import { Composite } from '@allors/workspace-system-meta';
 
 @Directive()
 export abstract class AllorsOverviewPageComponent

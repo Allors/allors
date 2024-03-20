@@ -1,12 +1,12 @@
 import { HostBinding, Directive } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Composite } from '@allors/workspace/system/meta';
-import { M } from '@allors/workspace/default/meta';
+import { Composite } from '@allors/workspace-system-meta';
+import { M } from '@allors/workspace-default-meta';
 import {
   AllorsComponent,
   ContextService,
   MetaService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 @Directive()
 export abstract class AllorsListPageComponent extends AllorsComponent {

@@ -1,6 +1,6 @@
 import { Component, Optional, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { RoleField } from '@allors/workspace/base/angular/foundation';
+import { RoleField } from '@allors/workspace-base-angular-foundation';
 
 @Component({
   selector: 'a-mat-slidetoggle',

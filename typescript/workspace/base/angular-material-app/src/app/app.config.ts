@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { WorkspaceService } from '@allors/workspace/base/angular/foundation';
+import { WorkspaceService } from '@allors/workspace-base-angular-foundation';
 
 import { AppClient } from './app.client';
-import { Configuration } from '@allors/workspace/system/domain';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
-import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
-import { DatabaseConnection } from '@allors/workspace/system/adapters/json';
-import { data } from '@allors/workspace/default/meta/json';
-import { M } from '@allors/workspace/default/meta';
+import { Configuration } from '@allors/workspace-system-domain';
+import { LazyMetaPopulation } from '@allors/workspace-system-meta-json';
+import { PrototypeObjectFactory } from '@allors/workspace-system-adapters';
+import { DatabaseConnection } from '@allors/workspace-system-adapters-json';
+import { data } from '@allors/workspace-default-meta-json';
+import { M } from '@allors/workspace-default-meta';
 import { AppContext } from './app.context';
 
 export function config(

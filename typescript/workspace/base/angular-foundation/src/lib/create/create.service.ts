@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { Composite } from '@allors/workspace/system/meta';
-import { IObject } from '@allors/workspace/system/domain';
+import { Composite } from '@allors/workspace-system-meta';
+import { IObject } from '@allors/workspace-system-domain';
 import { Injectable } from '@angular/core';
 import { CreateRequest } from './create-request';
 

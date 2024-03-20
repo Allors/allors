@@ -1,4 +1,4 @@
-import { RelationEndType } from '@allors/workspace/system/meta';
+import { RelationEndType } from '@allors/workspace-system-meta';
 
 export interface Initializer {
   relationEndType: RelationEndType;

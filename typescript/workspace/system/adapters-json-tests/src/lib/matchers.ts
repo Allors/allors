@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals';
-import { IObject } from '@allors/workspace/system/domain';
+import { IObject } from '@allors/workspace-system-domain';
 
 expect.extend({
   toEqualObjects(objects: IObject[], names: string[]) {

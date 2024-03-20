@@ -1,5 +1,5 @@
 import { Subscription, tap } from 'rxjs';
-import { Class, Composite, humanize } from '@allors/workspace/system/meta';
+import { Class, Composite, humanize } from '@allors/workspace-system-meta';
 import {
   Component,
   Inject,
@@ -15,7 +15,7 @@ import {
   FormService,
   MetaService,
   TemplateHostDirective,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 @Component({
   selector: 'a-mat-dynamic-create',

@@ -1,8 +1,8 @@
-import { NavigationService } from '@allors/workspace/base/angular/application';
-import { WorkspaceService } from '@allors/workspace/base/angular/foundation';
-import { M } from '@allors/workspace/default/meta';
-import { IObject } from '@allors/workspace/system/domain';
-import { Composite } from '@allors/workspace/system/meta';
+import { NavigationService } from '@allors/workspace-base-angular-application';
+import { WorkspaceService } from '@allors/workspace-base-angular-foundation';
+import { M } from '@allors/workspace-default-meta';
+import { IObject } from '@allors/workspace-system-domain';
+import { Composite } from '@allors/workspace-system-meta';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 

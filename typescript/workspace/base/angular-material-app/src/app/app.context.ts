@@ -3,7 +3,7 @@ import { from, Observable } from 'rxjs';
 import {
   Context,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   Configuration,
   IInvokeResult,
@@ -15,8 +15,8 @@ import {
   IWorkspace,
   Method,
   Pull,
-} from '@allors/workspace/system/domain';
-import { Class, Composite } from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-domain';
+import { Class, Composite } from '@allors/workspace-system-meta';
 
 export class AppContext implements Context {
   constructor(public workspaceService: WorkspaceService) {

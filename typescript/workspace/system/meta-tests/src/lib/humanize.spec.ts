@@ -1,4 +1,4 @@
-import { humanize } from '@allors/workspace/system/meta';
+import { humanize } from '@allors/workspace-system-meta';
 
 describe('humanize', function () {
   describe('camelCased', function () {

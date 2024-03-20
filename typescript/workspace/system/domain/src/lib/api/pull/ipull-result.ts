@@ -3,7 +3,7 @@ import {
   Class,
   Interface,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import { IObject } from '../../iobject';
 import { IUnit } from '../../types';
 import { IResult } from '../iresult';

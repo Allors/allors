@@ -1,7 +1,7 @@
 ﻿import { Observable, EMPTY } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { RoleType } from '@allors/workspace/system/meta';
+import { RoleType } from '@allors/workspace-system-meta';
 import {
   IObject,
   And,
@@ -10,8 +10,8 @@ import {
   IPullResult,
   Like,
   Pull,
-} from '@allors/workspace/system/domain';
-import { Context } from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-system-domain';
+import { Context } from '@allors/workspace-base-angular-foundation';
 
 import { SearchOptions } from './search-options';
 

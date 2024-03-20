@@ -1,10 +1,10 @@
 import {
   Sorter,
   SorterService,
-} from '@allors/workspace/base/angular/material/application';
-import { WorkspaceService } from '@allors/workspace/base/angular/foundation';
-import { M, tags } from '@allors/workspace/default/meta';
-import { Composite } from '@allors/workspace/system/meta';
+} from '@allors/workspace-base-angular-material-application';
+import { WorkspaceService } from '@allors/workspace-base-angular-foundation';
+import { M, tags } from '@allors/workspace-default-meta';
+import { Composite } from '@allors/workspace-system-meta';
 import { Injectable } from '@angular/core';
 
 @Injectable()

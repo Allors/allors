@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, throwError } from 'rxjs';
-import { IObject } from '@allors/workspace/system/domain';
-import { Composite } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace-system-domain';
+import { Composite } from '@allors/workspace-system-meta';
 import {
   CreateRequest,
   CreateService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 @Injectable()
 export class AllorsMaterialCreateService extends CreateService {

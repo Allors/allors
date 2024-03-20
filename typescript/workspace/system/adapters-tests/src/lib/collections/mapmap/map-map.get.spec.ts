@@ -2,7 +2,7 @@ import {
   MapMap,
   IRange,
   DefaultNumberRanges,
-} from '@allors/workspace/system/adapters';
+} from '@allors/workspace-system-adapters';
 import { mm } from './mm';
 
 describe('MapMap', () => {

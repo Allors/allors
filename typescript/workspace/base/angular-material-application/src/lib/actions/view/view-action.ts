@@ -3,8 +3,8 @@ import {
   Action,
   ActionTarget,
   EditDialogService,
-} from '@allors/workspace/base/angular/foundation';
-import { NavigationService } from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-foundation';
+import { NavigationService } from '@allors/workspace-base-angular-application';
 import { OverviewAction } from '../overview/overview-action';
 import { EditAction } from '../edit/edit-action';
 import { OverviewActionService } from '../overview/overview-action.service';

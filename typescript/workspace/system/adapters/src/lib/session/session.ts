@@ -8,12 +8,12 @@ import {
   ISession,
   Method,
   Pull,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   AssociationType,
   Class,
   Composite,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { Workspace } from '../workspace/workspace';
 import { ObjectBase } from '../object-base';

@@ -1,10 +1,10 @@
-import { RelationTypeData } from '@allors/database/system/protocol/json';
+import { RelationTypeData } from '@allors/database-system-protocol-json';
 import {
   AssociationType,
   ObjectType,
   RelationType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { Lookup } from './utils/lookup';
 import { InternalComposite } from './internal/internal-composite';

@@ -11,8 +11,8 @@ import {
   Response,
   SyncRequest,
   SyncResponse,
-} from '@allors/database/system/protocol/json';
-import { IDatabaseJsonClient } from '@allors/workspace/system/adapters/json';
+} from '@allors/database-system-protocol-json';
+import { IDatabaseJsonClient } from '@allors/workspace-system-adapters-json';
 import { HttpClient } from '@angular/common/http';
 
 export class AngularClient implements IDatabaseJsonClient {

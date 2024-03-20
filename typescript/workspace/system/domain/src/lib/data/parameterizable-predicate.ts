@@ -1,4 +1,4 @@
-import { ObjectType } from '@allors/workspace/system/meta';
+import { ObjectType } from '@allors/workspace-system-meta';
 import { Between } from './between';
 import { In } from './in';
 import { Has } from './has';

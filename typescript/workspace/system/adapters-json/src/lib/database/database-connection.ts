@@ -6,24 +6,24 @@ import {
   AccessResponse,
   PermissionRequest,
   PermissionResponse,
-} from '@allors/database/system/protocol/json';
+} from '@allors/database-system-protocol-json';
 import {
   Grant,
   DatabaseConnection as SystemDatabaseConnection,
   MapMap,
   Revocation,
-} from '@allors/workspace/system/adapters';
+} from '@allors/workspace-system-adapters';
 import {
   Configuration,
   IWorkspace,
   Operations,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   Class,
   MethodType,
   OperandType,
   RelationType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import { DatabaseRecord } from './database-record';
 import { ResponseContext } from './security/response-context';
 import { Workspace } from '../workspace/workspace';

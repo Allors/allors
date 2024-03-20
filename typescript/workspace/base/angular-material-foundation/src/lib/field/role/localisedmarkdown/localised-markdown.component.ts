@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { LocalisedRoleField } from '@allors/workspace/base/angular/foundation';
+import { LocalisedRoleField } from '@allors/workspace-base-angular-foundation';
 import EasyMDE from 'easymde';
 
 @Component({

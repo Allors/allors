@@ -2,15 +2,15 @@ import {
   PushRequestNewObject,
   PushRequestObject,
   PushRequestRole,
-} from '@allors/database/system/protocol/json';
+} from '@allors/database-system-protocol-json';
 import {
   DatabaseState as SystemDatabaseState,
   DatabaseRecord,
   Strategy,
   IRange,
-} from '@allors/workspace/system/adapters';
+} from '@allors/workspace-system-adapters';
 import { unitToJson } from '../../json/to-json';
-import { IObject } from '@allors/workspace/system/domain';
+import { IObject } from '@allors/workspace-system-domain';
 
 export class DatabaseState extends SystemDatabaseState {
   constructor(public object: IObject, record: DatabaseRecord) {

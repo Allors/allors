@@ -1,4 +1,4 @@
-import { MapMap, IRange } from '@allors/workspace/system/adapters';
+import { MapMap, IRange } from '@allors/workspace-system-adapters';
 
 describe('MapMap', () => {
   describe('after construction', () => {

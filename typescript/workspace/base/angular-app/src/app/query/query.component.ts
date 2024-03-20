@@ -5,10 +5,10 @@ import { Subscription } from 'rxjs';
 import {
   ContextService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/workspace/default/meta';
-import { Organization } from '@allors/workspace/default/domain';
+} from '@allors/workspace-base-angular-foundation';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
+import { M } from '@allors/workspace-default-meta';
+import { Organization } from '@allors/workspace-default-domain';
 
 @Component({
   templateUrl: './query.component.html',

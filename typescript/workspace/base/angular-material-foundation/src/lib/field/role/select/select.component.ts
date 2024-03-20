@@ -6,8 +6,8 @@ import {
   Output,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IObject } from '@allors/workspace/system/domain';
-import { RoleField } from '@allors/workspace/base/angular/foundation';
+import { IObject } from '@allors/workspace-system-domain';
+import { RoleField } from '@allors/workspace-base-angular-foundation';
 
 @Component({
   selector: 'a-mat-select',

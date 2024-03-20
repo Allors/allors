@@ -1,9 +1,9 @@
-import { MetaPopulation } from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
-import { data } from '@allors/workspace/default/meta/json';
-import { DatabaseConnection } from '@allors/workspace/system/adapters/json';
-import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
-import { M } from '@allors/workspace/default/meta';
+import { MetaPopulation } from '@allors/workspace-system-meta';
+import { LazyMetaPopulation } from '@allors/workspace-system-meta-json';
+import { data } from '@allors/workspace-default-meta-json';
+import { DatabaseConnection } from '@allors/workspace-system-adapters-json';
+import { PrototypeObjectFactory } from '@allors/workspace-system-adapters';
+import { M } from '@allors/workspace-default-meta';
 
 import { FetchClient } from './fetch-client';
 import {
@@ -11,8 +11,8 @@ import {
   ISession,
   IWorkspace,
   Pull,
-} from '@allors/workspace/system/domain';
-import { C1, C2 } from '@allors/workspace/default/domain';
+} from '@allors/workspace-system-domain';
+import { C1, C2 } from '@allors/workspace-default-domain';
 
 const BASE_URL = 'http://localhost:5000/allors/';
 const AUTH_URL = 'TestAuthentication/Token';

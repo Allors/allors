@@ -1,4 +1,4 @@
-import { Class, RoleType } from '@allors/workspace/system/meta';
+import { Class, RoleType } from '@allors/workspace-system-meta';
 import { IRecord } from '../irecord';
 
 export abstract class DatabaseRecord implements IRecord {

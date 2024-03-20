@@ -1,5 +1,5 @@
-import { ObjectTypeData } from '@allors/database/system/protocol/json';
-import { RelationType, RoleType } from '@allors/workspace/system/meta';
+import { ObjectTypeData } from '@allors/database-system-protocol-json';
+import { RelationType, RoleType } from '@allors/workspace-system-meta';
 
 import { Lookup } from './utils/lookup';
 import { InternalMetaPopulation } from './internal/internal-meta-population';

@@ -1,4 +1,4 @@
-import { Composite, RoleType } from '@allors/workspace/system/meta';
+import { Composite, RoleType } from '@allors/workspace-system-meta';
 import { Injectable } from '@angular/core';
 
 @Injectable()

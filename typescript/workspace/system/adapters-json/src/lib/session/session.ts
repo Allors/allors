@@ -3,8 +3,8 @@ import {
   PullRequest,
   PullResponse,
   PushRequest,
-} from '@allors/database/system/protocol/json';
-import { Session as SystemSession } from '@allors/workspace/system/adapters';
+} from '@allors/database-system-protocol-json';
+import { Session as SystemSession } from '@allors/workspace-system-adapters';
 import {
   IInvokeResult,
   InvokeOptions,
@@ -14,8 +14,8 @@ import {
   Method,
   Pull,
   ResultError,
-} from '@allors/workspace/system/domain';
-import { Class } from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-domain';
+import { Class } from '@allors/workspace-system-meta';
 import { DatabaseConnection } from '../database/database-connection';
 import { DatabaseRecord } from '../database/database-record';
 import { InvokeResult } from '../database/invoke/invoke-result';

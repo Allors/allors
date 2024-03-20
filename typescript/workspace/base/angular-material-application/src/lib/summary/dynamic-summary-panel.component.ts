@@ -1,6 +1,6 @@
 import { delay, pipe, Subscription, tap } from 'rxjs';
 import { Component, OnDestroy } from '@angular/core';
-import { Composite, RoleType } from '@allors/workspace/system/meta';
+import { Composite, RoleType } from '@allors/workspace-system-meta';
 import {
   IObject,
   IPullResult,
@@ -8,7 +8,7 @@ import {
   Pull,
   nodeResolve,
   pathResolve,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   Action,
   ActionService,
@@ -16,14 +16,14 @@ import {
   RefreshService,
   SharedPullService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   AllorsViewSummaryPanelComponent,
   NavigationService,
   Scoped,
   ScopedService,
   PanelService,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 import { HyperlinkType } from '../hyperlink/hyperlink-type';
 import { HyperlinkService } from '../hyperlink/hyperlink.service';
 import { IconService } from '../icon/icon.service';

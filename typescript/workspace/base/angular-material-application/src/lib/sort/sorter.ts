@@ -2,8 +2,8 @@ import { Sort as MaterialSort } from '@angular/material/sort';
 import {
   Sort as AllorsSort,
   SortDirection,
-} from '@allors/workspace/system/domain';
-import { RoleType } from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-domain';
+import { RoleType } from '@allors/workspace-system-meta';
 
 export class Sorter {
   private config: { [index: string]: RoleType | RoleType[] };

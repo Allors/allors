@@ -1,4 +1,4 @@
-import { IObject } from '@allors/workspace/system/domain';
+import { IObject } from '@allors/workspace-system-domain';
 import { Strategy } from '../../session/strategy';
 import { Ranges } from './ranges';
 

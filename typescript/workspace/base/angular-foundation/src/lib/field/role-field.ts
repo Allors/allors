@@ -1,8 +1,8 @@
 import { Input, Directive, HostBinding } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { RoleType, humanize, UnitTags } from '@allors/workspace/system/meta';
-import { IObject } from '@allors/workspace/system/domain';
+import { RoleType, humanize, UnitTags } from '@allors/workspace-system-meta';
+import { IObject } from '@allors/workspace-system-domain';
 
 import { Field } from './field';
 

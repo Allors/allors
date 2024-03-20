@@ -1,4 +1,4 @@
-import { MetaPopulation } from '@allors/workspace/system/meta';
+import { MetaPopulation } from '@allors/workspace-system-meta';
 
 export class LazyTreeBuilder {
   constructor(metaPopulation: MetaPopulation) {

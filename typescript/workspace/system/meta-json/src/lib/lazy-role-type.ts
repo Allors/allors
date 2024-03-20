@@ -1,4 +1,4 @@
-import { RelationTypeData } from '@allors/database/system/protocol/json';
+import { RelationTypeData } from '@allors/database-system-protocol-json';
 import {
   pluralize,
   Multiplicity,
@@ -7,7 +7,7 @@ import {
   RelationType,
   ObjectType,
   Unit,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { Lookup } from './utils/lookup';
 import { InternalComposite } from './internal/internal-composite';

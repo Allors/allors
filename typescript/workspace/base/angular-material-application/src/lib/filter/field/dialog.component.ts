@@ -10,14 +10,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { assert } from '@allors/workspace/system/meta';
-import { parameterizablePredicateObjectType } from '@allors/workspace/system/domain';
+import { assert } from '@allors/workspace-system-meta';
+import { parameterizablePredicateObjectType } from '@allors/workspace-system-domain';
 import {
   AllorsComponent,
   Filter,
   FilterField,
   FilterFieldDefinition,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 @Component({
   templateUrl: 'dialog.component.html',

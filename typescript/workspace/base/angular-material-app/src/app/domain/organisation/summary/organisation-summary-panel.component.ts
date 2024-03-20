@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { Organization } from '@allors/workspace/default/domain';
+import { Organization } from '@allors/workspace-default-domain';
 import {
   RefreshService,
   SharedPullService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   AllorsViewSummaryPanelComponent,
   NavigationService,
   PanelService,
   ScopedService,
-} from '@allors/workspace/base/angular/application';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/workspace/default/meta';
+} from '@allors/workspace-base-angular-application';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
+import { M } from '@allors/workspace-default-meta';
 
 @Component({
   selector: 'organisation-summary-panel',

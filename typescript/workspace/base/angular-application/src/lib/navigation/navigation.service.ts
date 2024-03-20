@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IObject } from '@allors/workspace/system/domain';
-import { Composite, ObjectType } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace-system-domain';
+import { Composite, ObjectType } from '@allors/workspace-system-meta';
 
 @Injectable()
 export abstract class NavigationService {

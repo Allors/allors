@@ -3,7 +3,7 @@ import {
   Multiplicity,
   RelationType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { InternalComposite } from './internal/internal-composite';
 import { InternalMetaPopulation } from './internal/internal-meta-population';

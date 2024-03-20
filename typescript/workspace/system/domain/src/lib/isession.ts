@@ -1,4 +1,4 @@
-import { Class, Composite } from '@allors/workspace/system/meta';
+import { Class, Composite } from '@allors/workspace-system-meta';
 
 import { IObject } from './iobject';
 import { IWorkspace } from './iworkspace';

@@ -3,7 +3,7 @@ import {
   IObject,
   IStrategy,
   IUnit,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   AssociationType,
   Class,
@@ -11,7 +11,7 @@ import {
   MethodType,
   RoleType,
   UnitTags,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { DatabaseState } from './state/database-state';
 import { frozenEmptyArray } from '../collections/frozen-empty-array';

@@ -8,8 +8,8 @@ import {
   RoleType,
   assert,
   humanize,
-} from '@allors/workspace/system/meta';
-import { IObject } from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-meta';
+import { IObject } from '@allors/workspace-system-domain';
 
 import { Field } from './field';
 

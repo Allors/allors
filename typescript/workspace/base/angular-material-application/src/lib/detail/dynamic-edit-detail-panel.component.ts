@@ -3,7 +3,7 @@ import {
   PanelService,
   ScopedService,
   AllorsEditDetailPanelComponent,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 import {
   AllorsForm,
   DisplayService,
@@ -11,9 +11,9 @@ import {
   RefreshService,
   SharedPullService,
   TemplateHostDirective,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { map, Subscription, tap } from 'rxjs';
-import { IPullResult, Pull } from '@allors/workspace/system/domain';
+import { IPullResult, Pull } from '@allors/workspace-system-domain';
 
 @Component({
   selector: 'a-mat-dyn-edit-detail-panel',

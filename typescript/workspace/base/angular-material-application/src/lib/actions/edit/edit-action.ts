@@ -1,13 +1,13 @@
 import { Subject } from 'rxjs';
-import { RoleType } from '@allors/workspace/system/meta';
-import { IObject } from '@allors/workspace/system/domain';
+import { RoleType } from '@allors/workspace-system-meta';
+import { IObject } from '@allors/workspace-system-domain';
 import {
   Action,
   ActionTarget,
   EditRequest,
   EditDialogService,
   RefreshService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 
 export class EditAction implements Action {
   name = 'edit';

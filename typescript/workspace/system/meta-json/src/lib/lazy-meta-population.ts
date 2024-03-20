@@ -1,4 +1,4 @@
-import { MetaData } from '@allors/database/system/protocol/json';
+import { MetaData } from '@allors/database-system-protocol-json';
 
 import { Lookup } from './utils/lookup';
 import { InternalMetaPopulation } from './internal/internal-meta-population';
@@ -21,7 +21,7 @@ import {
   ObjectType,
   RelationType,
   Unit,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 export class LazyMetaPopulation implements InternalMetaPopulation {
   readonly kind = 'MetaPopulation';

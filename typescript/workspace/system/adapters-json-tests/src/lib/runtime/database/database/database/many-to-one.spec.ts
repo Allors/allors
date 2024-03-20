@@ -3,7 +3,7 @@ import {
   MultipleSessionContext,
   databaseModes,
 } from '../../../context';
-import { C1 } from '@allors/workspace/default/domain';
+import { C1 } from '@allors/workspace-default-domain';
 import { Fixture } from '../../../../fixture';
 import '../../../../matchers';
 

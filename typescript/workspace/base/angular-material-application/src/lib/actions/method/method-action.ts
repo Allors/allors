@@ -1,18 +1,18 @@
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MethodType } from '@allors/workspace/system/meta';
-import { IObject } from '@allors/workspace/system/domain';
+import { MethodType } from '@allors/workspace-system-meta';
+import { IObject } from '@allors/workspace-system-domain';
 import {
   Context,
   ContextService,
   WorkspaceService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   Action,
   ActionTarget,
   RefreshService,
   ErrorService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import { MethodConfig } from './method-config';
 
 export class MethodAction implements Action {

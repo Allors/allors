@@ -1,4 +1,4 @@
-import { Class, RelationType, RoleType } from '@allors/workspace/system/meta';
+import { Class, RelationType, RoleType } from '@allors/workspace-system-meta';
 import {
   ICompositeDiff,
   ICompositesDiff,
@@ -6,7 +6,7 @@ import {
   IObject,
   IUnit,
   IUnitDiff,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 
 import { IRecord } from '../../irecord';
 import { Workspace } from '../../workspace/workspace';

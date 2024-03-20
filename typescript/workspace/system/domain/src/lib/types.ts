@@ -1,4 +1,4 @@
-﻿import { MetaObject } from '@allors/workspace/system/meta';
+﻿import { MetaObject } from '@allors/workspace-system-meta';
 import { IObject } from './iobject';
 
 export type IUnit = string | Date | boolean | number;

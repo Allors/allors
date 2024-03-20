@@ -1,12 +1,12 @@
 import { APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { WorkspaceService } from '@allors/workspace/base/angular/foundation';
+import { WorkspaceService } from '@allors/workspace-base-angular-foundation';
 import { config } from '../app/app.config';
 import { ErrorHandlerService } from '../app/services/error-handler.service';
 import {
   AllorsMaterialCreateService,
   AllorsMaterialEditDialogService,
-} from '@allors/workspace/base/angular/material/application';
+} from '@allors/workspace-base-angular-material-application';
 import { dialogs } from '../app/app.dialog';
 
 // This file can be replaced during build by using the `fileReplacements` array.

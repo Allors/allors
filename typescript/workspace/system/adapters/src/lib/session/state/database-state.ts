@@ -2,12 +2,12 @@ import {
   IObject,
   IPullResult,
   Operations,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 import {
   MethodType,
   RelationType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 import { DatabaseRecord } from '../../database/database-record';
 import { WorkspaceInitialVersion } from '../../version';
 import { IRecord } from '../../irecord';

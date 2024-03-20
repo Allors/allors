@@ -3,7 +3,7 @@ import {
   Composite,
   ObjectType,
   RoleType,
-} from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-meta';
 
 import { Lookup } from '../utils/lookup';
 import { InternalInterface } from './internal-interface';

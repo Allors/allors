@@ -1,4 +1,4 @@
-import { Pull } from '@allors/workspace/system/domain';
+import { Pull } from '@allors/workspace-system-domain';
 import { Fixture, name_c1C } from '../fixture';
 import '../matchers';
 

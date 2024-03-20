@@ -1,4 +1,4 @@
-import { IObject, IWorkspaceResult } from '@allors/workspace/system/domain';
+import { IObject, IWorkspaceResult } from '@allors/workspace-system-domain';
 export class WorkspaceResult implements IWorkspaceResult {
   get hasErrors(): boolean {
     return (

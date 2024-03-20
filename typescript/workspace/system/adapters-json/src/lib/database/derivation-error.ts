@@ -1,9 +1,9 @@
-import { ResponseDerivationError } from '@allors/database/system/protocol/json';
+import { ResponseDerivationError } from '@allors/database-system-protocol-json';
 import {
   IDatabaseDerivationError,
   ISession,
   Role,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 
 export class DerivationError implements IDatabaseDerivationError {
   constructor(

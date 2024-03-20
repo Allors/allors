@@ -9,26 +9,26 @@ import {
   EditActionService,
   OverviewActionService,
   SorterService,
-} from '@allors/workspace/base/angular/material/application';
-import { Country } from '@allors/workspace/default/domain';
+} from '@allors/workspace-base-angular-material-application';
+import { Country } from '@allors/workspace-default-domain';
 import {
   ContextService,
   FilterService,
   MetaService,
   Table,
   TableRow,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   Action,
   Filter,
   FilterField,
   MediaService,
   RefreshService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   NavigationService,
   AllorsListPageComponent,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 
 interface Row extends TableRow {
   object: Country;

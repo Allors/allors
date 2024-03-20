@@ -1,4 +1,4 @@
-import { IObject, IStrategy } from '@allors/workspace/system/domain';
+import { IObject, IStrategy } from '@allors/workspace-system-domain';
 
 export abstract class ObjectBase implements IObject {
   get id(): number {

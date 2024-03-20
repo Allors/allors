@@ -2,8 +2,8 @@ import {
   Configuration,
   IWorkspace,
   Operations,
-} from '@allors/workspace/system/domain';
-import { Class, OperandType } from '@allors/workspace/system/meta';
+} from '@allors/workspace-system-domain';
+import { Class, OperandType } from '@allors/workspace-system-meta';
 
 import { DefaultNumberRanges } from '../collections/ranges/default-number-ranges';
 import { Ranges } from '../collections/ranges/ranges';

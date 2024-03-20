@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Composite } from '@allors/workspace/system/meta';
+import { Composite } from '@allors/workspace-system-meta';
 import { HyperlinkType } from './hyperlink-type';
 
 @Injectable()

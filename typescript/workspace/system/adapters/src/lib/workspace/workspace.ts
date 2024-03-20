@@ -2,7 +2,7 @@ import {
   Configuration,
   ISession,
   IWorkspace,
-} from '@allors/workspace/system/domain';
+} from '@allors/workspace-system-domain';
 
 import { Ranges } from '../collections/ranges/ranges';
 import { DatabaseConnection } from '../database/database-connection';

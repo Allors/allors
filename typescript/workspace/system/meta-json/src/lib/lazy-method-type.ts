@@ -1,5 +1,5 @@
-import { MethodTypeData } from '@allors/database/system/protocol/json';
-import { MethodType } from '@allors/workspace/system/meta';
+import { MethodTypeData } from '@allors/database-system-protocol-json';
+import { MethodType } from '@allors/workspace-system-meta';
 
 import { InternalComposite } from './internal/internal-composite';
 import { InternalMetaPopulation } from './internal/internal-meta-population';

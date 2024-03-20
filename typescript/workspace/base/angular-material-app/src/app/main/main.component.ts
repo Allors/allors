@@ -3,20 +3,20 @@ import { filter } from 'rxjs/operators';
 import { Component, ViewChild, OnDestroy, OnInit, Self } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, NavigationEnd } from '@angular/router';
-import { Organization } from '@allors/workspace/default/domain';
+import { Organization } from '@allors/workspace-default-domain';
 import {
   ContextService,
   MetaService,
-} from '@allors/workspace/base/angular/foundation';
+} from '@allors/workspace-base-angular-foundation';
 import {
   MenuService,
   NavigationService,
-} from '@allors/workspace/base/angular/application';
+} from '@allors/workspace-base-angular-application';
 import {
   AllorsMaterialSideNavService,
   IconService,
   SideMenuItem,
-} from '@allors/workspace/base/angular/material/application';
+} from '@allors/workspace-base-angular-material-application';
 
 @Component({
   styleUrls: ['main.component.scss'],
