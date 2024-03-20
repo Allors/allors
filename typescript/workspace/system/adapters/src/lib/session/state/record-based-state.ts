@@ -228,18 +228,18 @@ export abstract class RecordBasedState {
             this.previousChangedRoleByRelationType.get(relationType);
 
           if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType, current, previous);
+            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
           } else if (relationType.roleType.isOne) {
-            changeSet.diffCompositeStrategyStrategy(
+            changeSet.diffCompositeObjectObject(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IObject,
               previous as IObject
             );
           } else {
-            changeSet.diffCompositesStrategyStrategy(
+            changeSet.diffCompositeObjectsObjects(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IRange<IObject>,
               previous as IRange<IObject>
             );
@@ -248,18 +248,18 @@ export abstract class RecordBasedState {
           const previous = this.record?.getRole(relationType.roleType);
 
           if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType, current, previous);
+            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
           } else if (relationType.roleType.isOne) {
-            changeSet.diffCompositeStrategyRecord(
+            changeSet.diffCompositeObjectRecord(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IObject,
               previous as number
             );
           } else {
-            changeSet.diffCompositesStrategyRecord(
+            changeSet.diffCompositeObjectsRecords(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IRange<IObject>,
               previous as IRange<number>
             );
@@ -280,18 +280,18 @@ export abstract class RecordBasedState {
             : this.record.getRole(roleType);
 
           if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType, current, previous);
+            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
           } else if (relationType.roleType.isOne) {
-            changeSet.diffCompositeStrategyStrategy(
+            changeSet.diffCompositeObjectObject(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IObject,
               previous as IObject
             );
           } else {
-            changeSet.diffCompositesStrategyStrategy(
+            changeSet.diffCompositeObjectsObjects(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IRange<IObject>,
               previous as IRange<IObject>
             );
@@ -303,18 +303,18 @@ export abstract class RecordBasedState {
             : this.record.getRole(roleType);
 
           if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType, current, previous);
+            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
           } else if (relationType.roleType.isOne) {
             changeSet.diffCompositeRecordRecord(
               this.object,
-              relationType,
+              relationType.roleType,
               current as number,
               previous as number
             );
           } else {
-            changeSet.diffCompositesRecordRecord(
+            changeSet.diffCompositeRecordsRecords(
               this.object,
-              relationType,
+              relationType.roleType,
               current as IRange<number>,
               previous as IRange<number>
             );

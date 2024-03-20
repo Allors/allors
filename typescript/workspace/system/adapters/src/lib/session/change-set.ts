@@ -2,7 +2,6 @@ import { IChangeSet, IObject } from '@allors/workspace-system-domain';
 import {
   AssociationType,
   RelationEndType,
-  RelationType,
   RoleType,
 } from '@allors/workspace-system-meta';
 
@@ -56,152 +55,159 @@ export class ChangeSet implements IChangeSet {
 
   public diffUnit(
     association: IObject,
-    relationType: RelationType,
+    roleType: RoleType,
     current: unknown,
     previous: unknown
   ) {
     if (current !== previous) {
-      this.addAssociation(relationType, association);
+      this.addAssociationByRoleType(roleType, association);
     }
   }
 
-  public diffCompositeStrategyRecord(
+  public diffCompositeObjectRecord(
     association: IObject,
-    relationType: RelationType,
-    current: IObject,
-    previous: number
+    roleType: RoleType,
+    currentRole: IObject,
+    previousRoleId: number
   ) {
-    if (current?.id === previous) {
+    if (currentRole?.id === previousRoleId) {
       return;
     }
 
-    if (previous != null) {
-      const previousStrategy = (this.session as Session).getObject(previous);
-      if (previousStrategy) {
-        this.addRole(relationType, previousStrategy);
+    if (previousRoleId != null) {
+      const previousRole = (this.session as Session).getObject(previousRoleId);
+      if (previousRole) {
+        this.addRoleByAssociationType(
+          roleType.associationType,
+          previousRole
+        );
       }
     }
 
-    if (current != null) {
-      this.addRole(relationType, current);
+    if (currentRole != null) {
+      this.addRoleByAssociationType(roleType.associationType, currentRole);
     }
 
-    this.addAssociation(relationType, association);
+    this.addAssociationByRoleType(roleType, association);
   }
 
   public diffCompositeRecordRecord(
     association: IObject,
-    relationType: RelationType,
-    current: number,
-    previous: number
+    roleType: RoleType,
+    currentRoleId: number,
+    previousRoleId: number
   ) {
-    if (current === previous) {
+    if (currentRoleId === previousRoleId) {
       return;
     }
 
-    if (previous != null) {
-      this.addRole(relationType, (this.session as Session).getObject(previous));
+    if (previousRoleId != null) {
+      this.addRoleByAssociationType(
+        roleType.associationType,
+        (this.session as Session).getObject(previousRoleId)
+      );
     }
 
-    if (current != null) {
-      this.addRole(relationType, (this.session as Session).getObject(current));
+    if (currentRoleId != null) {
+      this.addRoleByAssociationType(
+        roleType.associationType,
+        (this.session as Session).getObject(currentRoleId)
+      );
     }
 
-    this.addAssociation(relationType, association);
+    this.addAssociationByRoleType(roleType, association);
   }
 
-  public diffCompositeStrategyStrategy(
+  public diffCompositeObjectObject(
     association: IObject,
-    relationType: RelationType,
-    current: IObject,
-    previous: IObject
+    roleType: RoleType,
+    currentRole: IObject,
+    previousRole: IObject
   ) {
-    if (current === previous) {
+    if (currentRole === previousRole) {
       return;
     }
 
-    if (previous != null) {
-      this.addRole(relationType, previous);
+    if (previousRole != null) {
+      this.addRoleByAssociationType(roleType.associationType, previousRole);
     }
 
-    if (current != null) {
-      this.addRole(relationType, current);
+    if (currentRole != null) {
+      this.addRoleByAssociationType(roleType.associationType, currentRole);
     }
 
-    this.addAssociation(relationType, association);
+    this.addAssociationByRoleType(roleType, association);
   }
 
-  public diffCompositesStrategyRecord(
+  public diffCompositeObjectsRecords(
     association: IObject,
-    relationType: RelationType,
-    current: IRange<IObject>,
-    previousRange: IRange<number>
+    roleType: RoleType,
+    currentRoles: IRange<IObject>,
+    previousRoleIds: IRange<number>
   ) {
-    const previous: IRange<IObject> = previousRange?.map((v) =>
+    const previousRoles: IRange<IObject> = previousRoleIds?.map((v) =>
       (this.session as Session).getObject(v)
     );
-    this.diffCompositesStrategyStrategy(
+    this.diffCompositeObjectsObjects(
       association,
-      relationType,
-      current,
-      previous
+      roleType,
+      currentRoles,
+      previousRoles
     );
   }
 
-  public diffCompositesRecordRecord(
+  public diffCompositeRecordsRecords(
     association: IObject,
-    relationType: RelationType,
-    currentRange: IRange<number>,
-    previousRange: IRange<number>
+    roleType: RoleType,
+    currentRoleIds: IRange<number>,
+    previousRoleIds: IRange<number>
   ) {
-    const current: IRange<IObject> = currentRange?.map((v) =>
+    const currentRoles: IRange<IObject> = currentRoleIds?.map((v) =>
       (this.session as Session).getObject(v)
     );
-    const previous: IRange<IObject> = previousRange?.map((v) =>
+    const previousRoles: IRange<IObject> = previousRoleIds?.map((v) =>
       (this.session as Session).getObject(v)
     );
-    this.diffCompositesStrategyStrategy(
+    this.diffCompositeObjectsObjects(
       association,
-      relationType,
-      current,
-      previous
+      roleType,
+      currentRoles,
+      previousRoles
     );
   }
 
-  public diffCompositesStrategyStrategy(
+  public diffCompositeObjectsObjects(
     association: IObject,
-    relationType: RelationType,
-    current: IRange<IObject>,
-    previous: IRange<IObject>
+    roleType: RoleType,
+    currentRoles: IRange<IObject>,
+    previousRoles: IRange<IObject>
   ) {
     let hasChange = false;
 
-    for (const v of this.ranges.enumerate(previous)) {
-      if (!this.ranges.has(current, v)) {
-        this.addRole(relationType, v);
+    for (const v of this.ranges.enumerate(previousRoles)) {
+      if (!this.ranges.has(currentRoles, v)) {
+        this.addRoleByAssociationType(roleType.associationType, v);
         hasChange = true;
       }
     }
 
-    for (const v of this.ranges.enumerate(current)) {
-      if (!this.ranges.has(previous, v)) {
-        this.addRole(relationType, v);
+    for (const v of this.ranges.enumerate(currentRoles)) {
+      if (!this.ranges.has(previousRoles, v)) {
+        this.addRoleByAssociationType(roleType.associationType, v);
         hasChange = true;
       }
     }
 
     if (hasChange) {
-      this.addAssociation(relationType, association);
+      this.addAssociationByRoleType(roleType, association);
     }
   }
 
-  private addAssociation(relationType: RelationType, association: IObject) {
+  private addAssociationByRoleType(roleType: RoleType, association: IObject) {
     if (association == null) {
       // TODO: Investigate
       return;
     }
-
-    const roleType = relationType.roleType;
 
     let associations = this.associationsByRoleType.get(roleType);
     if (!associations) {
@@ -212,13 +218,14 @@ export class ChangeSet implements IChangeSet {
     associations.add(association);
   }
 
-  private addRole(relationType: RelationType, role: IObject) {
+  private addRoleByAssociationType(
+    associationType: AssociationType,
+    role: IObject
+  ) {
     if (role == null) {
       // TODO: Investigate
       return;
     }
-
-    const associationType = relationType.associationType;
 
     let roles = this.rolesByAssociationType.get(associationType);
     if (!roles) {
