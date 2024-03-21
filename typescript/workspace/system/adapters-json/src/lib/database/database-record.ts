@@ -15,7 +15,7 @@ export class DatabaseRecord extends SystemDatabaseRecord {
   grants: IRange<number>;
   revocations: IRange<number>;
 
-  private _roleByRelationType?: Map<RelationType, unknown>;
+  private _roleByRoleType?: Map<RoleType, unknown>;
   private syncResponseRoles?: SyncResponseRole[];
 
   constructor(
@@ -46,15 +46,15 @@ export class DatabaseRecord extends SystemDatabaseRecord {
     return object;
   }
 
-  get roleByRelationType(): Map<RelationType, unknown> {
+  get roleByRoleType(): Map<RoleType, unknown> {
     if (this.syncResponseRoles != null) {
       const metaPopulation = this.database.configuration.metaPopulation;
-      this._roleByRelationType = new Map(
+      this._roleByRoleType = new Map(
         this.syncResponseRoles.map((v) => {
-          const relationType = metaPopulation.metaObjectByTag.get(
+          const roleType = (metaPopulation.metaObjectByTag.get(
             v.t
-          ) as RelationType;
-          if (relationType == null) {
+          ) as RelationType).roleType;
+          if (roleType == null) {
             throw new Error(
               'RelationType with Tag ' +
                 v.t +
@@ -62,7 +62,6 @@ export class DatabaseRecord extends SystemDatabaseRecord {
             );
           }
 
-          const roleType = relationType.roleType;
           const objectType = roleType.objectType;
 
           let role: unknown;
@@ -77,18 +76,18 @@ export class DatabaseRecord extends SystemDatabaseRecord {
             }
           }
 
-          return [relationType, role];
+          return [roleType, role];
         })
       );
 
       delete this.syncResponseRoles;
     }
 
-    return this._roleByRelationType;
+    return this._roleByRoleType;
   }
 
   getRole(roleType: RoleType): unknown {
-    return this.roleByRelationType?.get(roleType.relationType);
+    return this.roleByRoleType?.get(roleType);
   }
 
   isPermitted(permission: number): boolean {

@@ -5,7 +5,6 @@ import {
 } from '@allors/workspace-system-domain';
 import {
   MethodType,
-  RelationType,
   RoleType,
 } from '@allors/workspace-system-meta';
 import { DatabaseRecord } from '../../database/database-record';
@@ -15,7 +14,7 @@ import { RecordBasedState } from './record-based-state';
 import { IRange } from '../../collections/ranges/ranges';
 
 export abstract class DatabaseState extends RecordBasedState {
-  protected cachedRoleByRelationType: Map<RelationType, IRange<IObject>>;
+  protected cachedRoleByRoleType: Map<RoleType, IRange<IObject>>;
 
   private isPushed: boolean;
 
@@ -119,7 +118,7 @@ export abstract class DatabaseState extends RecordBasedState {
     }
 
     this.databaseRecord = newRecord;
-    this.cachedRoleByRelationType = null;
+    this.cachedRoleByRoleType = null;
   }
 
   onChange() {

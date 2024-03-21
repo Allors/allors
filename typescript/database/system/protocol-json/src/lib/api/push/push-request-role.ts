@@ -1,7 +1,7 @@
 import { IUnit } from '@allors/workspace-system-domain';
 
 export interface PushRequestRole {
-  /** RelationType */
+  /** RoleType */
   t: string;
 
   /** SetUnitRole */

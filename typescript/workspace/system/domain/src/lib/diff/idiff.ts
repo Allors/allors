@@ -1,8 +1,8 @@
-import { RelationType } from '@allors/workspace-system-meta';
+import { RoleType } from '@allors/workspace-system-meta';
 import { IObject } from '../iobject';
 
 export interface IDiff {
-  relationType: RelationType;
+  roleType: RoleType;
 
   assocation: IObject;
 }

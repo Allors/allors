@@ -23,7 +23,7 @@ import { PullResult } from '../database/pull/pull-result';
 import { PushResult } from '../database/push/push-result';
 import { pullToJson } from '../json/to-json';
 import { Workspace } from '../workspace/workspace';
-import { DatabaseState } from './originstate/database-origin-state';
+import { DatabaseState } from './originstate/database-state';
 import { Strategy } from './strategy';
 
 export class Session extends SystemSession {

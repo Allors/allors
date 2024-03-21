@@ -338,7 +338,7 @@ export abstract class RecordBasedState {
 
       if (roleType.objectType.isUnit) {
         const diff: IUnitDiff = {
-          relationType: roleType.relationType,
+          roleType: roleType,
           assocation: this.object,
           originalRole: original as IUnit,
           changedRole: changed as IUnit,
@@ -347,7 +347,7 @@ export abstract class RecordBasedState {
         diffs.push(diff);
       } else if (roleType.isOne) {
         const diff: ICompositeDiff = {
-          relationType: roleType.relationType,
+          roleType: roleType,
           assocation: this.object,
           originalRole:
             original != null
@@ -359,7 +359,7 @@ export abstract class RecordBasedState {
         diffs.push(diff);
       } else {
         const diff: ICompositesDiff = {
-          relationType: roleType.relationType,
+          roleType: roleType,
           assocation: this.object,
           originalRoles:
             original != null

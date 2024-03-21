@@ -36,15 +36,15 @@ export class DatabaseState extends SystemDatabaseState {
   private pushRoles(): PushRequestRole[] {
     const ranges = this.session.workspace.ranges;
 
-    if (this.changedRoleByRelationType?.size > 0) {
+    if (this.changedRoleByRoleType?.size > 0) {
       const roles: PushRequestRole[] = [];
 
-      for (const [relationType, roleValue] of this.changedRoleByRelationType) {
-        const pushRequestRole: PushRequestRole = { t: relationType.tag };
+      for (const [roleType, roleValue] of this.changedRoleByRoleType) {
+        const pushRequestRole: PushRequestRole = { t: roleType.tag };
 
-        if (relationType.roleType.objectType.isUnit) {
+        if (roleType.objectType.isUnit) {
           pushRequestRole.u = unitToJson(roleValue);
-        } else if (relationType.roleType.isOne) {
+        } else if (roleType.isOne) {
           pushRequestRole.c = (roleValue as Strategy)?.id;
         } else {
           const roleStrategies = roleValue as IRange<Strategy>;
@@ -53,7 +53,7 @@ export class DatabaseState extends SystemDatabaseState {
             pushRequestRole.a = ranges.save(roleIds);
           } else {
             const databaseRole = this.databaseRecord.getRole(
-              relationType.roleType
+              roleType
             ) as IRange<number>;
             if (databaseRole == null) {
               pushRequestRole.a = ranges.save(roleIds);
