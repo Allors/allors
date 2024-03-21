@@ -1,5 +1,5 @@
 import { ObjectTypeData } from '@allors/database-system-protocol-json';
-import { RelationType, RoleType } from '@allors/workspace-system-meta';
+import { RoleType } from '@allors/workspace-system-meta';
 
 import { Lookup } from './utils/lookup';
 import { InternalMetaPopulation } from './internal/internal-meta-population';
@@ -27,9 +27,7 @@ export class LazyClass extends LazyComposite implements InternalClass {
   deriveOverridden(lookup: Lookup): void {
     this.overriddenRequiredRoleTypes = lookup.or.has(this.tag)
       ? [...lookup.or.get(this.tag)].map(
-          (v) =>
-            (this.metaPopulation.metaObjectByTag.get(v) as RelationType)
-              .roleType
+          (v) => this.metaPopulation.metaObjectByTag.get(v) as RoleType
         )
       : [];
 

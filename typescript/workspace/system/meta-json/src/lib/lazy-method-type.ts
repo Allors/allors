@@ -14,13 +14,12 @@ export class LazyMethodType implements MethodType {
   metaPopulation: InternalMetaPopulation;
   tag: string;
   name: string;
-  operandTag: string;
 
   constructor(public objectType: InternalComposite, d: MethodTypeData) {
     this.metaPopulation = objectType.metaPopulation as InternalMetaPopulation;
     this.tag = d[0];
     this.name = d[1];
-    this.operandTag = this.tag;
+    
     this.metaPopulation.onNew(this);
   }
 }

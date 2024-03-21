@@ -1,7 +1,6 @@
 import {
   AssociationType,
   Multiplicity,
-  RelationType,
   RoleType,
 } from '@allors/workspace-system-meta';
 
@@ -17,8 +16,6 @@ export class LazyAssociationType implements AssociationType {
   isAssociationType = true;
   isMethodType = false;
 
-  relationType: RelationType;
-  operandTag: string;
   isOne: boolean;
   isMany: boolean;
   name: string;
@@ -33,14 +30,13 @@ export class LazyAssociationType implements AssociationType {
     multiplicity: Multiplicity
   ) {
     this.metaPopulation = roleType.metaPopulation as InternalMetaPopulation;
-
-    this.relationType = roleType.relationType;
-    this.operandTag = this.tag;
     this.isOne = (multiplicity & 2) == 0;
     this.isMany = !this.isOne;
     this.singularName =
       this.objectType.singularName + 'Where' + this.roleType.singularName;
     this.name = this.isOne ? this.singularName : this.pluralName;
+
+    this.metaPopulation.onNew(this);
   }
 
   get pluralName() {

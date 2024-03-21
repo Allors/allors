@@ -3,7 +3,8 @@ import { Interface } from './interface';
 import { MetaObject } from './meta-object';
 import { MethodType } from './method-type';
 import { Unit } from './unit';
-import { RelationType } from './relation-type';
+import { AssociationType } from './association-type';
+import { RoleType } from './role-type';
 import { Composite } from './composite';
 
 export interface MetaPopulation {
@@ -14,6 +15,7 @@ export interface MetaPopulation {
   interfaces: Set<Interface>;
   classes: Set<Class>;
   composites: Set<Composite>;
-  relationTypes: Set<RelationType>;
+  associationTypes: Set<AssociationType>;
+  roleTypes: Set<RoleType>;
   methodTypes: Set<MethodType>;
 }

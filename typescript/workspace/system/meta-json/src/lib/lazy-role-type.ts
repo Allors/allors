@@ -4,7 +4,6 @@ import {
   Multiplicity,
   RoleType,
   AssociationType,
-  RelationType,
   ObjectType,
   Unit,
 } from '@allors/workspace-system-meta';
@@ -16,14 +15,14 @@ import { LazyAssociationType } from './lazy-association-type';
 import { InternalMetaPopulation } from './internal/internal-meta-population';
 
 export class LazyRoleType implements RoleType {
-  metaPopulation: InternalMetaPopulation;
-
   readonly kind = 'RoleType';
   readonly _ = {};
   isRoleType = true;
   isAssociationType = false;
   isMethodType = false;
 
+  metaPopulation: InternalMetaPopulation;
+  tag: string;
   objectType: ObjectType;
   multiplicity: Multiplicity;
   isOne: boolean;
@@ -36,33 +35,34 @@ export class LazyRoleType implements RoleType {
   precision?: number;
   scale?: number;
   mediaType?: string;
-  operandTag: string;
 
   associationType: AssociationType;
 
   private _pluralName?: string;
 
   constructor(
-    public relationType: RelationType,
-    public tag: string,
-    associationTag: string,
     associationObjectType: InternalComposite,
-    roleObjectType: ObjectType,
     data: RelationTypeData,
     lookup: Lookup
   ) {
-    this.metaPopulation = relationType.metaPopulation as InternalMetaPopulation;
-    this.objectType = roleObjectType;
+    this.metaPopulation =
+      associationObjectType.metaPopulation as InternalMetaPopulation;
 
-    this.multiplicity = roleObjectType.isUnit
+    const [roleTag, associationTag, r] = data;
+    this.objectType = this.metaPopulation.metaObjectByTag.get(
+      r
+    ) as ObjectType;
+
+    this.tag = roleTag;
+
+    this.multiplicity = this.objectType.isUnit
       ? Multiplicity.OneToOne
       : lookup.m.get(this.tag) ?? Multiplicity.ManyToOne;
     this.isDerived = lookup.d.has(this.tag);
 
     this.isOne = (this.multiplicity & 1) == 0;
     this.isMany = !this.isOne;
-    this.operandTag = this.tag;
-  
+
     this.isDerived = lookup.d.has(this.tag);
     this.isRequired = lookup.r.has(this.tag);
     this.mediaType = lookup.t.get(this.tag);
@@ -103,12 +103,22 @@ export class LazyRoleType implements RoleType {
 
     this.name = this.isOne ? this.singularName : this.pluralName;
 
+    this.metaPopulation.onNew(this);
+
     this.associationType = new LazyAssociationType(
       this,
       associationTag,
       associationObjectType,
       this.multiplicity
     );
+
+    if (this.objectType.isComposite) {
+      (this.objectType as InternalComposite).onNewAssociationType(
+        this.associationType
+      );
+    }
+
+    (this.associationType.objectType as InternalComposite).onNewRoleType(this);
   }
 
   get pluralName() {

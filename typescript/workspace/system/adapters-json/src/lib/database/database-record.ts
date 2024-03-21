@@ -1,4 +1,4 @@
-import { Class, RelationType, RoleType } from '@allors/workspace-system-meta';
+import { Class, RoleType } from '@allors/workspace-system-meta';
 import {
   DatabaseRecord as SystemDatabaseRecord,
   IRange,
@@ -51,12 +51,10 @@ export class DatabaseRecord extends SystemDatabaseRecord {
       const metaPopulation = this.database.configuration.metaPopulation;
       this._roleByRoleType = new Map(
         this.syncResponseRoles.map((v) => {
-          const roleType = (metaPopulation.metaObjectByTag.get(
-            v.t
-          ) as RelationType).roleType;
+          const roleType = metaPopulation.metaObjectByTag.get(v.t) as RoleType;
           if (roleType == null) {
             throw new Error(
-              'RelationType with Tag ' +
+              'RoleType with Tag ' +
                 v.t +
                 ' is not present. Please regenerate your workspace.'
             );

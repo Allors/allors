@@ -18,12 +18,7 @@ import {
   IWorkspace,
   Operations,
 } from '@allors/workspace-system-domain';
-import {
-  Class,
-  MethodType,
-  OperandType,
-  RelationType,
-} from '@allors/workspace-system-meta';
+import { Class, OperandType } from '@allors/workspace-system-meta';
 import { DatabaseRecord } from './database-record';
 import { ResponseContext } from './security/response-context';
 import { Workspace } from '../workspace/workspace';
@@ -177,8 +172,7 @@ export class DatabaseConnection extends SystemDatabaseConnection {
           this.configuration.metaPopulation.metaObjectByTag.get(
             syncResponsePermission.t
           );
-        const operandType: OperandType =
-          (metaObject as RelationType)?.roleType ?? (metaObject as MethodType);
+        const operandType: OperandType = metaObject as OperandType;
         const operation = syncResponsePermission.o;
 
         this.permissions.add(id);

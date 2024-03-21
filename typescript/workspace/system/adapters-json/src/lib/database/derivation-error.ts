@@ -1,4 +1,4 @@
-import { RelationType } from '@allors/workspace-system-meta';
+import { RoleType } from '@allors/workspace-system-meta';
 import { ResponseDerivationError } from '@allors/database-system-protocol-json';
 import {
   IDatabaseDerivationError,
@@ -21,9 +21,9 @@ export class DerivationError implements IDatabaseDerivationError {
       return {
         object: this.session.instantiate(r[0]),
         roleType:
-          (this.session.workspace.configuration.metaPopulation.metaObjectByTag.get(
+          this.session.workspace.configuration.metaPopulation.metaObjectByTag.get(
             r[1]
-          ) as RelationType).roleType,
+          ) as RoleType,
       } as Role;
     });
   }

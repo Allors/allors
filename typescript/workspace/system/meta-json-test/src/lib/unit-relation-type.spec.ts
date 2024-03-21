@@ -43,10 +43,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -102,10 +99,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeTruthy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -148,10 +142,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -193,10 +184,8 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.mediaType).toBeUndefined();
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
-      const { relationType, associationType } = roleType;
 
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -218,7 +207,12 @@ describe('Unit Relation in MetaPopulation', () => {
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
-        ['10', 'Organization', [], [['11', '12', UnitTags.Decimal, 'Balance', 25]]],
+        [
+          '10',
+          'Organization',
+          [],
+          [['11', '12', UnitTags.Decimal, 'Balance', 25]],
+        ],
       ],
     }) as M;
 
@@ -240,10 +234,8 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.mediaType).toBeUndefined();
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
-      const { relationType, associationType } = roleType;
 
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -292,10 +284,8 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.mediaType).toBeUndefined();
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
-      const { relationType, associationType } = roleType;
 
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -345,10 +335,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -398,10 +385,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -443,10 +427,8 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.mediaType).toBeUndefined();
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
-      const { relationType, associationType } = roleType;
 
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -489,10 +471,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -513,54 +492,13 @@ describe('Unit Relation in MetaPopulation', () => {
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organization', [], [['11', '12', UnitTags.String, 'Text', 512]]]],
-    }) as M;
-
-    const { Organization, String } = metaPopulation;
-    const { Text: roleType } = Organization;
-
-    it('should have the relation with its values', () => {
-      expect(roleType).toBeDefined();
-      expect(roleType.objectType).toBe(String);
-      expect(roleType.isOne).toBeTruthy();
-      expect(roleType.isMany).toBeFalsy();
-      expect(roleType.singularName).toBe('Text');
-      expect(roleType.pluralName).toBe('Texts');
-      expect(roleType.name).toBe('Text');
-      expect(roleType.isRequired).toBeFalsy();
-      expect(roleType.size).toBe(512);
-      expect(roleType.scale).toBeUndefined();
-      expect(roleType.precision).toBeUndefined();
-      expect(roleType.mediaType).toBeUndefined();
-      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(roleType.isDerived).toBeFalsy();
-
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
-
-      expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organization);
-      expect(associationType.isOne).toBeTruthy();
-      expect(associationType.isMany).toBeFalsy();
-    });
-  });
-
-  describe('with string relation singularName precision overflow metadata', () => {
-    interface Organization extends Composite {
-      Text: RoleType;
-    }
-
-    interface M extends LazyMetaPopulation {
-      String: Unit;
-
-      Organization: Organization;
-    }
-
-    const metaPopulation = new LazyMetaPopulation({
       c: [
-        ['10', 'Organization', [], [['11', '12', UnitTags.String, 'Text', 512, 10]]],
+        [
+          '10',
+          'Organization',
+          [],
+          [['11', '12', UnitTags.String, 'Text', 512]],
+        ],
       ],
     }) as M;
 
@@ -583,10 +521,57 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
+      const { associationType } = roleType;
 
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      expect(associationType).toBeDefined;
+      expect(associationType.objectType).toBe(Organization);
+      expect(associationType.isOne).toBeTruthy();
+      expect(associationType.isMany).toBeFalsy();
+    });
+  });
+
+  describe('with string relation singularName precision overflow metadata', () => {
+    interface Organization extends Composite {
+      Text: RoleType;
+    }
+
+    interface M extends LazyMetaPopulation {
+      String: Unit;
+
+      Organization: Organization;
+    }
+
+    const metaPopulation = new LazyMetaPopulation({
+      c: [
+        [
+          '10',
+          'Organization',
+          [],
+          [['11', '12', UnitTags.String, 'Text', 512, 10]],
+        ],
+      ],
+    }) as M;
+
+    const { Organization, String } = metaPopulation;
+    const { Text: roleType } = Organization;
+
+    it('should have the relation with its values', () => {
+      expect(roleType).toBeDefined();
+      expect(roleType.objectType).toBe(String);
+      expect(roleType.isOne).toBeTruthy();
+      expect(roleType.isMany).toBeFalsy();
+      expect(roleType.singularName).toBe('Text');
+      expect(roleType.pluralName).toBe('Texts');
+      expect(roleType.name).toBe('Text');
+      expect(roleType.isRequired).toBeFalsy();
+      expect(roleType.size).toBe(512);
+      expect(roleType.scale).toBeUndefined();
+      expect(roleType.precision).toBeUndefined();
+      expect(roleType.mediaType).toBeUndefined();
+      expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
+      expect(roleType.isDerived).toBeFalsy();
+
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -636,10 +621,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);
@@ -689,10 +671,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.multiplicity).toBe(Multiplicity.OneToOne);
       expect(roleType.isDerived).toBeFalsy();
 
-      const { relationType, associationType } = roleType;
-
-      expect(relationType).toBeDefined;
-      expect(relationType).not.toBeNull();
+      const { associationType } = roleType;
 
       expect(associationType).toBeDefined;
       expect(associationType.objectType).toBe(Organization);

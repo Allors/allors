@@ -15,7 +15,7 @@ import { InternalInterface } from './internal/internal-interface';
 import { InternalClass } from './internal/internal-class';
 import { InternalMetaPopulation } from './internal/internal-meta-population';
 
-import { LazyRelationType } from './lazy-relation-type';
+import { LazyRoleType } from './lazy-role-type';
 import { LazyMethodType } from './lazy-method-type';
 
 export abstract class LazyComposite implements InternalComposite {
@@ -84,7 +84,7 @@ export abstract class LazyComposite implements InternalComposite {
       this.directSupertypes = frozenEmptySet as Set<InternalInterface>;
     }
 
-    r?.forEach((v) => new LazyRelationType(this, v, lookup));
+    r?.forEach((v) => new LazyRoleType(this, v, lookup));
 
     if (m) {
       this.directMethodTypes = new Set(
