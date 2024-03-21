@@ -1,4 +1,4 @@
-import { Class, RelationType, RoleType } from '@allors/workspace-system-meta';
+import { Class, RoleType } from '@allors/workspace-system-meta';
 import {
   ICompositeDiff,
   ICompositesDiff,
@@ -23,23 +23,23 @@ export abstract class RecordBasedState {
 
   protected abstract record: IRecord;
 
-  protected abstract cachedRoleByRelationType: Map<
-    RelationType,
+  protected abstract cachedRoleByRoleType: Map<
+    RoleType,
     IRange<IObject>
   >;
 
   protected previousRecord: IRecord;
 
-  changedRoleByRelationType: Map<RelationType, unknown>;
+  changedRoleByRoleType: Map<RoleType, unknown>;
 
-  private previousChangedRoleByRelationType: Map<RelationType, unknown>;
+  private previousChangedRoleByRoleType: Map<RoleType, unknown>;
 
   getUnitRole(roleType: RoleType): IUnit {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
-      return this.changedRoleByRelationType.get(roleType.relationType) as IUnit;
+      return this.changedRoleByRoleType.get(roleType) as IUnit;
     }
 
     return this.record?.getRole(roleType) as IUnit;
@@ -51,11 +51,11 @@ export abstract class RecordBasedState {
 
   getCompositeRole(roleType: RoleType, skipMissing?: boolean): IObject {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
-      return this.changedRoleByRelationType.get(
-        roleType.relationType
+      return this.changedRoleByRoleType.get(
+        roleType
       ) as IObject;
     }
 
@@ -101,11 +101,11 @@ export abstract class RecordBasedState {
     skipMissing?: boolean
   ): IRange<IObject> {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
-      return this.changedRoleByRelationType.get(
-        roleType.relationType
+      return this.changedRoleByRoleType.get(
+        roleType
       ) as IRange<IObject>;
     }
 
@@ -128,11 +128,11 @@ export abstract class RecordBasedState {
     }
 
     if (
-      this.cachedRoleByRelationType != null &&
-      this.cachedRoleByRelationType.has(roleType.relationType)
+      this.cachedRoleByRoleType != null &&
+      this.cachedRoleByRoleType.has(roleType)
     ) {
-      return this.cachedRoleByRelationType.get(
-        roleType.relationType
+      return this.cachedRoleByRoleType.get(
+        roleType
       ) as IRange<IObject>;
     }
 
@@ -142,8 +142,8 @@ export abstract class RecordBasedState {
       return obj;
     });
 
-    this.cachedRoleByRelationType ??= new Map();
-    this.cachedRoleByRelationType.set(roleType.relationType, objects);
+    this.cachedRoleByRoleType ??= new Map();
+    this.cachedRoleByRoleType.set(roleType, objects);
 
     return objects;
   }
@@ -219,47 +219,47 @@ export abstract class RecordBasedState {
       this.record == null ||
       this.record.version == this.previousRecord.version
     ) {
-      this.changedRoleByRelationType?.forEach((current, relationType) => {
+      this.changedRoleByRoleType?.forEach((current, roleType) => {
         if (
-          this.previousChangedRoleByRelationType != null &&
-          this.previousChangedRoleByRelationType.has(relationType)
+          this.previousChangedRoleByRoleType != null &&
+          this.previousChangedRoleByRoleType.has(roleType)
         ) {
           const previous =
-            this.previousChangedRoleByRelationType.get(relationType);
+            this.previousChangedRoleByRoleType.get(roleType);
 
-          if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
-          } else if (relationType.roleType.isOne) {
+          if (roleType.objectType.isUnit) {
+            changeSet.diffUnit(this.object, roleType, current, previous);
+          } else if (roleType.isOne) {
             changeSet.diffCompositeObjectObject(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IObject,
               previous as IObject
             );
           } else {
             changeSet.diffCompositeObjectsObjects(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IRange<IObject>,
               previous as IRange<IObject>
             );
           }
         } else {
-          const previous = this.record?.getRole(relationType.roleType);
+          const previous = this.record?.getRole(roleType);
 
-          if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
-          } else if (relationType.roleType.isOne) {
+          if (roleType.objectType.isUnit) {
+            changeSet.diffUnit(this.object, roleType, current, previous);
+          } else if (roleType.isOne) {
             changeSet.diffCompositeObjectRecord(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IObject,
               previous as number
             );
           } else {
             changeSet.diffCompositeObjectsRecords(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IRange<IObject>,
               previous as IRange<number>
             );
@@ -270,51 +270,50 @@ export abstract class RecordBasedState {
     } else {
       //  Different record
       this.roleTypes.forEach((roleType) => {
-        const relationType = roleType.relationType;
 
-        if (this.previousChangedRoleByRelationType?.has(relationType)) {
+        if (this.previousChangedRoleByRoleType?.has(roleType)) {
           const previous =
-            this.previousChangedRoleByRelationType.get(relationType);
-          const current = this.changedRoleByRelationType?.has(relationType)
-            ? this.changedRoleByRelationType.get(relationType)
+            this.previousChangedRoleByRoleType.get(roleType);
+          const current = this.changedRoleByRoleType?.has(roleType)
+            ? this.changedRoleByRoleType.get(roleType)
             : this.record.getRole(roleType);
 
-          if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
-          } else if (relationType.roleType.isOne) {
+          if (roleType.objectType.isUnit) {
+            changeSet.diffUnit(this.object, roleType, current, previous);
+          } else if (roleType.isOne) {
             changeSet.diffCompositeObjectObject(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IObject,
               previous as IObject
             );
           } else {
             changeSet.diffCompositeObjectsObjects(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IRange<IObject>,
               previous as IRange<IObject>
             );
           }
         } else {
           const previous = this.previousRecord?.getRole(roleType);
-          const current = this.changedRoleByRelationType?.has(relationType)
-            ? this.changedRoleByRelationType?.get(relationType)
+          const current = this.changedRoleByRoleType?.has(roleType)
+            ? this.changedRoleByRoleType?.get(roleType)
             : this.record.getRole(roleType);
 
-          if (relationType.roleType.objectType.isUnit) {
-            changeSet.diffUnit(this.object, relationType.roleType, current, previous);
-          } else if (relationType.roleType.isOne) {
+          if (roleType.objectType.isUnit) {
+            changeSet.diffUnit(this.object, roleType, current, previous);
+          } else if (roleType.isOne) {
             changeSet.diffCompositeRecordRecord(
               this.object,
-              relationType.roleType,
+              roleType,
               current as number,
               previous as number
             );
           } else {
             changeSet.diffCompositeRecordsRecords(
               this.object,
-              relationType.roleType,
+              roleType,
               current as IRange<number>,
               previous as IRange<number>
             );
@@ -324,23 +323,22 @@ export abstract class RecordBasedState {
     }
 
     this.previousRecord = this.record;
-    this.previousChangedRoleByRelationType = new Map(
-      this.changedRoleByRelationType
+    this.previousChangedRoleByRoleType = new Map(
+      this.changedRoleByRoleType
     );
   }
 
   diff(diffs: IDiff[]) {
-    if (this.changedRoleByRelationType == null) {
+    if (this.changedRoleByRoleType == null) {
       return;
     }
 
-    for (const [relationType, changed] of this.changedRoleByRelationType) {
-      const roleType = relationType.roleType;
+    for (const [roleType, changed] of this.changedRoleByRoleType) {
       const original = this.record?.getRole(roleType);
 
       if (roleType.objectType.isUnit) {
         const diff: IUnitDiff = {
-          relationType,
+          relationType: roleType.relationType,
           assocation: this.object,
           originalRole: original as IUnit,
           changedRole: changed as IUnit,
@@ -349,7 +347,7 @@ export abstract class RecordBasedState {
         diffs.push(diff);
       } else if (roleType.isOne) {
         const diff: ICompositeDiff = {
-          relationType,
+          relationType: roleType.relationType,
           assocation: this.object,
           originalRole:
             original != null
@@ -361,7 +359,7 @@ export abstract class RecordBasedState {
         diffs.push(diff);
       } else {
         const diff: ICompositesDiff = {
-          relationType,
+          relationType: roleType.relationType,
           assocation: this.object,
           originalRoles:
             original != null
@@ -378,24 +376,23 @@ export abstract class RecordBasedState {
   }
 
   get hasChanges(): boolean {
-    return this.record == null || this.changedRoleByRelationType?.size > 0;
+    return this.record == null || this.changedRoleByRoleType?.size > 0;
   }
 
   hasChanged(roleType: RoleType): boolean {
-    return this.changedRoleByRelationType?.has(roleType.relationType) ?? false;
+    return this.changedRoleByRoleType?.has(roleType) ?? false;
   }
 
   restoreRole(roleType: RoleType): void {
-    this.changedRoleByRelationType?.delete(roleType.relationType);
+    this.changedRoleByRoleType?.delete(roleType);
   }
 
   canMerge(newRecord: IRecord): boolean {
-    if (this.changedRoleByRelationType == null) {
+    if (this.changedRoleByRoleType == null) {
       return true;
     }
 
-    for (const [relationType] of this.changedRoleByRelationType) {
-      const roleType = relationType.roleType;
+    for (const [roleType] of this.changedRoleByRoleType) {
       const original = this.record?.getRole(roleType);
       const newOriginal = newRecord?.getRole(roleType);
 
@@ -418,7 +415,7 @@ export abstract class RecordBasedState {
   }
 
   reset() {
-    this.changedRoleByRelationType = null;
+    this.changedRoleByRoleType = null;
   }
 
   isAssociationForRole(roleType: RoleType, forRole: IObject): boolean {
@@ -441,8 +438,8 @@ export abstract class RecordBasedState {
   protected abstract onChange();
 
   private setChangedRole(roleType: RoleType, role: unknown) {
-    this.changedRoleByRelationType ??= new Map<RelationType, unknown>();
-    this.changedRoleByRelationType.set(roleType.relationType, role);
+    this.changedRoleByRoleType ??= new Map<RoleType, unknown>();
+    this.changedRoleByRoleType.set(roleType, role);
     this.onChange();
   }
 
@@ -454,11 +451,11 @@ export abstract class RecordBasedState {
 
   private getCompositeRoleIfInstantiated(roleType: RoleType): IObject {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
-      return this.changedRoleByRelationType.get(
-        roleType.relationType
+      return this.changedRoleByRoleType.get(
+        roleType
       ) as IObject;
     }
 
@@ -474,11 +471,11 @@ export abstract class RecordBasedState {
 
   private getCompositesRoleIfInstantiated(roleType: RoleType): IRange<IObject> {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
-      return this.changedRoleByRelationType.get(
-        roleType.relationType
+      return this.changedRoleByRoleType.get(
+        roleType
       ) as IRange<IObject>;
     }
 
@@ -500,10 +497,10 @@ export abstract class RecordBasedState {
 
   private sameCompositeRole(roleType: RoleType, role: IObject): boolean {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
-      return role === this.changedRoleByRelationType.get(roleType.relationType);
+      return role === this.changedRoleByRoleType.get(roleType);
     }
 
     const changedRoleId = this.record?.getRole(roleType) as number;
@@ -524,13 +521,13 @@ export abstract class RecordBasedState {
     role: IRange<IObject>
   ): boolean {
     if (
-      this.changedRoleByRelationType != null &&
-      this.changedRoleByRelationType.has(roleType.relationType)
+      this.changedRoleByRoleType != null &&
+      this.changedRoleByRoleType.has(roleType)
     ) {
       return this.objectRanges.equals(
         role,
-        this.changedRoleByRelationType.get(
-          roleType.relationType
+        this.changedRoleByRoleType.get(
+          roleType
         ) as IRange<IObject>
       );
     }

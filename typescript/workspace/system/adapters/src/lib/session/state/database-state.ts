@@ -114,7 +114,7 @@ export abstract class DatabaseState extends RecordBasedState {
         return;
       }
     } else {
-      this.changedRoleByRelationType = null;
+      this.changedRoleByRoleType = null;
       this.isPushed = false;
     }
 
