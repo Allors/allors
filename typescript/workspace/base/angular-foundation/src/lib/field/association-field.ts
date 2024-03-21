@@ -50,7 +50,7 @@ export abstract class AssociationField extends Field {
   public assignedLabel: string;
 
   get roleType(): RoleType {
-    return this.associationType?.relationType.roleType;
+    return this.associationType?.roleType;
   }
 
   private id = 0;

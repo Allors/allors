@@ -46,7 +46,7 @@ test('databaseUnitDiff', async () => {
 
   expect(diff.originalRole).toBe('X');
   expect(diff.changedRole).toBe('Y');
-  expect(diff.relationType.roleType).toBe(m.C1.C1AllorsString);
+  expect(diff.roleType).toBe(m.C1.C1AllorsString);
 });
 
 test('databaseUnitDiffAfterReset', async () => {
@@ -155,14 +155,14 @@ test('databaseMultipleUnitDiff', async () => {
   expect(diffs.length).toBe(2);
 
   const stringDiff = diffs.find(
-    (v) => v.relationType.roleType === m.C1.C1AllorsString
+    (v) => v.roleType === m.C1.C1AllorsString
   );
 
   expect(stringDiff.originalRole).toBe('X');
   expect(stringDiff.changedRole).toBe('Y');
 
   const intDiff = diffs.find(
-    (v) => v.relationType.roleType === m.C1.C1AllorsInteger
+    (v) => v.roleType === m.C1.C1AllorsInteger
   );
 
   expect(intDiff.originalRole).toBe(1);

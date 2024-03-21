@@ -36,7 +36,7 @@ export abstract class LocalisedRoleField extends RoleField {
   set localisedText(value: string | null) {
     if (this.locale) {
       if (!this.localisedObject) {
-        const m = this.roleType.relationType.metaPopulation as M;
+        const m = this.roleType.metaPopulation as M;
         const localisedText: LocalisedText =
           this.object.strategy.session.create<LocalisedText>(m.LocalisedText);
         localisedText.Locale = this.locale;
