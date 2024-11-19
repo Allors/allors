@@ -1,58 +1,101 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/build",
-  "title": "Build Schema",
   "definitions": {
-    "build": {
-      "type": "object",
+    "Host": {
+      "type": "string",
+      "enum": [
+        "AppVeyor",
+        "AzurePipelines",
+        "Bamboo",
+        "Bitbucket",
+        "Bitrise",
+        "GitHubActions",
+        "GitLab",
+        "Jenkins",
+        "Rider",
+        "SpaceAutomation",
+        "TeamCity",
+        "Terminal",
+        "TravisCI",
+        "VisualStudio",
+        "VSCode"
+      ]
+    },
+    "ExecutableTarget": {
+      "type": "string",
+      "enum": [
+        "AllorsDotnetBaseDatabaseDomainTests",
+        "AllorsDotnetBaseDatabaseMetaTests",
+        "AllorsDotnetBaseDatabaseServerDirectTests",
+        "AllorsDotnetBaseDatabaseServerJsonTests",
+        "AllorsDotnetBaseGenerate",
+        "AllorsDotnetBasePublishCommands",
+        "AllorsDotnetBasePublishServer",
+        "AllorsDotnetBaseResetDatabase",
+        "AllorsDotnetBaseWorkspaceMetaStaticTests",
+        "AllorsDotnetBaseWorkspaceWinformsViewModelsTests",
+        "AllorsDotnetSystemAdaptersGenerate",
+        "AllorsDotnetSystemDatabaseAdaptersNpgsqlTests",
+        "AllorsDotnetSystemDatabaseAdaptersSqlClientTests",
+        "AllorsDotnetSystemDatabaseAdaptersTestMemory",
+        "AllorsDotnetSystemEmbeddedDomainMemoryTests",
+        "AllorsDotnetSystemEmbeddedTests",
+        "AllorsDotnetSystemRepositoryModelTests",
+        "AllorsDotnetSystemSharedTests",
+        "AllorsDotnetSystemWorkspaceAdaptersDirectTests",
+        "AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests",
+        "AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests",
+        "AllorsDotnetSystemWorkspaceSignalsTests",
+        "CiDotnetBaseDatabase",
+        "CiDotnetBaseWorkspace",
+        "CiDotnetSystem",
+        "CiDotnetSystemDatabaseAdaptersMemory",
+        "CiDotnetSystemDatabaseAdaptersNpgsql",
+        "CiDotnetSystemDatabaseAdaptersSqlClient",
+        "CiDotnetSystemWorkspace",
+        "CiDotnetSystemWorkspaceAdaptersDirect",
+        "CiDotnetSystemWorkspaceAdaptersJsonNewtonsoft",
+        "CiDotnetSystemWorkspaceAdaptersJsonSystemText",
+        "CiTypescriptWorkspace",
+        "CiTypescriptWorkspaceAdaptersJson",
+        "Clean",
+        "Default",
+        "EnsureDirectories",
+        "Generate",
+        "Install",
+        "Reset",
+        "TypescriptInstall",
+        "TypescriptWorkspaceAdaptersJsonTests",
+        "TypescriptWorkspaceSystemAdapters",
+        "TypescriptWorkspaceSystemAdaptersJson",
+        "TypescriptWorkspaceSystemMeta",
+        "TypescriptWorkspaceSystemMetaJson",
+        "TypescriptWorkspaceTests"
+      ]
+    },
+    "Verbosity": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "Verbose",
+        "Normal",
+        "Minimal",
+        "Quiet"
+      ]
+    },
+    "NukeBuild": {
       "properties": {
-        "Configuration": {
-          "type": "string",
-          "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
-          "enum": [
-            "Debug",
-            "Release"
-          ]
-        },
         "Continue": {
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
-        },
-        "DotNetVerbosity": {
-          "type": "string",
-          "description": "DotNet Verbosity",
-          "enum": [
-            "detailed",
-            "diagnostic",
-            "minimal",
-            "normal",
-            "quiet"
-          ]
         },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
         },
         "Host": {
-          "type": "string",
           "description": "Host for execution. Default is 'automatic'",
-          "enum": [
-            "AppVeyor",
-            "AzurePipelines",
-            "Bamboo",
-            "Bitbucket",
-            "Bitrise",
-            "GitHubActions",
-            "GitLab",
-            "Jenkins",
-            "Rider",
-            "SpaceAutomation",
-            "TeamCity",
-            "Terminal",
-            "TravisCI",
-            "VisualStudio",
-            "VSCode"
-          ]
+          "$ref": "#/definitions/Host"
         },
         "NoLogo": {
           "type": "boolean",
@@ -81,125 +124,49 @@
           "type": "array",
           "description": "List of targets to be skipped. Empty list skips all dependencies",
           "items": {
-            "type": "string",
-            "enum": [
-              "AllorsDotnetBaseDatabaseDomainTests",
-              "AllorsDotnetBaseDatabaseMetaTests",
-              "AllorsDotnetBaseDatabaseServerDirectTests",
-              "AllorsDotnetBaseDatabaseServerJsonTests",
-              "AllorsDotnetBaseGenerate",
-              "AllorsDotnetBasePublishCommands",
-              "AllorsDotnetBasePublishServer",
-              "AllorsDotnetBaseResetDatabase",
-              "AllorsDotnetBaseWorkspaceMetaStaticTests",
-              "AllorsDotnetBaseWorkspaceWinformsViewModelsTests",
-              "AllorsDotnetSystemAdaptersGenerate",
-              "AllorsDotnetSystemDatabaseAdaptersNpgsqlTests",
-              "AllorsDotnetSystemDatabaseAdaptersSqlClientTests",
-              "AllorsDotnetSystemDatabaseAdaptersTestMemory",
-              "AllorsDotnetSystemEmbeddedDomainMemoryTests",
-              "AllorsDotnetSystemEmbeddedTests",
-              "AllorsDotnetSystemRepositoryModelTests",
-              "AllorsDotnetSystemSharedTests",
-              "AllorsDotnetSystemWorkspaceAdaptersDirectTests",
-              "AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests",
-              "AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests",
-              "AllorsDotnetSystemWorkspaceSignalsTests",
-              "CiDotnetBaseDatabase",
-              "CiDotnetBaseWorkspace",
-              "CiDotnetSystem",
-              "CiDotnetSystemDatabaseAdaptersMemory",
-              "CiDotnetSystemDatabaseAdaptersNpgsql",
-              "CiDotnetSystemDatabaseAdaptersSqlClient",
-              "CiDotnetSystemWorkspace",
-              "CiDotnetSystemWorkspaceAdaptersDirect",
-              "CiDotnetSystemWorkspaceAdaptersJsonNewtonsoft",
-              "CiDotnetSystemWorkspaceAdaptersJsonSystemText",
-              "CiTypescriptWorkspace",
-              "CiTypescriptWorkspaceAdaptersJson",
-              "Clean",
-              "Default",
-              "EnsureDirectories",
-              "Generate",
-              "Install",
-              "Reset",
-              "TypescriptInstall",
-              "TypescriptWorkspaceAdaptersJsonTests",
-              "TypescriptWorkspaceSystemAdapters",
-              "TypescriptWorkspaceSystemAdaptersJson",
-              "TypescriptWorkspaceSystemMeta",
-              "TypescriptWorkspaceSystemMetaJson",
-              "TypescriptWorkspaceTests"
-            ]
+            "$ref": "#/definitions/ExecutableTarget"
           }
         },
         "Target": {
           "type": "array",
           "description": "List of targets to be invoked. Default is '{default_target}'",
           "items": {
-            "type": "string",
-            "enum": [
-              "AllorsDotnetBaseDatabaseDomainTests",
-              "AllorsDotnetBaseDatabaseMetaTests",
-              "AllorsDotnetBaseDatabaseServerDirectTests",
-              "AllorsDotnetBaseDatabaseServerJsonTests",
-              "AllorsDotnetBaseGenerate",
-              "AllorsDotnetBasePublishCommands",
-              "AllorsDotnetBasePublishServer",
-              "AllorsDotnetBaseResetDatabase",
-              "AllorsDotnetBaseWorkspaceMetaStaticTests",
-              "AllorsDotnetBaseWorkspaceWinformsViewModelsTests",
-              "AllorsDotnetSystemAdaptersGenerate",
-              "AllorsDotnetSystemDatabaseAdaptersNpgsqlTests",
-              "AllorsDotnetSystemDatabaseAdaptersSqlClientTests",
-              "AllorsDotnetSystemDatabaseAdaptersTestMemory",
-              "AllorsDotnetSystemEmbeddedDomainMemoryTests",
-              "AllorsDotnetSystemEmbeddedTests",
-              "AllorsDotnetSystemRepositoryModelTests",
-              "AllorsDotnetSystemSharedTests",
-              "AllorsDotnetSystemWorkspaceAdaptersDirectTests",
-              "AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests",
-              "AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests",
-              "AllorsDotnetSystemWorkspaceSignalsTests",
-              "CiDotnetBaseDatabase",
-              "CiDotnetBaseWorkspace",
-              "CiDotnetSystem",
-              "CiDotnetSystemDatabaseAdaptersMemory",
-              "CiDotnetSystemDatabaseAdaptersNpgsql",
-              "CiDotnetSystemDatabaseAdaptersSqlClient",
-              "CiDotnetSystemWorkspace",
-              "CiDotnetSystemWorkspaceAdaptersDirect",
-              "CiDotnetSystemWorkspaceAdaptersJsonNewtonsoft",
-              "CiDotnetSystemWorkspaceAdaptersJsonSystemText",
-              "CiTypescriptWorkspace",
-              "CiTypescriptWorkspaceAdaptersJson",
-              "Clean",
-              "Default",
-              "EnsureDirectories",
-              "Generate",
-              "Install",
-              "Reset",
-              "TypescriptInstall",
-              "TypescriptWorkspaceAdaptersJsonTests",
-              "TypescriptWorkspaceSystemAdapters",
-              "TypescriptWorkspaceSystemAdaptersJson",
-              "TypescriptWorkspaceSystemMeta",
-              "TypescriptWorkspaceSystemMetaJson",
-              "TypescriptWorkspaceTests"
-            ]
+            "$ref": "#/definitions/ExecutableTarget"
           }
         },
         "Verbosity": {
-          "type": "string",
           "description": "Logging verbosity during build execution. Default is 'Normal'",
-          "enum": [
-            "Minimal",
-            "Normal",
-            "Quiet",
-            "Verbose"
-          ]
+          "$ref": "#/definitions/Verbosity"
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "properties": {
+        "Configuration": {
+          "type": "string",
+          "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
+          "enum": [
+            "Debug",
+            "Release"
+          ]
+        },
+        "DotNetVerbosity": {
+          "type": "string",
+          "description": "DotNet Verbosity",
+          "enum": [
+            "detailed",
+            "diagnostic",
+            "minimal",
+            "normal",
+            "quiet"
+          ]
+        }
+      }
+    },
+    {
+      "$ref": "#/definitions/NukeBuild"
+    }
+  ]
 }

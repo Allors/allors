@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Allors.Population</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CaseExtensions" Version="1.1.0" />
-    <PackageReference Include="KGySoft.CoreLibraries" Version="8.1.0" />
+    <PackageReference Include="KGySoft.CoreLibraries" Version="8.3.0" />
   </ItemGroup>
 
   <ItemGroup>

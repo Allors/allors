@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
     using System.Linq;
     using Database.Derivations;
     using Derivations.Rules;
-    using DataUtils;
+    using FolkerKinzel.DataUrls;
 
     public class MediaRule : Rule<Media, MediaIndex>
     {
@@ -54,9 +54,10 @@ namespace Allors.Database.Domain
 
                 if (media.ExistInDataUri)
                 {
-                    var dataUrl = new DataUrl(media.InDataUri);
+                    _ = DataUrl.TryParse(media.InDataUri, out var dataUrlInfo);
+                    dataUrlInfo.TryGetEmbeddedBytes(out var bytes);               
 
-                    media.MediaContent.Data = Convert.FromBase64String(dataUrl.ReadAsBase64EncodedString());
+                    media.MediaContent.Data = bytes;
                     media.MediaContent.Type = MediaContent.Sniff(media.MediaContent.Data, media.InFileName);
 
                     media.RemoveInDataUri();

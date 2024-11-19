@@ -3,7 +3,6 @@ using System.Linq;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
-using static Nuke.Common.IO.FileSystemTasks;
 
 partial class Build : NukeBuild
 {
