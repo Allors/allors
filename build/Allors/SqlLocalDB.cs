@@ -1,7 +1,6 @@
 using System;
 using MartinCostello.SqlLocalDb;
 using Microsoft.Data.SqlClient;
-using static Nuke.Common.Logger;
 
 internal class SqlLocalDB : IDisposable
 {

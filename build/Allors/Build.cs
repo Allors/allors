@@ -2,7 +2,6 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tooling.ProcessTasks;
-using static Nuke.Common.IO.FileSystemTasks;
 
 public partial class Build
 {
