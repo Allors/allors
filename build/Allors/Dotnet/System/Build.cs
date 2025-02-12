@@ -17,7 +17,7 @@ partial class Build
             .SetProjectFile(Paths.AllorsDotnetSystemRepositoryModelTests)
             .AddLoggers("trx;LogFileName=AllorsDotnetSystemRepositoryModelTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
-    
+
     private Target AllorsDotnetSystemEmbeddedTests => _ => _
         .DependsOn(AllorsDotnetBaseGenerate)
         .Executes(() =>
@@ -44,8 +44,8 @@ partial class Build
         {
             DotNetRun(s => s
                 .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
-                .SetApplicationArguments(
-                    $"{Paths.AllorsDotnetSystemDatabaseTestsAdaptersRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetSystemDatabaseTestsAdaptersAllorsAdaptersGenerated}"));
+                .SetApplicationArguments(Paths.AllorsDotnetSystemDatabaseTestsAdaptersRepository, Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs,
+                    Paths.AllorsDotnetSystemDatabaseTestsAdaptersAllorsAdaptersGenerated));
             DotNetRun(s => s
                 .SetProcessWorkingDirectory(Paths.AllorsDotnetSystemDatabaseTestsAdapters)
                 .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersGenerate));
@@ -78,13 +78,13 @@ partial class Build
         .Executes(() =>
         {
             DotNetTest(s => s
-                 .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersTests)
-                 .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
-                 .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersNpgsqlTests.trx")
-                 .SetResultsDirectory(Paths.ArtifactsTests));
+                .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersTests)
+                .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
+                .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersNpgsqlTests.trx")
+                .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
-    
+
     private Target AllorsDotnetSystemWorkspaceAdaptersDirectTests => _ => _
         .DependsOn(AllorsDotnetBasePublishServer)
         .DependsOn(AllorsDotnetBasePublishCommands)
@@ -137,7 +137,6 @@ partial class Build
                     .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
-
         });
 
     private Target AllorsDotnetSystemWorkspaceSignalsTests => _ => _

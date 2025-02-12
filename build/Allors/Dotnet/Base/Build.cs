@@ -19,12 +19,10 @@ partial class Build
         {
             DotNetRun(s => s
                 .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
-                .SetApplicationArguments(
-                    $"{Paths.AllorsDotnetBaseRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetBaseDatabaseAllorsBaseGenerated}"));
+                .SetApplicationArguments(Paths.AllorsDotnetBaseRepository, Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs, Paths.AllorsDotnetBaseDatabaseAllorsBaseGenerated));
             // DotNetRun(s => s
             //     .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
-            //     .SetApplicationArguments(
-            //         $"{Paths.AllorsDotnetBaseRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaExtensionsCs} /temp/meta.extensions"));
+            //     .SetApplicationArguments(Paths.AllorsDotnetBaseRepository, Paths.AllorsDotnetSystemRepositoryTemplatesMetaExtensionsCs, "/temp/meta.extensions");
             DotNetRun(s => s
                 .SetProcessWorkingDirectory(Paths.AllorsDotnetBase)
                 .SetProjectFile(Paths.AllorsDotnetBaseDatabaseGenerate));
