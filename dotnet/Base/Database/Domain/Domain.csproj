@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Allors.Documents" Version="1.0.10" />
-    <PackageReference Include="FolkerKinzel.DataUrls" Version="1.2.1" />
+    <PackageReference Include="FolkerKinzel.DataUrls" Version="2.0.1" />
     
-    <PackageReference Include="MimeTypesMap" Version="1.0.8" />
+    <PackageReference Include="MimeTypesMap" Version="1.0.9" />
   </ItemGroup>
 
   <ItemGroup>
